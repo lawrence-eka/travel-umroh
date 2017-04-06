@@ -1,0 +1,69 @@
+{
+	"type": "Collection",
+	"properties": {
+		"packageId": {
+			"name": "packageId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "packageId",
+			"order": 0
+		},
+		"fromDateTime": {
+			"name": "fromDateTime",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "fromDateTime",
+			"order": 1
+		},
+		"toDateTime": {
+			"name": "toDateTime",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "toDateTime",
+			"order": 2
+		},
+		"hotelName": {
+			"name": "hotelName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "hotelName",
+			"order": 3
+		},
+		"airlineName": {
+			"name": "airlineName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "airlineName",
+			"order": 4
+		},
+		"fromAirport": {
+			"name": "fromAirport",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromAirport",
+			"order": 5
+		},
+		"toAIrport": {
+			"name": "toAIrport",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "toAIrport",
+			"order": 6
+		},
+		"cityName": {
+			"name": "cityName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "cityName",
+			"order": 7
+		}
+	}
+}

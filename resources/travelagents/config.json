@@ -1,0 +1,37 @@
+{
+	"type": "Collection",
+	"properties": {
+		"travelAgentName": {
+			"name": "travelAgentName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "travelAgentName",
+			"order": 0
+		},
+		"address": {
+			"name": "address",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "address",
+			"order": 1
+		},
+		"city": {
+			"name": "city",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "city",
+			"order": 2
+		},
+		"contactPersonId": {
+			"name": "contactPersonId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "contactPersonId",
+			"order": 3
+		}
+	}
+}

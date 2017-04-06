@@ -1,0 +1,1 @@
+{"travelAgentId":"2bf31cfe2222e87b","packageName":"365 Days of Switzerland","validFrom":1491591619198,"validUntil":1591591619198,"id":"6ea9605bd15db80e"}
