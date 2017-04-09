@@ -1,4 +1,5 @@
-cancelIf(!me || me.id !== this.contactPersonId, "Access Unathorized", 401);
+cancelIf(!me, "Access Unathorized", 401);
+cancelIf(query.contactPersonId && me.id !== this.contactPersonId, "Access Unathorized", 401);
 
 if(query.includePackages==="true")
 {

@@ -1,0 +1,9 @@
+{
+	"packageId":"55476e319be108ff",
+	"entry":{
+		"hotel":"Monginsidi",
+		"checkIn": 1601591620199,
+		"checkOut":1601591622198,
+		"city":"Lausanne"
+	}
+}
