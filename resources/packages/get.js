@@ -1,4 +1,4 @@
-cancelIf(this.travelAgentId !== query.travelAgentId, "Access Unathorized", 401);
+cancelIf(query.travelAgentId && this.travelAgentId !== query.travelAgentId, "Access Unathorized", 401);
 
 if(query.includeItineraries==="true")
 {
@@ -6,3 +6,5 @@ if(query.includeItineraries==="true")
       this.itineraries = result;
     });
 }
+
+//console.log("packages included");

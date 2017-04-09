@@ -9,7 +9,7 @@ cancelIf(!me || me.id !== this.id, "Access Unauthorized", 401);
 
 if(query.includeTravelAgents==="true")
 {
-    dpd.travelagents.get({includePackages: query.includePackages, includeItineraries: query.includeItineraries}, function (result) {
+    dpd.travelagents.get({contactPersonId: me.id, includePackages: query.includePackages, includeItineraries: query.includeItineraries}, function (result) {
       this.travelAgents = result;
     });
 }
