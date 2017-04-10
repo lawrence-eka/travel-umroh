@@ -40,6 +40,14 @@
 			"required": false,
 			"id": "phone",
 			"order": 4
+		},
+		"language": {
+			"name": "language",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "language",
+			"order": 5
 		}
 	}
 }

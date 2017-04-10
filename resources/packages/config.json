@@ -17,13 +17,21 @@
 			"id": "packageName",
 			"order": 1
 		},
+		"tourLeader": {
+			"name": "tourLeader",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "tourLeader",
+			"order": 2
+		},
 		"validFrom": {
 			"name": "validFrom",
 			"type": "number",
 			"typeLabel": "number",
 			"required": true,
 			"id": "validFrom",
-			"order": 2
+			"order": 3
 		},
 		"validUntil": {
 			"name": "validUntil",
@@ -31,7 +39,55 @@
 			"typeLabel": "number",
 			"required": true,
 			"id": "validUntil",
-			"order": 3
+			"order": 4
+		},
+		"remarks": {
+			"name": "remarks",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "remarks",
+			"order": 5
+		},
+		"travelDateFrom": {
+			"name": "travelDateFrom",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "travelDateFrom",
+			"order": 6
+		},
+		"travelDateUntil": {
+			"name": "travelDateUntil",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "travelDateUntil",
+			"order": 7
+		},
+		"isItineraryConfirmed": {
+			"name": "isItineraryConfirmed",
+			"type": "boolean",
+			"typeLabel": "boolean",
+			"required": false,
+			"id": "isItineraryConfirmed",
+			"order": 8
+		},
+		"isPublished": {
+			"name": "isPublished",
+			"type": "boolean",
+			"typeLabel": "boolean",
+			"required": false,
+			"id": "isPublished",
+			"order": 9
+		},
+		"price": {
+			"name": "price",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "price",
+			"order": 10
 		}
 	}
 }

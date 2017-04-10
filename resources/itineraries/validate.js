@@ -4,20 +4,21 @@ errorIf(!this.packageId, "invalidPackage", "Invalid Package");
 
 dpd.packages.get(this.packageId, function (pkg) {
     errorIf(!pkg, "invalidPackage", "Invalid Package");
-    
+
     dpd.travelagents.get(pkg.travelAgentId, function (trv) {
         errorIf(!trv, "invalidTravelAgent", "Invalid Travel Agent");
         errorIf(trv.contactPersonId != me.id, "notTravelAgentContactPerson", "You are not the contact person of this travel agent");
     });
+    
 });
 
 var fromDateType = "";
 var toDateType ="";
-var fromDateTime = null;
+var fromDateTime = null; 
 var toDateTime = null;
 
-errorIf(!this.entry || (!this.entry.airline && !this.entry.hotel), "invalidEntry", "Itinerary must contain information about either 'hotel' or 'airline'");
-if(this.entry.airline)
+errorIf(!this.entry || (!this.entry.transport && !this.entry.hotel), "invalidEntry", "Itinerary must contain information about either 'hotel' or 'transport'");
+if(this.entry.transport)
 {
     errorIf(!this.entry.departure, "invalidDepartureDate", "Flight is missing Departure Date Info ('departure')");
     errorIf(!this.entry.arrival, "invalidArrivalDate", "Flight is missing Arrival Date Info ('arrival')");
@@ -52,7 +53,7 @@ var query = {
     "$and":
     [
         {"packageId":this.packageId}, 
-        {
+        { 
             "$or":
             [
                 {
@@ -78,3 +79,23 @@ dpd.itineraries.get(query, function (result) {
     errorIf(result && result.length > 0, "overlappingDateRange", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
 });
 
+
+dpd.packages.get(this.packageId, function (travelPackage) {
+    if(travelPackage)
+    {
+        var query = {"$sort":{"fromDateTime":1}, "$limit": 1, "id":{"$ne": this.id}, "packageId":this.packageId};
+        dpd.itineraries.get(query, function (result) {
+            if(result) travelPackage.travelDateFrom = Math.min(!result[0].fromDateTime ? this.fromDateTime : result[0].fromDateTime);
+            else travelPackage.travelDateFrom = null;
+
+            query = {"$sort":{"toDateTime":-1}, "$limit": 1, "id":{"$ne": this.id}, "packageId":this.packageId};
+            dpd.itineraries.get(query, function (result) {
+                if(result) travelPackage.travelDateUntil = Math.max(result[0].toDateTime, this.toDateTime);
+                else travelPackage.travelDateUntil = nuill;
+                dpd.packages.put(travelPackage.id, travelPackage, function(result, err) {
+                    errorIf(err, "genericError", err);
+                });
+            });
+        });
+    }
+});
