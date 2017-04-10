@@ -32,6 +32,14 @@
 			"required": false,
 			"id": "entry",
 			"order": 3
+		},
+		"remarks": {
+			"name": "remarks",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "remarks",
+			"order": 4
 		}
 	}
 }
