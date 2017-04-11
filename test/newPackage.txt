@@ -1,6 +1,6 @@
 {
-	"travelAgentId":"2bf31cfe2222e87b",
-	"packageName":"365 Days of Switzerland",
+	"travelAgentId":"6a4dc8cd989d5873",
+	"packageName":"Denpasar Moon",
 	"validFrom":1591591619198,
 	"validUntil":1691591619198
 }

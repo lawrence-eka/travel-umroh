@@ -1,13 +1,21 @@
 {
 	"type": "UserCollection",
 	"properties": {
+		"email": {
+			"name": "email",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "email",
+			"order": 0
+		},
 		"isTravelAgent": {
 			"name": "isTravelAgent",
 			"type": "boolean",
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isTravelAgent",
-			"order": 0
+			"order": 1
 		},
 		"firstName": {
 			"name": "firstName",
@@ -15,7 +23,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "firstName",
-			"order": 1
+			"order": 2
 		},
 		"lastName": {
 			"name": "lastName",
@@ -23,14 +31,6 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "lastName",
-			"order": 2
-		},
-		"email": {
-			"name": "email",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "email",
 			"order": 3
 		},
 		"phone": {

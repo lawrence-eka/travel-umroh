@@ -1,4 +1,8 @@
-curl -X POST -H "Content-Type: application/json" -d @login.txt http://localhost:2403/users/login > result.txt
+curl -X POST -H "Content-Type: application/json" -d @newUser.txt http://localhost:2403/users > result.txt
+
+curl -X POST -H "Content-Type: application/json" -d @login.txt http://localhost:2403/users/login -c cookie.txt > result.txt
+
+curl -X POST -H "Content-Type: application/json" http://localhost:2403/users/logout  > result.txt
 
 curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/users > result.txt
 
@@ -10,4 +14,10 @@ curl -X GET -H "Content-Type: application/json" -b cookie.txt "http://localhost:
 
 curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/packages -d @newPackage.txt > result.txt
 
+curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/packages/55476e319be108ff > result.txt
+
 curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/itineraries -d @newItinerary.txt > result.txt
+
+curl -X DELETE -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/itineraries/0d2599e6de083881 > result.txt
+
+

@@ -6,5 +6,3 @@ if(query.includeItineraries==="true")
       this.itineraries = result;
     });
 }
-
-//console.log("packages included");

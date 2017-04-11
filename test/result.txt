@@ -1,1 +1,1 @@
-{"count":1}
+{"errors":{"invalidPackage":"Package does not exist"},"status":400}
