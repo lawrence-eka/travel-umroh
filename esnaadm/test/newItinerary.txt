@@ -1,0 +1,4 @@
+{
+	"packageId":"55476e319be108ff",
+	"entry":{"hotel":"Grand Hotel","checkIn":1601591622302,"checkOut":1601591622303,"city":"GeneveX"}
+}
