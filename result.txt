@@ -1,1 +1,1 @@
-{"errors":{"invalidCredential":"Invalid Credential"},"status":400}
+{"message":"username or password not specified","status":400}

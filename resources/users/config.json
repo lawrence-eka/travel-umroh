@@ -48,6 +48,14 @@
 			"required": false,
 			"id": "language",
 			"order": 5
+		},
+		"needApproval": {
+			"name": "needApproval",
+			"type": "object",
+			"typeLabel": "object",
+			"required": false,
+			"id": "needApproval",
+			"order": 6
 		}
 	}
 }
