@@ -24,4 +24,3 @@ dpd.purchases.get(q, function (result) {
     errorIf(result && result.length > 0, "doublePurchase", "User has purchased this package");
 });
 
-
