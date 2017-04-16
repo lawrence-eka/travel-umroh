@@ -1,4 +1,7 @@
 {
-	"lastName": "cahaya adi",
-	"isTravelAgent": true
+	"needApproval":
+	{
+		"isApproved":true,
+		"isAdmin": true
+	}
 }

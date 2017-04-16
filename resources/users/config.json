@@ -9,13 +9,21 @@
 			"id": "email",
 			"order": 0
 		},
+		"isAdmin": {
+			"name": "isAdmin",
+			"type": "boolean",
+			"typeLabel": "boolean",
+			"required": false,
+			"id": "isAdmin",
+			"order": 1
+		},
 		"isTravelAgent": {
 			"name": "isTravelAgent",
 			"type": "boolean",
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isTravelAgent",
-			"order": 1
+			"order": 2
 		},
 		"firstName": {
 			"name": "firstName",
@@ -23,7 +31,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "firstName",
-			"order": 2
+			"order": 3
 		},
 		"lastName": {
 			"name": "lastName",
@@ -31,7 +39,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "lastName",
-			"order": 3
+			"order": 4
 		},
 		"phone": {
 			"name": "phone",
@@ -39,7 +47,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "phone",
-			"order": 4
+			"order": 5
 		},
 		"language": {
 			"name": "language",
@@ -47,7 +55,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "language",
-			"order": 5
+			"order": 6
 		},
 		"needApproval": {
 			"name": "needApproval",
@@ -55,7 +63,7 @@
 			"typeLabel": "object",
 			"required": false,
 			"id": "needApproval",
-			"order": 6
+			"order": 7
 		}
 	}
 }

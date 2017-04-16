@@ -1,0 +1,61 @@
+{
+	"type": "Collection",
+	"properties": {
+		"forumId": {
+			"name": "forumId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "forumId",
+			"order": 0
+		},
+		"threadName": {
+			"name": "threadName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "threadName",
+			"order": 1
+		},
+		"isSticky": {
+			"name": "isSticky",
+			"type": "boolean",
+			"typeLabel": "boolean",
+			"required": true,
+			"id": "isSticky",
+			"order": 2
+		},
+		"createdById": {
+			"name": "createdById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "createdById",
+			"order": 3
+		},
+		"createdOn": {
+			"name": "createdOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "createdOn",
+			"order": 4
+		},
+		"latestCommentOn": {
+			"name": "latestCommentOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "latestCommentOn",
+			"order": 5
+		},
+		"latestCommentById": {
+			"name": "latestCommentById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "latestCommentById",
+			"order": 6
+		}
+	}
+}

@@ -2,11 +2,19 @@ curl -X POST -H "Content-Type: application/json" -d @newUser.txt http://localhos
 
 curl -X POST -H "Content-Type: application/json" -d @login.txt http://localhost:2403/users/login -c cookie.txt > result.txt
 
-curl -X POST -H "Content-Type: application/json" http://localhost:2403/users/logout  > result.txt
-
 curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/users > result.txt
 
+curl -X PUT -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/users/cabcc0b588a5d8d9 -d @updateUser.txt > result.txt
+
+curl -X PUT -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/users/d8589ac69fc3c9b9 -d @updateUser.txt > result.txt
+
+curl -X POST -H "Content-Type: application/json" http://localhost:2403/users/logout  > result.txt
+
+curl -X GET -H "Content-Type: application/json; Pragma: no-cache" -b cookie.txt http://localhost:2403/users > result.txt
+
 curl -X GET -H "Content-Type: application/json" -b cookie.txt "http://localhost:2403/users?includeTravelAgents=true&includePackages=true&includeItineraries=true" > result.txt
+
+curl -X GET -H "Content-Type: application/json" "http://localhost:2403/users?email=aduh@aduh.aduh" > result.txt
 
 curl -X GET -H "Content-Type: application/json" -b cookie.txt "http://localhost:2403/travelagents" > result.txt
 
@@ -16,8 +24,20 @@ curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:
 
 curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/packages/55476e319be108ff > result.txt
 
+curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/packages > result.txt
+
+curl -X GET -H "Content-Type: application/json" -b cookie.txt "http://localhost:2403/packages?showNext=4" > result.txt
+
 curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/itineraries -d @newItinerary.txt > result.txt
 
 curl -X DELETE -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/itineraries/0d2599e6de083881 > result.txt
 
+curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/purchases -d @newPurchase.txt> result.txt
 
+curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/purchases > result.txt
+
+curl -X POST -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/forums -d @newForum.txt> result.txt
+
+curl -X PUT -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/forums/e0f19f4fcacc58d9 -d @updateForum.txt> result.txt
+
+curl -X GET -H "Content-Type: application/json" -b cookie.txt http://localhost:2403/forums > result.txt

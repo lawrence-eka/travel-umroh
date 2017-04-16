@@ -1,0 +1,61 @@
+{
+	"type": "Collection",
+	"properties": {
+		"parentForumId": {
+			"name": "parentForumId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "parentForumId",
+			"order": 0
+		},
+		"forumName": {
+			"name": "forumName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "forumName",
+			"order": 1
+		},
+		"admins": {
+			"name": "admins",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "admins",
+			"order": 2
+		},
+		"createdById": {
+			"name": "createdById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "createdById",
+			"order": 3
+		},
+		"createdOn": {
+			"name": "createdOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "createdOn",
+			"order": 4
+		},
+		"modifiedById": {
+			"name": "modifiedById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "modifiedById",
+			"order": 5
+		},
+		"modifiedOn": {
+			"name": "modifiedOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "modifiedOn",
+			"order": 6
+		}
+	}
+}
