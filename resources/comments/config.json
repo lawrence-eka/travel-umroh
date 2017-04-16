@@ -1,21 +1,45 @@
 {
 	"type": "Collection",
 	"properties": {
-		"name": {
-			"name": "name",
+		"threadId": {
+			"name": "threadId",
 			"type": "string",
 			"typeLabel": "string",
-			"required": false,
-			"id": "name",
+			"required": true,
+			"id": "threadId",
 			"order": 0
 		},
-		"comment": {
-			"name": "comment",
+		"createdOn": {
+			"name": "createdOn",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "createdOn",
+			"order": 1
+		},
+		"createdById": {
+			"name": "createdById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "createdById",
+			"order": 2
+		},
+		"commentText": {
+			"name": "commentText",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "commentText",
+			"order": 3
+		},
+		"quotedCommentId": {
+			"name": "quotedCommentId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
-			"id": "comment",
-			"order": 1
+			"id": "quotedCommentId",
+			"order": 4
 		}
 	}
 }

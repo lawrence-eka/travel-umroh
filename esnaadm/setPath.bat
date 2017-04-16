@@ -1,1 +1,0 @@
-set PATH=%PATH%;C:\workspace\esnaadm\node_modules\.bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\temp\curl\src;C:\Program Files\MongoDB\Server\3.4\bin
