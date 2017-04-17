@@ -56,6 +56,30 @@
 			"required": false,
 			"id": "modifiedOn",
 			"order": 6
+		},
+		"latestActivityOn": {
+			"name": "latestActivityOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "latestActivityOn",
+			"order": 7
+		},
+		"latestActiveThreadId": {
+			"name": "latestActiveThreadId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "latestActiveThreadId",
+			"order": 8
+		},
+		"latestActivityById": {
+			"name": "latestActivityById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "latestActivityById",
+			"order": 9
 		}
 	}
 }

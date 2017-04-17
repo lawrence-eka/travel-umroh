@@ -11,9 +11,9 @@
 		},
 		"createdOn": {
 			"name": "createdOn",
-			"type": "string",
-			"typeLabel": "string",
-			"required": true,
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
 			"id": "createdOn",
 			"order": 1
 		},
@@ -21,7 +21,7 @@
 			"name": "createdById",
 			"type": "string",
 			"typeLabel": "string",
-			"required": true,
+			"required": false,
 			"id": "createdById",
 			"order": 2
 		},
@@ -40,6 +40,22 @@
 			"required": false,
 			"id": "quotedCommentId",
 			"order": 4
+		},
+		"updatedOn": {
+			"name": "updatedOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "updatedOn",
+			"order": 5
+		},
+		"updatedById": {
+			"name": "updatedById",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "updatedById",
+			"order": 6
 		}
 	}
 }
