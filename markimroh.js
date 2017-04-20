@@ -1,8 +1,14 @@
 // production.js
-var deployd = require('deployd');
+var deployd = require('deployd')
+  , fs = require('fs')
+;
 
 var server = deployd({
-  port: process.env.PORT || 5000,
+  port: process.env.PORT || 443,
+  
+  key: fs.readFileSync('privkey.pem'), // eka
+  cert: fs.readFileSync('fullchain.pem'), // eka
+
   env: 'production',
   db: {
     host: '127.0.0.1',
