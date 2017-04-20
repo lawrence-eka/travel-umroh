@@ -1,0 +1,5 @@
+{
+	includeTravelAgents: true,
+	includePackages: true,
+	includeItineraries: true
+}
