@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"IATA": {
+			"name": "IATA",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "IATA",
+			"order": 0
+		},
+		"airline": {
+			"name": "airline",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "airline",
+			"order": 1
+		},
+		"country": {
+			"name": "country",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "country",
+			"order": 2
+		},
+		"createdOn": {
+			"name": "createdOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "createdOn",
+			"order": 3
+		},
+		"lastUpdatedOn": {
+			"name": "lastUpdatedOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "lastUpdatedOn",
+			"order": 4
+		}
+	}
+}

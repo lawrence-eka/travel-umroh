@@ -1,20 +1,33 @@
 {
-  "name": "app_name",
+  "name": "markimroh",
   "version": "0.0.1",
   "description": "Super awesome app",
   "keywords": [],
-  "homepage": "",
+  "homepage": "https://github.com/lawrence-eka/travel-umroh#readme",
   "author": "You!",
   "contributors": [],
   "dependencies": {
-    "deployd": ">= 0"
+    "deployd": ">= 0",
+    "dpd-jobs": "^0.14.0"
   },
   "scripts": {
     "start": "node server"
   },
   "engines": {
     "node": "0.8.x",
-    "npm":  "1.2.x"
+    "npm": "1.2.x"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "main": "markimroh.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawrence-eka/travel-umroh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lawrence-eka/travel-umroh/issues"
+  }
 }
