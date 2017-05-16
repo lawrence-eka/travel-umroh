@@ -60,7 +60,7 @@ var server = deployd({
   env: "production",
   db: {
     host: "127.0.0.1",
-    port: 27105,
+    port: 27017,
     name: "deployd",
     credentials: {
       username: "deployd",

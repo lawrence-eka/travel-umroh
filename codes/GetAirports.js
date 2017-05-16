@@ -1,13 +1,7 @@
-var extractor = require('./ListExtractor.js');
+var extractor = require('/home/user-travel-umroh/travel-umroh/codes/ListExtractor.js');
 
-
-var airportComponentList = [
-	{"componentName": "airport", "begTag": '<td class="border1">', "endTag": '</td>'},
-	{"componentName": "country", "begTag": '<td class="border1">', "endTag": '</td>'},
-	{"componentName": "code", "begTag": '<td class="border1">', "endTag": '</td>'},
-];
-
-
+var airlinesHost = "en.wikipedia.org";
+var airlinesPath = "/wiki/List_of_airline_codes";
 var airlineComponentList = [
     {"componentName": "IATA", "begTag": '<tr><td>', "endTag": '</td><td>', "mandatory": true},
     {"componentName": "", "begTag": '', "endTag": '</td>', "mandatory": false},
@@ -17,9 +11,19 @@ var airlineComponentList = [
     {"componentName": "", "begTag": '', "endTag": '</td>', "mandatory": false}
 ];
 
-extractor.retrieve(true, "localhost", "/airportsx.html", "", airportComponentList).then(function(airports){
-    console.log(airports);
+var airportsHost = "www.nationsonline.org";
+var airportsPath = "/oneworld/IATA_Codes/airport_code_list.htm";
+var airportComponentList = [
+    {"componentName": "airport", "begTag": '<td class="border1">', "endTag": '</td>'},
+    {"componentName": "country", "begTag": '<td class="border1">', "endTag": '</td>'},
+    {"componentName": "IATA", "begTag": '<td class="border1">', "endTag": '</td>'},
+];
+
+console.log("Updating IATA lists on " + (new Date()).toString() + "...");
+extractor.retrieve(true, airlinesHost, airlinesPath, "<th>Comments</th>", airlineComponentList).then(function(airlines){
+    console.log("Found " + airlines.length.toString() + " IATA airlines.");
 });
-extractor.retrieve(true, "localhost", "/airlinesx.html", "<th>Comments</th>", airlineComponentList).then(function(airlines){
-    console.log(airlines);
-})
+
+extractor.retrieve(false, airportsHost, airportsPath, "", airportComponentList).then(function(airports){
+    console.log("Found " + airports.length.toString() + " IATA airports.");
+});
