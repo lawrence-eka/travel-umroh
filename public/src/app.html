@@ -1,0 +1,38 @@
+<inject from="/user/login-form" name="login-panel"></inject>
+<inject from="/home" name="home"></inject>
+<div>
+
+    <div data.load="checkCurrentUser()">
+        <div if.bind="data">
+            <div if.bind="hasPageRequest()">
+                <slot-view></slot-view>
+            </div>
+
+            <div if.bind="!hasPageRequest()">
+                <home></home>
+            </div>
+        </div>
+        <div if.bind="!data">
+            <p>
+                <login-panel></login-panel>
+            </p>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    function hasPageRequest(){
+        return (window.location.hash !== '' && window.location.hash !== '#app');
+    }
+
+    function checkCurrentUser(){
+        return new Promise(function(resolve){
+            dpd.users.me(function(me) {
+                //alert('current user');
+                resolve(me);
+            });
+        });
+    }
+
+</script>

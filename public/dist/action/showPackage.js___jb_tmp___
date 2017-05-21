@@ -1,0 +1,158 @@
+yalla.framework.addComponent("/dist/action/showPackage.js___jb_tmp", (function() {
+  var $path = "/dist/action/showPackage.js___jb_tmp";
+  var $patchChanges = yalla.framework.renderToScreen;
+  var $storeRef = yalla.framework.storeRef;
+  var $export = {};
+  var $context = {};
+  var $patchRef = yalla.framework.patchRef;
+  var $inject = yalla.framework.createInjector("/dist/action/showPackage.js___jb_tmp");
+  var elementOpen = IncrementalDOM.elementOpen,
+    elementClose = IncrementalDOM.elementClose,
+    elementOpenStart = IncrementalDOM.elementOpenStart,
+    elementOpenEnd = IncrementalDOM.elementOpenEnd,
+    elementVoid = IncrementalDOM.elementVoid,
+    text = IncrementalDOM.text,
+    attr = IncrementalDOM.attr,
+    skip = IncrementalDOM.skip;
+
+  var dates = $inject('/common/dates');
+
+  function formatItinerary(itr) {
+    var result = "";
+    if (itr && itr.entry) {
+      if (itr.entry.transport) {
+        result += "transport: " + itr.entry.transport + "; ";
+        result += "departure: " + dates.formatter(new Date(itr.entry.departure)) + "; ";
+        result += "arrival: " + dates.formatter(new Date(itr.entry.arrival)) + "; ";
+        result += "depart from: " + itr.entry.departFrom + "; ";
+        result += "arrive at: " + itr.entry.arriveAt + "; ";
+      } else {
+        result += "hotel: " + itr.entry.hotel + ";";
+        result += "c/i: " + dates.formatter(new Date(itr.entry.checkIn)) + "; ";
+        result += "c/o: " + dates.formatter(new Date(itr.entry.checkOut)) + "; ";
+        result += "city: " + itr.entry.city + "; ";
+      }
+
+      if (itr.remarks) result += "remark: " + itr.remarks;
+
+      return result;
+    }
+  }
+
+  function queryPackage(id) {
+    return new Promise(function(resolve) {
+      dpd.packages.get(id, function(pkg, err) {
+        if (err) {
+          errorMessage = JSON.stringify(err);
+          $patchChanges();
+        } else {
+          queryTravelAgent(pkg.travelAgentId).then(function(agent) {
+            pkg.agent = agent;
+            resolve(pkg);
+          });
+        }
+      });
+    });
+  }
+
+  function queryTravelAgent(id) {
+    return new Promise(function(resolve) {
+      dpd.travelagents.get(id, function(agent, err) {
+        if (err) {
+          errorMessage = JSON.stringify(err);
+          $patchChanges();
+        } else {
+          resolve(agent);
+        }
+      });
+    });
+  }
+
+  function queryItineraries(packageId) {
+    return new Promise(function(resolve) {
+      var q = {
+        packageId: packageId,
+        $sort: {
+          "fromDateTime": 1
+        }
+      }
+      dpd.itineraries.get(q, function(itineraries, err) {
+        if (err) {
+          errorMessage = JSON.stringify(err);
+          $patchChanges();
+        } else {
+          resolve(itineraries);
+        }
+      });
+    });
+  }
+
+  function $render(_data, _slotView) {
+    elementOpenStart("div", "");
+    attr("element", "dist.action.showPackage.js___jb_tmp");
+    elementOpenEnd("div");
+    (function(domNode) {
+      var node = domNode.element;
+
+      function asyncFunc__1(data) {
+        text("Package: " + (data.packageName) + "    Travel Date: " + (dates.rangePrettifier((new Date(data.travelDateFrom)), (new Date(data.travelDateUntil)))) + "    Operator: " + (data.agent.travelAgentName) + "");
+      }
+      var promise = queryPackage(_data.packageId);
+      if (promise && typeof promise == "object" && "then" in promise) {
+        skip();
+        promise.then(function(_result) {
+          $patchChanges(node, function() {
+            asyncFunc__1.call(node, _result)
+          });
+        });
+      } else {
+        asyncFunc__1.call(node, promise)
+      }
+    })({
+      element: IncrementalDOM.currentElement(),
+      pointer: IncrementalDOM.currentPointer()
+    });
+    elementClose("div");
+    elementOpenStart("div", "");
+    attr("element", "dist.action.showPackage.js___jb_tmp");
+    elementOpenEnd("div");
+    (function(domNode) {
+      var node = domNode.element;
+
+      function asyncFunc__1(data) {
+        elementOpenStart("ul", "");
+        elementOpenEnd("ul");
+        var _array = data || [];
+        _array.forEach(function(itr) {
+          elementOpenStart("li", "");
+          elementOpenEnd("li");
+          text("" + (formatItinerary(itr)) + "");
+          elementClose("li");
+        });
+        elementClose("ul");
+      }
+      var promise = queryItineraries(_data.packageId);
+      if (promise && typeof promise == "object" && "then" in promise) {
+        skip();
+        promise.then(function(_result) {
+          $patchChanges(node, function() {
+            asyncFunc__1.call(node, _result)
+          });
+        });
+      } else {
+        asyncFunc__1.call(node, promise)
+      }
+    })({
+      element: IncrementalDOM.currentElement(),
+      pointer: IncrementalDOM.currentPointer()
+    });
+    elementClose("div");
+    elementOpenStart("script", "");
+    elementOpenEnd("script");
+    elementClose("script");
+  }
+  if (typeof $render === "function") {
+    $export.render = $render;
+  }
+  return $export;
+})());

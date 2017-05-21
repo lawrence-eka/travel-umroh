@@ -32,9 +32,9 @@ curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localh
 
 curl -k -X DELETE -H "Content-Type: application/json" -b cookie.txt https://localhost/itineraries/0d2599e6de083881 > result.txt
 
-curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localhost/purchases -d @newPurchase.txt > result.txt
+curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localhost/bookings -d @newPurchase.txt > result.txt
 
-curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/purchases > result.txt
+curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/bookings > result.txt
 
 curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localhost/forums -d @newForum.txt > result.txt
 

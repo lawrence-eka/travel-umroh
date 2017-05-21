@@ -1,0 +1,149 @@
+{
+	"type": "Collection",
+	"properties": {
+		"userId": {
+			"name": "userId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "userId",
+			"order": 0
+		},
+		"packageId": {
+			"name": "packageId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "packageId",
+			"order": 1
+		},
+		"numberOfPassengers": {
+			"name": "numberOfPassengers",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "numberOfPassengers",
+			"order": 2
+		},
+		"costLandArrangements": {
+			"name": "costLandArrangements",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "costLandArrangements",
+			"order": 3
+		},
+		"costTickets": {
+			"name": "costTickets",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "costTickets",
+			"order": 4
+		},
+		"bookingStatus": {
+			"name": "bookingStatus",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "bookingStatus",
+			"order": 5
+		},
+		"createdOn": {
+			"name": "createdOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "createdOn",
+			"order": 6
+		},
+		"lastUpdatedOn": {
+			"name": "lastUpdatedOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "lastUpdatedOn",
+			"order": 7
+		},
+		"uniqueCode": {
+			"name": "uniqueCode",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "uniqueCode",
+			"order": 8
+		},
+		"totalPrice": {
+			"name": "totalPrice",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "totalPrice",
+			"order": 9
+		},
+		"totalPayment": {
+			"name": "totalPayment",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "totalPayment",
+			"order": 10
+		},
+		"fromAccount": {
+			"name": "fromAccount",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromAccount",
+			"order": 11
+		},
+		"fromBank": {
+			"name": "fromBank",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromBank",
+			"order": 12
+		},
+		"fromBankBranch": {
+			"name": "fromBankBranch",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromBankBranch",
+			"order": 13
+		},
+		"fromAccountNumber": {
+			"name": "fromAccountNumber",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "fromAccountNumber",
+			"order": 14
+		},
+		"fromAccountHolder": {
+			"name": "fromAccountHolder",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromAccountHolder",
+			"order": 15
+		},
+		"actualPayment": {
+			"name": "actualPayment",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "actualPayment",
+			"order": 16
+		},
+		"paymentDate": {
+			"name": "paymentDate",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "paymentDate",
+			"order": 17
+		}
+	}
+}

@@ -1,1 +1,1 @@
-{"message":"Unexpected token )","status":400}
+{"errors":{"credential":"User Info is not the same as logged in user"},"status":400}

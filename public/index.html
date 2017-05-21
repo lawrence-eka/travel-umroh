@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Travel Umroh</title>
-    <style type="text/css">
-        body { font-size: 16pt; }
-        .container { width: 960px; margin-left: auto; margin-right: auto; }
-        form { border: #cccccc 1px solid; padding: 20px; margin-bottom: 10px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
-        .form-element { margin-bottom: 10px; }
-        #refresh-btn { margin-bottom: 20px; }
-        .comment { padding: 10px; margin-bottom: 10px; border-bottom: #cccccc 1px solid; }
-        .comment .links { float: right; }
-        .comment .links a { margin-left: 10px; }
-        .comment .author { font-style: italic; }
-    </style>
-</head>
-<body>
-Core, ready at your service.
-</body>
+    <head>
+        <script src="dist/yalla.js"
+                yalla-component="app"
+                yalla-base="dist"
+                yalla-domtarget="body" yalla-access="allowedSecureAccess()">
+                </script>
+        <script src="dpd.js" ></script>
+    </head>
+    <body>
+        Core ready for service
+    </body>
+    <script>
+        function allowedSecuredAccess(){
+            return new Promise(function(resolve){
+                // pangggil
+                //checkk url
+                resolve(true);
+                resolve(false);
+            });
+        }
+
+    </script>
 </html>

@@ -81,13 +81,21 @@
 			"id": "isPublished",
 			"order": 9
 		},
-		"price": {
-			"name": "price",
+		"costLandArrangements": {
+			"name": "costLandArrangements",
 			"type": "number",
 			"typeLabel": "number",
 			"required": false,
-			"id": "price",
+			"id": "costLandArrangements",
 			"order": 10
+		},
+		"costTickets": {
+			"name": "costTickets",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "costTickets",
+			"order": 11
 		}
 	}
 }

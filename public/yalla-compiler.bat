@@ -1,0 +1,1 @@
+node c:\users\asus\appdata\roaming\npm\node_modules\yallajs\yalla-cli.js -s src -d dist -m compiler

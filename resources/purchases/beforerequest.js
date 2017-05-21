@@ -1,1 +1,0 @@
-query.userId = me.id

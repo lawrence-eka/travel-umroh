@@ -1,0 +1,133 @@
+Payment Detail
+
+<div data.load="getPaymentDetails($bookingId)">
+	<div if.bind="errorMessage">
+		{{errorMessage}}
+	</div>
+    Package: {{package.packageName}}<br/>
+    Travel Date: {{dates.rangePrettifier((new Date(package.travelDateFrom)), (new Date(package.travelDateUntil)))}}<br/>
+    Operator: {{package.agent.travelAgentName}}<br/>
+    Land Arrangements: {{numbers.money(booking.costLandArrangements)}}<br/>
+    Tickets: {{numbers.money(booking.costTickets)}}<br/>
+    Total passenger: {{booking.numberOfPassengers}}<br/>
+    Total Price: {{numbers.money(booking.totalPrice)}}<br/>
+    Unique Code: {{booking.uniqueCode}}<br/>
+    Grand Total: {{numbers.money(booking.totalPrice + booking.uniqueCode)}}<br/>
+    <br/>
+    Please make the payment with the following information:<br/>
+    Total: {{numbers.money(booking.totalPrice + booking.uniqueCode)}}<br/>
+    Bank: Bank Central Asia<br/>
+    Branch: Sidoarjo<br/>
+    Account No:1234567890<br/>
+    Name: PT Pete Tbk.<br/>
+    <br/>
+    Within the next 3 hours to avoid automatic cancellation of your booking.<br/>
+    <form submit.trigger="paymentConfirmation(this)">
+    	<p>Put your payment confirmation here:</p>
+        <p>Bank: <input type="text" name="fromBank"></p>
+        <p>Branch: <input type="text" name="fromBranch"></p>
+        <p>Account Number: <input type="text" name="fromAccountNumber"></p>
+        <p>Account Holder: <input type="text" name="fromAccountHolder"></p>
+        <p>Payment: <input type="number" name="actualPayment"></p>
+        <p>Payment Time: <input type="datetime-local" name="paymentDate"></p>
+	    <p><input type="submit" value="Payment Confirmation"/></p>
+    </form>
+</div>
+
+<script>
+    var dates = $inject('/common/dates');
+    var numbers = $inject('/common/numbers');
+	var errorMessage="";
+
+    var package = {};
+    var booking = {};
+
+    function setPackage(pkg) {
+    	package = pkg;
+    }
+
+    function getPackage() {
+    	return package;
+    }
+
+    function setBooking(bkg) {
+    	booking = bkg; 
+    }
+
+    function getBooking() {
+    	return booking;
+    }
+
+    function paymentConfirmation(form) {
+    	booking.fromBank = form.elements.fromBank.value;
+    	booking.fromBranch = form.elements.fromBranch.value;
+    	booking.fromAccountNumber  = form.elements.fromAccountNumber.value;
+    	booking.fromAccountHolder = form.elements.fromAccountHolder.value;
+    	booking.actualPayment = form.elements.actualPayment.value;
+    	booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
+		doPaymentConfirmation();
+        return false;
+    }
+
+    function doPaymentConfirmation() {
+        return new Promise(function(resolve){
+	        dpd.bookings.put(booking, function(bkg, err) {
+	            if(err){
+	                errorMessage = JSON.stringify(err);
+	                $patchChanges();
+	            } else {
+			        window.location.hash = '#app/home/action.paymentConfirmation:bookingId=' + booking.id;
+	            }
+	        });
+        });
+    }
+
+    function queryTravelAgent(id) {
+        return new Promise(function(resolve){
+            dpd.travelagents.get(id, function(agent, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(agent);
+                }
+            });
+        });
+    }
+
+    function queryPackage(id){
+    	
+        return new Promise(function(resolve){
+            dpd.packages.get(id, function(pkg, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    queryTravelAgent(pkg.travelAgentId).then(function(agent){
+                        pkg.agent = agent;
+                        resolve(pkg);
+                    });
+                }
+            });
+        });
+    }
+
+	function getPaymentDetails(bookingId) {
+        return new Promise(function(resolve) {
+            dpd.bookings.get(bookingId, function(bkg, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                } else {
+                	setBooking(bkg);
+    				queryPackage(bkg.packageId).then(function(pkg){
+    					setPackage(pkg);
+    					//debugger;
+                        resolve(bkg);
+    				});
+                }
+            });
+
+        });
+    }
+</script>

@@ -1,0 +1,119 @@
+<inject from="/component/itinerary" name="itrLines"></inject>
+<inject from="/component/test" name="test"></inject>
+
+<div if.bind="errorMessage != ''">
+    {{errorMessage}}
+</div>
+
+<form submit.trigger="book($packageId)">
+    <input type="submit" value="Book This!">
+</form>
+<div data.load="queryPackage($packageId)">
+    Package: {{data.packageName}}<br/>
+    Travel Date: {{dates.rangePrettifier((new Date(data.travelDateFrom)), (new Date(data.travelDateUntil)))}}<br/>
+    Operator: {{data.agent.travelAgentName}}<br/>
+    Land Arrangements: {{numbers.money(data.costLandArrangements)}}<br/>
+    Tickets: {{numbers.money(data.costTickets)}}<br/>
+</div>
+<div data.load="queryItineraries($packageId)">
+    <p for.each="itr in data">
+        <itrLines itr.bind="itr"></itrLines>
+    </p>
+</div>
+<form submit.trigger="book($packageId)">
+    <input type="submit" value="Book This!">
+</form>
+
+<script>
+    var errorMessage ="";
+    var dates = $inject('/common/dates');
+    var numbers = $inject('/common/numbers');
+    var package ={};
+
+    function setPackage(pkg){
+        package = pkg;
+    }
+
+    function getPackage() {
+        return package;
+    }
+
+    function book(packageId){
+        return new Promise(function(resolve){
+            dpd.users.me(function(me) {
+               doBooking(me.id);
+            });
+        });
+    }
+
+    function doBooking(userId, packageId) {
+        return new Promise(function(resolve) {
+            var pkg = getPackage();
+            var q = {
+                "userId": userId,
+                "packageId": pkg.id,
+                "costTickets": pkg.costTickets,
+                "costLandArrangements": pkg.costLandArrangements 
+            };
+            dpd.bookings.post(q, function(booking, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                } else {
+                    var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
+                    window.location.hash = '#app/home/action.bookPackage:bookingId=' + bookingId;
+                    resolve(booking);
+                }
+            });
+
+        });
+    }
+
+    function queryPackage(id){
+        return new Promise(function(resolve){
+            dpd.packages.get(id, function(pkg, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    queryTravelAgent(pkg.travelAgentId).then(function(agent){
+                        pkg.agent = agent;
+                        setPackage(pkg);
+                        resolve(pkg);
+                    });
+                }
+            });
+        });
+    }
+
+    function queryTravelAgent(id) {
+        return new Promise(function(resolve){
+            dpd.travelagents.get(id, function(agent, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(agent);
+                }
+            });
+        });
+    }
+
+    function queryItineraries(packageId){
+        return new Promise(function(resolve){
+            var q = {
+                packageId: packageId,
+                $sort:{"fromDateTime":1}
+            }
+            dpd.itineraries.get(q, function(itineraries, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(itineraries);
+                }
+            });
+        });
+    }
+
+</script>

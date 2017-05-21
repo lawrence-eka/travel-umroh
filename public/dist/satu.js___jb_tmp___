@@ -1,0 +1,41 @@
+yalla.framework.addComponent("/dist/satu.js___jb_tmp", (function() {
+  var $path = "/dist/satu.js___jb_tmp";
+  var $patchChanges = yalla.framework.renderToScreen;
+  var $storeRef = yalla.framework.storeRef;
+  var $export = {};
+  var $context = {};
+  var $patchRef = yalla.framework.patchRef;
+  var $inject = yalla.framework.createInjector("/dist/satu.js___jb_tmp");
+  var elementOpen = IncrementalDOM.elementOpen,
+    elementClose = IncrementalDOM.elementClose,
+    elementOpenStart = IncrementalDOM.elementOpenStart,
+    elementOpenEnd = IncrementalDOM.elementOpenEnd,
+    elementVoid = IncrementalDOM.elementVoid,
+    text = IncrementalDOM.text,
+    attr = IncrementalDOM.attr,
+    skip = IncrementalDOM.skip;
+
+  function $render(_data, _slotView) {
+    $context["dua"] = $inject("/dua");
+    var dua = $context["dua"];
+    $context["tiga"] = $inject("/tiga");
+    var tiga = $context["tiga"];
+    elementOpenStart("div", "");
+    attr("element", "dist.satu.js___jb_tmp");
+    elementOpenEnd("div");
+    text("Satu");
+    elementClose("div");
+    _slotView("default");
+    $context["dua"].render({
+      "element": "dist.satu.js___jb_tmp"
+    }, function(slotName) {});
+    $context["tiga"].render({
+      "element": "dist.satu.js___jb_tmp",
+      "hallo": "Eka"
+    }, function(slotName) {});
+  }
+  if (typeof $render === "function") {
+    $export.render = $render;
+  }
+  return $export;
+})());

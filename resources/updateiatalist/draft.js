@@ -1,5 +1,5 @@
-var extractor = require('/home/user-travel-umroh/travel-umroh/codes/ListExtractor.js');
-
+var extractor = require('../../codes/ListExtractor.js');
+console.log(process.cwd());
 var airlinesHost = "en.wikipedia.org";
 var airlinesPath = "/wiki/List_of_airline_codes";
 var airlineComponentList = [

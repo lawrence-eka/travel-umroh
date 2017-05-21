@@ -1,0 +1,67 @@
+
+<div>
+    <p>Search Package</p>
+    <p>Find me packages between</p>
+    <form submit.trigger="search(this)">
+        <p>
+            <input type="date" name="startDate" >
+            and
+            <input type="date" name="endDate">
+        </p>
+        <p>
+            <input type="submit" value="Search">
+        </p>
+    </form>
+    <div data.load="queryPackages()">
+        <ul>
+            <li for.each="pkg in data" >
+                <a href.bind="generateLink(pkg.id)">{{pkg.packageName}}  ({{dates.rangePrettifier((new Date(pkg.travelDateFrom)), (new Date(pkg.travelDateUntil)))}}) (LA: {{numbers.money(pkg.costLandArrangements)}}; Tickets: {{numbers.money(pkg.costTickets)}})</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    var numbers = $inject('/common/numbers');
+    var dates = $inject('/common/dates');
+    var errorMessage = '';
+    var formGlobal = null;
+
+    function generateLink(id){
+        return '#app/home/action.showPackage:packageId='+id
+    }
+
+    function queryPackages(){
+        return new Promise(function(resolve){
+            var form = formGlobal;
+
+            if(form == null || form.elements.startDate.value == "" || form.elements.endDate.value == "") resolve([]);
+            var startDate = new Date(form.elements.startDate.value + " 00:00:00");
+            var endDate = new Date(form.elements.endDate.value + " 23:59:59");
+            var query = {};
+            query.isPublished = "true";
+            query.validUntil = {"$gte": (new Date()).getTime()};
+            query.$and = [
+                {travelDateFrom: {"$gte": startDate.getTime()}},
+                {travelDateFrom: {"$lte": endDate.getTime()}}
+            ];
+            query.$sort={"travelDateFrom":1};
+            dpd.packages.get(query, function(pkg, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(pkg);
+                }
+            });
+        });
+
+    }
+
+    function search(form){
+        formGlobal = form;
+        $patchChanges();
+        return false;
+    }
+</script>
+

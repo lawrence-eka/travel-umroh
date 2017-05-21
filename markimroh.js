@@ -72,7 +72,7 @@ var server = deployd({
 server.listen();
 
 server.on("listening", function() {
-  console.log("Server is listening");
+  console.log("Server is listening on port " + server.options.port.toString());
 });
 
 server.on("error", function(err) {
