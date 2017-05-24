@@ -16,8 +16,6 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _skip = IncrementalDOM.skip;
 
   var errorMessage = "";
-  var dates = $inject('/common/dates');
-  var numbers = $inject('/common/numbers');
 
   function book(packageId) {
     dpd.users.me(function(me) {
@@ -103,16 +101,20 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       _text("" + (errorMessage) + "");
       _elementClose("div");
     }
-    _elementOpenStart("input", "");
+    _elementOpenStart("div", "");
     _attr("element", "dist.action.showPackage");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
     _attr("type", "button");
     _attr("value", "Book This!");
+    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
       return book(_data.packageId)
     });
-    _attr("class", "btn btn-default");
     _elementOpenEnd("input");
     _elementClose("input");
+    _elementClose("div");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.showPackage");
     _elementOpenEnd("div");
@@ -173,16 +175,20 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("input", "");
+    _elementOpenStart("div", "");
     _attr("element", "dist.action.showPackage");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
     _attr("type", "button");
     _attr("value", "Book This!");
+    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
       return book(_data.packageId)
     });
-    _attr("class", "btn btn-default");
     _elementOpenEnd("input");
     _elementClose("input");
+    _elementClose("div");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");
     _elementClose("script");

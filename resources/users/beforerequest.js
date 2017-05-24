@@ -12,9 +12,9 @@ if(this.hasOwnProperty("isAdmin"))
 
 if(Object.getOwnPropertyNames(needApproval).length > 0) 
 {
-    needApproval.requestedBy = me.id;
+    if(me) needApproval.requestedBy = me.id;
     needApproval.requestedOn = (new Date()).getTime();
-    if(me.isAdmin) needApproval.isApproved = true;
+    if(me && me.isAdmin) needApproval.isApproved = true;
     this.needApproval = needApproval;
 }
 

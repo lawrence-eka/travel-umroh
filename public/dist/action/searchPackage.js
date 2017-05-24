@@ -15,10 +15,10 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
   var errorMessage = '';
   var _startDate = '';
   var _endDate = '';
+  var numOfPackagesFound = '';
 
   function generateLink(id) {
     window.location.hash = '#app/action.showPackage:packageId=' + id;
@@ -55,6 +55,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           errorMessage = JSON.stringify(err);
           $patchChanges();
         } else {
+          numOfPackagesFound = pkg.length > 0 ? pkg.length.toString() + ' packages found' : '';
           resolve(pkg);
         }
       });
@@ -71,52 +72,113 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   }
 
   function $render(_data, _slotView) {
+    $context["alert"] = $inject("/component/alert");
+    var alert = $context["alert"];
     $context["card-package"] = $inject("/component/card-package");
     var cardPackage = $context["card-package"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.searchPackage");
     _elementOpenEnd("div");
-    _elementOpenStart("p", "");
-    _elementOpenEnd("p");
-    _text("Search Package");
-    _elementClose("p");
-    _elementOpenStart("p", "");
-    _elementOpenEnd("p");
-    _text("Find me packages between");
-    _elementClose("p");
+    _elementOpenStart("div", "");
+    _attr("class", "container all-5px");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row centered-form no-top-margin");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel panel-default");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel-heading");
+    _elementOpenEnd("div");
+    _elementOpenStart("h3", "");
+    _attr("class", "panel-title");
+    _elementOpenEnd("h3");
+    _text("Search Packages");
+    _elementClose("h3");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel-body");
+    _elementOpenEnd("div");
+    if (errorMessage) {
+      _elementOpenStart("div", "");
+      _attr("class", "form-control");
+      _elementOpenEnd("div");
+      _text("" + (errorMessage) + "");
+      _elementClose("div");
+    }
     _elementOpenStart("form", "");
+    _attr("role", "form");
     _attr("onsubmit", function(event) {
       return search(this)
     });
     _elementOpenEnd("form");
-    _elementOpenStart("p", "");
-    _elementOpenEnd("p");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("label", "");
+    _elementOpenEnd("label");
+    _text("Between:");
+    _elementClose("label");
     _elementOpenStart("input", "");
     _attr("type", "date");
     _attr("name", "startDate");
-    _attr("class", "form-control");
-    _attr("value", _startDate == '' ? dates.toYYYYMMDD(new Date()) : _startDate);
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Between This Date...");
+    _attr("value", _startDate == '' ? (new Date()).toYYYYMMDD() : _startDate);
     _elementOpenEnd("input");
     _elementClose("input");
-    _text("and");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("label", "");
+    _elementOpenEnd("label");
+    _text("And:");
+    _elementClose("label");
     _elementOpenStart("input", "");
     _attr("type", "date");
     _attr("name", "endDate");
-    _attr("class", "form-control");
-    _attr("value", _endDate == '' ? dates.toYYYYMMDD(new Date((new Date()).getTime() + 31536000000)) : _endDate);
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "...and This Date");
+    _attr("value", _endDate == '' ? ((new Date()).getTime() + 31536000000).toYYYYMMDD() : _endDate);
     _elementOpenEnd("input");
     _elementClose("input");
-    _elementClose("p");
-    _elementOpenStart("p", "");
-    _elementOpenEnd("p");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
     _elementOpenStart("input", "");
     _attr("type", "submit");
     _attr("value", "Search");
-    _attr("class", "btn btn-default");
+    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _elementOpenEnd("input");
     _elementClose("input");
-    _elementClose("p");
+    _elementClose("div");
+    $context["alert"].render({
+      "message": numOfPackagesFound
+    }, function(slotName) {});
     _elementClose("form");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {

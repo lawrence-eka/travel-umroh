@@ -15,6 +15,8 @@ yalla.framework.addComponent("/dist/app", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
+  $inject("/common/prototypes");
+
   function path() {
     return $path;
   }

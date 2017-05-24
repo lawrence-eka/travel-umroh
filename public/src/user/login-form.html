@@ -1,3 +1,5 @@
+<inject from="/component/alert" name="alert"></inject>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,9 +39,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <div class="alert alert-danger" role="alert" if.bind="errorMessage">
-            <label >{{errorMessage}}</label>
-        </div>
+        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <a href="#user.registration">New to MarKiMroh? Register here</a>
     </form>

@@ -1,38 +1,57 @@
+<inject from="/component/alert" name="alert"></inject>
 <inject from="/component/card-package" name="card-package"></inject>
 <div>
-    <p>Search Package</p>
-    <p>Find me packages between</p>
-    <form submit.trigger="search(this)">
-        <p>
-            <input type="date" name="startDate" class="form-control" value.bind="_startDate == '' ? dates.toYYYYMMDD(new Date()) : _startDate">
-            and
-            <input type="date" name="endDate" class="form-control" value.bind="_endDate == '' ? dates.toYYYYMMDD(new Date((new Date()).getTime() + 31536000000)) : _endDate">
-        </p>
-        <p>
-            <input type="submit" value="Search" class="btn btn-default">
-        </p>
-    </form>
+    <div class="container all-5px">
+        <div class="row centered-form no-top-margin">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Search Packages</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div if.bind="errorMessage" class="form-control" >
+                            {{errorMessage}}
+                        </div>
+                        <form role="form" submit.trigger="search(this)">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Between:</label>
+                                        <input type="date" name="startDate" class="form-control input-sm" placeholder="Between This Date..." value.bind="_startDate == '' ? (new Date()).toYYYYMMDD() : _startDate">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>And:</label>
+                                        <input type="date" name="endDate" class="form-control input-sm" placeholder="...and This Date" value.bind="_endDate == '' ? ((new Date()).getTime() + 31536000000).toYYYYMMDD() : _endDate">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Search" class="form-control btn btn-info btn-block margin-top-15px">
+                            </div>
+                            <alert message.bind="numOfPackagesFound"></alert>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div data.load="queryPackages()">
         <div class="row">
             <div class="col-md-4 col-sm-6" for.each="pkg in data" >
                 <card-package click.trigger="generateLink(pkg.id)" pkg.bind="pkg"></card-package>
             </div>
         </div>
-        <!--
-        <ul>
-            <li for.each="pkg in data" >
-                <a href.bind="generateLink(pkg.id)">{{pkg.packageName}}  ({{dates.rangePrettifier((new Date(pkg.travelDateFrom)), (new Date(pkg.travelDateUntil)))}}) (LA: {{numbers.money(pkg.costLandArrangements)}}; Tickets: {{numbers.money(pkg.costTickets)}})</a>
-            </li>
-        </ul>
-        -->
     </div>
 </div>
 
 <script>
-    var dates = $inject('/common/dates');
     var errorMessage = '';
     var _startDate = '';
     var _endDate = '';
+    var numOfPackagesFound='';
 
     function generateLink(id){
         window.location.hash = '#app/action.showPackage:packageId='+id;
@@ -58,6 +77,7 @@
                     errorMessage = JSON.stringify(err);
                     $patchChanges();
                 }else {
+                	numOfPackagesFound = pkg.length > 0 ? pkg.length.toString() + ' packages found' : '';
                     resolve(pkg);
                 }
             });
