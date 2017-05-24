@@ -15,14 +15,12 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
-
   function $render(_data, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
     $context["card"].render({
       "element": "dist.component.card-itinerary",
-      "title": dates.formatter(_data.itr.fromDateTime),
+      "title": _data.itr.fromDateTime.toDateComponents(),
       "remarks": _data.itr.remarks
     }, function(slotName) {
       if (_data.itr.entry.transport) {
@@ -32,7 +30,7 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Departure: " + (dates.formatter(_data.itr.entry.departure, false, true)) + "");
+        _text("Departure: " + (_data.itr.entry.departure.toDateComponents(false, true)) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
@@ -40,7 +38,7 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Arrival: " + (dates.formatter(_data.itr.entry.arrival, false, true)) + "");
+        _text("Arrival: " + (_data.itr.entry.arrival.toDateComponents(false, true)) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
@@ -61,20 +59,17 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Check in: " + (dates.formatter(_data.itr.entry.checkIn)) + "");
+        _text("Check in: " + (_data.itr.entry.checkIn.toDateComponents()) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Check out: " + (dates.formatter(_data.itr.entry.checkOut)) + "");
+        _text("Check out: " + (_data.itr.entry.checkOut.toDateComponents()) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
         _elementClose("div");
       }
     });
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

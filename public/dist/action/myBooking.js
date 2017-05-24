@@ -15,8 +15,8 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
-  var numbers = $inject('/common/numbers');
+  //var dates = $inject('/common/dates');
+  //var numbers = $inject('/common/numbers');
   var errorMessage = "";
 
   function queryBookings(userId) {
@@ -39,7 +39,6 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     return new Promise(function(resolve) {
       dpd.users.me(function(me) {
         queryBookings(me.id).then(function(bkg) {
-          debugger;
           resolve(bkg);
         });
 

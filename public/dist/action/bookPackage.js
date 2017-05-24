@@ -138,6 +138,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var cardBooking = $context["card-booking"];
     $context["card-passenger"] = $inject("/component/card-passenger");
     var cardPassenger = $context["card-passenger"];
+    $context["alert"] = $inject("/component/alert");
+    var alert = $context["alert"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.bookPackage");
     _attr("href", "asset/css/registration.css");

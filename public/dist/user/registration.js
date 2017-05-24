@@ -64,6 +64,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
     _elementClose("link");
+    $context["alert"] = $inject("/component/alert");
+    var alert = $context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.registration");
     _attr("class", "container all-5px");
@@ -93,13 +95,6 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     _elementOpenStart("div", "");
     _attr("class", "panel-body");
     _elementOpenEnd("div");
-    if (errorMessage) {
-      _elementOpenStart("div", "");
-      _attr("class", "form-control");
-      _elementOpenEnd("div");
-      _text("" + (errorMessage) + "");
-      _elementClose("div");
-    }
     _elementOpenStart("form", "");
     _attr("role", "form");
     _attr("onsubmit", function(event) {
@@ -319,6 +314,10 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
+    $context["alert"].render({
+      "alertType": 'error',
+      "message": errorMessage
+    }, function(slotName) {});
     _elementOpenStart("input", "");
     _attr("type", "submit");
     _attr("value", "Register");

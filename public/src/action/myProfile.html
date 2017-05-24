@@ -1,3 +1,141 @@
-<div>
-    this is My Profile screen
+<link href="asset/css/registration.css" rel="stylesheet">
+<inject from="/component/alert" name="alert"></inject>
+
+<div class="container all-5px">
+    <div class="row centered-form no-top-margin">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign Up <small> It's free!</small></h3>
+                </div>
+                <div class="panel-body"  data.load="getMyProfile()">
+                    <form role="form" submit.trigger="register(this)">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="firstName" class="form-control input-sm" placeholder="First Name" value.bind="data.firstName">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="lastName" class="form-control input-sm" placeholder="Last Name" value.bind="data.lastName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control input-sm" placeholder="Email Address"  value.bind="data.email">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="form-control input-sm" placeholder="Phone" value.bind="data.phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="address1" class="form-control input-sm" placeholder="Address"  value.bind="data.address1">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="address2" class="form-control input-sm" placeholder="Address" value.bind="data.address2">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.city">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="checkbox" name="isTravelAgent" id="isTravelAgent" autocomplete="off"  value.bind="data.isTravelAgent"/>
+                                    <div class="btn-group">
+                                        <label for="isTravelAgent" class="btn btn-default btn-checkbox">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <span> </span>
+                                        </label>
+                                        <label for="isTravelAgent" class="btn btn-default active btn-checkbox">
+                                            Travel Agent
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="checkbox" name="isAdmin" id="isAdmin" autocomplete="off"  value.bind="data.isAdmin"/>
+                                    <div class="btn-group">
+                                        <label for="isAdmin" class="btn btn-default btn-checkbox">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <span> </span>
+                                        </label>
+                                        <label for="isAdmin" class="btn btn-default active btn-checkbox">
+                                            Administrator
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="password" name="repeatPassword" class="form-control input-sm" placeholder="Confirm Password">
+                                </div>
+                            </div>
+                        </div>
+                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                    </form>
+                    <div class="form-group">
+                        <input type="button" value="Cancel" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="cancelRegistration()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+
+	var errorMessage = '';
+
+	function getMyProfile(){
+		return new Promise(function(resolve) {
+		dpd.users.me(function(me) {
+			    resolve(me);
+			});
+		});
+	}
+
+	function cancelRegistration() {
+		window.location.hash = "#app";
+	}
+	function register(form){
+		var q = {};
+		q.firstName = form.elements.firstName.value;
+		q.lastName = form.elements.lastName.value;
+		q.email = form.elements.email.value;
+		q.phone = form.elements.phone.value;
+		q.username = form.elements.email.value;
+
+		if(form.elements.password.value != '') q.password = form.elements.password.value;
+		var repeatPassword = form.elements.repeatPassword.value;
+
+		q.address1 = form.elements.address1.value;
+		q.address2 = form.elements.address2.value;
+		q.city = form.elements.city.value;
+		q.isAdmin = (form.elements.isAdmin.value == "on");
+		q.isTravelAgent = (form.elements.isTravelAgent.value == "on");
+		dpd.users.post(q, function(user, err) {
+			if(err){
+				errorMessage = err.message;
+			}
+			$patchChanges();
+		});
+		return false;
+	}
+</script>
+

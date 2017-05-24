@@ -15,9 +15,6 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
-  var numbers = $inject('/common/numbers');
-
   function loadPackage(packageId) {
     return new Promise(function(resolve) {
       dpd.packages.get(packageId, function(pkg) {
@@ -60,7 +57,7 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Travel Date: " + (dates.rangePrettifier((new Date(pkg.travelDateFrom)), (new Date(pkg.travelDateUntil)))) + "");
+          _text("Travel Date: " + ((pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
@@ -92,11 +89,11 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Land Arrangements: " + (numbers.money(_data.bkg.costLandArrangements)) + "");
+          _text("Land Arrangements: " + (_data.bkg.costLandArrangements.toFormattedString()) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Tickets: " + (numbers.money(_data.bkg.costTickets)) + "");
+          _text("Tickets: " + (_data.bkg.costTickets.toFormattedString()) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
@@ -104,7 +101,7 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Total Price: " + (numbers.money(_data.bkg.totalPrice)) + "");
+          _text("Total Price: " + ((_data.bkg.totalPrice ? _data.bkg.totalPrice.toFormattedString() : '')) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
@@ -112,11 +109,11 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Grand Total: " + (numbers.money(_data.bkg.totalPrice + _data.bkg.uniqueCode)) + "");
+          _text("Grand Total: " + ((_data.bkg.totalPrice + _data.bkg.uniqueCode).toFormattedString()) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");
-          _text("Expiry Date: " + (dates.formatter(_data.bkg.waitingForPaymentUntil, false, true)) + "");
+          _text("Expiry Date: " + ((_data.bkg.waitingForPaymentUntil ? _data.bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')) + "");
         }
         var promise = loadPackage(_data.bkg.packageId);
         if (promise && typeof promise == "object" && "then" in promise) {

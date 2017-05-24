@@ -15,9 +15,6 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var numbers = $inject('/common/numbers');
-  var dates = $inject('/common/dates');
-
   function $render(_data, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
@@ -30,20 +27,17 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
     }, function(slotName) {
       _elementOpenStart("div", "");
       _elementOpenEnd("div");
-      _text("Travel Date: " + (dates.rangePrettifier((new Date(_data.pkg.travelDateFrom)), (new Date(_data.pkg.travelDateUntil)))) + "");
+      _text("Travel Date: " + (_data.pkg.travelDateFrom.toStringDateRange(_data.pkg.travelDateUntil)) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Land Arrangements: " + (numbers.money(_data.pkg.costLandArrangements)) + "");
+      _text("Land Arrangements: " + (_data.pkg.costLandArrangements.toFormattedString()) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Tickets: " + (numbers.money(_data.pkg.costTickets)) + "");
+      _text("Tickets: " + (_data.pkg.costTickets.toFormattedString()) + "");
       _elementClose("div");
     });
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

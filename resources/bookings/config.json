@@ -144,6 +144,14 @@
 			"required": false,
 			"id": "paymentDate",
 			"order": 17
+		},
+		"waitingForPaymentUntil": {
+			"name": "waitingForPaymentUntil",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "waitingForPaymentUntil",
+			"order": 18
 		}
 	}
 }

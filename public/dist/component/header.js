@@ -21,7 +21,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
   function generateMenu(me) {
     if (!me) return [];
     var menusBase = [{
-        label: strings.titleCase(me.firstName + " " + me.lastName),
+        label: (me.firstName + " " + me.lastName).toTitleCase(),
         ref: '#app/action.myProfile'
       },
       {

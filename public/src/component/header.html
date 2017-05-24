@@ -24,7 +24,7 @@
     function generateMenu(me){
         if(!me) return [];
         var menusBase = [
-            {label:strings.titleCase(me.firstName + " " + me.lastName),ref:'#app/action.myProfile'},
+            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/action.myProfile'},
             {label:'Find Package',ref:'#app/action.searchPackage'},
             {label:'My Booking',ref:'#app/action.myBooking'}
         ];

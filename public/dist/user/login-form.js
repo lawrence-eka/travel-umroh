@@ -36,6 +36,8 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   }
 
   function $render(_data, _slotView) {
+    $context["alert"] = $inject("/component/alert");
+    var alert = $context["alert"];
     _elementOpenStart("html", "");
     _attr("element", "dist.user.login-form");
     _attr("lang", "en");
@@ -149,17 +151,10 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _text("Remember me");
     _elementClose("label");
     _elementClose("div");
-    if (errorMessage) {
-      _elementOpenStart("div", "");
-      _attr("class", "alert alert-danger");
-      _attr("role", "alert");
-      _elementOpenEnd("div");
-      _elementOpenStart("label", "");
-      _elementOpenEnd("label");
-      _text("" + (errorMessage) + "");
-      _elementClose("label");
-      _elementClose("div");
-    }
+    $context["alert"].render({
+      "alertType": 'error',
+      "message": errorMessage
+    }, function(slotName) {});
     _elementOpenStart("button", "");
     _attr("class", "btn btn-lg btn-primary btn-block");
     _attr("type", "submit");
