@@ -6,18 +6,17 @@ yalla.framework.addComponent("/dist/app", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/app");
-  var elementOpen = IncrementalDOM.elementOpen,
-    elementClose = IncrementalDOM.elementClose,
-    elementOpenStart = IncrementalDOM.elementOpenStart,
-    elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    elementVoid = IncrementalDOM.elementVoid,
-    text = IncrementalDOM.text,
-    attr = IncrementalDOM.attr,
-    skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen,
+    _elementClose = IncrementalDOM.elementClose,
+    _elementOpenStart = IncrementalDOM.elementOpenStart,
+    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
+    _elementVoid = IncrementalDOM.elementVoid,
+    _text = IncrementalDOM.text,
+    _attr = IncrementalDOM.attr,
+    _skip = IncrementalDOM.skip;
 
-
-  function hasPageRequest() {
-    return (window.location.hash !== '' && window.location.hash !== '#app');
+  function path() {
+    return $path;
   }
 
   function checkCurrentUser() {
@@ -33,47 +32,51 @@ yalla.framework.addComponent("/dist/app", (function() {
   function $render(_data, _slotView) {
     $context["login-panel"] = $inject("/user/login-form");
     var loginPanel = $context["login-panel"];
-    $context["home"] = $inject("/home");
-    var home = $context["home"];
-    elementOpenStart("div", "");
-    attr("element", "dist.app");
-    elementOpenEnd("div");
-    elementOpenStart("div", "");
-    elementOpenEnd("div");
+    $context["registration-panel"] = $inject("/user/registration");
+    var registrationPanel = $context["registration-panel"];
+    $context["app-header"] = $inject("/component/header");
+    var appHeader = $context["app-header"];
+    $context["app-footer"] = $inject("/component/footer");
+    var appFooter = $context["app-footer"];
+    _elementOpenStart("div", "");
+    _attr("element", "dist.app");
+    _attr("class", "container");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
 
       function asyncFunc__1(data) {
         if (data) {
-          elementOpenStart("div", "");
-          elementOpenEnd("div");
-          if (hasPageRequest()) {
-            elementOpenStart("div", "");
-            elementOpenEnd("div");
-            _slotView("default");
-            elementClose("div");
-          }
-          if (!hasPageRequest()) {
-            elementOpenStart("div", "");
-            elementOpenEnd("div");
-            $context["home"].render({}, function(slotName) {});
-            elementClose("div");
-          }
-          elementClose("div");
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          $context["app-header"].render({}, function(slotName) {});
+          _slotView("default");
+          $context["app-footer"].render({}, function(slotName) {});
+          _elementClose("div");
         }
         if (!data) {
-          elementOpenStart("div", "");
-          elementOpenEnd("div");
-          elementOpenStart("p", "");
-          elementOpenEnd("p");
-          $context["login-panel"].render({}, function(slotName) {});
-          elementClose("p");
-          elementClose("div");
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          if (path().indexOf('registration') >= 0) {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            $context["registration-panel"].render({}, function(slotName) {});
+            _elementClose("div");
+          }
+          if (path().indexOf('registration') < 0) {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            $context["login-panel"].render({}, function(slotName) {});
+            _elementClose("div");
+          }
+          _elementClose("div");
         }
       }
       var promise = checkCurrentUser();
       if (promise && typeof promise == "object" && "then" in promise) {
-        skip();
+        _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
             asyncFunc__1.call(node, _result)
@@ -86,11 +89,11 @@ yalla.framework.addComponent("/dist/app", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    elementClose("div");
-    elementClose("div");
-    elementOpenStart("script", "");
-    elementOpenEnd("script");
-    elementClose("script");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("script", "");
+    _elementOpenEnd("script");
+    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

@@ -1,0 +1,1 @@
+mongod -dbpath C:\workspace\MongoDB\data --smallfiles

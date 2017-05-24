@@ -1,0 +1,59 @@
+<style>
+    .menu {
+        list-style-type: none;
+        margin : 0px;
+        padding : 0px;
+    }
+
+    .menu-item {
+        display: inline-block;
+        padding-left: 1rem;
+    }
+
+</style>
+
+<div>
+    <div data.load="getMe()" class="menu" bgcolor="ff0000">
+        <p>Hello, {{data.firstName}} {{data.lastName}}</p>
+        <div class="menu-item" for.each="menu in generateMenu(data)">
+            <a href.bind="menu.ref" click.trigger="menu.clickTrigger ? menu.clickTrigger():null">{{menu.label}}</a>
+        </div>
+    </div>
+    <slot-view></slot-view>
+</div>
+<script>
+    function generateMenu(me){
+        var menusBase = [
+            {label:'Find Package',ref:'#app/home/action.searchPackage'},
+            {label:'My Booking',ref:'#app/home/action.myBooking'}
+        ];
+
+        var menuEnd = [
+            {label:'My Profile',ref:'#app/home/action.myProfile'},
+            {label:'Logout',ref:'#', clickTrigger: logout}];
+
+        if(me.isTravelAgent){
+            menusBase.push({label:'My Travel Agent',ref:'#app/home/action.myTravelAgents'});
+        }
+        if(me.isAdmin){
+            menusBase.push({label:'Approvals',ref:'#app/home/action.approvals'});
+        }
+        return menusBase.concat(menuEnd);
+    }
+
+
+    function getMe(){
+        return new Promise(function(resolve){
+            dpd.users.me(function(me) {
+                resolve(me);
+            });
+        });
+    }
+
+    function logout(){
+        dpd.users.logout(function(err) {
+            window.location.hash = '#app';
+        });
+    }
+
+</script>

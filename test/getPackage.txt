@@ -1,0 +1,1 @@
+{"isPublished":"true","validFrom":{"$gte":-2209003200000},"validUntil":{"$lte":32503665599000},"travelDateFrom":{"$gte":-2209003200000},"travelDateUntil":{"$lte":32503665599000},"$sort":{"travelDateFrom":1}}

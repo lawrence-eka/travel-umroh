@@ -1,0 +1,43 @@
+<inject from="/component/card" name="card"></inject>
+<card title.bind="'Booking Detail'" click.trigger="$onclick()">
+    <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
+        Package: {{pkg.packageName}}<br/>
+        Travel Date: {{dates.rangePrettifier((new Date(pkg.travelDateFrom)), (new Date(pkg.travelDateUntil)))}}<br/>
+        Operator: <span data.load="loadAgent(pkg.travelAgentId)">{{data.travelAgentName}}</span><br/>
+        Land Arrangements: {{numbers.money($bkg.costLandArrangements)}}<br/>
+        Tickets: {{numbers.money($bkg.costTickets)}}<br/>
+        Total passenger: {{$bkg.numberOfPassengers}}<br/>
+        Total Price: {{numbers.money($bkg.totalPrice)}}<br/>
+        Unique Code: {{$bkg.uniqueCode}}<br/>
+        Grand Total: {{numbers.money($bkg.totalPrice + $bkg.uniqueCode)}}<br/>
+        Expiry Date: {{dates.formatter($bkg.waitingForPaymentUntil, false, true)}}
+    </div>
+
+</card>
+
+<script>
+    var dates = $inject('/common/dates');
+    var numbers = $inject('/common/numbers');
+
+    function loadPackage(packageId){
+        return new Promise(function(resolve){
+            dpd.packages.get(packageId,function(pkg){
+                resolve(pkg);
+            });
+        });
+    }
+
+
+    function loadAgent(travelAgentId){
+        return new Promise(function(resolve){
+            dpd.travelagents.get(travelAgentId, function(agent, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(agent);
+                }
+            });
+        });
+    }
+</script>

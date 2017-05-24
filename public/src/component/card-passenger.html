@@ -1,0 +1,14 @@
+<inject from="/component/card" name="card"></inject>
+
+<card title.bind="strings.titleCase($passenger.firstName + ' ' + $passenger.lastName)">
+    <div>
+        First Name: {{$passenger.firstName}}; Middle Name: {{$passenger.middleName}}; Last Name: {{$passenger.lastName}};<br/>
+        Birth Place: {{$passenger.birthPlace}}; Birth Date: {{dates.formatter($passenger.birthday)}}<br/>
+        Passport No: {{$passenger.passportNumber}}; Expiry Date: {{dates.formatter($passenger.passportExpiryDate)}}<br/>
+    </div>
+</card>
+
+<script>
+    var dates = $inject('/common/dates');
+    var strings = $inject('/common/strings');
+</script>

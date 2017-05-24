@@ -1,41 +1,83 @@
+<inject from="/component/card-booking" name="card-booking"></inject>
+<inject from="/component/card-passenger" name="card-passenger"></inject>
+<link href="asset/css/registration.css" rel="stylesheet">
 
 <div>
-	Book This Package: 
 	<div if.bind="errorMessage != ''">
 	    {{errorMessage}}
 	</div>
 
 	<div data.load="queryBooking($bookingId)">
-	    Package: {{package.packageName}}<br/>
-	    Travel Date: {{dates.rangePrettifier((new Date(package.travelDateFrom)), (new Date(package.travelDateUntil)))}}<br/>
-	    Operator: {{package.agent.travelAgentName}}<br/>
-	    Land Arrangements: {{numbers.money(booking.costLandArrangements)}}<br/>
-	    Tickets: {{numbers.money(booking.costTickets)}}<br/>
-	    Total passenger: {{booking.numberOfPassengers}}<br/>
-	    Total Price: {{numbers.money(booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements))}}<br/>
-
-	    <form submit.trigger="registerPassenger(this)" >
-	    	<input type="hidden" name="bookingId" value.bind="$bookingId">
-	        <p>First Name: <input type="text" name="firstName"></p>
-	        <p>Middle Name: <input type="text" name="middleName"></p>
-	        <p>Last Name: <input type="text" name="lastName"></p>
-	        <p>Birth Place: <input type="text" name="birthPlace"></p>
-	        <p>Birthday: <input type="date" name="birthday"></p>
-	        <p>Passport No: <input type="text" name="passportNumber"></p>
-	        <p>Passport Expiry Date: <input type="date" name="passportExpiryDate"></p>
-	        <p><input type="submit" value="Add Passenger"></p>
-	    </form>
-	    <form submit.trigger="calculatePaymentDetail()">
-	    <p><input type="submit" value="Done and Go to Payment Detail"></p>
-	    </form>
+		<card-booking bkg.bind="data"></card-booking>
 	</div>
-</div>
+
+	<div class="container all-5px">
+		<div class="row centered-form no-top-margin">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Passenger Detail</h3>
+					</div>
+					<div class="panel-body">
+						<div if.bind="errorMessage" class="form-control" >
+							{{errorMessage}}
+						</div>
+						<form role="form" submit.trigger="register(this)">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="form-group">
+										<input type="text" name="firstName" class="form-control input-sm" placeholder="First Name">
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="form-group">
+										<input type="text" name="middleName" class="form-control input-sm" placeholder="Middle Name">
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="form-group">
+										<input type="text" name="lastName" class="form-control input-sm" placeholder="Last Name">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<div class="form-group">
+										<input type="text" name="birthPlace" class="form-control input-sm" placeholder="Birth Place">
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<div class="form-group">
+										<input type="date" name="birthday" class="form-control input-sm" placeholder="birthday">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="text" name="passportNumber" class="form-control input-sm" placeholder="Passport Number">
+							</div>
+							<div class="form-group">
+								<input type="date" name="passportExpiryDate" class="form-control input-sm" placeholder="Passport Expiry Date">
+							</div>
+							<div class="form-group">
+								<input type="text" name="passportIssuer" class="form-control input-sm" placeholder="Passport Issuer">
+							</div>
+
+							<input type="submit" value="Register" class="btn btn-info btn-block btn-default">
+
+						</form>
+						<div class="form-group">
+							<input type="button" value="Done and Go to Payment Detail" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="calculatePaymentDetail($bookingId)">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <div data.load="getPassengers($bookingId)">
 	<p for.each="psg in data">
-		First Name: {{psg.firstName}}; Middle Name: {{psg.middleName}}; Last Name: {{psg.lastName}};
-		Birth Place: {{psg.birthPlace}}; Birth Date: {{dates.formatter(psg.birthday)}}
-		Passport No: {{psg.passportNumber}}; Expiry Date: {{dates.formatter(psg.passportExpiryDate)}}
+		<card-passenger passenger.bind="psg"></card-passenger>
 	</p>
 </div>
 
@@ -62,22 +104,30 @@
     }
 
     function setBooking(bkg) {
-    	var nop = booking.numBeRofpassengers?booking.numBeRofpassengers:0;
+    	var nop = booking.numberOfPassengers?booking.numberOfPassengers:0;
     	booking = bkg; 
-    	booking.numBeRofpassengers = nop; 
+    	booking.numberOfPassengers = nop;
     }
 
-    function setNumBeRofpassengers(numBeRofpassengers) {
-    	booking.numBeRofpassengers = numBeRofpassengers
+    function setNumberOfPassengers(numberOfPassengers) {
+    	booking.numberOfPassengers = numberOfPassengers
     }
     function getBooking() {
     	return booking;
     }
 
-    function calculatePaymentDetail(userId, packageId) {
-		//doCalculatePaymentDetail(userId, packageId);
-        window.location.hash = '#app/home/action.paymentDetails:bookingId=' + booking.id;
-    }
+    function calculatePaymentDetail(bookingId) {
+        booking.uniqueCode = Math.floor(Math.random() * 1000);
+        booking.waitingForPaymentUntil = (new Date()).getTime() + 10800000;
+        dpd.bookings.put(booking, function(bkg, err) {
+            if(err){
+                errorMessage = err.message;
+            } else {
+                window.location.hash = '#app/action.paymentDetails:bookingId=' + bookingId;
+            }
+            $patchChanges();
+        });
+   }
 
     function getPassengers(bookingId) {
     	//debugger;
@@ -89,7 +139,7 @@
                 }else {
                 	//numOfPassenger = passengers.length;
                 	//booking.numBeRofpassengers = passengers.length;
-                	setNumBeRofpassengers(passengers.length);
+                	setNumberOfPassengers(passengers.length);
                     resolve(passengers);
                 }
 	    	});
@@ -97,11 +147,11 @@
     }
 
     function registerPassenger(form){
-    	booking.uniqueCode = Math.floor(Math.random() * 1000);
-    	booking.totalPrice = booking.numBeRofpassengers * (booking.costTickets + booking.costLandArrangements);
+    	//booking.uniqueCode = Math.floor(Math.random() * 1000);
+    	booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
         dpd.bookings.put(booking, function(booking, err) {
             if(err){
-                errorMessage = JSON.stringify(err);
+                errorMessage = err.message;
                 $patchChanges();
             } else {
             }
@@ -115,6 +165,7 @@
         q.birthPlace = form.elements.birthPlace.value;
         q.birthday = (new Date(form.elements.birthday.value)).getTime();
         q.passportNumber = form.elements.passportNumber.value;
+        q.passportIssuer = form.elements.passportIssuer.value;
         q.passportExpiryDate = (new Date(form.elements.passportExpiryDate.value)).getTime();
 
     	form.elements.bookingId.value = "";
@@ -132,40 +183,7 @@
             }
             $patchChanges();
         });
-
-
 	    return false;
-    }
-
-    function queryTravelAgent(id) {
-        return new Promise(function(resolve){
-            dpd.travelagents.get(id, function(agent, err) {
-                if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
-                }else {
-                	;
-                    resolve(agent);
-                }
-            });
-        });
-    }
-
-    function queryPackage(id){
-    	
-        return new Promise(function(resolve){
-            dpd.packages.get(id, function(pkg, err) {
-                if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
-                }else {
-                    queryTravelAgent(pkg.travelAgentId).then(function(agent){
-                        pkg.agent = agent;
-                        resolve(pkg);
-                    });
-                }
-            });
-        });
     }
 
     function queryBooking(id){
@@ -174,12 +192,8 @@
     			if(err) {
     				errorMessage = JSON.stringify(err);
     			} else {
+    			    resolve(bkg);
     				setBooking(bkg);
-    				queryPackage(bkg.packageId).then(function(pkg){
-    					setPackage(pkg);
-    					//debugger;
-                        resolve(bkg);
-    				});
     			}
     		});
     	});

@@ -6,14 +6,14 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/paymentDetails");
-  var elementOpen = IncrementalDOM.elementOpen,
-    elementClose = IncrementalDOM.elementClose,
-    elementOpenStart = IncrementalDOM.elementOpenStart,
-    elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    elementVoid = IncrementalDOM.elementVoid,
-    text = IncrementalDOM.text,
-    attr = IncrementalDOM.attr,
-    skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen,
+    _elementClose = IncrementalDOM.elementClose,
+    _elementOpenStart = IncrementalDOM.elementOpenStart,
+    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
+    _elementVoid = IncrementalDOM.elementVoid,
+    _text = IncrementalDOM.text,
+    _attr = IncrementalDOM.attr,
+    _skip = IncrementalDOM.skip;
 
   var dates = $inject('/common/dates');
   var numbers = $inject('/common/numbers');
@@ -56,7 +56,7 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
           errorMessage = JSON.stringify(err);
           $patchChanges();
         } else {
-          window.location.hash = '#app/home/action.paymentConfirmation:bookingId=' + booking.id;
+          window.location.hash = '#app/action.paymentConfirmation:bookingId=' + booking.id;
         }
       });
     });
@@ -102,6 +102,7 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
           setBooking(bkg);
           queryPackage(bkg.packageId).then(function(pkg) {
             setPackage(pkg);
+            bkg.package = pkg;
             //debugger;
             resolve(bkg);
           });
@@ -112,165 +113,202 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   }
 
   function $render(_data, _slotView) {
-    elementOpenStart("div", "");
-    attr("element", "dist.action.paymentDetails");
-    elementOpenEnd("div");
+    $context["card-booking"] = $inject("/component/card-booking");
+    var cardBooking = $context["card-booking"];
+    $context["card"] = $inject("/component/card");
+    var card = $context["card"];
+    if (errorMessage) {
+      _elementOpenStart("div", "");
+      _attr("element", "dist.action.paymentDetails");
+      _elementOpenEnd("div");
+      _text("" + (errorMessage) + "");
+      _elementClose("div");
+    }
+    _elementOpenStart("div", "");
+    _attr("element", "dist.action.paymentDetails");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
 
       function asyncFunc__1(data) {
+        $context["card-booking"].render({
+          "bkg": data
+        }, function(slotName) {});
+        $context["card"].render({
+          "title": "Payment Info",
+          "remarks": "Please make the payment before booking expires to avoid automatic cancellation of your booking"
+        }, function(slotName) {
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          _text("Total: " + (numbers.money(booking.totalPrice + booking.uniqueCode)) + "");
+          _elementOpenStart("br", "");
+          _elementOpenEnd("br");
+          _elementClose("br");
+          _text("Bank: Bank Central Asia");
+          _elementOpenStart("br", "");
+          _elementOpenEnd("br");
+          _elementClose("br");
+          _text("Branch: Sidoarjo");
+          _elementOpenStart("br", "");
+          _elementOpenEnd("br");
+          _elementClose("br");
+          _text("Account No:1234567890");
+          _elementOpenStart("br", "");
+          _elementOpenEnd("br");
+          _elementClose("br");
+          _text("Name: PT Pete Tbk.");
+          _elementOpenStart("br", "");
+          _elementOpenEnd("br");
+          _elementClose("br");
+          _elementClose("div");
+        });
+        _elementOpenStart("div", "");
+        _attr("class", "container all-5px");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row centered-form no-top-margin");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "panel panel-default");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "panel-heading");
+        _elementOpenEnd("div");
+        _elementOpenStart("h3", "");
+        _attr("class", "panel-title");
+        _elementOpenEnd("h3");
+        _text("Payment Confirmation");
+        _elementClose("h3");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "panel-body");
+        _elementOpenEnd("div");
         if (errorMessage) {
-          elementOpenStart("div", "");
-          elementOpenEnd("div");
-          text("" + (errorMessage) + "");
-          elementClose("div");
+          _elementOpenStart("div", "");
+          _attr("class", "form-control");
+          _elementOpenEnd("div");
+          _text("" + (errorMessage) + "");
+          _elementClose("div");
         }
-        text("Package: " + (package.packageName) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Travel Date: " + (dates.rangePrettifier((new Date(package.travelDateFrom)), (new Date(package.travelDateUntil)))) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Operator: " + (package.agent.travelAgentName) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Land Arrangements: " + (numbers.money(booking.costLandArrangements)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Tickets: " + (numbers.money(booking.costTickets)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Total passenger: " + (booking.numberOfPassengers) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Total Price: " + (numbers.money(booking.totalPrice)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Unique Code: " + (booking.uniqueCode) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Grand Total: " + (numbers.money(booking.totalPrice + booking.uniqueCode)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Please make the payment with the following information:");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Total: " + (numbers.money(booking.totalPrice + booking.uniqueCode)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Bank: Bank Central Asia");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Branch: Sidoarjo");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Account No:1234567890");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Name: PT Pete Tbk.");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Within the next 3 hours to avoid automatic cancellation of your booking.");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        elementOpenStart("form", "");
-        attr("onsubmit", function(event) {
+        _elementOpenStart("form", "");
+        _attr("role", "form");
+        _attr("onsubmit", function(event) {
           return paymentConfirmation(this)
         });
-        elementOpenEnd("form");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Put your payment confirmation here:");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Bank:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "fromBank");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Branch:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "fromBranch");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Account Number:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "fromAccountNumber");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Account Holder:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "fromAccountHolder");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Payment:");
-        elementOpenStart("input", "");
-        attr("type", "number");
-        attr("name", "actualPayment");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Payment Time:");
-        elementOpenStart("input", "");
-        attr("type", "datetime-local");
-        attr("name", "paymentDate");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        elementOpenStart("input", "");
-        attr("type", "submit");
-        attr("value", "Payment Confirmation");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementClose("form");
+        _elementOpenEnd("form");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "fromBank");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Bank Name");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "fromBranch");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Branch");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "fromAcountNumber");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Account Number");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "fromAcountHolder");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Account Holder Name");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "number");
+        _attr("name", "actualPayment");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Amount Transfered");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "datetime-local");
+        _attr("name", "paymentDate");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Transfer Date & Time");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("input", "");
+        _attr("type", "submit");
+        _attr("value", "Payment Confirmation");
+        _attr("class", "btn btn-info btn-block btn-default");
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("form");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
       }
       var promise = getPaymentDetails(_data.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
-        skip();
+        _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
             asyncFunc__1.call(node, _result)
@@ -283,10 +321,10 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    elementClose("div");
-    elementOpenStart("script", "");
-    elementOpenEnd("script");
-    elementClose("script");
+    _elementClose("div");
+    _elementOpenStart("script", "");
+    _elementOpenEnd("script");
+    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

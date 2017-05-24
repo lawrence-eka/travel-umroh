@@ -1,0 +1,10 @@
+<div>
+	{{JSON.stringify($itr)}}
+	<div>
+		{{dates.formatter($itr.fromDateTime)}}
+	</div>
+</div>
+
+<script>
+    var dates = $inject('/common/dates');
+</script>

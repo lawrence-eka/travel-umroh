@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse" data.load="getMe()" >
+            <ul class="nav navbar-nav">
+                <li for.each="menu in generateMenu(data)"><a href.bind="menu.ref" click.trigger="menu.clickTrigger ? menu.clickTrigger():null">{{menu.label}}</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<script>
+
+    var strings = $inject("/common/strings");
+
+    function generateMenu(me){
+        if(!me) return [];
+        var menusBase = [
+            {label:strings.titleCase(me.firstName + " " + me.lastName),ref:'#app/action.myProfile'},
+            {label:'Find Package',ref:'#app/action.searchPackage'},
+            {label:'My Booking',ref:'#app/action.myBooking'}
+        ];
+
+        var menuEnd = [
+            {label:'Logout',ref:'#', clickTrigger: logout}];
+
+        if(me.isTravelAgent){
+            menusBase.push({label:'My Travel Agent',ref:'#app/action.myTravelAgents'});
+        }
+        if(me.isAdmin){
+            menusBase.push({label:'Approvals',ref:'#app/action.approvals'});
+        }
+        return menusBase.concat(menuEnd);
+    }
+
+
+    function getMe(){
+        return new Promise(function(resolve){
+            dpd.users.me(function(me) {
+                resolve(me);
+            });
+        });
+    }
+
+    function logout(){
+        dpd.users.logout(function(err) {
+            window.location.hash = '#app';
+        });
+    }
+
+</script>

@@ -1,0 +1,18 @@
+<inject from="/component/card" name="card"></inject>
+<card title.bind="'Booking of '+ $bkg.package.packageName">
+    <div>
+        Travel Date: {{dates.rangePrettifier((new Date($bkg.package.travelDateFrom)), (new Date($bkg.package.travelDateUntil)))}}<br/>
+        Operator: {{$bkg.package.agent.travelAgentName}}<br/>
+        Land Arrangements: {{numbers.money($bkg.costLandArrangements)}}<br/>
+        Tickets: {{numbers.money($bkg.costTickets)}}<br/>
+        Total passenger: {{$bkg.numberOfPassengers}}<br/>
+        Total Price: {{numbers.money($bkg.totalPrice)}}<br/>
+        Unique Code: {{$bkg.uniqueCode}}<br/>
+        Grand Total: {{numbers.money($bkg.totalPrice + $bkg.uniqueCode)}}<br/>
+    </div>
+</card>
+
+<script>
+    var dates = $inject('/common/dates');
+    var numbers = $inject('/common/numbers');
+</script>

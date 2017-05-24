@@ -1,37 +1,72 @@
-Payment Detail
+<inject from="/component/card-booking" name="card-booking"></inject>
+<inject from="/component/card" name="card"></inject>
 
+<div if.bind="errorMessage">
+    {{errorMessage}}
+</div>
 <div data.load="getPaymentDetails($bookingId)">
-	<div if.bind="errorMessage">
-		{{errorMessage}}
-	</div>
-    Package: {{package.packageName}}<br/>
-    Travel Date: {{dates.rangePrettifier((new Date(package.travelDateFrom)), (new Date(package.travelDateUntil)))}}<br/>
-    Operator: {{package.agent.travelAgentName}}<br/>
-    Land Arrangements: {{numbers.money(booking.costLandArrangements)}}<br/>
-    Tickets: {{numbers.money(booking.costTickets)}}<br/>
-    Total passenger: {{booking.numberOfPassengers}}<br/>
-    Total Price: {{numbers.money(booking.totalPrice)}}<br/>
-    Unique Code: {{booking.uniqueCode}}<br/>
-    Grand Total: {{numbers.money(booking.totalPrice + booking.uniqueCode)}}<br/>
-    <br/>
-    Please make the payment with the following information:<br/>
-    Total: {{numbers.money(booking.totalPrice + booking.uniqueCode)}}<br/>
-    Bank: Bank Central Asia<br/>
-    Branch: Sidoarjo<br/>
-    Account No:1234567890<br/>
-    Name: PT Pete Tbk.<br/>
-    <br/>
-    Within the next 3 hours to avoid automatic cancellation of your booking.<br/>
-    <form submit.trigger="paymentConfirmation(this)">
-    	<p>Put your payment confirmation here:</p>
-        <p>Bank: <input type="text" name="fromBank"></p>
-        <p>Branch: <input type="text" name="fromBranch"></p>
-        <p>Account Number: <input type="text" name="fromAccountNumber"></p>
-        <p>Account Holder: <input type="text" name="fromAccountHolder"></p>
-        <p>Payment: <input type="number" name="actualPayment"></p>
-        <p>Payment Time: <input type="datetime-local" name="paymentDate"></p>
-	    <p><input type="submit" value="Payment Confirmation"/></p>
-    </form>
+    <card-booking bkg.bind="data"></card-booking>
+    <card title="Payment Info" remarks="Please make the payment before booking expires to avoid automatic cancellation of your booking">
+        <div>
+            Total: {{numbers.money(booking.totalPrice + booking.uniqueCode)}}<br/>
+            Bank: Bank Central Asia<br/>
+            Branch: Sidoarjo<br/>
+            Account No:1234567890<br/>
+            Name: PT Pete Tbk.<br/>
+        </div>
+    </card>
+
+    <div class="container all-5px">
+        <div class="row centered-form no-top-margin">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Payment Confirmation</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div if.bind="errorMessage" class="form-control" >
+                            {{errorMessage}}
+                        </div>
+                        <form role="form" submit.trigger="paymentConfirmation(this)">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="fromBank" class="form-control input-sm" placeholder="Bank Name">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="fromBranch" class="form-control input-sm" placeholder="Branch">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="fromAcountNumber" class="form-control input-sm" placeholder="Account Number">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="fromAcountHolder" class="form-control input-sm" placeholder="Account Holder Name">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="number" name="actualPayment" class="form-control input-sm" placeholder="Amount Transfered">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="paymentDate" class="form-control input-sm" placeholder="Transfer Date & Time">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" value="Payment Confirmation" class="btn btn-info btn-block btn-default">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -76,7 +111,7 @@ Payment Detail
 	                errorMessage = JSON.stringify(err);
 	                $patchChanges();
 	            } else {
-			        window.location.hash = '#app/home/action.paymentConfirmation:bookingId=' + booking.id;
+			        window.location.hash = '#app/action.paymentConfirmation:bookingId=' + booking.id;
 	            }
 	        });
         });
@@ -122,6 +157,7 @@ Payment Detail
                 	setBooking(bkg);
     				queryPackage(bkg.packageId).then(function(pkg){
     					setPackage(pkg);
+    					bkg.package = pkg;
     					//debugger;
                         resolve(bkg);
     				});

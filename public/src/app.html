@@ -1,31 +1,31 @@
 <inject from="/user/login-form" name="login-panel"></inject>
-<inject from="/home" name="home"></inject>
-<div>
+<inject from="/user/registration" name="registration-panel"></inject>
+<inject from="/component/header" name="app-header"></inject>
+<inject from="/component/footer" name="app-footer"></inject>
 
+<div class="container">
     <div data.load="checkCurrentUser()">
         <div if.bind="data">
-            <div if.bind="hasPageRequest()">
-                <slot-view></slot-view>
-            </div>
-
-            <div if.bind="!hasPageRequest()">
-                <home></home>
-            </div>
+            <app-header></app-header>
+            <slot-view></slot-view>
+            <app-footer></app-footer>
         </div>
         <div if.bind="!data">
-            <p>
+            <div if.bind="path().indexOf('registration') >= 0">
+                <registration-panel></registration-panel>
+            </div>
+            <div if.bind="path().indexOf('registration') < 0">
                 <login-panel></login-panel>
-            </p>
+            </div>
         </div>
     </div>
-
 </div>
+
+
 <script>
-
-    function hasPageRequest(){
-        return (window.location.hash !== '' && window.location.hash !== '#app');
+    function path() {
+        return $path;
     }
-
     function checkCurrentUser(){
         return new Promise(function(resolve){
             dpd.users.me(function(me) {

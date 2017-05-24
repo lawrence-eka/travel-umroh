@@ -1,40 +1,137 @@
-<div>
-    <div>
-        {{errorMessage}}
+<link href="asset/css/registration.css" rel="stylesheet">
+
+<div class="container all-5px">
+    <div class="row centered-form no-top-margin">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign Up <small> It's free!</small></h3>
+                </div>
+                <div class="panel-body">
+                    <div if.bind="errorMessage" class="form-control" >
+                        {{errorMessage}}
+                    </div>
+                    <form role="form" submit.trigger="register(this)">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="firstName" class="form-control input-sm" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="lastName" class="form-control input-sm" placeholder="Last Name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control input-sm" placeholder="Email Address">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="form-control input-sm" placeholder="Phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="address1" class="form-control input-sm" placeholder="Address">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="address2" class="form-control input-sm" placeholder="Address">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="city" class="form-control input-sm" placeholder="City">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="checkbox" name="isTravelAgent" id="isTravelAgent" autocomplete="off" />
+                                    <div class="btn-group">
+                                        <label for="isTravelAgent" class="btn btn-default btn-checkbox">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <span> </span>
+                                        </label>
+                                        <label for="isTravelAgent" class="btn btn-default active btn-checkbox">
+                                            Travel Agent
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="checkbox" name="isAdmin" id="isAdmin" autocomplete="off" />
+                                    <div class="btn-group">
+                                        <label for="isAdmin" class="btn btn-default btn-checkbox">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <span> </span>
+                                        </label>
+                                        <label for="isAdmin" class="btn btn-default active btn-checkbox">
+                                            Administrator
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="password" name="repeatPassword" class="form-control input-sm" placeholder="Confirm Password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                    </form>
+                    <div class="form-group">
+                        <input type="button" value="Cancel" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="cancelRegistration()">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form submit.trigger="register(this)" >
-        <p>First Name: <input type="text" name="firstName"></p>
-        <p>Last Name: <input type="text" name="lastName"></p>
-        <p>Username: <input type="text" name="username"></p>
-        <p>Email: <input type="text" name="email"></p>
-        <p>Password: <input type="password" name="password"></p>
-        <p>Repeat Password: <input type="password" name="repeatPassword"></p>
-        <p><input type="submit" value="Register"></p>
-    </form>
 </div>
 
 <script>
 
     var errorMessage = '';
 
+    function cancelRegistration() {
+        window.location.hash = "#app";
+    }
     function register(form){
-        var firstName = form.elements.firstName.value;
-        var lastName = form.elements.lastName.value;
-        var email = form.elements.email.value;
-        var username = form.elements.username.value;
-        var password = form.elements.password.value;
+        var q = {};
+        q.firstName = form.elements.firstName.value;
+        q.lastName = form.elements.lastName.value;
+        q.email = form.elements.email.value;
+        q.phone = form.elements.phone.value;
+        q.username = form.elements.email.value;
+        q.password = form.elements.password.value;
         var repeatPassword = form.elements.repeatPassword.value;
-        dpd.users.post({"username": username, "password": password, "firstName": firstName, "lastName": lastName, "email": email}, function(user, err) {
+        q.address1 = form.elements.address1.value;
+        q.address2 = form.elements.address2.value;
+        q.city = form.elements.city.value;
+        q.isAdmin = (form.elements.isAdmin.value == "on");
+        q.isTravelAgent = (form.elements.isTravelAgent.value == "on");
+        dpd.users.post(q, function(user, err) {
             if(err){
-                errorMessage = JSON.stringify(err);
+                errorMessage = err.message;
                 $patchChanges();
             }else{
-                dpd.users.login({"username": username, "password": password}, function(user, err) {
+                dpd.users.login({"username": q.username, "password": q.password}, function(user, err) {
                     if(err){
-                        errorMessage = JSON.stringify(err);
+                        errorMessage = err.message;
                         $patchChanges();
                     }else{
-                        window.location.hash = '#app/home';
+                        window.location.hash = '#app';
                     }
                 });
             }

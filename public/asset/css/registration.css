@@ -1,0 +1,53 @@
+body{
+    background-color: #525252;
+}
+.centered-form{
+    margin-top: 60px;
+}
+
+.centered-form .panel{
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;
+}
+
+.btn-checkbox{
+    padding : 5px 10px 4px !important;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.all-5px {
+    margin: 5px 5px 5px 5px !important;
+    padding: 5px 5px 5px 5px !important;
+    border: 5px !important;
+}
+
+.margin-top-15px {
+    margin-top: 15px;
+}

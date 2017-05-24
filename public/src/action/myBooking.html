@@ -1,3 +1,45 @@
-<div>
-    This is Managing My Booking screen
+<inject from="/component/card-booking" name="card-booking"></inject>
+<inject from="/component/card" name="card"></inject>
+
+<div data.load="getBookings()">
+    <p for.each="bkg in data">
+        <card-booking bkg.bind="bkg" click.trigger="generateLink(bkg.id)"></card-booking>
+    </p>
 </div>
+
+<script>
+    var dates = $inject('/common/dates');
+    var numbers = $inject('/common/numbers');
+    var errorMessage="";
+
+    function queryBookings(userId) {
+        return new Promise(function(resolve) {
+            var q = {"userId": userId};
+            dpd.bookings.get(q, function (bkg, err) {
+                if (err) {
+                    errorMessage = err.message;
+                    $patchChanges();
+                } else {
+                    resolve(bkg);
+                }
+                ;
+            });
+        });
+    }
+
+    function getBookings(){
+        return new Promise(function(resolve) {
+            dpd.users.me(function(me) {
+                queryBookings(me.id).then(function(bkg) {
+                    debugger;
+                    resolve(bkg);
+                });
+
+            });
+        });
+    }
+
+    function generateLink(id){
+	    window.location.hash = '#app/action.bookPackage:bookingId='+id;
+    }
+</script>

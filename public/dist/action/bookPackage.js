@@ -6,14 +6,14 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
-  var elementOpen = IncrementalDOM.elementOpen,
-    elementClose = IncrementalDOM.elementClose,
-    elementOpenStart = IncrementalDOM.elementOpenStart,
-    elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    elementVoid = IncrementalDOM.elementVoid,
-    text = IncrementalDOM.text,
-    attr = IncrementalDOM.attr,
-    skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen,
+    _elementClose = IncrementalDOM.elementClose,
+    _elementOpenStart = IncrementalDOM.elementOpenStart,
+    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
+    _elementVoid = IncrementalDOM.elementVoid,
+    _text = IncrementalDOM.text,
+    _attr = IncrementalDOM.attr,
+    _skip = IncrementalDOM.skip;
 
   var dates = $inject('/common/dates');
   var numbers = $inject('/common/numbers');
@@ -37,22 +37,30 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   }
 
   function setBooking(bkg) {
-    var nop = booking.numBeRofpassengers ? booking.numBeRofpassengers : 0;
+    var nop = booking.numberOfPassengers ? booking.numberOfPassengers : 0;
     booking = bkg;
-    booking.numBeRofpassengers = nop;
+    booking.numberOfPassengers = nop;
   }
 
-  function setNumBeRofpassengers(numBeRofpassengers) {
-    booking.numBeRofpassengers = numBeRofpassengers
+  function setNumberOfPassengers(numberOfPassengers) {
+    booking.numberOfPassengers = numberOfPassengers
   }
 
   function getBooking() {
     return booking;
   }
 
-  function calculatePaymentDetail(userId, packageId) {
-    //doCalculatePaymentDetail(userId, packageId);
-    window.location.hash = '#app/home/action.paymentDetails:bookingId=' + booking.id;
+  function calculatePaymentDetail(bookingId) {
+    booking.uniqueCode = Math.floor(Math.random() * 1000);
+    booking.waitingForPaymentUntil = (new Date()).getTime() + 10800000;
+    dpd.bookings.put(booking, function(bkg, err) {
+      if (err) {
+        errorMessage = err.message;
+      } else {
+        window.location.hash = '#app/action.paymentDetails:bookingId=' + bookingId;
+      }
+      $patchChanges();
+    });
   }
 
   function getPassengers(bookingId) {
@@ -66,7 +74,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         } else {
           //numOfPassenger = passengers.length;
           //booking.numBeRofpassengers = passengers.length;
-          setNumBeRofpassengers(passengers.length);
+          setNumberOfPassengers(passengers.length);
           resolve(passengers);
         }
       });
@@ -74,11 +82,11 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   }
 
   function registerPassenger(form) {
-    booking.uniqueCode = Math.floor(Math.random() * 1000);
-    booking.totalPrice = booking.numBeRofpassengers * (booking.costTickets + booking.costLandArrangements);
+    //booking.uniqueCode = Math.floor(Math.random() * 1000);
+    booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
     dpd.bookings.put(booking, function(booking, err) {
       if (err) {
-        errorMessage = JSON.stringify(err);
+        errorMessage = err.message;
         $patchChanges();
       } else {}
     });
@@ -91,6 +99,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     q.birthPlace = form.elements.birthPlace.value;
     q.birthday = (new Date(form.elements.birthday.value)).getTime();
     q.passportNumber = form.elements.passportNumber.value;
+    q.passportIssuer = form.elements.passportIssuer.value;
     q.passportExpiryDate = (new Date(form.elements.passportExpiryDate.value)).getTime();
 
     form.elements.bookingId.value = "";
@@ -108,39 +117,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       }
       $patchChanges();
     });
-
-
     return false;
-  }
-
-  function queryTravelAgent(id) {
-    return new Promise(function(resolve) {
-      dpd.travelagents.get(id, function(agent, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {;
-          resolve(agent);
-        }
-      });
-    });
-  }
-
-  function queryPackage(id) {
-
-    return new Promise(function(resolve) {
-      dpd.packages.get(id, function(pkg, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {
-          queryTravelAgent(pkg.travelAgentId).then(function(agent) {
-            pkg.agent = agent;
-            resolve(pkg);
-          });
-        }
-      });
-    });
   }
 
   function queryBooking(id) {
@@ -149,163 +126,46 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         if (err) {
           errorMessage = JSON.stringify(err);
         } else {
+          resolve(bkg);
           setBooking(bkg);
-          queryPackage(bkg.packageId).then(function(pkg) {
-            setPackage(pkg);
-            //debugger;
-            resolve(bkg);
-          });
         }
       });
     });
   }
 
   function $render(_data, _slotView) {
-    elementOpenStart("div", "");
-    attr("element", "dist.action.bookPackage");
-    elementOpenEnd("div");
-    text("Book This Package:");
+    $context["card-booking"] = $inject("/component/card-booking");
+    var cardBooking = $context["card-booking"];
+    $context["card-passenger"] = $inject("/component/card-passenger");
+    var cardPassenger = $context["card-passenger"];
+    _elementOpenStart("link", "");
+    _attr("element", "dist.action.bookPackage");
+    _attr("href", "asset/css/registration.css");
+    _attr("rel", "stylesheet");
+    _elementOpenEnd("link");
+    _elementClose("link");
+    _elementOpenStart("div", "");
+    _attr("element", "dist.action.bookPackage");
+    _elementOpenEnd("div");
     if (errorMessage != '') {
-      elementOpenStart("div", "");
-      elementOpenEnd("div");
-      text("" + (errorMessage) + "");
-      elementClose("div");
+      _elementOpenStart("div", "");
+      _elementOpenEnd("div");
+      _text("" + (errorMessage) + "");
+      _elementClose("div");
     }
-    elementOpenStart("div", "");
-    elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
 
       function asyncFunc__1(data) {
-        text("Package: " + (package.packageName) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Travel Date: " + (dates.rangePrettifier((new Date(package.travelDateFrom)), (new Date(package.travelDateUntil)))) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Operator: " + (package.agent.travelAgentName) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Land Arrangements: " + (numbers.money(booking.costLandArrangements)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Tickets: " + (numbers.money(booking.costTickets)) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Total passenger: " + (booking.numberOfPassengers) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        text("Total Price: " + (numbers.money(booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements))) + "");
-        elementOpenStart("br", "");
-        elementOpenEnd("br");
-        elementClose("br");
-        elementOpenStart("form", "");
-        attr("onsubmit", function(event) {
-          return registerPassenger(this)
-        });
-        elementOpenEnd("form");
-        elementOpenStart("input", "");
-        attr("type", "hidden");
-        attr("name", "bookingId");
-        attr("value", _data.bookingId);
-        elementOpenEnd("input");
-        elementClose("input");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("First Name:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "firstName");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Middle Name:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "middleName");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Last Name:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "lastName");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Birth Place:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "birthPlace");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Birthday:");
-        elementOpenStart("input", "");
-        attr("type", "date");
-        attr("name", "birthday");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Passport No:");
-        elementOpenStart("input", "");
-        attr("type", "text");
-        attr("name", "passportNumber");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        text("Passport Expiry Date:");
-        elementOpenStart("input", "");
-        attr("type", "date");
-        attr("name", "passportExpiryDate");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        elementOpenStart("input", "");
-        attr("type", "submit");
-        attr("value", "Add Passenger");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementClose("form");
-        elementOpenStart("form", "");
-        attr("onsubmit", function(event) {
-          return calculatePaymentDetail()
-        });
-        elementOpenEnd("form");
-        elementOpenStart("p", "");
-        elementOpenEnd("p");
-        elementOpenStart("input", "");
-        attr("type", "submit");
-        attr("value", "Done and Go to Payment Detail");
-        elementOpenEnd("input");
-        elementClose("input");
-        elementClose("p");
-        elementClose("form");
+        $context["card-booking"].render({
+          "bkg": data
+        }, function(slotName) {});
       }
       var promise = queryBooking(_data.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
-        skip();
+        _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
             asyncFunc__1.call(node, _result)
@@ -318,26 +178,204 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    elementClose("div");
-    elementClose("div");
-    elementOpenStart("div", "");
-    attr("element", "dist.action.bookPackage");
-    elementOpenEnd("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "container all-5px");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row centered-form no-top-margin");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel panel-default");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel-heading");
+    _elementOpenEnd("div");
+    _elementOpenStart("h3", "");
+    _attr("class", "panel-title");
+    _elementOpenEnd("h3");
+    _text("Passenger Detail");
+    _elementClose("h3");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "panel-body");
+    _elementOpenEnd("div");
+    if (errorMessage) {
+      _elementOpenStart("div", "");
+      _attr("class", "form-control");
+      _elementOpenEnd("div");
+      _text("" + (errorMessage) + "");
+      _elementClose("div");
+    }
+    _elementOpenStart("form", "");
+    _attr("role", "form");
+    _attr("onsubmit", function(event) {
+      return register(this)
+    });
+    _elementOpenEnd("form");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "firstName");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "First Name");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "middleName");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Middle Name");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "lastName");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Last Name");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "birthPlace");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Birth Place");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "date");
+    _attr("name", "birthday");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "birthday");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "passportNumber");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Passport Number");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "date");
+    _attr("name", "passportExpiryDate");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Passport Expiry Date");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "passportIssuer");
+    _attr("class", "form-control input-sm");
+    _attr("placeholder", "Passport Issuer");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementOpenStart("input", "");
+    _attr("type", "submit");
+    _attr("value", "Register");
+    _attr("class", "btn btn-info btn-block btn-default");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("form");
+    _elementOpenStart("div", "");
+    _attr("class", "form-group");
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "button");
+    _attr("value", "Done and Go to Payment Detail");
+    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
+    _attr("onclick", function(event) {
+      return calculatePaymentDetail(_data.bookingId)
+    });
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
 
       function asyncFunc__1(data) {
         var _array = data || [];
         _array.forEach(function(psg) {
-          elementOpenStart("p", "");
-          elementOpenEnd("p");
-          text("First Name: " + (psg.firstName) + "; Middle Name: " + (psg.middleName) + "; Last Name: " + (psg.lastName) + ";		Birth Place: " + (psg.birthPlace) + "; Birth Date: " + (dates.formatter(psg.birthday)) + "		Passport No: " + (psg.passportNumber) + "; Expiry Date: " + (dates.formatter(psg.passportExpiryDate)) + "");
-          elementClose("p");
+          _elementOpenStart("p", "");
+          _elementOpenEnd("p");
+          $context["card-passenger"].render({
+            "passenger": psg
+          }, function(slotName) {});
+          _elementClose("p");
         });
       }
       var promise = getPassengers(_data.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
-        skip();
+        _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
             asyncFunc__1.call(node, _result)
@@ -350,10 +388,11 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    elementClose("div");
-    elementOpenStart("script", "");
-    elementOpenEnd("script");
-    elementClose("script");
+    _elementClose("div");
+    _elementOpenStart("script", "");
+    _elementOpenEnd("script");
+    _elementClose("script");
+    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

@@ -1,0 +1,5 @@
+{
+	"IATA": "SG",
+	"airline": "Singapoore Air",
+	"country": "Singapore"
+}

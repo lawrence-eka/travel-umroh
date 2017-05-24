@@ -1,0 +1,28 @@
+<style>
+    .clickable{
+        cursor: pointer;
+    }
+
+</style>
+
+<div click.trigger="$onclick()" class.bind="prepareClass($onclick)">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{$title}}</h3>
+    </div>
+    <div class="panel-body">
+        <slot-view></slot-view>
+    </div>
+    <div class="panel-footer" if.bind="$remarks">
+        {{$remarks}}
+    </div>
+</div>
+
+<script>
+
+    function prepareClass(hasOnClick){
+        var panelClass = 'panel panel-default ';
+        var className = panelClass + (hasOnClick ? 'clickable' : '');
+        return panelClass;
+    }
+
+</script>

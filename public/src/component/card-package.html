@@ -1,0 +1,14 @@
+<inject from="/component/card" name="card"></inject>
+
+<card title.bind="$pkg.packageName" click.trigger="$onclick()">
+    <div>
+        Travel Date: {{dates.rangePrettifier((new Date($pkg.travelDateFrom)), (new Date($pkg.travelDateUntil)))}} <br/>
+        Land Arrangements: {{numbers.money($pkg.costLandArrangements)}}<br/>
+        Tickets: {{numbers.money($pkg.costTickets)}}
+    </div>
+</card>
+
+<script>
+    var numbers = $inject('/common/numbers');
+    var dates = $inject('/common/dates');
+</script>
