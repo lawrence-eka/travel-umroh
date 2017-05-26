@@ -2026,13 +2026,16 @@ var yalla = (function () {
 
 
     var attributes = IncrementalDOM.attributes;
-    attributes['checked'] = function (element, name, value) {
-        if (value) {
-            element.setAttribute('checked', true);
-        } else {
-            element.removeAttribute('checked');
-        }
-    };
+    ['checked','required','selected'].forEach(function(key){
+        attributes[key] = function (element, name, value) {
+            if (value) {
+                element.setAttribute(key, true);
+            } else {
+                element.removeAttribute(key);
+            }
+        };
+    });
+
 
     IncrementalDOM.notifications.nodesCreated = function (nodes) {
         nodes.forEach(function (node) {

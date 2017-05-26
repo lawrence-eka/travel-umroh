@@ -1,1 +1,1 @@
-{"errors":{"credential":"User Info is not the same as logged in user"},"status":400}
+[{"travelAgentName":"Jalan Menuju Kaya","address":"Baniyas Apartments Building 11 Unit 403","city":"Abu Dhabi","contactPersonId":"d8589ac69fc3c9b9","id":"2bf31cfe2222e87b"},{"travelAgentName":"Jalanmu Ngesot","address":"Di Laut","city":"Antah Berantah","contactPersonId":" fd955df2e9163a1f","id":"6a4dc8cd989d5873"}]

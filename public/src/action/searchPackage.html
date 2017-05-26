@@ -14,13 +14,13 @@
                         </div>
                         <form role="form" submit.trigger="search(this)">
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Between:</label>
                                         <input type="date" name="startDate" class="form-control input-sm" placeholder="Between This Date..." value.bind="_startDate == '' ? (new Date()).toYYYYMMDD() : _startDate">
                                     </div>
                                 </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>And:</label>
                                         <input type="date" name="endDate" class="form-control input-sm" placeholder="...and This Date" value.bind="_endDate == '' ? ((new Date()).getTime() + 31536000000).toYYYYMMDD() : _endDate">
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <input type="submit" value="Search" class="form-control btn btn-info btn-block margin-top-15px">
                             </div>
-                            <alert message.bind="numOfPackagesFound"></alert>
+                            <alert alertType.bind="'info'" message.bind="numOfPackagesFound"></alert>
                         </form>
                     </div>
                 </div>

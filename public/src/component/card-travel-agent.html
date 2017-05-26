@@ -1,0 +1,24 @@
+<inject from="/component/card" name="card"></inject>
+
+<card title.bind="$travelAgent.travelAgentName">
+    <div>
+        Address: {{$travelAgent.address}}<br/>
+        City: {{$travelAgent.city}}
+        <div class=row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Edit Info" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$oneditTA()">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Packages..." class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$onshowPackages()">
+                </div>
+            </div>
+        </div>
+    </div>
+</card>
+
+<script>
+</script>
+

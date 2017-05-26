@@ -42,9 +42,8 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     var card = $context["card"];
     $context["card"].render({
       "element": "dist.component.card-booking",
-      "title": 'Booking Detail',
       "onclick": function(event) {
-        return _data.onclick()
+        return _data.onclick();
       }
     }, function(slotName) {
       _elementOpenStart("div", "");
@@ -53,10 +52,11 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
         var node = domNode.element;
 
         function asyncFunc__1(pkg) {
+          _elementOpenStart("p", "");
+          _attr("class", "bg-primary");
+          _elementOpenEnd("p");
           _text("Package: " + (pkg.packageName) + "");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
+          _elementClose("p");
           _text("Travel Date: " + ((pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");

@@ -1,0 +1,169 @@
+<link href="asset/css/registration.css" rel="stylesheet">
+<inject from="/component/alert" name="alert"></inject>
+
+<div class="container all-5px">
+    <div class="row centered-form no-top-margin">
+        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" if.bind="$itinerary">Edit Package Info</h3>
+                    <h3 class="panel-title" if.bind="!$itinerary">New Package</h3>
+                </div>
+                <div class="panel-body"  data.load="loadItinerary($itinerary)">
+
+                    <form role="form" submit.trigger="save(this, $onsave)">
+                        <input type="hidden" name="id" value.bind="data.id">
+                        <input type="hidden" name="packageId" value.bind="data.packageId">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <select class="form-control" name="entryType" id="entryType" change.trigger="onEntryTypeChanged(this, data)" >
+                                        <option value="Hotel" selected.bind="entryType(data)=='Hotel'">Hotel</option>
+                                        <option value="Transport" selected.bind="entryType(data)=='Transport'">Airline</option>
+                                        <option value="Train" selected.bind="entryType(data)=='Train'">Train</option>
+                                        <option value="Bus/Car" selected.bind="entryType(data)=='Bus/Car'">Bus/Car</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div if.bind="!xx('Hotel')">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="departure" class="form-control input-sm" placeholder="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="departFrom" class="form-control input-sm" placeholder="Depart From" value.bind="data.entry.departFrom">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="arrival" class="form-control input-sm" placeholder="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="arriveAt" class="form-control input-sm" placeholder="Arrive At" value.bind="data.entry.arriveAt">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="airline" class="form-control input-sm" placeholder="Airline" value.bind="data.entry.airline">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div if.bind="xx('Hotel')">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="checkIn" class="form-control input-sm" placeholder="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="checkOut" class="form-control input-sm" placeholder="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="hotel" class="form-control input-sm" placeholder="Hotel" value.bind="data.entry.hotel">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.entry.city">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <textarea name="remarks" class="form-control input-sm" placeholder="Remarks" value.bind="data.remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+
+                        <div class=row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="submit" value.bind="$itinerary ? 'Save' : 'Register'" class="btn btn-info btn-block">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="$oncancel()">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	
+	var errorMessage = '';
+    var x ="";
+	function loadItinerary(data, itinerary){
+		itinerary = (itinerary ? itinerary : {entry: {}});
+        if (x == "") x = entryType(itinerary);
+		return itinerary;
+
+	}
+
+	function save(form, onSave){
+		var package = {};
+		itinerary.id = form.elements.id.value;
+		itinerary.travelAgentId = form.elements.travelAgentId.value;
+		itinerary.packageName = form.elements.packageName.value;
+		itinerary.tourLeader = form.elements.tourLeader.value;
+		itinerary.validFrom = (new Date(form.elements.validFrom.value)).getTime();
+		itinerary.validUntil = (new Date(form.elements.validUntil.value)).getTime();
+		itinerary.costLandArrangements = form.elements.costLandArrangements.value;
+		itinerary.costTickets = form.elements.costTickets.value;
+		itinerary.isItineraryConfirmed = (form.elements.isItineraryConfirmed .value == "on");
+		itinerary.isPublished = (form.elements.isPublished.value == "on");
+		onSave(package);
+	}
+
+	function xx(c) {
+		return x == c;
+    }
+	function onEntryTypeChanged(et, data){
+		data.entry={};
+		if(et.value == 'Hotel')  data.entry.hotel = "";
+		else data.entry.transport = "";
+		x=entryType(data);
+		$patchChanges();
+    }
+    function entryType(data) {
+       	if(data.entry && data.entry.hotel != null) return 'Hotel';
+    	else return 'Transport';
+    }
+
+</script>
+

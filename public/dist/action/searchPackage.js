@@ -113,14 +113,14 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _elementOpenStart("form", "");
     _attr("role", "form");
     _attr("onsubmit", function(event) {
-      return search(this)
+      return search(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("div", "");
     _attr("class", "row");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "form-group");
@@ -140,7 +140,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "form-group");
@@ -171,6 +171,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _elementClose("input");
     _elementClose("div");
     $context["alert"].render({
+      "alertType": 'info',
       "message": numOfPackagesFound
     }, function(slotName) {});
     _elementClose("form");
@@ -195,7 +196,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           _elementOpenEnd("div");
           $context["card-package"].render({
             "onclick": function(event) {
-              return generateLink(pkg.id)
+              return generateLink(pkg.id);
             },
             "pkg": pkg
           }, function(slotName) {});

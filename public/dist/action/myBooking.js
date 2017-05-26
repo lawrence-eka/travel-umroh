@@ -15,8 +15,6 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  //var dates = $inject('/common/dates');
-  //var numbers = $inject('/common/numbers');
   var errorMessage = "";
 
   function queryBookings(userId) {
@@ -69,7 +67,7 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
           $context["card-booking"].render({
             "bkg": bkg,
             "onclick": function(event) {
-              return generateLink(bkg.id)
+              return generateLink(bkg.id);
             }
           }, function(slotName) {});
           _elementClose("p");

@@ -15,27 +15,25 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
-  var strings = $inject('/common/strings');
-
   function $render(_data, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
     $context["card"].render({
       "element": "dist.component.card-passenger",
-      "title": strings.titleCase(_data.passenger.firstName + ' ' + _data.passenger.lastName)
+      "title": (_data.passenger.firstName + ' ' + _data.passenger.lastName).toTitleCase()
     }, function(slotName) {
       _elementOpenStart("div", "");
+      _attr("class", "");
       _elementOpenEnd("div");
       _text("First Name: " + (_data.passenger.firstName) + "; Middle Name: " + (_data.passenger.middleName) + "; Last Name: " + (_data.passenger.lastName) + ";");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Birth Place: " + (_data.passenger.birthPlace) + "; Birth Date: " + (dates.formatter(_data.passenger.birthday)) + "");
+      _text("Birth Place: " + (_data.passenger.birthPlace) + "; Birth Date: " + ((_data.passenger.birthday).toDateComponents()) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Passport No: " + (_data.passenger.passportNumber) + "; Expiry Date: " + (dates.formatter(_data.passenger.passportExpiryDate)) + "");
+      _text("Passport No: " + (_data.passenger.passportNumber) + "; Expiry Date: " + ((_data.passenger.passportExpiryDate).toDateComponents()) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");

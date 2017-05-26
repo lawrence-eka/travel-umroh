@@ -188,7 +188,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr("class", "row centered-form no-top-margin");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "panel panel-default");
@@ -215,7 +215,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementOpenStart("form", "");
     _attr("role", "form");
     _attr("onsubmit", function(event) {
-      return register(this)
+      return register(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("div", "");
@@ -346,10 +346,10 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementOpenEnd("div");
     _elementOpenStart("input", "");
     _attr("type", "button");
-    _attr("value", "Done and Go to Payment Detail");
+    _attr("value", "Payment Detail");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return calculatePaymentDetail(_data.bookingId)
+      return calculatePaymentDetail(_data.bookingId);
     });
     _elementOpenEnd("input");
     _elementClose("input");
@@ -359,7 +359,9 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
+    _elementClose("div");
     _elementOpenStart("div", "");
+    _attr("element", "dist.action.bookPackage");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
@@ -394,7 +396,6 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementOpenStart("script", "");
     _elementOpenEnd("script");
     _elementClose("script");
-    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

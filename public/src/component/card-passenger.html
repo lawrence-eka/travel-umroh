@@ -1,14 +1,12 @@
 <inject from="/component/card" name="card"></inject>
 
-<card title.bind="strings.titleCase($passenger.firstName + ' ' + $passenger.lastName)">
-    <div>
+<card title.bind="($passenger.firstName + ' ' + $passenger.lastName).toTitleCase()">
+    <div class="">
         First Name: {{$passenger.firstName}}; Middle Name: {{$passenger.middleName}}; Last Name: {{$passenger.lastName}};<br/>
-        Birth Place: {{$passenger.birthPlace}}; Birth Date: {{dates.formatter($passenger.birthday)}}<br/>
-        Passport No: {{$passenger.passportNumber}}; Expiry Date: {{dates.formatter($passenger.passportExpiryDate)}}<br/>
+        Birth Place: {{$passenger.birthPlace}}; Birth Date: {{($passenger.birthday).toDateComponents()}}<br/>
+        Passport No: {{$passenger.passportNumber}}; Expiry Date: {{($passenger.passportExpiryDate).toDateComponents()}}<br/>
     </div>
 </card>
 
 <script>
-    var dates = $inject('/common/dates');
-    var strings = $inject('/common/strings');
 </script>

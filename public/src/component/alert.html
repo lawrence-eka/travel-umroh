@@ -1,16 +1,15 @@
-<div class="alert alert-danger" role="alert" if.bind="$message">
-    <label >{{$message}}</label>
+<div class.bind="className($alertType)" role="alert" if.bind="$message">
+    <label >{{$message.toSentenceCase()}}</label>
 </div>
 
 <script>
     function className(alertType)
     {
-    	debugger;
     	var base = "alert ";
-	    if(type == "error") return base + "alert-danger";
-	    else if(type == "success") return base + "alert-success";
-	    else if(type == "info") return base + "alert-info";
-	    else if(type == "warning") return base + "alert-warning";
+	    if(alertType == "error") return base + "alert-danger";
+	    else if(alertType == "success") return base + "alert-success";
+	    else if(alertType == "info") return base + "alert-info";
+	    else if(alertType == "warning") return base + "alert-warning";
 	    return base;
     }
 </script>

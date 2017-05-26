@@ -196,7 +196,7 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
         _elementOpenStart("form", "");
         _attr("role", "form");
         _attr("onsubmit", function(event) {
-          return paymentConfirmation(this)
+          return paymentConfirmation(this);
         });
         _elementOpenEnd("form");
         _elementOpenStart("div", "");

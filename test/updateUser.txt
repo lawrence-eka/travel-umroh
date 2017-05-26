@@ -1,7 +1,3 @@
 {
-	"needApproval":
-	{
-		"isApproved":true,
-		"isAdmin": true
-	}
+	"password":"eka"
 }

@@ -1,0 +1,58 @@
+<inject from="/component/card" name="card"></inject>
+<inject from="/component/card-itinerary" name="card-itinerary"></inject>
+<inject from="/component/edit-itinerary" name="edit-itinerary"></inject>
+
+<div data.load="getPackage($packageId)">
+    <card title.bind="data.packageName">
+        <input type="button" value="Add Itinerary" class="form-control btn btn-info btn-block" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId">
+    </card>
+    <edit-itinerary if.bind="$editItineraryId == -1" save.trigger="onSavePackage(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+    <div data.load="queryItineraries($packageId)">
+        <p for.each="itr in data">
+            <card-itinerary if.bind="itr.id != $editItineraryId" itr.bind="itr" edit.trigger="onEdit(event, $packageId)" delete.trigger="onDelete(event)"></card-itinerary>
+            <edit-itinerary if.bind="itr.id == $editItineraryId" itinerary.bind="itr" save.trigger="onSavePackage(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+        </p>
+    </div>
+
+</div>
+
+<script>
+	function queryItineraries(packageId) {
+		return new Promise(function (resolve) {
+			var q = {
+				"packageId": packageId
+            }
+			dpd.itineraries.get(q, function (itr, err) {
+				if(err) {
+					errorMessage = err.message;
+					$patchChanges();
+				} else {
+					resolve(itr);
+				}
+			});
+		});
+	}
+
+	function getPackage(id){
+		return new Promise(function(resolve){
+			dpd.packages.get(id, function(result, err){
+				resolve(result);
+			});
+		});
+	}
+
+	function onCancelEdit(packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+	}
+
+	function onAddItinerary(packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
+    }
+	function onEdit(itineraryId, packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId;
+    }
+
+    function onDelete(itineraryId, packageId) {
+		alert(itineraryId);
+    }
+</script>

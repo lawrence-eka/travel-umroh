@@ -1,11 +1,11 @@
-yalla.framework.addComponent("/dist/component/itinerary", (function() {
-  var $path = "/dist/component/itinerary";
+yalla.framework.addComponent("/dist/component/Xitinerary", (function() {
+  var $path = "/dist/component/Xitinerary";
   var $patchChanges = yalla.framework.renderToScreen;
   var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
-  var $inject = yalla.framework.createInjector("/dist/component/itinerary");
+  var $inject = yalla.framework.createInjector("/dist/component/Xitinerary");
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -21,7 +21,7 @@ yalla.framework.addComponent("/dist/component/itinerary", (function() {
 
   function $render(_data, _slotView) {
     _elementOpenStart("div", "");
-    _attr("element", "dist.component.itinerary");
+    _attr("element", "dist.component.Xitinerary");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");

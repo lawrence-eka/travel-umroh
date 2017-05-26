@@ -14,4 +14,17 @@
         Check in: {{$itr.entry.checkIn.toDateComponents()}} <br/>
         Check out: {{$itr.entry.checkOut.toDateComponents()}} <br/>
     </div>
+    <div class=row" if.bind="$onedit || $ondelete">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+                <input type="button" value="Edit" class="form-control btn btn-info btn-block" click.trigger="$onedit($itr.id)">
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+                <input type="button" value="Delete" class="form-control btn btn-info btn-block" click.trigger="$ondelete($itr.id)">
+            </div>
+        </div>
+    </div>
 </card>
+

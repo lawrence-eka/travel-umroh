@@ -16,12 +16,11 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     _skip = IncrementalDOM.skip;
 
   function className(alertType) {
-    debugger;
     var base = "alert ";
-    if (type == "error") return base + "alert-danger";
-    else if (type == "success") return base + "alert-success";
-    else if (type == "info") return base + "alert-info";
-    else if (type == "warning") return base + "alert-warning";
+    if (alertType == "error") return base + "alert-danger";
+    else if (alertType == "success") return base + "alert-success";
+    else if (alertType == "info") return base + "alert-info";
+    else if (alertType == "warning") return base + "alert-warning";
     return base;
   }
 
@@ -29,12 +28,12 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     if (_data.message) {
       _elementOpenStart("div", "");
       _attr("element", "dist.component.alert");
-      _attr("class", "alert alert-danger");
+      _attr("class", className(_data.alertType));
       _attr("role", "alert");
       _elementOpenEnd("div");
       _elementOpenStart("label", "");
       _elementOpenEnd("label");
-      _text("" + (_data.message) + "");
+      _text("" + (_data.message.toSentenceCase()) + "");
       _elementClose("label");
       _elementClose("div");
     }

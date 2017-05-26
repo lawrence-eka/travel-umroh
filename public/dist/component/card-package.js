@@ -22,7 +22,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
       "element": "dist.component.card-package",
       "title": _data.pkg.packageName,
       "onclick": function(event) {
-        return _data.onclick()
+        return _data.onclick();
       }
     }, function(slotName) {
       _elementOpenStart("div", "");
@@ -31,11 +31,51 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Land Arrangements: " + (_data.pkg.costLandArrangements.toFormattedString()) + "");
+      _text("Land Arrangements: " + (_data.pkg.costLandArrangements ? _data.pkg.costLandArrangements.toFormattedString() : '') + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
       _text("Tickets: " + (_data.pkg.costTickets.toFormattedString()) + "");
+      if (_data.onedit || _data.onshowItinerary) {
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Edit");
+        _attr("class", "form-control btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          return _data.onedit(_data.pkg.id);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Itinerary...");
+        _attr("class", "form-control btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          return _data.onshowItinerary(_data.pkg.id);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+      }
       _elementClose("div");
     });
   }

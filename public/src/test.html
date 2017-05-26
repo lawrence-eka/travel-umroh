@@ -1,0 +1,27 @@
+<div data.load="loadData('Transport')">
+    <select class="form-control" name="entryType" id="entryType" change.trigger="onEntryTypeChanged(this)" >
+        <option value="Hotel" selected.bind="x=='Hotel'">Hotel</option>
+        <option value="Transport" selected.bind="x=='Transport'">Airline</option>
+        <option value="Train" selected.bind="x=='Train'">Train</option>
+        <option value="Bus/Car" selected.bind="x=='Bus/Car'">Bus/Car</option>
+    </select>
+    <div if.bind="x != 'Hotel'">
+        ini transport
+    </div>
+    <div if.bind="x == 'Hotel'">
+        ini hotel
+    </div>
+</div>
+
+<script>
+    var x = "";
+    function onEntryTypeChanged(form) {
+    	x = form.value;
+    	$patchChanges();
+    }
+
+    function loadData(y) {
+    	//if(x=="")
+    		x = y;
+    }
+</script>

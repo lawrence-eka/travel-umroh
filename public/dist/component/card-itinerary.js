@@ -69,6 +69,46 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _elementClose("br");
         _elementClose("div");
       }
+      if (_data.onedit || _data.ondelete) {
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Edit");
+        _attr("class", "form-control btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          return _data.onedit(_data.itr.id);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Delete");
+        _attr("class", "form-control btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          return _data.ondelete(_data.itr.id);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+      }
     });
   }
   if (typeof $render === "function") {

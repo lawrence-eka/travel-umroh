@@ -110,7 +110,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _attr("value", "Book This!");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return book(_data.packageId)
+      return book(_data.packageId);
     });
     _elementOpenEnd("input");
     _elementClose("input");
@@ -184,7 +184,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _attr("value", "Book This!");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return book(_data.packageId)
+      return book(_data.packageId);
     });
     _elementOpenEnd("input");
     _elementClose("input");

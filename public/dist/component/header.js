@@ -70,6 +70,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     });
   }
 
+  function hideMenu() {
+    $('.navbar-toggle').click();
+  }
+
 
   function $render(_data, _slotView) {
     _elementOpenStart("nav", "");
@@ -129,14 +133,26 @@ yalla.framework.addComponent("/dist/component/header", (function() {
         _array.forEach(function(menu) {
           _elementOpenStart("li", "");
           _elementOpenEnd("li");
-          _elementOpenStart("a", "");
-          _attr("href", menu.ref);
-          _attr("onclick", function(event) {
-            return menu.clickTrigger ? menu.clickTrigger() : null
-          });
-          _elementOpenEnd("a");
-          _text("" + (menu.label) + "");
-          _elementClose("a");
+          if (menu.ref != '#') {
+            _elementOpenStart("a", "");
+            _attr("href", menu.ref);
+            _attr("onclick", function(event) {
+              return hideMenu();
+            });
+            _elementOpenEnd("a");
+            _text("" + (menu.label) + "");
+            _elementClose("a");
+          }
+          if (menu.ref == '#') {
+            _elementOpenStart("a", "");
+            _attr("href", "#");
+            _attr("onclick", function(event) {
+              return logout();
+            });
+            _elementOpenEnd("a");
+            _text("" + (menu.label) + "");
+            _elementClose("a");
+          }
           _elementClose("li");
         });
         _elementClose("ul");

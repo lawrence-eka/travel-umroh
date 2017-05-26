@@ -96,7 +96,7 @@ yalla.framework.addComponent("/dist/old-home", (function() {
           _elementOpenStart("a", "");
           _attr("href", menu.ref);
           _attr("onclick", function(event) {
-            return menu.clickTrigger ? menu.clickTrigger() : null
+            return menu.clickTrigger ? menu.clickTrigger() : null;
           });
           _elementOpenEnd("a");
           _text("" + (menu.label) + "");

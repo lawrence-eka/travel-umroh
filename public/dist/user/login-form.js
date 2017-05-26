@@ -29,7 +29,10 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     }, function(user, err) {
       if (err) {
         errorMessage = err.message;
+      } else {
+        window.location.hash = "#app/action.searchPackage";
       }
+
       $patchChanges();
     });
     return false;
@@ -101,7 +104,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _elementOpenStart("form", "");
     _attr("class", "form-signin");
     _attr("onsubmit", function(event) {
-      return login(this)
+      return login(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("h2", "");
