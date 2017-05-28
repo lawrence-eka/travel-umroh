@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-booking");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -42,9 +49,14 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     var card = $context["card"];
     $context["card"].render({
       "element": "dist.component.card-booking",
-      "title": 'Booking Detail',
       "onclick": function(event) {
-        return _data.onclick()
+        this.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, this);
+          if ('on' + eventName in _data) {
+            _data['on' + eventName](event);
+          }
+        };
+        return _data.onclick.bind(this)();
       }
     }, function(slotName) {
       _elementOpenStart("div", "");
@@ -53,10 +65,11 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
         var node = domNode.element;
 
         function asyncFunc__1(pkg) {
+          _elementOpenStart("p", "");
+          _attr("class", "bg-primary");
+          _elementOpenEnd("p");
           _text("Package: " + (pkg.packageName) + "");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
+          _elementClose("p");
           _text("Travel Date: " + ((pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");

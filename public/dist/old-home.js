@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/old-home", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/old-home");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -71,7 +78,7 @@ yalla.framework.addComponent("/dist/old-home", (function() {
   function $render(_data, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\r\n[element='dist.old-home'] .menu {list-style-type: none;margin : 0px;padding : 0px;}\r\n[element='dist.old-home'] .menu-item {display: inline-block;padding-left: 1rem;}");
+    _text("\n[element='dist.old-home'] .menu {list-style-type: none;margin : 0px;padding : 0px;}\n[element='dist.old-home'] .menu-item {display: inline-block;padding-left: 1rem;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.old-home");
@@ -96,7 +103,13 @@ yalla.framework.addComponent("/dist/old-home", (function() {
           _elementOpenStart("a", "");
           _attr("href", menu.ref);
           _attr("onclick", function(event) {
-            return menu.clickTrigger ? menu.clickTrigger() : null
+            this.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, this);
+              if ('on' + eventName in _data) {
+                _data['on' + eventName](event);
+              }
+            };
+            return menu.clickTrigger ? menu.clickTrigger.bind(this)() : null;
           });
           _elementOpenEnd("a");
           _text("" + (menu.label) + "");

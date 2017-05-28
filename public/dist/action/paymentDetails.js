@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/paymentDetails");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -196,7 +203,13 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
         _elementOpenStart("form", "");
         _attr("role", "form");
         _attr("onsubmit", function(event) {
-          return paymentConfirmation(this)
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return paymentConfirmation.bind(this)(this);
         });
         _elementOpenEnd("form");
         _elementOpenStart("div", "");

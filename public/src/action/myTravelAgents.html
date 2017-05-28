@@ -1,3 +1,160 @@
+<inject from="/component/card-travel-agent" name="card-travel-agent"></inject>
+<link href="asset/css/registration.css" rel="stylesheet">
+
 <div>
-    This is My Travel Agents
+    <div if.bind="errorMessage != ''">
+        {{errorMessage}}
+    </div>
+
+    <div class="container all-5px" data.load="getOneTravelAgent($travelAgentId)">
+        <div class="row centered-form no-top-margin">
+            <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 if.bind="!$travelAgentId" class="panel-title">New Travel Agent</h3>
+                        <h3 if.bind="$travelAgentId" class="panel-title">Edit Travel Agent</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div if.bind="errorMessage" class="form-control" >
+                            {{errorMessage}}
+                        </div>
+                        <form role="form" submit.trigger="register(this)">
+                            <div class="row">
+                                <input type="hidden" name="id" value.bind="data.id">
+                                <input type="hidden" name="contactPersonId" value.bind="data.contactPersonId">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="travelAgentName" class="form-control input-sm" placeholder="Name" value.bind="data.travelAgentName">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="address" class="form-control input-sm" placeholder="Address" value.bind="data.address">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.city">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="submit" value.bind="($travelAgentId ? 'Save' : 'Register')" class="btn btn-info btn-block btn-default">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="cancel()" if.bind="$travelAgentId">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="form-group" if.bind="$travelAgentId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div data.load="getTravelAgents($travelAgentId)">
+    <p for.each="ta in data">
+        <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(ta.id)" showPackages.trigger="onShowPackages(ta.id)"></card-travel-agent>
+    </p>
+</div>
+
+<script>
+    var errorMessage ="";
+    function queryTravelAgents(userId, travelAgentId) {
+         return new Promise(function(resolve) {
+
+             var q = {
+                 "contactPersonId": userId,
+                 "id": {"$ne": (travelAgentId ? travelAgentId : "-1")}
+             };
+            dpd.travelagents.get(q, function (ta, err) {
+                if (err) {
+                    errorMessage = err.message;
+                    $patchChanges();
+                } else {
+                    resolve(ta);
+                }
+                ;
+            });
+        });
+    }
+
+    function getTravelAgents(travelAgentId){
+        return new Promise(function(resolve) {
+            dpd.users.me(function(me) {
+                queryTravelAgents(me.id, travelAgentId).then(function(ta) {
+                    resolve(ta);
+                });
+            });
+        });
+    }
+
+    function onEditTA(travelAgentId) {
+        window.location.hash="#app/action.myTravelAgents:travelAgentId=" + travelAgentId;
+    }
+
+    function onShowPackages(travelAgentId) {
+    	window.location.hash ="#app/action.myPackages:travelAgentId=" + travelAgentId;
+    }
+
+    function getOneTravelAgent(id) {
+        return new Promise(function (resolve) {
+        	if(id) {
+		        dpd.travelagents.get(id, function (ta, err) {
+			        if (err) {
+				        errorMessage = err.message;
+				        $patchChanges();
+			        } else {
+				        resolve(ta);
+			        }
+		        });
+	        }
+        	else {
+		        dpd.users.me(function(me) {
+                    var ta = {
+                        "contactPersonId": me.id
+                    }
+                    resolve(ta);
+                });
+            }
+        });
+    }
+
+    function cancel() {
+	    window.location.hash="#app/action.myTravelAgents";
+    }
+
+    function register(form) {
+    	debugger;
+    	var q = {
+    		"travelAgentName": form.elements.travelAgentName.value,
+    		"address": form.elements.address.value,
+    		"city": form.elements.city.value,
+            "contactPersonId": form.elements.contactPersonId.value
+        };
+    	if(form.elements.id.value == "") {
+    		dpd.travelagents.post(q, cleanupAfterSave);
+        } else {
+		    dpd.travelagents.put(form.elements.id.value, q, cleanupAfterSave);
+	    }
+    }
+
+    function cleanupAfterSave(result, err) {
+	    if(err) errorMessage = err.message;
+	    else {
+	    	window.location.hash="#app/action.myTravelAgents";
+	    }
+	    $patchChanges();
+    }
+
+</script>

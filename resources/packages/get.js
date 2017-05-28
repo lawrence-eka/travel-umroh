@@ -6,4 +6,3 @@ if(query.includeItineraries==="true")
       this.itineraries = result;
     });
 }
-console.log("baca data package");

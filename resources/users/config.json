@@ -49,37 +49,13 @@
 			"id": "phone",
 			"order": 5
 		},
-		"address1": {
-			"name": "address1",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "address1",
-			"order": 6
-		},
-		"address2": {
-			"name": "address2",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "address2",
-			"order": 7
-		},
-		"city": {
-			"name": "city",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "city",
-			"order": 8
-		},
 		"language": {
 			"name": "language",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
 			"id": "language",
-			"order": 9
+			"order": 6
 		},
 		"needApproval": {
 			"name": "needApproval",
@@ -87,6 +63,30 @@
 			"typeLabel": "object",
 			"required": false,
 			"id": "needApproval",
+			"order": 7
+		},
+		"address1": {
+			"name": "address1",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "address1",
+			"order": 8
+		},
+		"address2": {
+			"name": "address2",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "address2",
+			"order": 9
+		},
+		"city": {
+			"name": "city",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "city",
 			"order": 10
 		}
 	}

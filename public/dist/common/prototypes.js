@@ -6,28 +6,47 @@ yalla.framework.addComponent("/dist/common/prototypes", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/common/prototypes");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   /**
    * Created by Lawrence Eka on 24-May-2017.
    */
+
+  String.prototype.toSentenceCase = function() {
+    return this == '' ? '' : this[0].toUpperCase() + this.substr(1).toLowerCase();
+  }
 
   String.prototype.toTitleCase = function() {
     var retval = "";
     var s = this.split(" ");
     for (var i = 0; i < s.length; i++) {
-      retval += s[i][0].toUpperCase() + s[i].substr(1).toLowerCase() + " ";
+      retval += s[i].trim().toSentenceCase() + " ";
     }
     return retval.trim();
   }
 
-  Date.prototype.toYYYYMMDD = function() {
+  Date.prototype.toYYYYMMDD = function(withHHMM) {
       var y = this.getFullYear().toString();
-      var m = this.getMonth();
+      var m = this.getMonth() + 1;
       var d = this.getDate();
+
+      if (withHHMM) {
+        var h = this.getHours();
+        var mi = this.getMinutes();
+
+        h = (h < 10 ? '0' : '') + h.toString();
+        mi = (mi < 10 ? '0' : '') + mi.toString();
+      }
 
       m = (m < 10 ? "0" : "") + m.toString();
       d = (d < 10 ? "0" : "") + d.toString();
 
-      return y + "-" + m + "-" + d;
+      return y + "-" + m + "-" + d + (withHHMM ? 'T' + h + ':' + mi : '');
     },
 
     Date.prototype.toDateComponents = function(asComponents, withHHMM) {
@@ -89,8 +108,8 @@ yalla.framework.addComponent("/dist/common/prototypes", (function() {
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(this - i).toFixed(c).slice(2) : "");
   }
 
-  Number.prototype.toYYYYMMDD = function() {
-    return (new Date(this)).toYYYYMMDD();
+  Number.prototype.toYYYYMMDD = function(withHHMM) {
+    return (new Date(this)).toYYYYMMDD(withHHMM);
   }
 
   if (typeof $render === "function") {

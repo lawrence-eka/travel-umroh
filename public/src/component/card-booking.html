@@ -1,8 +1,8 @@
 <inject from="/component/card" name="card"></inject>
 
-<card title.bind="'Booking Detail'" click.trigger="$onclick()">
+<card click.trigger="$onclick()">
     <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
-        Package: {{pkg.packageName}}<br/>
+        <p class="bg-primary">Package: {{pkg.packageName}}</p>
         Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
         Operator: <span data.load="loadAgent(pkg.travelAgentId)">{{data.travelAgentName}}</span><br/>
         Land Arrangements: {{$bkg.costLandArrangements.toFormattedString()}}<br/>

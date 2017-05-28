@@ -4,7 +4,7 @@ curl -k -X POST -H "Content-Type: application/json" -d @login.txt https://localh
 
 curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/users > result.txt
 
-curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/users/cabcc0b588a5d8d9 -d @updateUser.txt > result.txt
+curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/users/d8589ac69fc3c9b9 -d @updateUser.txt > result.txt
 
 curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/users/d8589ac69fc3c9b9 -d @updateUser.txt > result.txt
 
@@ -48,3 +48,4 @@ curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localh
 
 curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/comments/beaa36f8045adb44 -d @updateComment.txt > result.txt
 
+curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/travelagents -d @getTravelAgents.txt > result.txt

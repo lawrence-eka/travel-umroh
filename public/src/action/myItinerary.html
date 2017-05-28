@@ -1,0 +1,112 @@
+<inject from="/component/card" name="card"></inject>
+<inject from="/component/card-itinerary" name="card-itinerary"></inject>
+<inject from="/component/edit-itinerary" name="edit-itinerary"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div data.load="getPackage($packageId)">
+    <card title.bind="data.packageName">
+        <input type="button" value="Add Itinerary" class="form-control btn btn-info btn-block" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId">
+    </card>
+    <alert alertType.bind="alertType" message.bind="message" if.bind="message"></alert>
+    <edit-itinerary if.bind="$editItineraryId == -1" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+    <div data.load="queryItineraries($packageId)">
+        <p for.each="itr in data">
+            <card-itinerary if.bind="itr.id != $editItineraryId" itr.bind="itr" edit.trigger="onEdit(event, $packageId)" delete.trigger="onDelete(event)"></card-itinerary>
+            <edit-itinerary if.bind="itr.id == $editItineraryId" itinerary.bind="itr" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+        </p>
+    </div>
+
+</div>
+
+<script>
+    var message="";
+    var alertType="";
+	function queryItineraries(packageId) {
+		return new Promise(function (resolve) {
+			var q = {
+				"packageId": packageId,
+                "$sort": {"fromDateTime":1}
+            }
+			dpd.itineraries.get(q, function (itr, err) {
+				if(err) {
+					errorMessage = err.message;
+					alertType="error";
+					$patchChanges();
+				} else {
+					resolve(itr);
+				}
+			});
+		});
+	}
+
+	function getPackage(id){
+		return new Promise(function(resolve){
+			dpd.packages.get(id, function(result, err){
+				resolve(result);
+			});
+		});
+	}
+
+	function onSaveItinerary(itinerary, packageId) {
+		return new Promise(function(resolve) {
+            debugger;
+            itinerary.packageId = packageId;
+            if(itinerary.id=="") {
+                dpd.itineraries.post(itinerary, function(result, err) {
+                    debugger;
+                    if (err) {
+                        resolve(err);
+                    }
+                    if(result) {
+                        window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+                        resolve(null);
+                    }
+                });
+            }
+            else {
+                debugger;
+                dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
+                    debugger;
+                    if(err) {
+                        resolve(err);
+                    }
+                    else {
+                        window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+                        resolve(null);
+                    }
+                });
+            }
+            debugger;
+		});
+        return false;
+	}
+
+	function onCancelEdit(packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+	}
+
+	function onAddItinerary(packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
+    }
+	function onEdit(itineraryId, packageId) {
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId;
+    }
+
+    function onDelete(itineraryId, packageId) {
+		debugger;
+		return new Promise(function(resolve){
+			dpd.itineraries.del(itineraryId,function(err){
+				debugger;
+				if(err){
+					if (err) {
+						message=JSON.stringify(err);
+						alertType="error";
+					}
+                }
+                else {
+					window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+				}
+            });
+        });
+    }
+</script>

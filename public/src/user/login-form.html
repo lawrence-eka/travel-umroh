@@ -63,7 +63,10 @@
         dpd.users.login({"username": userName, "password": password}, function(user, err) {
             if(err){
                 errorMessage = err.message;
+            } else {
+                window.location.hash = "#app/action.searchPackage";
             }
+
             $patchChanges();
         });
         return false;

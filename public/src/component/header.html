@@ -11,7 +11,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse" data.load="getMe()" >
             <ul class="nav navbar-nav">
-                <li for.each="menu in generateMenu(data)"><a href.bind="menu.ref" click.trigger="menu.clickTrigger ? menu.clickTrigger():null">{{menu.label}}</a></li>
+                <li for.each="menu in generateMenu(data)">
+
+                    <a href.bind="menu.ref" if.bind="menu.ref!='#'" click.trigger="hideMenu()">{{menu.label}}</a>
+                    <a href="#" click.trigger="logout()" if.bind="menu.ref=='#'">{{menu.label}}</a>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -36,7 +40,7 @@
             menusBase.push({label:'My Travel Agent',ref:'#app/action.myTravelAgents'});
         }
         if(me.isAdmin){
-            menusBase.push({label:'Approvals',ref:'#app/action.approvals'});
+            menusBase.push({label:'Approvals',ref:'#app/action.myApprovals'});
         }
         return menusBase.concat(menuEnd);
     }
@@ -54,6 +58,10 @@
         dpd.users.logout(function(err) {
             window.location.hash = '#app';
         });
+    }
+
+    function hideMenu(){
+        $('.navbar-toggle').click();
     }
 
 </script>

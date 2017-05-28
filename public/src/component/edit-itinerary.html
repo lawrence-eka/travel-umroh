@@ -1,0 +1,215 @@
+<link href="asset/css/registration.css" rel="stylesheet">
+<inject from="/component/alert" name="alert"></inject>
+
+<style>
+    .setHidden {
+        display:none;
+    }
+
+</style>
+<div class="container all-5px">
+    <div class="row centered-form no-top-margin">
+        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" if.bind="$itinerary">Edit Package Info</h3>
+                    <h3 class="panel-title" if.bind="!$itinerary">New Package</h3>
+                </div>
+                <div class="panel-body"  data.load="loadItinerary($itinerary)">
+
+                    <form role="form">
+                        <input type="hidden" name="id" value.bind="data.id">
+                        <input type="hidden" name="packageId" value.bind="data.packageId">
+                        <div class=row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Hotel" name='btnHotel' class.bind="setButtonClass('Hotel')" click.trigger="onClick(this)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Transport" name='btnTransport' class.bind="setButtonClass('Transport')" click.trigger="onClick(this)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class.bind="isVisible('Transport')">
+                            <!--
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <select class="form-control" name="transport" id="entryType">
+                                            <option value="Airline" selected.bind="entryType(data.entry)=='Transport'">Airline</option>
+                                            <option value="Train" selected.bind="entryType(data.entry)=='Train'">Train</option>
+                                            <option value="Bus/Car" selected.bind="entryType(data.entry)=='Bus/Car'">Bus/Car</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="departure" class="form-control input-sm" placeholder="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="departFrom" class="form-control input-sm" placeholder="Depart From" value.bind="data.entry.departFrom">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="arrival" class="form-control input-sm" placeholder="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="arriveAt" class="form-control input-sm" placeholder="Arrive At" value.bind="data.entry.arriveAt">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="airline" class="form-control input-sm" placeholder="Airline" value.bind="data.entry.transport">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class.bind ="isVisible('Hotel')">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="checkIn" class="form-control input-sm" placeholder="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="datetime-local" name="checkOut" class="form-control input-sm" placeholder="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):'')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="hotel" class="form-control input-sm" placeholder="Hotel" value.bind="data.entry.hotel">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.entry.city">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <textarea name="remarks" class="form-control input-sm" placeholder="Remarks" >{{ data.remarks }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+
+                        <div class=row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value.bind="$itinerary ? 'Save' : 'Register'" class="btn btn-info btn-block" click.trigger="save(this, $onsave)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="$oncancel()">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function onClick(button){
+
+        x = button.value;
+    	$patchChanges();
+    }
+
+    function setButtonClass(btn) {
+        return (btn == x ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
+    }
+
+	var errorMessage = '';
+    var x ="";
+
+	function loadItinerary(itinerary){
+        itinerary = (itinerary ? itinerary : {entry: {}});
+        debugger;
+        if(x == "") {
+            if(itinerary && itinerary.entry && itinerary.entry.hotel) x = 'Hotel';
+            else x = 'Transport';
+        }
+        return itinerary;
+
+    }
+
+	function save(form, onSave){
+		if(form.form != null) form = form.form;
+		var itinerary = {};
+		itinerary.id = form.elements.id.value;
+		itinerary.entry = {};
+		itinerary.remarks = form.elements.remarks.value;
+		if(x=='Hotel'){
+			itinerary.entry.hotel = form.elements.hotel.value;
+			itinerary.entry.city = form.elements.city.value;
+			itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
+			itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
+		}
+        else {
+			itinerary.entry.transport = form.elements.airline.value;
+			itinerary.entry.departFrom = form.elements.departFrom.value;
+			itinerary.entry.arriveAt = form.elements.arriveAt.value;
+			itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
+			itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
+        }
+		onSave(itinerary).then(function(err) {
+            if(err) {
+                debugger;
+                errorMessage = JSON.stringify(err);
+            }
+            else {
+                errorMessage ="";
+            }
+            $patchChanges();
+		});
+	}
+
+	function isVisible(group) {
+	    if (x==group) return "";
+	    else return "setHidden";
+    }
+
+	function entryType(data)
+    {
+    	if(!entry) return 'Transport';
+    	else return entry.transport;
+    }
+
+</script>
+

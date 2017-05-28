@@ -64,6 +64,14 @@
 			"required": true,
 			"id": "passportExpiryDate",
 			"order": 7
+		},
+		"passportIssuer": {
+			"name": "passportIssuer",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "passportIssuer",
+			"order": 8
 		}
 	}
 }

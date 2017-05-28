@@ -3,7 +3,19 @@
 <card title.bind="$pkg.packageName" click.trigger="$onclick()">
     <div>
         Travel Date: {{$pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil)}} <br/>
-        Land Arrangements: {{$pkg.costLandArrangements.toFormattedString()}}<br/>
-        Tickets: {{$pkg.costTickets.toFormattedString()}}
+        Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
+        Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
+        <div class=row" if.bind="$onedit || $onshowItinerary">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Edit" class="form-control btn btn-info btn-block" click.trigger="$onedit($pkg.id)">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Itinerary..." class="form-control btn btn-info btn-block" click.trigger="$onshowItinerary($pkg.id)">
+                </div>
+            </div>
+        </div>
     </div>
 </card>

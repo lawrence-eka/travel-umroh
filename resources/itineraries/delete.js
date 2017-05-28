@@ -1,4 +1,3 @@
-console.log("hello delete nih");
 errorIf(!me, "invalidCredential", "Invalid Credential");
 errorIf(!me.isTravelAgent, "notContactPerson", "You are not a travel agent contact person");
 errorIf(!this.packageId, "invalidPackage", "Invalid Package");

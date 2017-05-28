@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/showPackage");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -110,7 +117,13 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _attr("value", "Book This!");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return book(_data.packageId)
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return book.bind(this)(_data.packageId);
     });
     _elementOpenEnd("input");
     _elementClose("input");
@@ -184,7 +197,13 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _attr("value", "Book This!");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return book(_data.packageId)
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return book.bind(this)(_data.packageId);
     });
     _elementOpenEnd("input");
     _elementClose("input");

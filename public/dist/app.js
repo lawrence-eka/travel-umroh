@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/app", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/app");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -55,7 +62,6 @@ yalla.framework.addComponent("/dist/app", (function() {
           _elementOpenEnd("div");
           $context["app-header"].render({}, function(slotName) {});
           _slotView("default");
-          $context["app-footer"].render({}, function(slotName) {});
           _elementClose("div");
         }
         if (!data) {

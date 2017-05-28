@@ -1,0 +1,26 @@
+<inject from="/component/card" name="card"></inject>
+
+<card title.bind="fullName($user.firstName, $user.lastName)">
+    <div>
+        Admin: {{$user.needApproval.isAdmin ? 'Yes' : 'No'}}<br/>
+        Travel Agent: {{$user.needApproval.isTravelAgent ? 'Yes' : 'No'}}<br/>
+        <div class=row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Approve" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$onapprove($user)">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input type="button" value="Reject" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$onreject($user)">
+                </div>
+            </div>
+        </div>
+    </div>
+</card>
+
+<script>
+    function fullName(firstName, lastName) {
+    	return ((firstName ? firstName : 'NoFirstName') + ' ' + (lastName ? lastName : 'NoLastName')).toTitleCase()
+    }
+</script>

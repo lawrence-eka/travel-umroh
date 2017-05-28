@@ -1,4 +1,4 @@
-errorIf((!me && this.id) || (me && !me.isAdmin && me.id !== this.id), "credential", "Access Unauthorized");
+errorIf((!me && this.id) || (me && !me.isAdmin), "credential", "Access Unauthorized");
 if(!query.checkAvailability && !query.checkIsLastAdmin)
 {
     var q = 

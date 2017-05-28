@@ -9,12 +9,12 @@
 	</div>
 
 	<div data.load="queryBooking($bookingId)">
-		<card-booking bkg.bind="data"></card-booking>
+		<card-booking bkg.bind="data" ></card-booking>
 	</div>
 
 	<div class="container all-5px">
 		<div class="row centered-form no-top-margin">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Passenger Detail</h3>
@@ -68,13 +68,14 @@
 
 						</form>
 						<div class="form-group">
-							<input type="button" value="Done and Go to Payment Detail" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="calculatePaymentDetail($bookingId)">
+							<input type="button" value="Payment Detail" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="calculatePaymentDetail($bookingId)">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 <div data.load="getPassengers($bookingId)">
 	<p for.each="psg in data">
