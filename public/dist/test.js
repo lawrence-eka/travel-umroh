@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/test", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/test");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,87 +22,65 @@ yalla.framework.addComponent("/dist/test", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var x = "";
+  var x = 1;
 
-  function onEntryTypeChanged(form) {
-    x = form.value;
+  function onclick() {
+    x = (x == 1 ? 2 : 1);
     $patchChanges();
   }
 
-  function loadData(y) {
-    //if(x=="")
-    x = y;
+  function isVisible(obj, num) {
+
+    if (x == num)
+    else return "hideThis"
   }
 
   function $render(_data, _slotView) {
+    _elementOpenStart("style", "");
+    _elementOpenEnd("style");
+    _text("\n[element='dist.test'] .hideThis {display:none;}");
+    _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.test");
     _elementOpenEnd("div");
-    (function(domNode) {
-      var node = domNode.element;
-
-      function asyncFunc__1(data) {
-        _elementOpenStart("select", "");
-        _attr("class", "form-control");
-        _attr("name", "entryType");
-        _attr("id", "entryType");
-        _attr("onchange", function(event) {
-          return onEntryTypeChanged(this);
-        });
-        _elementOpenEnd("select");
-        _elementOpenStart("option", "");
-        _attr("value", "Hotel");
-        _attr("selected", x == 'Hotel');
-        _elementOpenEnd("option");
-        _text("Hotel");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Transport");
-        _attr("selected", x == 'Transport');
-        _elementOpenEnd("option");
-        _text("Airline");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Train");
-        _attr("selected", x == 'Train');
-        _elementOpenEnd("option");
-        _text("Train");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Bus/Car");
-        _attr("selected", x == 'Bus/Car');
-        _elementOpenEnd("option");
-        _text("Bus/Car");
-        _elementClose("option");
-        _elementClose("select");
-        if (x != 'Hotel') {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          _text("ini transport");
-          _elementClose("div");
+    _elementOpenStart("input", "");
+    _attr("type", "button");
+    _attr("onclick", function(event) {
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
         }
-        if (x == 'Hotel') {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          _text("ini hotel");
-          _elementClose("div");
-        }
-      }
-      var promise = loadData('Transport');
-      if (promise && typeof promise == "object" && "then" in promise) {
-        _skip();
-        promise.then(function(_result) {
-          $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
-          });
-        });
-      } else {
-        asyncFunc__1.call(node, promise)
-      }
-    })({
-      element: IncrementalDOM.currentElement(),
-      pointer: IncrementalDOM.currentPointer()
+      };
+      return onclick.bind(this)();
     });
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementOpenStart("form", "");
+    _elementOpenEnd("form");
+    _elementOpenStart("div", "");
+    _attr("name", "hello");
+    _attr("class", isVisible(this, 1));
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "hello");
+    _attr("value", "hello");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("name", "world");
+    _attr("class", isVisible(this, 2));
+    _elementOpenEnd("div");
+    _elementOpenStart("input", "");
+    _attr("type", "text");
+    _attr("name", "world");
+    _attr("value", "world");
+    _elementOpenEnd("input");
+    _elementClose("input");
+    _elementClose("div");
+    _elementClose("form");
     _elementClose("div");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");

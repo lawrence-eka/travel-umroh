@@ -50,6 +50,7 @@ errorIf(fromDateTime < (new Date()).getTime(), 'invalidPastDate', "'" + fromDate
 errorIf(fromDateTime > toDateTime, 'invalidDateRange', "'" + fromDateType + " Date' (" + fromDateTime + ") must be less or equal to '" + toDateType + " Date' (" + toDateTime + ")");
 
 var query = {  
+    "id": {"$ne": this.id},
     "$and":
     [
         {"packageId":this.packageId}, 
@@ -74,7 +75,6 @@ var query = {
         }
     ]
 };
-
 dpd.itineraries.get(query, function (result) {
     errorIf(result && result.length > 0, "overlappingDateRange", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
 });
@@ -84,15 +84,19 @@ dpd.packages.get(this.packageId, function (travelPackage) {
     if(travelPackage)
     {
         var query = {"$sort":{"fromDateTime":1}, "$limit": 1, "id":{"$ne": this.id}, "packageId":this.packageId};
-        dpd.itineraries.get(query, function (result) {
-            if(result) travelPackage.travelDateFrom = Math.min(!result[0].fromDateTime ? this.fromDateTime : result[0].fromDateTime);
+        dpd.itineraries.get(query, function (result, err) {
+            if(result && result.length > 0) travelPackage.travelDateFrom = Math.min(!result[0].fromDateTime ? this.fromDateTime : result[0].fromDateTime);
             else travelPackage.travelDateFrom = null;
 
             query = {"$sort":{"toDateTime":-1}, "$limit": 1, "id":{"$ne": this.id}, "packageId":this.packageId};
             dpd.itineraries.get(query, function (result) {
-                if(result) travelPackage.travelDateUntil = Math.max(result[0].toDateTime, this.toDateTime);
-                else travelPackage.travelDateUntil = nuill;
+                if(result && result.length > 0) travelPackage.travelDateUntil = Math.max(result[0].toDateTime, this.toDateTime);
+                else travelPackage.travelDateUntil = null;
+               // console.log(travelPackage);
+                //console.log((new Date()).getTime());
                 dpd.packages.put(travelPackage.id, travelPackage, function(result, err) {
+                    //console.log(result);
+                    //console.log(err);
                     errorIf(err, "genericError", err);
                 });
             });

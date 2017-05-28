@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/myTravelAgents");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -170,7 +177,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
         _elementOpenStart("form", "");
         _attr("role", "form");
         _attr("onsubmit", function(event) {
-          return register(this);
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return register.bind(this)(this);
         });
         _elementOpenEnd("form");
         _elementOpenStart("div", "");
@@ -266,7 +279,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
           _attr("value", "Cancel");
           _attr("class", "form-control btn btn-info btn-block");
           _attr("onclick", function(event) {
-            return cancel();
+            this.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, this);
+              if ('on' + eventName in _data) {
+                _data['on' + eventName](event);
+              }
+            };
+            return cancel.bind(this)();
           });
           _elementOpenEnd("input");
           _elementClose("input");
@@ -317,10 +336,22 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
           $context["card-travel-agent"].render({
             "travelAgent": ta,
             "oneditTA": function(event) {
-              return onEditTA(ta.id);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return onEditTA.bind(this)(ta.id);
             },
             "onshowPackages": function(event) {
-              return onShowPackages(ta.id);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return onShowPackages.bind(this)(ta.id);
             }
           }, function(slotName) {});
           _elementClose("p");

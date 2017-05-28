@@ -3,14 +3,14 @@
  */
 
 String.prototype.toSentenceCase = function() {
-	return this[0].toUpperCase() + this.substr(1).toLowerCase();
+	return this == '' ? '' : this[0].toUpperCase() + this.substr(1).toLowerCase();
 }
 
 String.prototype.toTitleCase =function() {
 	var retval = "";
 	var s = this.split(" ");
 	for(var i = 0; i < s.length; i++) {
-		retval += s[i].toSentenceCase() + " ";
+		retval += s[i].trim().toSentenceCase() + " ";
 	}
 	return retval.trim();
 }

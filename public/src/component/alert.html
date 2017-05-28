@@ -1,5 +1,5 @@
 <div class.bind="className($alertType)" role="alert" if.bind="$message">
-    <label >{{$message.toSentenceCase()}}</label>
+    <label >{{($titleCase ? $message.toTitleCase() : $message.toSentenceCase())}}</label>
 </div>
 
 <script>

@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/alert");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -33,7 +40,7 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       _elementOpenEnd("div");
       _elementOpenStart("label", "");
       _elementOpenEnd("label");
-      _text("" + (_data.message.toSentenceCase()) + "");
+      _text("" + ((_data.titleCase ? _data.message.toTitleCase() : _data.message.toSentenceCase())) + "");
       _elementClose("label");
       _elementClose("div");
     }

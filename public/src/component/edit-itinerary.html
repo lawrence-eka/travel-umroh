@@ -1,6 +1,12 @@
 <link href="asset/css/registration.css" rel="stylesheet">
 <inject from="/component/alert" name="alert"></inject>
 
+<style>
+    .setHidden {
+        display:none;
+    }
+
+</style>
 <div class="container all-5px">
     <div class="row centered-form no-top-margin">
         <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -11,23 +17,36 @@
                 </div>
                 <div class="panel-body"  data.load="loadItinerary($itinerary)">
 
-                    <form role="form" submit.trigger="save(this, $onsave)">
+                    <form role="form">
                         <input type="hidden" name="id" value.bind="data.id">
                         <input type="hidden" name="packageId" value.bind="data.packageId">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class=row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <select class="form-control" name="entryType" id="entryType" change.trigger="onEntryTypeChanged(this, data)" >
-                                        <option value="Hotel" selected.bind="entryType(data)=='Hotel'">Hotel</option>
-                                        <option value="Transport" selected.bind="entryType(data)=='Transport'">Airline</option>
-                                        <option value="Train" selected.bind="entryType(data)=='Train'">Train</option>
-                                        <option value="Bus/Car" selected.bind="entryType(data)=='Bus/Car'">Bus/Car</option>
-                                    </select>
+                                    <input type="button" value="Hotel" name='btnHotel' class.bind="setButtonClass('Hotel')" click.trigger="onClick(this)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Transport" name='btnTransport' class.bind="setButtonClass('Transport')" click.trigger="onClick(this)">
                                 </div>
                             </div>
                         </div>
 
-                        <div if.bind="!xx('Hotel')">
+                        <div class.bind="isVisible('Transport')">
+                            <!--
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <select class="form-control" name="transport" id="entryType">
+                                            <option value="Airline" selected.bind="entryType(data.entry)=='Transport'">Airline</option>
+                                            <option value="Train" selected.bind="entryType(data.entry)=='Train'">Train</option>
+                                            <option value="Bus/Car" selected.bind="entryType(data.entry)=='Bus/Car'">Bus/Car</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
@@ -59,13 +78,13 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" name="airline" class="form-control input-sm" placeholder="Airline" value.bind="data.entry.airline">
+                                        <input type="text" name="airline" class="form-control input-sm" placeholder="Airline" value.bind="data.entry.transport">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div if.bind="xx('Hotel')">
+                        <div class.bind ="isVisible('Hotel')">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
@@ -98,7 +117,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <textarea name="remarks" class="form-control input-sm" placeholder="Remarks" value.bind="data.remarks"></textarea>
+                                    <textarea name="remarks" class="form-control input-sm" placeholder="Remarks" >{{ data.remarks }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +127,7 @@
                         <div class=row">
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <input type="submit" value.bind="$itinerary ? 'Save' : 'Register'" class="btn btn-info btn-block">
+                                    <input type="button" value.bind="$itinerary ? 'Save' : 'Register'" class="btn btn-info btn-block" click.trigger="save(this, $onsave)">
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -125,44 +144,71 @@
 </div>
 
 <script>
-	
+
+    function onClick(button){
+
+        x = button.value;
+    	$patchChanges();
+    }
+
+    function setButtonClass(btn) {
+        return (btn == x ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
+    }
+
 	var errorMessage = '';
     var x ="";
-	function loadItinerary(data, itinerary){
-		itinerary = (itinerary ? itinerary : {entry: {}});
-        if (x == "") x = entryType(itinerary);
-		return itinerary;
 
-	}
+	function loadItinerary(itinerary){
+        itinerary = (itinerary ? itinerary : {entry: {}});
+        debugger;
+        if(x == "") {
+            if(itinerary && itinerary.entry && itinerary.entry.hotel) x = 'Hotel';
+            else x = 'Transport';
+        }
+        return itinerary;
+
+    }
 
 	function save(form, onSave){
-		var package = {};
+		if(form.form != null) form = form.form;
+		var itinerary = {};
 		itinerary.id = form.elements.id.value;
-		itinerary.travelAgentId = form.elements.travelAgentId.value;
-		itinerary.packageName = form.elements.packageName.value;
-		itinerary.tourLeader = form.elements.tourLeader.value;
-		itinerary.validFrom = (new Date(form.elements.validFrom.value)).getTime();
-		itinerary.validUntil = (new Date(form.elements.validUntil.value)).getTime();
-		itinerary.costLandArrangements = form.elements.costLandArrangements.value;
-		itinerary.costTickets = form.elements.costTickets.value;
-		itinerary.isItineraryConfirmed = (form.elements.isItineraryConfirmed .value == "on");
-		itinerary.isPublished = (form.elements.isPublished.value == "on");
-		onSave(package);
+		itinerary.entry = {};
+		itinerary.remarks = form.elements.remarks.value;
+		if(x=='Hotel'){
+			itinerary.entry.hotel = form.elements.hotel.value;
+			itinerary.entry.city = form.elements.city.value;
+			itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
+			itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
+		}
+        else {
+			itinerary.entry.transport = form.elements.airline.value;
+			itinerary.entry.departFrom = form.elements.departFrom.value;
+			itinerary.entry.arriveAt = form.elements.arriveAt.value;
+			itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
+			itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
+        }
+		onSave(itinerary).then(function(err) {
+            if(err) {
+                debugger;
+                errorMessage = JSON.stringify(err);
+            }
+            else {
+                errorMessage ="";
+            }
+            $patchChanges();
+		});
 	}
 
-	function xx(c) {
-		return x == c;
+	function isVisible(group) {
+	    if (x==group) return "";
+	    else return "setHidden";
     }
-	function onEntryTypeChanged(et, data){
-		data.entry={};
-		if(et.value == 'Hotel')  data.entry.hotel = "";
-		else data.entry.transport = "";
-		x=entryType(data);
-		$patchChanges();
-    }
-    function entryType(data) {
-       	if(data.entry && data.entry.hotel != null) return 'Hotel';
-    	else return 'Transport';
+
+	function entryType(data)
+    {
+    	if(!entry) return 'Transport';
+    	else return entry.transport;
     }
 
 </script>

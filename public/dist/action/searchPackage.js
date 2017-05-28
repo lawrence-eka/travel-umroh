@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/searchPackage");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -113,7 +120,13 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _elementOpenStart("form", "");
     _attr("role", "form");
     _attr("onsubmit", function(event) {
-      return search(this);
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return search.bind(this)(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("div", "");
@@ -196,7 +209,13 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           _elementOpenEnd("div");
           $context["card-package"].render({
             "onclick": function(event) {
-              return generateLink(pkg.id);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return generateLink.bind(this)(pkg.id);
             },
             "pkg": pkg
           }, function(slotName) {});

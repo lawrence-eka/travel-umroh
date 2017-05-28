@@ -1,0 +1,1 @@
+{"id": "09575dd600bdcb83", "entry":{"arrival": 1601591580000,"arriveAt": "ZRH","departFrom": "CGK","departure": 1591591560000,"transport": "Garuda Indonesia"}, "remarks": "test"}

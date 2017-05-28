@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/user/registration");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -58,10 +65,22 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     $context["profile"].render({
       "element": "dist.user.registration",
       "onsave": function(event) {
-        return register(event);
+        this.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, this);
+          if ('on' + eventName in _data) {
+            _data['on' + eventName](event);
+          }
+        };
+        return register.bind(this)(event);
       },
       "oncancel": function(event) {
-        return cancelRegistration();
+        this.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, this);
+          if ('on' + eventName in _data) {
+            _data['on' + eventName](event);
+          }
+        };
+        return cancelRegistration.bind(this)();
       }
     }, function(slotName) {});
     _elementOpenStart("script", "");

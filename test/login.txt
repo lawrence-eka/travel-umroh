@@ -1,4 +1,4 @@
 {
-	"username":"lawrence.eka",
+	"username":"aduh",
 	"password":"aduh"
 }

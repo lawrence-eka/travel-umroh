@@ -6,19 +6,26 @@ yalla.framework.addComponent("/dist/common/prototypes", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/common/prototypes");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   /**
    * Created by Lawrence Eka on 24-May-2017.
    */
 
   String.prototype.toSentenceCase = function() {
-    return this[0].toUpperCase() + this.substr(1).toLowerCase();
+    return this == '' ? '' : this[0].toUpperCase() + this.substr(1).toLowerCase();
   }
 
   String.prototype.toTitleCase = function() {
     var retval = "";
     var s = this.split(" ");
     for (var i = 0; i < s.length; i++) {
-      retval += s[i].toSentenceCase() + " ";
+      retval += s[i].trim().toSentenceCase() + " ";
     }
     return retval.trim();
   }

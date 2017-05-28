@@ -4,7 +4,7 @@
     <div>
         Travel Date: {{$pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil)}} <br/>
         Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
-        Tickets: {{$pkg.costTickets.toFormattedString()}}
+        Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
         <div class=row" if.bind="$onedit || $onshowItinerary">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">

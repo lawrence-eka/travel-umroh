@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -215,7 +222,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementOpenStart("form", "");
     _attr("role", "form");
     _attr("onsubmit", function(event) {
-      return register(this);
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return register.bind(this)(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("div", "");
@@ -349,7 +362,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr("value", "Payment Detail");
     _attr("class", "form-control btn btn-info btn-block margin-top-15px");
     _attr("onclick", function(event) {
-      return calculatePaymentDetail(_data.bookingId);
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return calculatePaymentDetail.bind(this)(_data.bookingId);
     });
     _elementOpenEnd("input");
     _elementClose("input");

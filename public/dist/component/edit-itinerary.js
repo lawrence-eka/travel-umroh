@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/edit-itinerary");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -16,48 +23,69 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _skip = IncrementalDOM.skip;
 
 
+  function onClick(button) {
+
+    x = button.value;
+    $patchChanges();
+  }
+
+  function setButtonClass(btn) {
+    return (btn == x ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
+  }
+
   var errorMessage = '';
   var x = "";
 
-  function loadItinerary(data, itinerary) {
+  function loadItinerary(itinerary) {
     itinerary = (itinerary ? itinerary : {
       entry: {}
     });
-    if (x == "") x = entryType(itinerary);
+    debugger;
+    if (x == "") {
+      if (itinerary && itinerary.entry && itinerary.entry.hotel) x = 'Hotel';
+      else x = 'Transport';
+    }
     return itinerary;
 
   }
 
   function save(form, onSave) {
-    var package = {};
+    if (form.form != null) form = form.form;
+    var itinerary = {};
     itinerary.id = form.elements.id.value;
-    itinerary.travelAgentId = form.elements.travelAgentId.value;
-    itinerary.packageName = form.elements.packageName.value;
-    itinerary.tourLeader = form.elements.tourLeader.value;
-    itinerary.validFrom = (new Date(form.elements.validFrom.value)).getTime();
-    itinerary.validUntil = (new Date(form.elements.validUntil.value)).getTime();
-    itinerary.costLandArrangements = form.elements.costLandArrangements.value;
-    itinerary.costTickets = form.elements.costTickets.value;
-    itinerary.isItineraryConfirmed = (form.elements.isItineraryConfirmed.value == "on");
-    itinerary.isPublished = (form.elements.isPublished.value == "on");
-    onSave(package);
+    itinerary.entry = {};
+    itinerary.remarks = form.elements.remarks.value;
+    if (x == 'Hotel') {
+      itinerary.entry.hotel = form.elements.hotel.value;
+      itinerary.entry.city = form.elements.city.value;
+      itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
+      itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
+    } else {
+      itinerary.entry.transport = form.elements.airline.value;
+      itinerary.entry.departFrom = form.elements.departFrom.value;
+      itinerary.entry.arriveAt = form.elements.arriveAt.value;
+      itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
+      itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
+    }
+    onSave(itinerary).then(function(err) {
+      if (err) {
+        debugger;
+        errorMessage = JSON.stringify(err);
+      } else {
+        errorMessage = "";
+      }
+      $patchChanges();
+    });
   }
 
-  function xx(c) {
-    return x == c;
-  }
-
-  function onEntryTypeChanged(et, data) {
-    data.entry = {};
-    if (et.value == 'Hotel') data.entry.hotel = "";
-    else data.entry.transport = "";
-    x = entryType(data);
-    $patchChanges();
+  function isVisible(group) {
+    if (x == group) return "";
+    else return "setHidden";
   }
 
   function entryType(data) {
-    if (data.entry && data.entry.hotel != null) return 'Hotel';
-    else return 'Transport';
+    if (!entry) return 'Transport';
+    else return entry.transport;
   }
 
 
@@ -70,6 +98,10 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _elementClose("link");
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
+    _elementOpenStart("style", "");
+    _elementOpenEnd("style");
+    _text("\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
+    _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.edit-itinerary");
     _attr("class", "container all-5px");
@@ -110,9 +142,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
       function asyncFunc__1(data) {
         _elementOpenStart("form", "");
         _attr("role", "form");
-        _attr("onsubmit", function(event) {
-          return save(this, _data.onsave);
-        });
         _elementOpenEnd("form");
         _elementOpenStart("input", "");
         _attr("type", "hidden");
@@ -130,237 +159,242 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("class", "row");
         _elementOpenEnd("div");
         _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Hotel");
+        _attr("name", "btnHotel");
+        _attr("class", setButtonClass('Hotel'));
+        _attr("onclick", function(event) {
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return onClick.bind(this)(this);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "button");
+        _attr("value", "Transport");
+        _attr("name", "btnTransport");
+        _attr("class", setButtonClass('Transport'));
+        _attr("onclick", function(event) {
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return onClick.bind(this)(this);
+        });
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", isVisible('Transport'));
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
         _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
         _elementOpenEnd("div");
         _elementOpenStart("div", "");
         _attr("class", "form-group");
         _elementOpenEnd("div");
-        _elementOpenStart("select", "");
-        _attr("class", "form-control");
-        _attr("name", "entryType");
-        _attr("id", "entryType");
-        _attr("onchange", function(event) {
-          return onEntryTypeChanged(this, data);
-        });
-        _elementOpenEnd("select");
-        _elementOpenStart("option", "");
-        _attr("value", "Hotel");
-        _attr("selected", entryType(data) == 'Hotel');
-        _elementOpenEnd("option");
-        _text("Hotel");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Transport");
-        _attr("selected", entryType(data) == 'Transport');
-        _elementOpenEnd("option");
-        _text("Airline");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Train");
-        _attr("selected", entryType(data) == 'Train');
-        _elementOpenEnd("option");
-        _text("Train");
-        _elementClose("option");
-        _elementOpenStart("option", "");
-        _attr("value", "Bus/Car");
-        _attr("selected", entryType(data) == 'Bus/Car');
-        _elementOpenEnd("option");
-        _text("Bus/Car");
-        _elementClose("option");
-        _elementClose("select");
+        _elementOpenStart("input", "");
+        _attr("type", "datetime-local");
+        _attr("name", "departure");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Departure");
+        _attr("value", (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : ''));
+        _elementOpenEnd("input");
+        _elementClose("input");
         _elementClose("div");
         _elementClose("div");
         _elementClose("div");
-        if (!xx('Hotel')) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "datetime-local");
-          _attr("name", "departure");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Departure");
-          _attr("value", (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : ''));
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "text");
-          _attr("name", "departFrom");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Depart From");
-          _attr("value", data.entry.departFrom);
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "datetime-local");
-          _attr("name", "arrival");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Arrival");
-          _attr("value", (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : ''));
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "text");
-          _attr("name", "arriveAt");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Arrive At");
-          _attr("value", data.entry.arriveAt);
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "text");
-          _attr("name", "airline");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Airline");
-          _attr("value", data.entry.airline);
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-        }
-        if (xx('Hotel')) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "datetime-local");
-          _attr("name", "checkIn");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Check In");
-          _attr("value", (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : ''));
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "datetime-local");
-          _attr("name", "checkOut");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Check Out");
-          _attr("value", (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : ''));
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "text");
-          _attr("name", "hotel");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "Hotel");
-          _attr("value", data.entry.hotel);
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementOpenStart("div", "");
-          _attr("class", "row");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-          _elementOpenEnd("div");
-          _elementOpenStart("div", "");
-          _attr("class", "form-group");
-          _elementOpenEnd("div");
-          _elementOpenStart("input", "");
-          _attr("type", "text");
-          _attr("name", "city");
-          _attr("class", "form-control input-sm");
-          _attr("placeholder", "City");
-          _attr("value", data.entry.city);
-          _elementOpenEnd("input");
-          _elementClose("input");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-          _elementClose("div");
-        }
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "departFrom");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Depart From");
+        _attr("value", data.entry.departFrom);
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "datetime-local");
+        _attr("name", "arrival");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Arrival");
+        _attr("value", (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : ''));
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "arriveAt");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Arrive At");
+        _attr("value", data.entry.arriveAt);
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "airline");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Airline");
+        _attr("value", data.entry.transport);
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", isVisible('Hotel'));
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "datetime-local");
+        _attr("name", "checkIn");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Check In");
+        _attr("value", (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : ''));
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "datetime-local");
+        _attr("name", "checkOut");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Check Out");
+        _attr("value", (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : ''));
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "hotel");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "Hotel");
+        _attr("value", data.entry.hotel);
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "form-group");
+        _elementOpenEnd("div");
+        _elementOpenStart("input", "");
+        _attr("type", "text");
+        _attr("name", "city");
+        _attr("class", "form-control input-sm");
+        _attr("placeholder", "City");
+        _attr("value", data.entry.city);
+        _elementOpenEnd("input");
+        _elementClose("input");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
+        _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
@@ -374,8 +408,8 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("name", "remarks");
         _attr("class", "form-control input-sm");
         _attr("placeholder", "Remarks");
-        _attr("value", data.remarks);
         _elementOpenEnd("textarea");
+        _text("" + (data.remarks) + "");
         _elementClose("textarea");
         _elementClose("div");
         _elementClose("div");
@@ -394,9 +428,18 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("class", "form-group");
         _elementOpenEnd("div");
         _elementOpenStart("input", "");
-        _attr("type", "submit");
+        _attr("type", "button");
         _attr("value", _data.itinerary ? 'Save' : 'Register');
         _attr("class", "btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return save.bind(this)(this, _data.onsave);
+        });
         _elementOpenEnd("input");
         _elementClose("input");
         _elementClose("div");
@@ -412,7 +455,13 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("value", "Cancel");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return _data.oncancel();
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return _data.oncancel.bind(this)();
         });
         _elementOpenEnd("input");
         _elementClose("input");

@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-itinerary");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -84,7 +91,13 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _attr("value", "Edit");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return _data.onedit(_data.itr.id);
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return _data.onedit.bind(this)(_data.itr.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -101,7 +114,13 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _attr("value", "Delete");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return _data.ondelete(_data.itr.id);
+          this.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, this);
+            if ('on' + eventName in _data) {
+              _data['on' + eventName](event);
+            }
+          };
+          return _data.ondelete.bind(this)(_data.itr.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");

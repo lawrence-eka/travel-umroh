@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/myPackages");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -90,7 +97,13 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
             _attr("value", "New Package");
             _attr("class", "form-control btn btn-info btn-block");
             _attr("onclick", function(event) {
-              return onNewPackage(_data.travelAgentId);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return onNewPackage.bind(this)(_data.travelAgentId);
             });
             _elementOpenEnd("input");
             _elementClose("input");
@@ -99,10 +112,22 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
         if (_data.editPackageId == -1) {
           $context["edit-package"].render({
             "onsave": function(event) {
-              return onSavePackage(event, _data.travelAgentId);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return onSavePackage.bind(this)(event, _data.travelAgentId);
             },
             "oncancel": function(event) {
-              return onCancelEdit(_data.travelAgentId);
+              this.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, this);
+                if ('on' + eventName in _data) {
+                  _data['on' + eventName](event);
+                }
+              };
+              return onCancelEdit.bind(this)(_data.travelAgentId);
             }
           }, function(slotName) {});
         }
@@ -120,10 +145,22 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
                 $context["card-package"].render({
                   "pkg": pkg,
                   "onedit": function(event) {
-                    return onEditPackage(event, _data.travelAgentId);
+                    this.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, this);
+                      if ('on' + eventName in _data) {
+                        _data['on' + eventName](event);
+                      }
+                    };
+                    return onEditPackage.bind(this)(event, _data.travelAgentId);
                   },
                   "onshowItinerary": function(event) {
-                    return onShowItinerary(event);
+                    this.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, this);
+                      if ('on' + eventName in _data) {
+                        _data['on' + eventName](event);
+                      }
+                    };
+                    return onShowItinerary.bind(this)(event);
                   }
                 }, function(slotName) {});
               }
@@ -131,10 +168,22 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
                 $context["edit-package"].render({
                   "package": pkg,
                   "onsave": function(event) {
-                    return onSavePackage(event, _data.travelAgentId);
+                    this.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, this);
+                      if ('on' + eventName in _data) {
+                        _data['on' + eventName](event);
+                      }
+                    };
+                    return onSavePackage.bind(this)(event, _data.travelAgentId);
                   },
                   "oncancel": function(event) {
-                    return onCancelEdit(_data.travelAgentId);
+                    this.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, this);
+                      if ('on' + eventName in _data) {
+                        _data['on' + eventName](event);
+                      }
+                    };
+                    return onCancelEdit.bind(this)(_data.travelAgentId);
                   }
                 }, function(slotName) {});
               }

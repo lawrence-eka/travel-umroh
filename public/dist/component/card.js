@@ -6,6 +6,13 @@ yalla.framework.addComponent("/dist/component/card", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card");
+
+  function ComponentEvent(type, data, target) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -28,7 +35,13 @@ yalla.framework.addComponent("/dist/component/card", (function() {
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card");
     _attr("onclick", function(event) {
-      return _data.onclick();
+      this.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, this);
+        if ('on' + eventName in _data) {
+          _data['on' + eventName](event);
+        }
+      };
+      return _data.onclick.bind(this)();
     });
     _attr("class", "panel panel-default");
     _attr("style", isClickable(_data.onclick));

@@ -3,12 +3,12 @@
 <inject from="/component/header" name="app-header"></inject>
 <inject from="/component/footer" name="app-footer"></inject>
 
+
 <div class="container">
     <div data.load="checkCurrentUser()">
         <div if.bind="data">
             <app-header></app-header>
             <slot-view></slot-view>
-            <app-footer></app-footer>
         </div>
         <div if.bind="!data">
             <div if.bind="path().indexOf('registration') >= 0">
@@ -20,6 +20,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script>
