@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/header", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/header");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -22,8 +15,6 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-
-  var strings = $inject("/common/strings");
 
   function generateMenu(me) {
     if (!me) return [];
@@ -144,13 +135,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
             _elementOpenStart("a", "");
             _attr("href", menu.ref);
             _attr("onclick", function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return hideMenu.bind(this)();
+              return hideMenu();
             });
             _elementOpenEnd("a");
             _text("" + (menu.label) + "");
@@ -160,13 +145,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
             _elementOpenStart("a", "");
             _attr("href", "#");
             _attr("onclick", function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return logout.bind(this)();
+              return logout();
             });
             _elementOpenEnd("a");
             _text("" + (menu.label) + "");

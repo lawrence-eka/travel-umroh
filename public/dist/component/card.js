@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/card", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -34,14 +27,19 @@ yalla.framework.addComponent("/dist/component/card", (function() {
   function $render(_data, _slotView) {
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "container all-5px");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row centered-form no-top-margin");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
     _attr("onclick", function(event) {
-      this.emitEvent = function(eventName, data) {
-        var event = new ComponentEvent(eventName, data, this);
-        if ('on' + eventName in _data) {
-          _data['on' + eventName](event);
-        }
-      };
-      return _data.onclick.bind(this)();
+      return _data.onclick();
     });
     _attr("class", "panel panel-default");
     _attr("style", isClickable(_data.onclick));
@@ -74,6 +72,10 @@ yalla.framework.addComponent("/dist/component/card", (function() {
       }
       _elementClose("div");
     }
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
+    _elementClose("div");
     _elementClose("div");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");

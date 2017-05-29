@@ -2,7 +2,9 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/userProfile" name="profile"></inject>
 
-<profile save.trigger="register(event)" cancel.trigger="cancelRegistration()"></profile>
+<div class="container margin-top-15px">
+    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()"></profile>
+</div>
 
 <script>
 
@@ -12,22 +14,22 @@
         window.location.hash = "#app";
     }
     function register(profile){
-        dpd.users.post(profile, function(user, err) {
-            if(err){
-                errorMessage = err.message;
-                $patchChanges();
-            }else{
-                dpd.users.login({"username": q.username, "password": q.password}, function(user, err) {
-                    if(err){
-                        errorMessage = err.message;
-                        $patchChanges();
-                    }else{
-                        window.location.hash = '#app';
-                    }
-                });
-            }
+        return new Promise(function(resolve){
+            dpd.users.post(profile, function(user, err) {
+                if(err){
+                    resolve(err);
+                }else{
+                    dpd.users.login({"username": profile.username, "password": profile.password}, function(user, err) {
+                        if(err){
+                            resolve(err);
+                        }else{
+                            window.location.hash = '#app';
+                            resolve(null);
+                        }
+                    });
+                }
+            });
         });
-        return false;
     }
 </script>
 

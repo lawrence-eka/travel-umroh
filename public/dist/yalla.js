@@ -331,22 +331,6 @@
 
 })(typeof window != 'undefined' ? window : typeof global != 'undefined' ? global : typeof self != 'undefined' ? self : this);
 
-// from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
-(function (arr) {
-    arr.forEach(function (item) {
-        if (item.hasOwnProperty('remove')) {
-            return;
-        }
-        Object.defineProperty(item, 'remove', {
-            configurable: true,
-            enumerable: true,
-            writable: true,
-            value: function remove() {
-                this.parentNode.removeChild(this);
-            }
-        });
-    });
-})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
 
 /**
@@ -1721,25 +1705,7 @@ var yalla = (function () {
 
     log.error = function (message) {
         console.log('%c' + message, 'font-size:1.2em;color:red;font-family=verdana');
-        showErrorInBrowser(message);
     };
-
-    function showErrorInBrowser(message){
-        var errorDiv = document.createElement('div');
-        errorDiv.style = 'background:#000;color: red;padding:10px;position:fixed;bottom:0px;right:0px;left:0px;z-index:10000;';
-        var deleteButton = document.createElement('button');
-        deleteButton.innerText = 'OK';
-        deleteButton.style = 'float:right;background-color: #4CAF50; /* Green */ border: none; padding:5px; color: white; text-align: center; text-decoration: none; display: inline-block; font-size: 12px;';
-        deleteButton.onclick = function(event){
-            event.target.parentNode.remove();
-        };
-        var messageDiv = document.createElement('div');
-        messageDiv.innerText = message;
-        messageDiv.style = 'font-size:20px';
-        errorDiv.appendChild(deleteButton);
-        errorDiv.appendChild(messageDiv);
-        document.body.appendChild(errorDiv);
-    }
 
     var utils = yalla.utils;
 
@@ -1805,16 +1771,12 @@ var yalla = (function () {
 
         return new Promise(function (resolve, reject) {
             var req = createXMLHTTPObject();
-            req.timeout = 2000;
             if (!req) return;
             var method = (postData) ? "POST" : "GET";
             req.open(method, url, true);
             if (postData) {
                 req.setRequestHeader('Content-type', 'application/json');
             }
-            req.ontimeout = function (e) {
-                reject(req);
-            };
             req.onreadystatechange = function () {
                 if (req.readyState != 4) return;
                 if (req.status != 200 && req.status != 304) {
@@ -1901,16 +1863,11 @@ var yalla = (function () {
     };
 
     framework.loadScriptAndDependency = function (component) {
-        if(component.indexOf('.')>0){
-            log.error('Invalid dependency : '+component);
-            return Promise.reject();
-        }
         var componentPath = framework.composePathFromBase(component);
         if (componentPath in yalla.components) {
             return Promise.resolve(true);
         }
         var url = componentPath + framework.filePrefix;
-
         var relativePath = component.substring(0, component.lastIndexOf("/") + 1);
         return new Promise(function (resolve) {
             utils.fetch('.' + url).then(function (req) {
@@ -1921,7 +1878,7 @@ var yalla = (function () {
                 if (utils.nonEmptyArray(injects)) {
                     var injectsPromise = injects.map(function (inject) {
                         if (inject.charAt(0) != '/') {
-                            inject = "/" + inject;
+                            inject = "/" + relativePath + inject;
                         }
                         return framework.loadScriptAndDependency(inject);
                     });
@@ -2069,24 +2026,7 @@ var yalla = (function () {
 
 
     var attributes = IncrementalDOM.attributes;
-    // html5 boolean attributes
-    /*
-     checked             (input type=checkbox/radio)
-     selected            (option)
-     disabled            (input, textarea, button, select, option, optgroup)
-     readonly            (input type=text/password, textarea)
-     multiple            (select)
-     ismap     isMap     (img, input type=image)
-
-     defer               (script)
-     declare             (object; never used)
-     noresize  noResize  (frame)
-     nowrap    noWrap    (td, th; deprecated)
-     noshade   noShade   (hr; deprecated)
-     compact             (ul, ol, dl, menu, dir; deprecated)
-     */
-
-    ['checked','selected','disabled','readonly','required','multiple','ismap'].forEach(function(key){
+    ['checked','required','selected'].forEach(function(key){
         attributes[key] = function (element, name, value) {
             if (value) {
                 element.setAttribute(key, true);

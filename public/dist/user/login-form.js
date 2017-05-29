@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/user/login-form");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -48,76 +41,26 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   function $render(_data, _slotView) {
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
-    _elementOpenStart("html", "");
+    _elementOpenStart("link", "");
     _attr("element", "dist.user.login-form");
-    _attr("lang", "en");
-    _elementOpenEnd("html");
-    _elementOpenStart("head", "");
-    _elementOpenEnd("head");
-    _elementOpenStart("meta", "");
-    _attr("charset", "utf-8");
-    _elementOpenEnd("meta");
-    _elementClose("meta");
-    _elementOpenStart("meta", "");
-    _attr("http-equiv", "X-UA-Compatible");
-    _attr("content", "IE=edge");
-    _elementOpenEnd("meta");
-    _elementClose("meta");
-    _elementOpenStart("meta", "");
-    _attr("name", "viewport");
-    _attr("content", "width=device-width, initial-scale=1");
-    _elementOpenEnd("meta");
-    _elementClose("meta");
-    _elementOpenStart("meta", "");
-    _attr("name", "description");
-    _attr("content", "");
-    _elementOpenEnd("meta");
-    _elementClose("meta");
-    _elementOpenStart("meta", "");
-    _attr("name", "author");
-    _attr("content", "");
-    _elementOpenEnd("meta");
-    _elementClose("meta");
-    _elementOpenStart("link", "");
-    _attr("rel", "icon");
-    _attr("href", "../asset/favicon.ico");
-    _elementOpenEnd("link");
-    _elementClose("link");
-    _elementOpenStart("title", "");
-    _elementOpenEnd("title");
-    _text("Signin Template for Bootstrap");
-    _elementClose("title");
-    _elementOpenStart("link", "");
-    _attr("href", "../asset/css/bootstrap.min.css");
-    _attr("rel", "stylesheet");
-    _elementOpenEnd("link");
-    _elementClose("link");
-    _elementOpenStart("link", "");
-    _attr("href", "../assets/css/ie10-viewport-bug-workaround.css");
-    _attr("rel", "stylesheet");
-    _elementOpenEnd("link");
-    _elementClose("link");
-    _elementOpenStart("link", "");
     _attr("href", "/asset/css/signin.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
     _elementClose("link");
-    _elementClose("head");
-    _elementOpenStart("body", "");
-    _elementOpenEnd("body");
+    _elementOpenStart("link", "");
+    _attr("element", "dist.user.login-form");
+    _attr("href", "asset/css/registration.css");
+    _attr("rel", "stylesheet");
+    _elementOpenEnd("link");
+    _elementClose("link");
     _elementOpenStart("div", "");
-    _attr("class", "container");
+    _attr("element", "dist.user.login-form");
+    _attr("class", "container  margin-top-login-panel");
     _elementOpenEnd("div");
     _elementOpenStart("form", "");
     _attr("class", "form-signin");
     _attr("onsubmit", function(event) {
-      this.emitEvent = function(eventName, data) {
-        var event = new ComponentEvent(eventName, data, this);
-        if ('on' + eventName in _data) {
-          _data['on' + eventName](event);
-        }
-      };
-      return login.bind(this)(this);
+      return login(this);
     });
     _elementOpenEnd("form");
     _elementOpenStart("h2", "");
@@ -188,8 +131,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _attr("src", "../assets/js/ie10-viewport-bug-workaround.js");
     _elementOpenEnd("script");
     _elementClose("script");
-    _elementClose("body");
-    _elementClose("html");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");
     _elementClose("script");

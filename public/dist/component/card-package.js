@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-package");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -29,13 +22,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
       "element": "dist.component.card-package",
       "title": _data.pkg.packageName,
       "onclick": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.onclick.bind(this)();
+        return _data.onclick();
       }
     }, function(slotName) {
       _elementOpenStart("div", "");
@@ -64,13 +51,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
         _attr("value", "Edit");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return _data.onedit.bind(this)(_data.pkg.id);
+          return _data.onedit(_data.pkg.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -87,13 +68,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
         _attr("value", "Itinerary...");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return _data.onshowItinerary.bind(this)(_data.pkg.id);
+          return _data.onshowItinerary(_data.pkg.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");

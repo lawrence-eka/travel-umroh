@@ -1,8 +1,17 @@
 <div class.bind="className($alertType)" role="alert" if.bind="$message">
-    <label >{{($titleCase ? $message.toTitleCase() : $message.toSentenceCase())}}</label>
+    <p for.each="error in messages($message, $alertType, $titleCase)">{{error}}</p>
 </div>
 
 <script>
+    function messages(msg, alertType, titleCase) {
+        if(alertType != "error") {
+            return (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
+        } else {
+            var msgs = toErrorMessages(msg);
+            for(var i = 0; i < msgs.length; i++) msgs[i]  = msgs[i].toSentenceCase();
+            return msgs;
+        }
+    }
     function className(alertType)
     {
     	var base = "alert ";
@@ -11,5 +20,29 @@
 	    else if(alertType == "info") return base + "alert-info";
 	    else if(alertType == "warning") return base + "alert-warning";
 	    return base;
+    }
+
+    toErrorMessages = function(err) {
+        var result = [];
+        if (typeof err === "string") {
+            result.push(err);
+        }
+        else if (err.hasOwnProperty("error")) {
+            result.push(err.error);
+        }
+        else if (err.hasOwnProperty("errors")) {
+            var errorList = [];
+            if (!err.errors.length) errorList.push(err.errors)
+            else errorList = err.errors;
+
+            for (var i in errorList) {
+                for (var name in errorList[i]) {
+                    if (errorList[i].hasOwnProperty(name)) {
+                        result.push(name + ": " + errorList[i][name]);
+                    }
+                }
+            }
+        }
+        return result;
     }
 </script>

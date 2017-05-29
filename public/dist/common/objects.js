@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/common/objects", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/common/objects");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   /**
    * Created by Lawrence Eka on 24-May-2017.
    */

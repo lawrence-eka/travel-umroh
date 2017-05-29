@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/card-user-approvals", (function() 
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-user-approvals");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -57,13 +50,7 @@ yalla.framework.addComponent("/dist/component/card-user-approvals", (function() 
       _attr("value", "Approve");
       _attr("class", "form-control btn btn-info btn-block margin-top-15px");
       _attr("onclick", function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.onapprove.bind(this)(_data.user);
+        return _data.onapprove(_data.user);
       });
       _elementOpenEnd("input");
       _elementClose("input");
@@ -80,13 +67,7 @@ yalla.framework.addComponent("/dist/component/card-user-approvals", (function() 
       _attr("value", "Reject");
       _attr("class", "form-control btn btn-info btn-block margin-top-15px");
       _attr("onclick", function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.onreject.bind(this)(_data.user);
+        return _data.onreject(_data.user);
       });
       _elementOpenEnd("input");
       _elementClose("input");

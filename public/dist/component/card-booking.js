@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-booking");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -50,13 +43,7 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     $context["card"].render({
       "element": "dist.component.card-booking",
       "onclick": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.onclick.bind(this)();
+        return _data.onclick();
       }
     }, function(slotName) {
       _elementOpenStart("div", "");

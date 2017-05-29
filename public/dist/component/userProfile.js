@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/userProfile");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -30,6 +23,8 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
   }
 
   function register(form, onSave) {
+    errorMessage = "";
+    if (form.form) form = form.form;
     var profile = {};
     profile.id = form.elements.id.value;
     profile.firstName = form.elements.firstName.value;
@@ -42,11 +37,18 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     var repeatPassword = form.elements.repeatPassword.value;
 
     profile.address1 = form.elements.address1.value;
-    profile.address2 = form.elements.address2.value;
     profile.city = form.elements.city.value;
     profile.isAdmin = (form.elements.isAdmin.value == "on");
     profile.isTravelAgent = (form.elements.isTravelAgent.value == "on");
-    onSave(profile);
+
+    onSave(profile).then(function(err) {
+      debugger;
+      if (err) {
+        errorMessage = err;
+      }
+      $patchChanges();
+    });
+
   }
 
   function $render(_data, _slotView) {
@@ -102,15 +104,6 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
       function asyncFunc__1(data) {
         _elementOpenStart("form", "");
         _attr("role", "form");
-        _attr("onsubmit", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return register.bind(this)(this, _data.onsave);
-        });
         _elementOpenEnd("form");
         _elementOpenStart("input", "");
         _attr("type", "hidden");
@@ -198,7 +191,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
         _attr("class", "form-control input-sm");
         _attr("placeholder", "Address");
         _elementOpenEnd("textarea");
-        _text("" + (data.address1) + "");
+        _text("" + ((data.address1 ? data.address1 : '')) + "");
         _elementClose("textarea");
         _elementClose("div");
         _elementOpenStart("div", "");
@@ -341,9 +334,12 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
         _attr("class", "form-group");
         _elementOpenEnd("div");
         _elementOpenStart("input", "");
-        _attr("type", "submit");
+        _attr("type", "button");
         _attr("value", _data.profile ? 'Save' : 'Register');
         _attr("class", "btn btn-info btn-block");
+        _attr("onclick", function(event) {
+          return register(this, _data.onsave);
+        });
         _elementOpenEnd("input");
         _elementClose("input");
         _elementClose("div");
@@ -359,13 +355,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
         _attr("value", "Cancel");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return _data.oncancel.bind(this)();
+          return _data.oncancel();
         });
         _elementOpenEnd("input");
         _elementClose("input");

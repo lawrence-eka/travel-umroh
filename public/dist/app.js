@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/app", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/app");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -22,7 +15,7 @@ yalla.framework.addComponent("/dist/app", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  $inject("/common/prototypes");
+  //$inject("/common/prototypes");
 
   function path() {
     return $path;
@@ -41,12 +34,14 @@ yalla.framework.addComponent("/dist/app", (function() {
   function $render(_data, _slotView) {
     $context["login-panel"] = $inject("/user/login-form");
     var loginPanel = $context["login-panel"];
-    $context["registration-panel"] = $inject("/user/registration");
-    var registrationPanel = $context["registration-panel"];
     $context["app-header"] = $inject("/component/header");
     var appHeader = $context["app-header"];
-    $context["app-footer"] = $inject("/component/footer");
-    var appFooter = $context["app-footer"];
+    _elementOpenStart("link", "");
+    _attr("element", "dist.app");
+    _attr("href", "asset/css/registration.css");
+    _attr("rel", "stylesheet");
+    _elementOpenEnd("link");
+    _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.app");
     _attr("class", "container");
@@ -57,7 +52,7 @@ yalla.framework.addComponent("/dist/app", (function() {
       var node = domNode.element;
 
       function asyncFunc__1(data) {
-        if (data) {
+        if (data || (path().indexOf('registration') >= 0)) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
           $context["app-header"].render({}, function(slotName) {});
@@ -67,18 +62,7 @@ yalla.framework.addComponent("/dist/app", (function() {
         if (!data) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          if (path().indexOf('registration') >= 0) {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            $context["registration-panel"].render({}, function(slotName) {});
-            _elementClose("div");
-          }
-          if (path().indexOf('registration') < 0) {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            $context["login-panel"].render({}, function(slotName) {});
-            _elementClose("div");
-          }
+          $context["login-panel"].render({}, function(slotName) {});
           _elementClose("div");
         }
       }

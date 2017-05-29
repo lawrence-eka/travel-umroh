@@ -2,7 +2,9 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/userProfile" name="profile"></inject>
 
-<profile profile.bind="getMyProfile()" save.trigger="save(event)" cancel.trigger="cancel()"></profile>
+<div>
+    <profile profile.bind="getMyProfile()" save.trigger="save(event)" cancel.trigger="cancel()"></profile>
+</div>
 
 <script>
 
@@ -21,13 +23,15 @@
 		window.location.hash = "#app";
 	}
 	function save(profile){
-		dpd.users.put(profile.id, profile, function(user, err) {
-			if(err){
-				errorMessage = err.message;
-			}
-			$patchChanges();
-		});
-		return false;
+	    return new Promise(function(resolve){
+            dpd.users.put(profile.id, profile, function(user, err) {
+                if(err) {
+                    resolve(err)
+                } else {
+                    window.location.hash = '#app';
+                }
+            });
+        });
 	}
 </script>
 

@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/action/myProfile", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/myProfile");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -39,13 +32,15 @@ yalla.framework.addComponent("/dist/action/myProfile", (function() {
   }
 
   function save(profile) {
-    dpd.users.put(profile.id, profile, function(user, err) {
-      if (err) {
-        errorMessage = err.message;
-      }
-      $patchChanges();
+    return new Promise(function(resolve) {
+      dpd.users.put(profile.id, profile, function(user, err) {
+        if (err) {
+          resolve(err)
+        } else {
+          window.location.hash = '#app';
+        }
+      });
     });
-    return false;
   }
 
   function $render(_data, _slotView) {
@@ -59,28 +54,19 @@ yalla.framework.addComponent("/dist/action/myProfile", (function() {
     var alert = $context["alert"];
     $context["profile"] = $inject("/component/userProfile");
     var profile = $context["profile"];
+    _elementOpenStart("div", "");
+    _attr("element", "dist.action.myProfile");
+    _elementOpenEnd("div");
     $context["profile"].render({
-      "element": "dist.action.myProfile",
       "profile": getMyProfile(),
       "onsave": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return save.bind(this)(event);
+        return save(event);
       },
       "oncancel": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return cancel.bind(this)();
+        return cancel();
       }
     }, function(slotName) {});
+    _elementClose("div");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");
     _elementClose("script");

@@ -2,6 +2,8 @@ curl -k -X POST -H "Content-Type: application/json" -d @newUser.txt https://loca
 
 curl -k -X POST -H "Content-Type: application/json" -d @login.txt https://localhost/users/login -c cookie.txt > result.txt
 
+curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/users -d @getNeedApprovals.txt > result.txt
+
 curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/users > result.txt
 
 curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/users/d8589ac69fc3c9b9 -d @updateUser.txt > result.txt
@@ -29,6 +31,8 @@ curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localho
 curl -k -X GET -H "Content-Type: application/json" -b cookie.txt "https://localhost/packages?showNext=4" > result.txt
 
 curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localhost/itineraries -d @newItinerary.txt > result.txt
+
+curl -k -X PUT -H "Content-Type: application/json" -b cookie.txt https://localhost/itineraries/09575dd600bdcb83 -d @updateItinerary.txt> result.txt
 
 curl -k -X DELETE -H "Content-Type: application/json" -b cookie.txt https://localhost/itineraries/0d2599e6de083881 > result.txt
 

@@ -49,5 +49,9 @@ body{
 }
 
 .margin-top-15px {
-    margin-top: 15px;
+    margin-top: 5px !important;
+    padding-top: 5px !important;
 }
+.margin-top-login-panel {
+     padding-top: 220px !important;
+ }
