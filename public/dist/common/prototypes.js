@@ -6,16 +6,15 @@ yalla.framework.addComponent("/dist/common/prototypes", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/common/prototypes");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   /**
    * Created by Lawrence Eka on 24-May-2017.
    */
+
+
+  String.prototype.replaceAll = function(toFind, replaceWith) {
+    return this.split(toFind).join(replaceWith);
+  }
+
 
   String.prototype.toSentenceCase = function() {
     return this == '' ? '' : this[0].toUpperCase() + this.substr(1).toLowerCase();
@@ -111,7 +110,9 @@ yalla.framework.addComponent("/dist/common/prototypes", (function() {
   Number.prototype.toYYYYMMDD = function(withHHMM) {
     return (new Date(this)).toYYYYMMDD(withHHMM);
   }
+  /*
 
+  */
   if (typeof $render === "function") {
     $export.render = $render;
   }

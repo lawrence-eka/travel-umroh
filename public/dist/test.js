@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/test", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/test");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -38,7 +31,7 @@ yalla.framework.addComponent("/dist/test", (function() {
   function $render(_data, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\n[element='dist.test'] .hideThis {display:none;}");
+    _text("\r\n[element='dist.test'] .hideThis {display:none;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.test");
@@ -46,13 +39,7 @@ yalla.framework.addComponent("/dist/test", (function() {
     _elementOpenStart("input", "");
     _attr("type", "button");
     _attr("onclick", function(event) {
-      this.emitEvent = function(eventName, data) {
-        var event = new ComponentEvent(eventName, data, this);
-        if ('on' + eventName in _data) {
-          _data['on' + eventName](event);
-        }
-      };
-      return onclick.bind(this)();
+      return onclick();
     });
     _elementOpenEnd("input");
     _elementClose("input");

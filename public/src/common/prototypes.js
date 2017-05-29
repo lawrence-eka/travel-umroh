@@ -2,6 +2,12 @@
  * Created by Lawrence Eka on 24-May-2017.
  */
 
+
+String.prototype.replaceAll = function(toFind, replaceWith) {
+	return this.split(toFind).join(replaceWith);
+}
+
+
 String.prototype.toSentenceCase = function() {
 	return this == '' ? '' : this[0].toUpperCase() + this.substr(1).toLowerCase();
 }
@@ -104,3 +110,6 @@ Number.prototype.toFormattedString = function( c, d, t){
 Number.prototype.toYYYYMMDD = function(withHHMM) {
 	return (new Date(this)).toYYYYMMDD(withHHMM);
 }
+/*
+
+*/

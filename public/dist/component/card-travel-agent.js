@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/card-travel-agent");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -50,13 +43,7 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
       _attr("value", "Edit Info");
       _attr("class", "form-control btn btn-info btn-block margin-top-15px");
       _attr("onclick", function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.oneditTA.bind(this)();
+        return _data.oneditTA();
       });
       _elementOpenEnd("input");
       _elementClose("input");
@@ -73,13 +60,7 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
       _attr("value", "Packages...");
       _attr("class", "form-control btn btn-info btn-block margin-top-15px");
       _attr("onclick", function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return _data.onshowPackages.bind(this)();
+        return _data.onshowPackages();
       });
       _elementOpenEnd("input");
       _elementClose("input");

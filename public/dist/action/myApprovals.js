@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/myApprovals");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -92,22 +85,10 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
           $context["card-user-approvals"].render({
             "user": user,
             "onapprove": function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return onApprove.bind(this)(event, true);
+              return onApprove(event, true);
             },
             "onreject": function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return onApprove.bind(this)(event, false);
+              return onApprove(event, false);
             }
           }, function(slotName) {});
           _elementClose("p");

@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/list-editor");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -133,13 +126,7 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
         _attr("value", _data.addButtonTitle);
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return onAdd.bind(this)(_data.packageId);
+          return onAdd(_data.packageId);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -156,22 +143,10 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
       $context["edit-itinerary"].render({
         "element": "dist.component.list-editor",
         "onsave": function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return onSaveItinerary.bind(this)(event, _data.packageId);
+          return onSaveItinerary(event, _data.packageId);
         },
         "oncancel": function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return onCancelEdit.bind(this)(_data.packageId);
+          return onCancelEdit(_data.packageId);
         }
       }, function(slotName) {});
     }
@@ -190,22 +165,10 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
             $context["card-itinerary"].render({
               "itr": itr,
               "onedit": function(event) {
-                this.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, this);
-                  if ('on' + eventName in _data) {
-                    _data['on' + eventName](event);
-                  }
-                };
-                return onEdit.bind(this)(event, _data.packageId);
+                return onEdit(event, _data.packageId);
               },
               "ondelete": function(event) {
-                this.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, this);
-                  if ('on' + eventName in _data) {
-                    _data['on' + eventName](event);
-                  }
-                };
-                return onDelete.bind(this)(event);
+                return onDelete(event);
               }
             }, function(slotName) {});
           }
@@ -213,22 +176,10 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
             $context["edit-itinerary"].render({
               "itinerary": itr,
               "onsave": function(event) {
-                this.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, this);
-                  if ('on' + eventName in _data) {
-                    _data['on' + eventName](event);
-                  }
-                };
-                return onSaveItinerary.bind(this)(event, _data.packageId);
+                return onSaveItinerary(event, _data.packageId);
               },
               "oncancel": function(event) {
-                this.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, this);
-                  if ('on' + eventName in _data) {
-                    _data['on' + eventName](event);
-                  }
-                };
-                return onCancelEdit.bind(this)(_data.packageId);
+                return onCancelEdit(_data.packageId);
               }
             }, function(slotName) {});
           }

@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/action/myItinerary");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -139,13 +132,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
             _attr("value", "Add Itinerary");
             _attr("class", "form-control btn btn-info btn-block");
             _attr("onclick", function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return onAddItinerary.bind(this)(_data.packageId);
+              return onAddItinerary(_data.packageId);
             });
             _elementOpenEnd("input");
             _elementClose("input");
@@ -160,22 +147,10 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
         if (_data.editItineraryId == -1) {
           $context["edit-itinerary"].render({
             "onsave": function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return onSaveItinerary.bind(this)(event, _data.packageId);
+              return onSaveItinerary(event, _data.packageId);
             },
             "oncancel": function(event) {
-              this.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, this);
-                if ('on' + eventName in _data) {
-                  _data['on' + eventName](event);
-                }
-              };
-              return onCancelEdit.bind(this)(_data.packageId);
+              return onCancelEdit(_data.packageId);
             }
           }, function(slotName) {});
         }
@@ -193,22 +168,10 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                 $context["card-itinerary"].render({
                   "itr": itr,
                   "onedit": function(event) {
-                    this.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, this);
-                      if ('on' + eventName in _data) {
-                        _data['on' + eventName](event);
-                      }
-                    };
-                    return onEdit.bind(this)(event, _data.packageId);
+                    return onEdit(event, _data.packageId);
                   },
                   "ondelete": function(event) {
-                    this.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, this);
-                      if ('on' + eventName in _data) {
-                        _data['on' + eventName](event);
-                      }
-                    };
-                    return onDelete.bind(this)(event);
+                    return onDelete(event);
                   }
                 }, function(slotName) {});
               }
@@ -216,22 +179,10 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                 $context["edit-itinerary"].render({
                   "itinerary": itr,
                   "onsave": function(event) {
-                    this.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, this);
-                      if ('on' + eventName in _data) {
-                        _data['on' + eventName](event);
-                      }
-                    };
-                    return onSaveItinerary.bind(this)(event, _data.packageId);
+                    return onSaveItinerary(event, _data.packageId);
                   },
                   "oncancel": function(event) {
-                    this.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, this);
-                      if ('on' + eventName in _data) {
-                        _data['on' + eventName](event);
-                      }
-                    };
-                    return onCancelEdit.bind(this)(_data.packageId);
+                    return onCancelEdit(_data.packageId);
                   }
                 }, function(slotName) {});
               }

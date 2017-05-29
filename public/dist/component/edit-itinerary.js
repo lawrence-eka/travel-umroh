@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/component/edit-itinerary");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -100,7 +93,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     var alert = $context["alert"];
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
+    _text("\r\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.edit-itinerary");
@@ -170,13 +163,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("name", "btnHotel");
         _attr("class", setButtonClass('Hotel'));
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return onClick.bind(this)(this);
+          return onClick(this);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -194,13 +181,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("name", "btnTransport");
         _attr("class", setButtonClass('Transport'));
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return onClick.bind(this)(this);
+          return onClick(this);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -432,13 +413,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("value", _data.itinerary ? 'Save' : 'Register');
         _attr("class", "btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return save.bind(this)(this, _data.onsave);
+          return save(this, _data.onsave);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -455,13 +430,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _attr("value", "Cancel");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          this.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, this);
-            if ('on' + eventName in _data) {
-              _data['on' + eventName](event);
-            }
-          };
-          return _data.oncancel.bind(this)();
+          return _data.oncancel();
         });
         _elementOpenEnd("input");
         _elementClose("input");

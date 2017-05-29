@@ -6,13 +6,6 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   var $context = {};
   var $patchRef = yalla.framework.patchRef;
   var $inject = yalla.framework.createInjector("/dist/user/registration");
-
-  function ComponentEvent(type, data, target) {
-    this.data = data;
-    this.target = target;
-    this.type = type;
-  }
-
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -30,25 +23,25 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   }
 
   function register(profile) {
-    dpd.users.post(profile, function(user, err) {
-      if (err) {
-        errorMessage = err.message;
-        $patchChanges();
-      } else {
-        dpd.users.login({
-          "username": q.username,
-          "password": q.password
-        }, function(user, err) {
-          if (err) {
-            errorMessage = err.message;
-            $patchChanges();
-          } else {
-            window.location.hash = '#app';
-          }
-        });
-      }
+    return new Promise(function(resolve) {
+      dpd.users.post(profile, function(user, err) {
+        if (err) {
+          resolve(err);
+        } else {
+          dpd.users.login({
+            "username": profile.username,
+            "password": profile.password
+          }, function(user, err) {
+            if (err) {
+              resolve(err);
+            } else {
+              window.location.hash = '#app';
+              resolve(null);
+            }
+          });
+        }
+      });
     });
-    return false;
   }
 
   function $render(_data, _slotView) {
@@ -62,27 +55,19 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     var alert = $context["alert"];
     $context["profile"] = $inject("/component/userProfile");
     var profile = $context["profile"];
+    _elementOpenStart("div", "");
+    _attr("element", "dist.user.registration");
+    _attr("class", "container margin-top-15px");
+    _elementOpenEnd("div");
     $context["profile"].render({
-      "element": "dist.user.registration",
       "onsave": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return register.bind(this)(event);
+        return register(event);
       },
       "oncancel": function(event) {
-        this.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, this);
-          if ('on' + eventName in _data) {
-            _data['on' + eventName](event);
-          }
-        };
-        return cancelRegistration.bind(this)();
+        return cancelRegistration();
       }
     }, function(slotName) {});
+    _elementClose("div");
     _elementOpenStart("script", "");
     _elementOpenEnd("script");
     _elementClose("script");
