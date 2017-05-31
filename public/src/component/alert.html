@@ -1,24 +1,16 @@
+<link href="asset/css/custom-style.css" rel="stylesheet">
 <div class.bind="className($alertType)" role="alert" if.bind="$message">
     <p for.each="error in messages($message, $alertType, $titleCase)">{{error}}</p>
 </div>
 
 <script>
-    function messages(msg, alertType, titleCase) {
-        if(alertType != "error") {
-            return (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
-        } else {
-            var msgs = toErrorMessages(msg);
-            for(var i = 0; i < msgs.length; i++) msgs[i]  = msgs[i].toSentenceCase();
-            return msgs;
-        }
-    }
     function className(alertType)
     {
-    	var base = "alert ";
-	    if(alertType == "error") return base + "alert-danger";
-	    else if(alertType == "success") return base + "alert-success";
-	    else if(alertType == "info") return base + "alert-info";
-	    else if(alertType == "warning") return base + "alert-warning";
+    	var base = "alert custom-alert ";
+	    if(alertType == "error") base = base + "alert-danger";
+	    else if(alertType == "success") base = base + "alert-success";
+	    else if(alertType == "info") base = base + "alert-info";
+	    else if(alertType == "warning") base = base + "alert-warning";
 	    return base;
     }
 
@@ -45,4 +37,15 @@
         }
         return result;
     }
+    function messages(msg, alertType, titleCase) {
+        var msgs = [];
+        if(alertType != "error") {
+            msgs.push(titleCase ? msg.toTitleCase() : msg.toSentenceCase());
+        } else {
+            var msgs = toErrorMessages(msg);
+            for(var i = 0; i < msgs.length; i++) msgs[i]  = msgs[i].toSentenceCase();
+        }
+        return msgs;
+    }
+
 </script>

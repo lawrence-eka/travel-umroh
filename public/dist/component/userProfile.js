@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/userProfile", (function() {
   var $path = "/dist/component/userProfile";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/userProfile");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,16 +22,34 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
+  function initState(props) {
+    return {}
+  };
 
-  var errorMessage = '';
 
-  function loadProfile(profile) {
+  function initState(props) {
+    return {
+      error: {
+        message: props.errorMessage
+      }
+    };
+  }
+
+  function loadProfile(profile, errorMessage) {
+    if (!this.state.error.message) this.state.error.message = errorMessage;
     return profile ? profile : {};
   }
 
-  function register(form, onSave) {
-    errorMessage = "";
-    if (form.form) form = form.form;
+  function onRegister() {
+    this.state.error.message = '';
+    var form = this.target.form;
+
+    if (form.elements.password.value != form.elements.repeatPassword.value) {
+      this.state.error.message = "Please repeat your password correctly";
+      $patchChanges();
+      return;
+    }
+
     var profile = {};
     profile.id = form.elements.id.value;
     profile.firstName = form.elements.firstName.value;
@@ -33,37 +58,45 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     profile.phone = form.elements.phone.value;
     profile.username = form.elements.email.value;
 
+    if (profile.username) profile.username = profile.username.toLowerCase();
     if (form.elements.password.value != '') profile.password = form.elements.password.value;
-    var repeatPassword = form.elements.repeatPassword.value;
 
     profile.address1 = form.elements.address1.value;
     profile.city = form.elements.city.value;
     profile.isAdmin = (form.elements.isAdmin.value == "on");
     profile.isTravelAgent = (form.elements.isTravelAgent.value == "on");
-
-    onSave(profile).then(function(err) {
-      debugger;
-      if (err) {
-        errorMessage = err;
-      }
-      $patchChanges();
-    });
-
+    debugger;
+    this.emitEvent('save', profile);
   }
 
-  function $render(_data, _slotView) {
+  function onCancel() {
+    this.emitEvent('cancel');
+  }
+
+
+  function $render(_props, _slotView) {
     _elementOpenStart("link", "");
     _attr("element", "dist.component.userProfile");
-    _attr("href", "asset/css/registration.css");
+    _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
+    $context["entry"] = $inject("/component/entry");
+    var entry = $context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.userProfile");
     _attr("class", "container all-5px");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
     _attr("class", "row centered-form no-top-margin");
     _elementOpenEnd("div");
@@ -71,19 +104,19 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "panel panel-default");
+    _attr("class", "panel panel-default frosted-glass");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "panel-heading");
     _elementOpenEnd("div");
-    if (_data.profile) {
+    if (_props.profile) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
       _text("Your Profile");
       _elementClose("h3");
     }
-    if (!_data.profile) {
+    if (!_props.profile) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
@@ -96,10 +129,21 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     }
     _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "panel-body");
+    _attr("class", "panel-body custom-panel-body");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         _elementOpenStart("form", "");
@@ -114,266 +158,160 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "firstName");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "First Name");
-        _attr("value", data.firstName);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "lastName");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Last Name");
-        _attr("value", data.lastName);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "First Name",
+          "name": "firstName",
+          "value": data.firstName
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Last Name",
+          "name": "lastName",
+          "value": data.lastName
+        }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "email");
-        _attr("name", "email");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Email Address");
-        _attr("value", data.email);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "phone");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Phone");
-        _attr("value", data.phone);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("textarea", "");
-        _attr("name", "address1");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Address");
-        _elementOpenEnd("textarea");
-        _text("" + ((data.address1 ? data.address1 : '')) + "");
-        _elementClose("textarea");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "city");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "City");
-        _attr("value", data.city);
-        _elementOpenEnd("input");
-        _elementClose("input");
+        $context["entry"].render({
+          "type": "email",
+          "prompt": "Email",
+          "name": "email",
+          "value": data.email
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Phone",
+          "name": "phone",
+          "value": data.phone
+        }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "checkbox");
-        _attr("name", "isTravelAgent");
-        _attr("id", "isTravelAgent");
-        _attr("autocomplete", "off");
-        _attr("checked", data.isTravelAgent);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementOpenStart("div", "");
-        _attr("class", "btn-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("label", "");
-        _attr("for", "isTravelAgent");
-        _attr("class", "btn btn-default btn-checkbox");
-        _elementOpenEnd("label");
-        _elementOpenStart("span", "");
-        _attr("class", "glyphicon glyphicon-ok");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementClose("label");
-        _elementOpenStart("label", "");
-        _attr("for", "isTravelAgent");
-        _attr("class", "btn btn-default active btn-checkbox");
-        _elementOpenEnd("label");
-        _text("Travel Agent");
-        _elementClose("label");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "checkbox");
-        _attr("name", "isAdmin");
-        _attr("id", "isAdmin");
-        _attr("autocomplete", "off");
-        _attr("checked", data.isAdmin);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementOpenStart("div", "");
-        _attr("class", "btn-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("label", "");
-        _attr("for", "isAdmin");
-        _attr("class", "btn btn-default btn-checkbox");
-        _elementOpenEnd("label");
-        _elementOpenStart("span", "");
-        _attr("class", "glyphicon glyphicon-ok");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementClose("label");
-        _elementOpenStart("label", "");
-        _attr("for", "isAdmin");
-        _attr("class", "btn btn-default active btn-checkbox");
-        _elementOpenEnd("label");
-        _text("Administrator");
-        _elementClose("label");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "textarea",
+          "prompt": "Address",
+          "name": "address1",
+          "value": data.address1
+        }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "password");
-        _attr("name", "password");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Password");
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "City",
+          "name": "city",
+          "value": data.city
+        }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
+        _attr("class", "row");
         _elementOpenEnd("div");
+        $context["entry"].render({
+          "type": "checkbox",
+          "prompt": "Travel Agent",
+          "name": "isTravelAgent",
+          "value": data.isTravelAgent
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "checkbox",
+          "prompt": "Administrator",
+          "name": "isAdmin",
+          "value": data.isAdmin
+        }, function(slotName) {});
+        _elementClose("div");
         _elementOpenStart("div", "");
-        _attr("class", "form-group");
+        _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "password");
-        _attr("name", "repeatPassword");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Confirm Password");
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "password",
+          "prompt": "Password",
+          "name": "password",
+          "value": data.password
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "password",
+          "prompt": "Repeat Password",
+          "name": "repeatPassword"
+        }, function(slotName) {});
         _elementClose("div");
         $context["alert"].render({
           "alertType": 'error',
-          "message": errorMessage
+          "message": __state.error.message
         }, function(slotName) {});
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", _data.profile ? 'Save' : 'Register');
-        _attr("class", "btn btn-info btn-block");
-        _attr("onclick", function(event) {
-          return register(this, _data.onsave);
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", "Cancel");
-        _attr("class", "form-control btn btn-info btn-block");
-        _attr("onclick", function(event) {
-          return _data.oncancel();
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "button",
+          "name": "btnSave",
+          "value": _props.profile ? 'Save' : 'Register',
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onRegister.bind(self)();
+          }
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "name": "btnCancel",
+          "value": "Cancel",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onCancel.bind(self)();
+          }
+        }, function(slotName) {});
         _elementClose("div");
         _elementClose("form");
       }
-      var promise = loadProfile(_data.profile);
+      var promise = loadProfile.bind(self)(_props.profile, _props.errorMessage);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
@@ -384,9 +322,6 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

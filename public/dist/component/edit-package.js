@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/edit-package", (function() {
   var $path = "/dist/component/edit-package";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/edit-package");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,6 +22,10 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
+  function initState(props) {
+    return {}
+  };
+
 
   var errorMessage = '';
 
@@ -22,7 +33,8 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     return package ? package : {};
   }
 
-  function save(form, onSave) {
+  function onSave() {
+    var form = this.target.form;
     var package = {};
     package.id = form.elements.id.value;
     package.travelAgentId = form.elements.travelAgentId.value;
@@ -34,22 +46,36 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     package.costTickets = form.elements.costTickets.value;
     package.isItineraryConfirmed = (form.elements.isItineraryConfirmed.value == "on");
     package.isPublished = (form.elements.isPublished.value == "on");
-    onSave(package);
+    this.emitEvent('save', package);
   }
 
-  function $render(_data, _slotView) {
+  function onCancel() {
+    this.emitEvent('cancel');
+  }
+
+  function $render(_props, _slotView) {
     _elementOpenStart("link", "");
     _attr("element", "dist.component.edit-package");
-    _attr("href", "asset/css/registration.css");
+    _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
+    $context["entry"] = $inject("/component/entry");
+    var entry = $context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.edit-package");
     _attr("class", "container all-5px");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
     _attr("class", "row centered-form no-top-margin");
     _elementOpenEnd("div");
@@ -57,19 +83,19 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "panel panel-default");
+    _attr("class", "panel panel-default custom-panel");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "panel-heading");
     _elementOpenEnd("div");
-    if (_data.package) {
+    if (_props.package) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
       _text("Edit Package Info");
       _elementClose("h3");
     }
-    if (!_data.package) {
+    if (!_props.package) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
@@ -82,253 +108,152 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         _elementOpenStart("form", "");
         _attr("role", "form");
-        _attr("onsubmit", function(event) {
-          return save(this, _data.onsave);
-        });
         _elementOpenEnd("form");
-        _elementOpenStart("input", "");
-        _attr("type", "hidden");
-        _attr("name", "id");
-        _attr("value", data.id);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementOpenStart("input", "");
-        _attr("type", "hidden");
-        _attr("name", "travelAgentId");
-        _attr("value", data.travelAgentId);
-        _elementOpenEnd("input");
-        _elementClose("input");
+        $context["entry"].render({
+          "type": "hidden",
+          "name": "id",
+          "value": data.id
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "hidden",
+          "name": "travelAgentId",
+          "value": data.travelAgentId
+        }, function(slotName) {});
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "packageName");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Package Name");
-        _attr("value", data.packageName);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "tourLeader");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Tour Leader");
-        _attr("value", data.tourLeader);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "date");
-        _attr("name", "validFrom");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Valid From");
-        _attr("value", data.validFrom);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "date");
-        _attr("name", "validUntil");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Valid Until");
-        _attr("value", data.validUntil);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "number");
-        _attr("name", "costLandArrangements");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Land Arrangements");
-        _attr("value", data.costLandArrangements);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "number");
-        _attr("name", "costTickets");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Tickets");
-        _attr("value", data.costTickets);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "checkbox");
-        _attr("name", "isItineraryConfirmed");
-        _attr("id", "isItineraryConfirmed");
-        _attr("autocomplete", "off");
-        _attr("checked", data.isItineraryConfirmed);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementOpenStart("div", "");
-        _attr("class", "btn-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("label", "");
-        _attr("for", "isItineraryConfirmed");
-        _attr("class", "btn btn-default btn-checkbox");
-        _elementOpenEnd("label");
-        _elementOpenStart("span", "");
-        _attr("class", "glyphicon glyphicon-ok");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementClose("label");
-        _elementOpenStart("label", "");
-        _attr("for", "isItineraryConfirmed");
-        _attr("class", "btn btn-default active btn-checkbox");
-        _elementOpenEnd("label");
-        _text("Itinerary Confirmed");
-        _elementClose("label");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "checkbox");
-        _attr("name", "isPublished");
-        _attr("id", "isPublished");
-        _attr("autocomplete", "off");
-        _attr("checked", data.isPublished);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementOpenStart("div", "");
-        _attr("class", "btn-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("label", "");
-        _attr("for", "isPublished");
-        _attr("class", "btn btn-default btn-checkbox");
-        _elementOpenEnd("label");
-        _elementOpenStart("span", "");
-        _attr("class", "glyphicon glyphicon-ok");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        _elementClose("span");
-        _elementClose("label");
-        _elementOpenStart("label", "");
-        _attr("for", "isPublished");
-        _attr("class", "btn btn-default active btn-checkbox");
-        _elementOpenEnd("label");
-        _text("Published");
-        _elementClose("label");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "text",
+          "name": "packageName",
+          "prompt": "Package Name",
+          "value": data.packageName
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "tourLeader",
+          "prompt": "Tour Leader",
+          "value": data.tourLeader
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "date",
+          "name": "validFrom",
+          "prompt": "Valid From",
+          "value": data.validFrom
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "date",
+          "name": "validUntil",
+          "prompt": "Valid Until",
+          "value": data.validUntil
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "number",
+          "name": "costLandArrangements",
+          "prompt": "Land Arrangements",
+          "value": data.costLandArrangements
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "number",
+          "name": "costTickets",
+          "prompt": "Tickets",
+          "value": data.costTickets
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "checkbox",
+          "name": "isItineraryConfirmed",
+          "prompt": "Itinerary Confirmed",
+          "value": data.isItineraryConfirmed
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "checkbox",
+          "name": "isPublished",
+          "prompt": "Published",
+          "value": data.isPublished
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "value": _props.package ? 'Save' : 'Register',
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onSave.bind(self)();
+          }
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "value": "Cancel",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onCancel.bind(self)();
+          }
+        }, function(slotName) {});
         _elementClose("div");
         $context["alert"].render({
           "alertType": 'error',
           "message": errorMessage
         }, function(slotName) {});
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "submit");
-        _attr("value", _data.package ? 'Save' : 'Register');
-        _attr("class", "btn btn-info btn-block");
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", "Cancel");
-        _attr("class", "form-control btn btn-info btn-block");
-        _attr("onclick", function(event) {
-          return _data.oncancel();
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
         _elementClose("form");
       }
-      var promise = loadPackage(_data.package);
+      var promise = loadPackage.bind(self)(_props.package);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
@@ -339,9 +264,6 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

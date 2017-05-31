@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
   var $path = "/dist/component/card-itinerary";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/card-itinerary");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,61 +22,65 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  function $render(_data, _slotView) {
+  function initState(props) {
+    return {}
+  };
+
+  function $render(_props, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
     $context["card"].render({
       "element": "dist.component.card-itinerary",
-      "title": _data.itr.fromDateTime.toDateComponents(),
-      "remarks": _data.itr.remarks
+      "title": _props.itr.fromDateTime.toDateComponents(),
+      "remarks": _props.itr.remarks
     }, function(slotName) {
-      if (_data.itr.entry.transport) {
+      if (_props.itr.entry.transport) {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _text("Airline: " + (_data.itr.entry.transport) + "");
+        _text("Airline: " + (_props.itr.entry.transport) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Departure: " + (_data.itr.entry.departure.toDateComponents(false, true)) + "");
+        _text("Departure: " + (_props.itr.entry.departure.toDateComponents(false, true)) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("From: " + (_data.itr.entry.departFrom) + "");
+        _text("From: " + (_props.itr.entry.departFrom) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Arrival: " + (_data.itr.entry.arrival.toDateComponents(false, true)) + "");
+        _text("Arrival: " + (_props.itr.entry.arrival.toDateComponents(false, true)) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("At: " + (_data.itr.entry.arriveAt) + "");
+        _text("At: " + (_props.itr.entry.arriveAt) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
         _elementClose("div");
       }
-      if (_data.itr.entry.hotel) {
+      if (_props.itr.entry.hotel) {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _text("Hotel: " + (_data.itr.entry.hotel) + "");
+        _text("Hotel: " + (_props.itr.entry.hotel) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("City: " + (_data.itr.entry.city) + "");
+        _text("City: " + (_props.itr.entry.city) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Check in: " + (_data.itr.entry.checkIn.toDateComponents()) + "");
+        _text("Check in: " + (_props.itr.entry.checkIn.toDateComponents()) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
-        _text("Check out: " + (_data.itr.entry.checkOut.toDateComponents()) + "");
+        _text("Check out: " + (_props.itr.entry.checkOut.toDateComponents()) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
         _elementClose("br");
         _elementClose("div");
       }
-      if (_data.onedit || _data.ondelete) {
+      if (_props.onedit || _props.ondelete) {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
@@ -84,7 +95,24 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _attr("value", "Edit");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return _data.onedit(_data.itr.id);
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          return _props.onedit.bind(self)(_props.itr.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -101,7 +129,24 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
         _attr("value", "Delete");
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return _data.ondelete(_data.itr.id);
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          return _props.ondelete.bind(self)(_props.itr.id);
         });
         _elementOpenEnd("input");
         _elementClose("input");

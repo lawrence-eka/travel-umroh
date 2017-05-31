@@ -1,21 +1,25 @@
 <inject from="/component/card" name="card"></inject>
+<inject from="/component/entry" name="entry"></inject>
 
-<card title.bind="$pkg.packageName" click.trigger="$onclick()">
-    <div>
-        Travel Date: {{$pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil)}} <br/>
-        Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
-        Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
-        <div class=row" if.bind="$onedit || $onshowItinerary">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <input type="button" value="Edit" class="form-control btn btn-info btn-block" click.trigger="$onedit($pkg.id)">
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <input type="button" value="Itinerary..." class="form-control btn btn-info btn-block" click.trigger="$onshowItinerary($pkg.id)">
-                </div>
+<div>
+    <card title.bind="$pkg.packageName" click.trigger="onButtonClicked($pkg.id)">
+        <div>
+            Travel Date: {{$pkg.travelDateFrom ? $pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil) : ''}} <br/>
+            Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
+            Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
+            <div class=row" if.bind="$onedit || $onshowItinerary">
+                <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($pkg.id)"></entry>
+                <entry type="button" value="Itinerary..." divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onButtonClicked($pkg.id)"></entry>
             </div>
         </div>
-    </div>
-</card>
+    </card>
+</div>
+<script>
+    function onButtonClicked(packageId) {
+        this.emitEvent('showItinerary', packageId);
+    }
+    function onEdit(packageId) {
+	    this.emitEvent('edit', packageId);
+    }
+
+</script>

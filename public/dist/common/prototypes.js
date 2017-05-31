@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/common/prototypes", (function() {
   var $path = "/dist/common/prototypes";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/common/prototypes");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   /**
    * Created by Lawrence Eka on 24-May-2017.
    */

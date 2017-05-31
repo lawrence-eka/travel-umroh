@@ -3,7 +3,7 @@
 
 <div data.load="getBookings()">
     <p for.each="bkg in data">
-        <card-booking bkg.bind="bkg" click.trigger="generateLink(bkg.id)"></card-booking>
+        <card-booking bkg.bind="bkg" click.trigger="generateLink(event)"></card-booking>
     </p>
 </div>
 
@@ -36,7 +36,8 @@
         });
     }
 
-    function generateLink(id){
-	    window.location.hash = '#app/action.bookPackage:bookingId='+id;
+    function generateLink(event){
+    	debugger;
+	    window.location.hash = '#app/action.bookPackage:bookingId='+event.data.id;
     }
 </script>

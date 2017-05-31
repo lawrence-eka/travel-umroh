@@ -1,12 +1,13 @@
 <inject from="/component/card" name="card"></inject>
 
-<card title.bind="($passenger.firstName + ' ' + $passenger.lastName).toTitleCase()">
-    <div class="">
-        First Name: {{$passenger.firstName}}; Middle Name: {{$passenger.middleName}}; Last Name: {{$passenger.lastName}};<br/>
-        Birth Place: {{$passenger.birthPlace}}; Birth Date: {{($passenger.birthday).toDateComponents()}}<br/>
-        Passport No: {{$passenger.passportNumber}}; Expiry Date: {{($passenger.passportExpiryDate).toDateComponents()}}<br/>
-    </div>
-</card>
-
+<div>
+    <card title.bind="($passenger.firstName + ' ' + $passenger.lastName).toTitleCase()">
+        <div class="">
+            First Name: {{$passenger.firstName}}; Middle Name: {{$passenger.middleName}}; Last Name: {{$passenger.lastName}};<br/>
+            Birth Place: {{$passenger.birthPlace}}; Birth Date: {{($passenger.birthday).toDateComponents()}}<br/>
+            Passport No: {{$passenger.passportNumber}}; Expiry Date: {{($passenger.passportExpiryDate).toDateComponents()}}<br/>
+        </div>
+    </card>
+</div>
 <script>
 </script>

@@ -1,16 +1,21 @@
-<link href="asset/css/registration.css" rel="stylesheet">
-<inject from="/component/alert" name="alert"></inject>
 <inject from="/component/userProfile" name="profile"></inject>
 
 <div>
-    <profile profile.bind="getMyProfile()" save.trigger="save(event)" cancel.trigger="cancel()"></profile>
+    <profile profile.bind="getMyProfile()" save.trigger="onSave(event)" cancel.trigger="onCancel()" errorMessage.bind="@error.message"></profile>
 </div>
 
 <script>
 
-	var errorMessage = '';
 
-	function getMyProfile(){
+    function initState() {
+        return {
+            error : {
+                message : ''
+            }
+        };
+    }
+
+    function getMyProfile(){
 
 		return new Promise(function(resolve) {
             dpd.users.me(function(me) {
@@ -19,18 +24,18 @@
 		});
 	}
 
-	function cancel() {
+	function onCancel() {
 		window.location.hash = "#app";
 	}
-	function save(profile){
-	    return new Promise(function(resolve){
-            dpd.users.put(profile.id, profile, function(user, err) {
-                if(err) {
-                    resolve(err)
-                } else {
-                    window.location.hash = '#app';
-                }
-            });
+	function onSave(profile){
+	    profile = profile.data;
+        var self = this;
+        dpd.users.put(profile.id, profile, function(user, err) {
+            if(err) {
+                self.state.error.message = err;
+            } else {
+                window.location.hash = '#app';
+            }
         });
 	}
 </script>

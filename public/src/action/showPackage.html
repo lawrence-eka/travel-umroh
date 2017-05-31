@@ -1,26 +1,33 @@
 <inject from="/component/card-package" name="card-package"></inject>
 <inject from="/component/card-itinerary" name="itrLines"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
 
-<div if.bind="errorMessage != ''">
-    {{errorMessage}}
-</div>
-
+<!--
 <div class="form-group">
     <input type="button" value="Book This!" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="book($packageId)">
 </div>
-<div data.load="queryPackage($packageId)">
-    <card-package pkg.bind="data"></card-package>
+-->
+<div>
+    <div class="row">
+        <div data.load="queryPackage($packageId)">
+            <card-package pkg.bind="data"></card-package>
+        </div>
+    </div>
+    <div class="row">
+        <entry type="button" value="Book This!" click.trigger="book($packageId)"></entry>
+    </div>
+    <div class="row">
+        <div data.load="queryItineraries($packageId)">
+            <p for.each="itr in data">
+                <itrLines itr.bind="itr"></itrLines>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <entry type="button" value="Book This!" click.trigger="book($packageId)"></entry>
+    </div>
 </div>
-
-<div data.load="queryItineraries($packageId)">
-    <p for.each="itr in data">
-        <itrLines itr.bind="itr"></itrLines>
-    </p>
-</div>
-<div class="form-group">
-    <input type="button" value="Book This!" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="book($packageId)">
-</div>
-
 <script>
     var errorMessage ="";
     function book(packageId){

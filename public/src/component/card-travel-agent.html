@@ -1,24 +1,29 @@
+<link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/card" name="card"></inject>
+<inject from="/component/entry" name="entry"></inject>
 
-<card title.bind="$travelAgent.travelAgentName">
-    <div>
-        Address: {{$travelAgent.address}}<br/>
-        City: {{$travelAgent.city}}
-        <div class=row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <input type="button" value="Edit Info" class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$oneditTA()">
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <input type="button" value="Packages..." class="form-control btn btn-info btn-block margin-top-15px" click.trigger="$onshowPackages()">
-                </div>
+<div>
+    <card title.bind="$travelAgent.travelAgentName">
+        <div>
+            Address: {{$travelAgent.address}}<br/>
+            City: {{$travelAgent.city}}
+            <div class=row">
+                <entry type="button" value="Edit Info" name="btnEdit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onClickEdit($travelAgent.id)"></entry>
+                <entry type="button" value="Packages..." name="btnPackages" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onClickPackages($travelAgent.id)"></entry>
             </div>
         </div>
-    </div>
-</card>
-
+    </card>
+</div>
 <script>
+	function onClickEdit(travelAgentId){
+		this.emitEvent('editTA', travelAgentId);
+	}
+
+	function onClickPackages(travelAgentId){
+		this.emitEvent('showPackages', travelAgentId);
+	}
+
+
+
 </script>
 

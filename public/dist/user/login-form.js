@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/user/login-form", (function() {
   var $path = "/dist/user/login-form";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/user/login-form");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
 
   var errorMessage = '';
@@ -38,7 +49,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     return false;
   }
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
     _elementOpenStart("link", "");
@@ -46,21 +57,51 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _attr("href", "/asset/css/signin.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
     _elementOpenStart("link", "");
     _attr("element", "dist.user.login-form");
     _attr("href", "asset/css/registration.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.user.login-form");
     _attr("class", "container  margin-top-login-panel");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("form", "");
     _attr("class", "form-signin");
     _attr("onsubmit", function(event) {
-      return login(this);
+      var self = {
+        target: event.target
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
+      self.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+        if ('on' + eventName in _props) {
+          _props['on' + eventName](event);
+        }
+      };
+      login.bind(self)(this);
+      return false;
     });
     _elementOpenEnd("form");
     _elementOpenStart("h2", "");
@@ -127,13 +168,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _elementClose("a");
     _elementClose("form");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _attr("src", "../assets/js/ie10-viewport-bug-workaround.js");
-    _elementOpenEnd("script");
-    _elementClose("script");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/test", (function() {
   var $path = "/dist/test";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/test");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/test", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
   var x = 1;
 
@@ -28,18 +39,43 @@ yalla.framework.addComponent("/dist/test", (function() {
     else return "hideThis"
   }
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\r\n[element='dist.test'] .hideThis {display:none;}");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _text("\n[element='dist.test'] .hideThis {display:none;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.test");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("input", "");
     _attr("type", "button");
     _attr("onclick", function(event) {
-      return onclick();
+      var self = {
+        target: event.target
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
+      self.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+        if ('on' + eventName in _props) {
+          _props['on' + eventName](event);
+        }
+      };
+      return onclick.bind(self)();
     });
     _elementOpenEnd("input");
     _elementClose("input");
@@ -69,9 +105,6 @@ yalla.framework.addComponent("/dist/test", (function() {
     _elementClose("div");
     _elementClose("form");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

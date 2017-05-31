@@ -1,22 +1,27 @@
-<link href="asset/css/registration.css" rel="stylesheet">
+<link href="asset/css/custom-style.css" rel="stylesheet">
+<inject from="/component/entry" name="entry"></inject>
 <inject from="/component/card" name="card"></inject>
 <inject from="/component/card-package" name="card-package"></inject>
 <inject from="/component/edit-package" name="edit-package"></inject>
 
-<div data.load="getTravelAgentName($travelAgentId)">
-    <card title.bind="data.travelAgentName">
-        <input type="button" value="New Package" class="form-control btn btn-info btn-block" click.trigger="onNewPackage($travelAgentId)" if.bind="!$editPackageId">
-    </card>
-    <edit-package if.bind="$editPackageId == -1" save.trigger="onSavePackage(event, $travelAgentId)" cancel.trigger="onCancelEdit($travelAgentId)"></edit-package>
-    <div data.load="getPackages($travelAgentId)">
-        <div for.each="pkg in data">
-            <card-package if.bind="$editPackageId != pkg.id" pkg.bind="pkg" edit.trigger="onEditPackage(event, $travelAgentId)" showItinerary.trigger="onShowItinerary(event)"></card-package>
-            <edit-package if.bind="$editPackageId == pkg.id" package.bind="pkg" save.trigger="onSavePackage(event, $travelAgentId)" cancel.trigger="onCancelEdit($travelAgentId)"></edit-package>
+<div>
+    <div class="container all-5px">
+        <div class="row centered-form no-top-margin">
+            <div data.load="getTravelAgentName($travelAgentId)">
+                <card title.bind="data.travelAgentName">
+                    <entry type="button" value="New Package" click.trigger="onNewPackage($travelAgentId)" if.bind="!$editPackageId"></entry>
+                </card>
+                <edit-package if.bind="$editPackageId == -1" save.trigger="onSavePackage(event, $travelAgentId)" cancel.trigger="onCancelEdit($travelAgentId)"></edit-package>
+                <div data.load="getPackages($travelAgentId)">
+                    <div for.each="pkg in data">
+                        <card-package if.bind="$editPackageId != pkg.id" pkg.bind="pkg" edit.trigger="onEditPackage(event, $travelAgentId)" showItinerary.trigger="onShowItinerary(event)"></card-package>
+                        <edit-package if.bind="$editPackageId == pkg.id" package.bind="pkg" save.trigger="onSavePackage(event, $travelAgentId)" cancel.trigger="onCancelEdit($travelAgentId)"></edit-package>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
-
 <script>
     function getTravelAgentName(id) {
 	    return new Promise(function (resolve) {
@@ -43,21 +48,30 @@
     }
 
     function onCancelEdit(travelAgentId) {
+    	debugger;
 	    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId;
     }
 
     function onSavePackage(pkg, travelAgentId) {
+    	debugger;
+    	pkg = pkg.data;
     	pkg.travelAgentId = travelAgentId;
-    	alert(JSON.stringify(pkg));
+    	dpd.packages.post(pkg, function(result,err){
+		    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId;
+    		$patchChanges();
+        });
     }
     function onEditPackage(packageId, travelAgentId) {
-	    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId + ":editPackageId=" + packageId;
+    	debugger;
+	    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId + ":editPackageId=" + packageId.data;
     }
     function onShowItinerary(packageId) {
-	    window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+    	debugger;
+	    window.location.hash="#app/action.myItinerary:packageId=" + packageId.data;
     }
 
-    function onNewPackage(travelAgentId) {
-	    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId + ":editPackageId=-1";
+    function onNewPackage(event) {
+    	debugger;
+	    window.location.hash="#app/action.myPackages:travelAgentId=" + event + ":editPackageId=-1";
     }
 </script>

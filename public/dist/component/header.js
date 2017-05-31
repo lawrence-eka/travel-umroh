@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/header", (function() {
   var $path = "/dist/component/header";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/header");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
 
   function generateMenu(me) {
@@ -73,11 +84,15 @@ yalla.framework.addComponent("/dist/component/header", (function() {
   }
 
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     _elementOpenStart("nav", "");
     _attr("element", "dist.component.header");
     _attr("class", "navbar navbar-default navbar-fixed-top");
     _elementOpenEnd("nav");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
     _attr("class", "container");
     _elementOpenEnd("div");
@@ -122,6 +137,17 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         _elementOpenStart("ul", "");
@@ -135,7 +161,24 @@ yalla.framework.addComponent("/dist/component/header", (function() {
             _elementOpenStart("a", "");
             _attr("href", menu.ref);
             _attr("onclick", function(event) {
-              return hideMenu();
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = __component;
+              self.component.__state = self.component.__state || {};
+              self.state = self.component.__state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              return hideMenu.bind(self)();
             });
             _elementOpenEnd("a");
             _text("" + (menu.label) + "");
@@ -145,7 +188,24 @@ yalla.framework.addComponent("/dist/component/header", (function() {
             _elementOpenStart("a", "");
             _attr("href", "#");
             _attr("onclick", function(event) {
-              return logout();
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = __component;
+              self.component.__state = self.component.__state || {};
+              self.state = self.component.__state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              return logout.bind(self)();
             });
             _elementOpenEnd("a");
             _text("" + (menu.label) + "");
@@ -155,16 +215,18 @@ yalla.framework.addComponent("/dist/component/header", (function() {
         });
         _elementClose("ul");
       }
-      var promise = getMe();
+      var promise = getMe.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
@@ -173,9 +235,6 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("nav");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

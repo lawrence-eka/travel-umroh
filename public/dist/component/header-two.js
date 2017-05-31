@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/header-two", (function() {
   var $path = "/dist/component/header-two";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/header-two");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,11 +22,19 @@ yalla.framework.addComponent("/dist/component/header-two", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  function $render(_data, _slotView) {
+  function initState(props) {
+    return {}
+  };
+
+  function $render(_props, _slotView) {
     _elementOpenStart("nav", "");
     _attr("element", "dist.component.header-two");
     _attr("class", "navbar navbar-default navbar-fixed-top");
     _elementOpenEnd("nav");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
     _attr("class", "container");
     _elementOpenEnd("div");
@@ -76,9 +91,6 @@ yalla.framework.addComponent("/dist/component/header-two", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("nav");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

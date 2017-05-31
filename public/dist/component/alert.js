@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/alert", (function() {
   var $path = "/dist/component/alert";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/alert");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,22 +22,16 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  function messages(msg, alertType, titleCase) {
-    if (alertType != "error") {
-      return (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
-    } else {
-      var msgs = toErrorMessages(msg);
-      for (var i = 0; i < msgs.length; i++) msgs[i] = msgs[i].toSentenceCase();
-      return msgs;
-    }
-  }
+  function initState(props) {
+    return {}
+  };
 
   function className(alertType) {
-    var base = "alert ";
-    if (alertType == "error") return base + "alert-danger";
-    else if (alertType == "success") return base + "alert-success";
-    else if (alertType == "info") return base + "alert-info";
-    else if (alertType == "warning") return base + "alert-warning";
+    var base = "alert custom-alert ";
+    if (alertType == "error") base = base + "alert-danger";
+    else if (alertType == "success") base = base + "alert-success";
+    else if (alertType == "info") base = base + "alert-info";
+    else if (alertType == "warning") base = base + "alert-warning";
     return base;
   }
 
@@ -56,14 +57,40 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     return result;
   }
 
-  function $render(_data, _slotView) {
-    if (_data.message) {
+  function messages(msg, alertType, titleCase) {
+    var msgs = [];
+    if (alertType != "error") {
+      msgs.push(titleCase ? msg.toTitleCase() : msg.toSentenceCase());
+    } else {
+      var msgs = toErrorMessages(msg);
+      for (var i = 0; i < msgs.length; i++) msgs[i] = msgs[i].toSentenceCase();
+    }
+    return msgs;
+  }
+
+
+  function $render(_props, _slotView) {
+    _elementOpenStart("link", "");
+    _attr("element", "dist.component.alert");
+    _attr("href", "asset/css/custom-style.css");
+    _attr("rel", "stylesheet");
+    _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _elementClose("link");
+    if (_props.message) {
       _elementOpenStart("div", "");
       _attr("element", "dist.component.alert");
-      _attr("class", className(_data.alertType));
+      _attr("class", className(_props.alertType));
       _attr("role", "alert");
       _elementOpenEnd("div");
-      var _array = messages(_data.message, _data.alertType, _data.titleCase) || [];
+      // The component of this object
+      var __component = IncrementalDOM.currentElement();
+      __component.__state = __component.__state || initState.bind(__component)(_props);
+      var __state = __component.__state;
+      var _array = messages(_props.message, _props.alertType, _props.titleCase) || [];
       _array.forEach(function(error) {
         _elementOpenStart("p", "");
         _elementOpenEnd("p");
@@ -72,9 +99,6 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       });
       _elementClose("div");
     }
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;
