@@ -1,34 +1,41 @@
-<link href="asset/css/registration.css" rel="stylesheet">
-<inject from="/component/alert" name="alert"></inject>
 <inject from="/component/userProfile" name="profile"></inject>
 
-<div class="container margin-top-15px">
-    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()"></profile>
+<div class="container small-margin-top">
+    <profile error.bind="@error.message" save.trigger="register(event)" cancel.trigger="cancelRegistration()" errorMessage.bind="@error.message"></profile>
 </div>
 
 <script>
 
-    var errorMessage = '';
+    function initState() {
+        return {
+            error : {
+                message : ''
+            }
+        };
+    }
 
     function cancelRegistration() {
         window.location.hash = "#app";
     }
+
     function register(profile){
-        return new Promise(function(resolve){
-            dpd.users.post(profile, function(user, err) {
-                if(err){
-                    resolve(err);
-                }else{
-                    dpd.users.login({"username": profile.username, "password": profile.password}, function(user, err) {
-                        if(err){
-                            resolve(err);
-                        }else{
-                            window.location.hash = '#app';
-                            resolve(null);
-                        }
-                    });
-                }
-            });
+        profile = profile.data;
+        var self = this;
+        dpd.users.post(profile, function(user, err) {
+            if(err){
+                self.state.error.message = err;
+                $patchChanges();
+            }else{
+                dpd.users.login({"username": profile.username, "password": profile.password}, function(user, err) {
+                    if(err){
+                        self.state.error.message = err;
+                        $patchChanges();
+                    }else{
+                        window.location.hash = '#app';
+                    }
+                });
+            }
+
         });
     }
 </script>

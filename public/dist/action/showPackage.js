@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/action/showPackage", (function() {
   var $path = "/dist/action/showPackage";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/action/showPackage");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
   var errorMessage = "";
 
@@ -89,64 +100,119 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
   }
 
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     $context["card-package"] = $inject("/component/card-package");
     var cardPackage = $context["card-package"];
     $context["itrLines"] = $inject("/component/card-itinerary");
     var itrLines = $context["itrLines"];
-    if (errorMessage != '') {
-      _elementOpenStart("div", "");
-      _attr("element", "dist.action.showPackage");
-      _elementOpenEnd("div");
-      _text("" + (errorMessage) + "");
-      _elementClose("div");
-    }
+    $context["entry"] = $inject("/component/entry");
+    var entry = $context["entry"];
+    _elementOpenStart("link", "");
+    _attr("element", "dist.action.showPackage");
+    _attr("href", "asset/css/custom-style.css");
+    _attr("rel", "stylesheet");
+    _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.showPackage");
-    _attr("class", "form-group");
     _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "button");
-    _attr("value", "Book This!");
-    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
-    _attr("onclick", function(event) {
-      return book(_data.packageId);
-    });
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
-    _attr("element", "dist.action.showPackage");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         $context["card-package"].render({
           "pkg": data
         }, function(slotName) {});
       }
-      var promise = queryPackage(_data.packageId);
+      var promise = queryPackage.bind(self)(_props.packageId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
+    _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("element", "dist.action.showPackage");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    $context["entry"].render({
+      "type": "button",
+      "value": "Book This!",
+      "onclick": function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = __component;
+        self.component.__state = self.component.__state || {};
+        self.state = self.component.__state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        return book.bind(self)(_props.packageId);
+      }
+    }, function(slotName) {});
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         var _array = data || [];
@@ -159,39 +225,54 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
           _elementClose("p");
         });
       }
-      var promise = queryItineraries(_data.packageId);
+      var promise = queryItineraries.bind(self)(_props.packageId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("element", "dist.action.showPackage");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "button");
-    _attr("value", "Book This!");
-    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
-    _attr("onclick", function(event) {
-      return book(_data.packageId);
-    });
-    _elementOpenEnd("input");
-    _elementClose("input");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    $context["entry"].render({
+      "type": "button",
+      "value": "Book This!",
+      "onclick": function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = __component;
+        self.component.__state = self.component.__state || {};
+        self.state = self.component.__state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        return book.bind(self)(_props.packageId);
+      }
+    }, function(slotName) {});
+    _elementClose("div");
+    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

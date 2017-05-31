@@ -1,24 +1,31 @@
 <inject from="/component/card" name="card"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
 
-<card click.trigger="$onclick()">
-    <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
-        <p class="bg-primary">Package: {{pkg.packageName}}</p>
-        Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
-        Operator: <span data.load="loadAgent(pkg.travelAgentId)">{{data.travelAgentName}}</span><br/>
-        Land Arrangements: {{$bkg.costLandArrangements.toFormattedString()}}<br/>
-        Tickets: {{$bkg.costTickets.toFormattedString()}}<br/>
-        Total passenger: {{$bkg.numberOfPassengers}}<br/>
-        Total Price: {{($bkg.totalPrice ? $bkg.totalPrice.toFormattedString() : '')}}<br/>
-        Unique Code: {{$bkg.uniqueCode}}<br/>
-        Grand Total: {{($bkg.totalPrice + $bkg.uniqueCode).toFormattedString()}}<br/>
-        Expiry Date: {{($bkg.waitingForPaymentUntil ? $bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')}}
-    </div>
-
-</card>
-
+<div>
+    <card click.trigger="onClick($bkg.id)">
+        <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
+            <p class="bg-primary">Package: {{pkg.packageName}}</p>
+            Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
+            Operator: <span data.load="loadAgent(pkg.travelAgentId)">{{data.travelAgentName}}</span><br/>
+            Land Arrangements: {{$bkg.costLandArrangements.toFormattedString()}}<br/>
+            Tickets: {{$bkg.costTickets.toFormattedString()}}<br/>
+            Total passenger: {{$bkg.numberOfPassengers}}<br/>
+            Total Price: {{($bkg.totalPrice ? $bkg.totalPrice.toFormattedString() : '')}}<br/>
+            Unique Code: {{$bkg.uniqueCode}}<br/>
+            Grand Total: {{($bkg.totalPrice + $bkg.uniqueCode).toFormattedString()}}<br/>
+            Expiry Date: {{($bkg.waitingForPaymentUntil ? $bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')}}
+        </div>
+    </card>
+</div>
 
 <script>
-function loadPackage(packageId){
+
+    function onClick(bookingId){
+    	debugger;
+    	this.emitEvent('click', bookingId);
+    }
+
+    function loadPackage(packageId){
         return new Promise(function(resolve){
             dpd.packages.get(packageId,function(pkg){
                 resolve(pkg);

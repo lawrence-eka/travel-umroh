@@ -1,38 +1,24 @@
+<inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/card-package" name="card-package"></inject>
-<div>
-    <div class="container all-5px">
-        <div class="row centered-form no-top-margin">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Search Packages</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div if.bind="errorMessage" class="form-control" >
-                            {{errorMessage}}
+<link href="asset/css/custom-style.css" rel="stylesheet">
+
+<div class="container all-5px">
+    <div class="row centered-form no-top-margin">
+        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default frosted-glass">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Search Packages</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="row">
+                            <entry type="date" prompt="Between" name="startDate" value.bind="_startDate"></entry>
+                            <entry type="date" prompt="And" name="endDate" value.bind="_endDate"></entry>
+                            <entry type="button" name="Search" value="Search" click.trigger="search()"></entry>
                         </div>
-                        <form role="form" submit.trigger="search(this)">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Between:</label>
-                                        <input type="date" name="startDate" class="form-control input-sm" placeholder="Between This Date..." value.bind="_startDate == '' ? (new Date()).toYYYYMMDD() : _startDate">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>And:</label>
-                                        <input type="date" name="endDate" class="form-control input-sm" placeholder="...and This Date" value.bind="_endDate == '' ? ((new Date()).getTime() + 31536000000).toYYYYMMDD() : _endDate">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Search" class="form-control btn btn-info btn-block margin-top-15px">
-                            </div>
-                            <alert alertType.bind="'info'" message.bind="numOfPackagesFound"></alert>
-                        </form>
-                    </div>
+                        <alert alertType.bind="messageType" message.bind="message"></alert>
+                    </form>
                 </div>
             </div>
         </div>
@@ -41,26 +27,26 @@
     <div data.load="queryPackages()">
         <div class="row">
             <div class="col-md-4 col-sm-6" for.each="pkg in data" >
-                <card-package click.trigger="generateLink(pkg.id)" pkg.bind="pkg"></card-package>
+                <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    var errorMessage = '';
-    var _startDate = '';
-    var _endDate = '';
+    var message = '';
+    var messageType ='';
+    var _startDate = (new Date()).toYYYYMMDD();
+    var _endDate = ((new Date()).getTime() + 31536000000).toYYYYMMDD();
     var numOfPackagesFound='';
 
-    function generateLink(id){
-        window.location.hash = '#app/action.showPackage:packageId='+id;
+    function generateLink(event){
+        window.location.hash = '#app/action.showPackage:packageId='+event.data;
     }
 
     function queryPackages(){
         return new Promise(function(resolve){
             //var form = formGlobal;
-
             if(_startDate == "" || _endDate == "") resolve([]);
             var startDate = new Date(_startDate + " 00:00:00");
             var endDate = new Date(_endDate + " 23:59:59");
@@ -74,19 +60,21 @@
             query.$sort={"travelDateFrom":1};
             dpd.packages.get(query, function(pkg, err) {
                 if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
+                    message = err;
+                    messageType = "error";
                 }else {
-                	numOfPackagesFound = pkg.length > 0 ? pkg.length.toString() + ' packages found' : '';
-                    resolve(pkg);
+                	message = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
+                	messageType = "info";
                 }
+	            resolve(pkg);
+                $patchChanges();
             });
         });
 
     }
 
-    function search(form){
-        //formGlobal = form;
+    function search(){
+    	var form = this.target.form;
         _startDate = form.elements.startDate.value;
         _endDate = form.elements.endDate.value;
         $patchChanges();

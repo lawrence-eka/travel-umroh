@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/test", (function() {
   var $path = "/dist/component/test";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/test");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,21 +22,26 @@ yalla.framework.addComponent("/dist/component/test", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
+  function initState(props) {
+    return {}
+  };
+
   var dates = $inject('/common/dates');
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     _elementOpenStart("div", "");
     _attr("element", "dist.component.test");
     _elementOpenEnd("div");
-    _text("" + (JSON.stringify(_data.itr)) + "");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _text("" + (JSON.stringify(_props.itr)) + "");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
-    _text("" + (dates.formatter(_data.itr.fromDateTime)) + "");
+    _text("" + (dates.formatter(_props.itr.fromDateTime)) + "");
     _elementClose("div");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

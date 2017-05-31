@@ -1,102 +1,45 @@
-<link href="asset/css/registration.css" rel="stylesheet">
+<link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
 
 <div class="container all-5px">
     <div class="row centered-form no-top-margin">
         <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default frosted-glass">
                 <div class="panel-heading">
                     <h3 class="panel-title" if.bind="$profile">Your Profile</h3>
                     <h3 class="panel-title" if.bind="!$profile">Please Sign Up <small> It's free!</small></h3>
                 </div>
-                <div class="panel-body"  data.load="loadProfile($profile)">
+                <div class="panel-body custom-panel-body"  data.load="loadProfile($profile, $errorMessage)">
                     <form role="form">
                         <input type="hidden" name="id" value.bind="data.id">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="firstName" class="form-control input-sm" placeholder="First Name" value.bind="data.firstName">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="lastName" class="form-control input-sm" placeholder="Last Name" value.bind="data.lastName">
-                                </div>
-                            </div>
+                            <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
+                            <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control input-sm" placeholder="Email Address"  value.bind="data.email">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="phone" class="form-control input-sm" placeholder="Phone" value.bind="data.phone">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="address1" class="form-control input-sm" placeholder="Address">{{(data.address1 ? data.address1 : '')}}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.city">
+                            <entry type="email" prompt="Email" name="email" value.bind="data.email"></entry>
+                            <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="checkbox" name="isTravelAgent" id="isTravelAgent" autocomplete="off"  checked.bind="data.isTravelAgent"/>
-                                    <div class="btn-group">
-                                        <label for="isTravelAgent" class="btn btn-default btn-checkbox">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
-                                        </label>
-                                        <label for="isTravelAgent" class="btn btn-default active btn-checkbox">
-                                            Travel Agent
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="checkbox" name="isAdmin" id="isAdmin" autocomplete="off"  checked.bind="data.isAdmin"/>
-                                    <div class="btn-group">
-                                        <label for="isAdmin" class="btn btn-default btn-checkbox">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
-                                        </label>
-                                        <label for="isAdmin" class="btn btn-default active btn-checkbox">
-                                            Administrator
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                            <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control input-sm" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="password" name="repeatPassword" class="form-control input-sm" placeholder="Confirm Password">
-                                </div>
-                            </div>
+                            <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
                         </div>
-                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+                        <div class="row">
+                            <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" value.bind="data.isTravelAgent"></entry>
+                            <entry type="checkbox" prompt="Administrator" name="isAdmin" value.bind="data.isAdmin"></entry>
+                        </div>
+                        <div class="row">
+                            <entry type="password" prompt="Password" name="password" value.bind="data.password"></entry>
+                            <entry type="password" prompt="Repeat Password" name="repeatPassword" ></entry>
+                        </div>
+                        <alert alertType.bind="'error'" message.bind="@error.message"></alert>
                         <div class=row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="button" value.bind="$profile ? 'Save' : 'Register'" class="btn btn-info btn-block" click.trigger="register(this, $onsave)">
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="$oncancel()">
-                                </div>
-                            </div>
+                            <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
+                            <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
                         </div>
                     </form>
                 </div>
@@ -107,15 +50,28 @@
 
 <script>
 
-    var errorMessage = '';
-
-    function loadProfile(profile){
+    function initState(props) {
+        return {
+            error : {
+                message : props.errorMessage
+            }
+        };
+    }
+    function loadProfile(profile, errorMessage){
+        if(!this.state.error.message) this.state.error.message = errorMessage;
         return profile ? profile : {};
     }
 
-    function register(form, onSave){
-        errorMessage="";
-        if(form.form) form = form.form;
+    function onRegister(){
+        this.state.error.message='';
+        var form = this.target.form;
+
+        if(form.elements.password.value != form.elements.repeatPassword.value ) {
+            this.state.error.message = "Please repeat your password correctly";
+            $patchChanges();
+            return;
+        }
+
         var profile = {};
         profile.id = form.elements.id.value;
         profile.firstName = form.elements.firstName.value;
@@ -124,22 +80,20 @@
         profile.phone = form.elements.phone.value;
         profile.username = form.elements.email.value;
 
+        if(profile.username) profile.username = profile.username.toLowerCase();
         if(form.elements.password.value != '') profile.password = form.elements.password.value;
-        var repeatPassword = form.elements.repeatPassword.value;
 
         profile.address1 = form.elements.address1.value;
         profile.city = form.elements.city.value;
         profile.isAdmin = (form.elements.isAdmin.value == "on");
         profile.isTravelAgent = (form.elements.isTravelAgent.value == "on");
-
-        onSave(profile).then(function(err){
-            debugger;
-             if(err) {
-                errorMessage=err;
-            }
-            $patchChanges();
-        });
-
+        debugger;
+        this.emitEvent('save', profile);
     }
+
+    function onCancel() {
+        this.emitEvent('cancel');
+    }
+
 </script>
 

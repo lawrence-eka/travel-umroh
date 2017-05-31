@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   var $path = "/dist/component/edit-itinerary";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/edit-itinerary");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,10 +22,13 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
+  function initState(props) {
+    return {}
+  };
 
-  function onClick(button) {
 
-    x = button.value;
+  function onClick() {
+    x = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
     $patchChanges();
   }
 
@@ -33,7 +43,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     itinerary = (itinerary ? itinerary : {
       entry: {}
     });
-    debugger;
     if (x == "") {
       if (itinerary && itinerary.entry && itinerary.entry.hotel) x = 'Hotel';
       else x = 'Transport';
@@ -42,8 +51,14 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
 
   }
 
-  function save(form, onSave) {
-    if (form.form != null) form = form.form;
+  function onCancel() {
+    debugger;
+    this.emitEvent('cancel');
+  }
+
+  function save(event, itinerary) {
+    debugger;
+    var form = this.target.form;
     var itinerary = {};
     itinerary.id = form.elements.id.value;
     itinerary.entry = {};
@@ -60,15 +75,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
       itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
       itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
     }
-    onSave(itinerary).then(function(err) {
-      if (err) {
-        debugger;
-        errorMessage = JSON.stringify(err);
-      } else {
-        errorMessage = "";
-      }
-      $patchChanges();
-    });
+    this.emitEvent('save', itinerary);
   }
 
   function isVisible(group) {
@@ -82,23 +89,37 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   }
 
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     _elementOpenStart("link", "");
     _attr("element", "dist.component.edit-itinerary");
-    _attr("href", "asset/css/registration.css");
+    _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
+    $context["entry"] = $inject("/component/entry");
+    var entry = $context["entry"];
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\r\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _text("\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.edit-itinerary");
     _attr("class", "container all-5px");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementOpenStart("div", "");
     _attr("class", "row centered-form no-top-margin");
     _elementOpenEnd("div");
@@ -111,18 +132,18 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _elementOpenStart("div", "");
     _attr("class", "panel-heading");
     _elementOpenEnd("div");
-    if (_data.itinerary) {
+    if (_props.itinerary) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
-      _text("Edit Package Info");
+      _text("Edit Entry");
       _elementClose("h3");
     }
-    if (!_data.itinerary) {
+    if (!_props.itinerary) {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
-      _text("New Package");
+      _text("New Entry");
       _elementClose("h3");
     }
     _elementClose("div");
@@ -131,6 +152,17 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         _elementOpenStart("form", "");
@@ -151,42 +183,60 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", "Hotel");
-        _attr("name", "btnHotel");
-        _attr("class", setButtonClass('Hotel'));
-        _attr("onclick", function(event) {
-          return onClick(this);
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", "Transport");
-        _attr("name", "btnTransport");
-        _attr("class", setButtonClass('Transport'));
-        _attr("onclick", function(event) {
-          return onClick(this);
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "button",
+          "value": "Hotel",
+          "name": "btnHotel",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "class": setButtonClass('Hotel'),
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onClick.bind(self)();
+          }
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "value": "Transport",
+          "name": "btnTransport",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "class": setButtonClass('Transport'),
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onClick.bind(self)();
+          }
+        }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", isVisible('Transport'));
@@ -194,102 +244,36 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "datetime-local");
-        _attr("name", "departure");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Departure");
-        _attr("value", (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : ''));
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "departFrom");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Depart From");
-        _attr("value", data.entry.departFrom);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "datetime-local");
-        _attr("name", "arrival");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Arrival");
-        _attr("value", (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : ''));
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "arriveAt");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Arrive At");
-        _attr("value", data.entry.arriveAt);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "airline");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Airline");
-        _attr("value", data.entry.transport);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "datetime-local",
+          "name": "departure",
+          "prompt": "Departure",
+          "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : '')
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "departFrom",
+          "prompt": "Depart From",
+          "value": data.entry.departFrom
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "datetime-local",
+          "name": "arrival",
+          "prompt": "Arrival",
+          "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "arriveAt",
+          "prompt": "Arrive At",
+          "value": data.entry.arriveAt
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "airline",
+          "prompt": "Airline",
+          "value": data.entry.transport
+        }, function(slotName) {});
         _elementClose("div");
         _elementClose("div");
         _elementOpenStart("div", "");
@@ -298,102 +282,43 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "datetime-local");
-        _attr("name", "checkIn");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Check In");
-        _attr("value", (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : ''));
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "datetime-local");
-        _attr("name", "checkOut");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Check Out");
-        _attr("value", (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : ''));
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "datetime-local",
+          "name": "checkIn",
+          "class": "form-control input-sm",
+          "prompt": "Check In",
+          "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : '')
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "datetime-local",
+          "name": "checkOut",
+          "class": "form-control input-sm",
+          "prompt": "Check Out",
+          "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : '')
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "hotel",
+          "prompt": "Hotel",
+          "value": data.entry.hotel
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "name": "city",
+          "prompt": "City",
+          "value": data.entry.city
+        }, function(slotName) {});
         _elementClose("div");
         _elementClose("div");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "hotel");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Hotel");
-        _attr("value", data.entry.hotel);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "text");
-        _attr("name", "city");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "City");
-        _attr("value", data.entry.city);
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("textarea", "");
-        _attr("name", "remarks");
-        _attr("class", "form-control input-sm");
-        _attr("placeholder", "Remarks");
-        _elementOpenEnd("textarea");
-        _text("" + (data.remarks) + "");
-        _elementClose("textarea");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "textarea",
+          "name": "remarks",
+          "prompt": "Remarks",
+          "value": data.remarks
+        }, function(slotName) {});
         _elementClose("div");
         $context["alert"].render({
           "alertType": 'error',
@@ -402,53 +327,71 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", _data.itinerary ? 'Save' : 'Register');
-        _attr("class", "btn btn-info btn-block");
-        _attr("onclick", function(event) {
-          return save(this, _data.onsave);
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "col-xs-6 col-sm-6 col-md-6 col-lg-6");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-group");
-        _elementOpenEnd("div");
-        _elementOpenStart("input", "");
-        _attr("type", "button");
-        _attr("value", "Cancel");
-        _attr("class", "form-control btn btn-info btn-block");
-        _attr("onclick", function(event) {
-          return _data.oncancel();
-        });
-        _elementOpenEnd("input");
-        _elementClose("input");
-        _elementClose("div");
-        _elementClose("div");
+        $context["entry"].render({
+          "type": "button",
+          "value": _props.itinerary ? 'Save' : 'Register',
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return save.bind(self)();
+          }
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "value": "Cancel",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onCancel.bind(self)();
+          }
+        }, function(slotName) {});
         _elementClose("div");
         _elementClose("form");
       }
-      var promise = loadItinerary(_data.itinerary);
+      var promise = loadItinerary.bind(self)(_props.itinerary);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
@@ -459,9 +402,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

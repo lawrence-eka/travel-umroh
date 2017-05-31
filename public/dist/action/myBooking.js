@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/action/myBooking", (function() {
   var $path = "/dist/action/myBooking";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/action/myBooking");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
   var errorMessage = "";
 
@@ -44,11 +55,12 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     });
   }
 
-  function generateLink(id) {
-    window.location.hash = '#app/action.bookPackage:bookingId=' + id;
+  function generateLink(event) {
+    debugger;
+    window.location.hash = '#app/action.bookPackage:bookingId=' + event.data.id;
   }
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     $context["card-booking"] = $inject("/component/card-booking");
     var cardBooking = $context["card-booking"];
     $context["card"] = $inject("/component/card");
@@ -56,8 +68,23 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myBooking");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         var _array = data || [];
@@ -67,31 +94,47 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
           $context["card-booking"].render({
             "bkg": bkg,
             "onclick": function(event) {
-              return generateLink(bkg.id);
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = __component;
+              self.component.__state = self.component.__state || {};
+              self.state = self.component.__state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              return generateLink.bind(self)(event);
             }
           }, function(slotName) {});
           _elementClose("p");
         });
       }
-      var promise = getBookings();
+      var promise = getBookings.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;

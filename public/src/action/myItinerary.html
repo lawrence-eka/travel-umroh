@@ -48,40 +48,36 @@
 	}
 
 	function onSaveItinerary(itinerary, packageId) {
-		return new Promise(function(resolve) {
-            debugger;
-            itinerary.packageId = packageId;
-            if(itinerary.id=="") {
-                dpd.itineraries.post(itinerary, function(result, err) {
-                    debugger;
-                    if (err) {
-                        resolve(err);
-                    }
-                    if(result) {
-                        window.location.hash="#app/action.myItinerary:packageId=" + packageId;
-                        resolve(null);
-                    }
-                });
-            }
-            else {
+		debugger;
+		itinerary = itinerary.data;
+        itinerary.packageId = packageId;
+        if(itinerary.id=="") {
+            dpd.itineraries.post(itinerary, function(result, err) {
                 debugger;
-                dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
-                    debugger;
-                    if(err) {
-                        resolve(err);
-                    }
-                    else {
-                        window.location.hash="#app/action.myItinerary:packageId=" + packageId;
-                        resolve(null);
-                    }
-                });
-            }
+                if (err) {
+                    message = err;
+                }
+                if(result) {
+                    window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+                }
+            });
+        }
+        else {
             debugger;
-		});
-        return false;
+            dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
+                debugger;
+                if(err) {
+	                message = err;
+                }
+                else {
+                    window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+                }
+            });
+        }
 	}
 
 	function onCancelEdit(packageId) {
+		debugger;
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId;
 	}
 

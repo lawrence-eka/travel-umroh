@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/card-passenger", (function() {
   var $path = "/dist/component/card-passenger";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/card-passenger");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,33 +22,41 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  function $render(_data, _slotView) {
+  function initState(props) {
+    return {}
+  };
+
+  function $render(_props, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
+    _elementOpenStart("div", "");
+    _attr("element", "dist.component.card-passenger");
+    _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     $context["card"].render({
-      "element": "dist.component.card-passenger",
-      "title": (_data.passenger.firstName + ' ' + _data.passenger.lastName).toTitleCase()
+      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase()
     }, function(slotName) {
       _elementOpenStart("div", "");
       _attr("class", "");
       _elementOpenEnd("div");
-      _text("First Name: " + (_data.passenger.firstName) + "; Middle Name: " + (_data.passenger.middleName) + "; Last Name: " + (_data.passenger.lastName) + ";");
+      _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Birth Place: " + (_data.passenger.birthPlace) + "; Birth Date: " + ((_data.passenger.birthday).toDateComponents()) + "");
+      _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
-      _text("Passport No: " + (_data.passenger.passportNumber) + "; Expiry Date: " + ((_data.passenger.passportExpiryDate).toDateComponents()) + "");
+      _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
       _elementOpenStart("br", "");
       _elementOpenEnd("br");
       _elementClose("br");
       _elementClose("div");
     });
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
+    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

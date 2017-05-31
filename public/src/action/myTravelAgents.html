@@ -1,72 +1,49 @@
 <inject from="/component/card-travel-agent" name="card-travel-agent"></inject>
-<link href="asset/css/registration.css" rel="stylesheet">
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-    <div if.bind="errorMessage != ''">
-        {{errorMessage}}
-    </div>
-
     <div class="container all-5px" data.load="getOneTravelAgent($travelAgentId)">
         <div class="row centered-form no-top-margin">
             <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-default">
+                <div class="panel panel-default custom-panel">
                     <div class="panel-heading">
                         <h3 if.bind="!$travelAgentId" class="panel-title">New Travel Agent</h3>
                         <h3 if.bind="$travelAgentId" class="panel-title">Edit Travel Agent</h3>
                     </div>
                     <div class="panel-body">
-                        <div if.bind="errorMessage" class="form-control" >
-                            {{errorMessage}}
-                        </div>
-                        <form role="form" submit.trigger="register(this)">
+                        <alert alertType="error" message.bind="$errorMessage"></alert>
+                        <form role="form">
                             <div class="row">
-                                <input type="hidden" name="id" value.bind="data.id">
-                                <input type="hidden" name="contactPersonId" value.bind="data.contactPersonId">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <input type="text" name="travelAgentName" class="form-control input-sm" placeholder="Name" value.bind="data.travelAgentName">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <input type="text" name="address" class="form-control input-sm" placeholder="Address" value.bind="data.address">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <input type="text" name="city" class="form-control input-sm" placeholder="City" value.bind="data.city">
-                                    </div>
-                                </div>
+                                <entry type="hidden" name="id"  value.bind="data.id"></entry>
+                                <entry type="hidden" name="contactPersonId"  value.bind="data.contactPersonId"></entry>
+                                <entry type="text" prompt="Name" name="travelAgentName" value.bind="data.travelAgentName"></entry>
+                                <entry type="textarea" prompt="Address" name="address" value.bind="data.address"></entry>
+                                <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
                             </div>
-
-                            <div class=row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <input type="submit" value.bind="($travelAgentId ? 'Save' : 'Register')" class="btn btn-info btn-block btn-default">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="cancel()" if.bind="$travelAgentId">
-                                    </div>
-                                </div>
+                            <div class="row">
+                                <entry type="button" name="btnSave" value.bind="($travelAgentId ? 'Save' : 'Register')" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="register()"></entry>
+                                <entry type="button" if.bind="$travelAgentId" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="cancel()"></entry>
                             </div>
 
                         </form>
-                        <div class="form-group" if.bind="$travelAgentId">
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div>
+        <div class="row">
+            <div data.load="getTravelAgents($travelAgentId)">
+                <p for.each="ta in data">
+                    <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></card-travel-agent>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div data.load="getTravelAgents($travelAgentId)">
-    <p for.each="ta in data">
-        <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(ta.id)" showPackages.trigger="onShowPackages(ta.id)"></card-travel-agent>
-    </p>
-</div>
 
 <script>
     var errorMessage ="";
@@ -99,12 +76,13 @@
         });
     }
 
-    function onEditTA(travelAgentId) {
-        window.location.hash="#app/action.myTravelAgents:travelAgentId=" + travelAgentId;
+    function onEditTA(event) {
+        window.location.hash="#app/action.myTravelAgents:travelAgentId=" + event.data;
     }
 
-    function onShowPackages(travelAgentId) {
-    	window.location.hash ="#app/action.myPackages:travelAgentId=" + travelAgentId;
+    function onShowPackages(event) {
+    	debugger;
+    	window.location.hash ="#app/action.myPackages:travelAgentId=" + event.data;
     }
 
     function getOneTravelAgent(id) {
@@ -131,11 +109,13 @@
     }
 
     function cancel() {
+    	debugger;
 	    window.location.hash="#app/action.myTravelAgents";
     }
 
-    function register(form) {
+    function register() {
     	debugger;
+	    var form = this.target.form;
     	var q = {
     		"travelAgentName": form.elements.travelAgentName.value,
     		"address": form.elements.address.value,

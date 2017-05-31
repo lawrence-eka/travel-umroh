@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   var $path = "/dist/action/bookPackage";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -15,12 +22,9 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
 
-  var dates = $inject('/common/dates');
-  var numbers = $inject('/common/numbers');
-  var obj = $inject('/common/objects');
-
-  //var costLA = 0;
-  //var costTickets = 0;
+  function initState(props) {
+    return {}
+  };
 
   var package = {};
   var booking = {};
@@ -72,8 +76,6 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         if (err) {
           errorMessage = JSON.stringify(err);
         } else {
-          //numOfPassenger = passengers.length;
-          //booking.numBeRofpassengers = passengers.length;
           setNumberOfPassengers(passengers.length);
           resolve(passengers);
         }
@@ -81,7 +83,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     });
   }
 
-  function registerPassenger(form) {
+  function registerPassenger(bookingId) {
     //booking.uniqueCode = Math.floor(Math.random() * 1000);
     booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
     dpd.bookings.put(booking, function(booking, err) {
@@ -90,6 +92,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         $patchChanges();
       } else {}
     });
+    var form = this.target.form;
 
     var q = {};
     q.bookingId = form.elements.bookingId.value;
@@ -102,16 +105,17 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     q.passportIssuer = form.elements.passportIssuer.value;
     q.passportExpiryDate = (new Date(form.elements.passportExpiryDate.value)).getTime();
 
-    form.elements.bookingId.value = "";
     form.elements.firstName.value = "";
     form.elements.middleName.value = "";
     form.elements.lastName.value = "";
     form.elements.birthPlace.value = "";
     form.elements.birthday.value = "";
     form.elements.passportNumber.value = "";
+    form.elements.passportIssuer.value = "";
     form.elements.passportExpiryDate.value = "";
-
+    debugger;
     dpd.passengers.post(q, function(user, err) {
+      debugger;
       if (err) {
         errorMessage = JSON.stringify(err);
       }
@@ -133,53 +137,74 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     });
   }
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     $context["card-booking"] = $inject("/component/card-booking");
     var cardBooking = $context["card-booking"];
     $context["card-passenger"] = $inject("/component/card-passenger");
     var cardPassenger = $context["card-passenger"];
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
+    $context["entry"] = $inject("/component/entry");
+    var entry = $context["entry"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.bookPackage");
-    _attr("href", "asset/css/registration.css");
+    _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.bookPackage");
     _elementOpenEnd("div");
-    if (errorMessage != '') {
-      _elementOpenStart("div", "");
-      _elementOpenEnd("div");
-      _text("" + (errorMessage) + "");
-      _elementClose("div");
-    }
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         $context["card-booking"].render({
           "bkg": data
         }, function(slotName) {});
       }
-      var promise = queryBooking(_data.bookingId);
+      var promise = queryBooking.bind(self)(_props.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
+    _elementClose("div");
     _elementClose("div");
     _elementOpenStart("div", "");
     _attr("class", "container all-5px");
@@ -191,7 +216,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "panel panel-default");
+    _attr("class", "panel panel-default custom-panel");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "panel-heading");
@@ -205,65 +230,111 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _elementOpenStart("div", "");
     _attr("class", "panel-body");
     _elementOpenEnd("div");
-    if (errorMessage) {
-      _elementOpenStart("div", "");
-      _attr("class", "form-control");
-      _elementOpenEnd("div");
-      _text("" + (errorMessage) + "");
-      _elementClose("div");
-    }
     _elementOpenStart("form", "");
     _attr("role", "form");
-    _attr("onsubmit", function(event) {
-      return register(this);
-    });
     _elementOpenEnd("form");
     _elementOpenStart("div", "");
     _attr("class", "row");
     _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "firstName");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "First Name");
-    _elementOpenEnd("input");
-    _elementClose("input");
+    $context["entry"].render({
+      "type": "hidden",
+      "name": "bookingId",
+      "value": _props.bookingId
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "First Name",
+      "name": "firstName"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "Middle Name",
+      "name": "middleName"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "Last Name",
+      "name": "lastName"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "Birth Place",
+      "name": "birthPlace"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "date",
+      "prompt": "Birthday",
+      "name": "birthday"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "Passport Number",
+      "name": "passportNumber"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "date",
+      "prompt": "Passport Expiry Date",
+      "name": "passportExpiryDate"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "text",
+      "prompt": "Passport Issuer",
+      "name": "passportIssuer"
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "button",
+      "name": "btnRegister",
+      "value": "Register",
+      "onclick": function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = __component;
+        self.component.__state = self.component.__state || {};
+        self.state = self.component.__state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        return registerPassenger.bind(self)(_props.bookingId);
+      }
+    }, function(slotName) {});
+    $context["entry"].render({
+      "type": "button",
+      "name": "btnPaymentDetail",
+      "value": "Payment Detail",
+      "onclick": function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = __component;
+        self.component.__state = self.component.__state || {};
+        self.state = self.component.__state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        return calculatePaymentDetail.bind(self)(_props.bookingId);
+      }
+    }, function(slotName) {});
+    _elementClose("div");
+    _elementClose("form");
     _elementClose("div");
     _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "middleName");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Middle Name");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "lastName");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Last Name");
-    _elementOpenEnd("input");
-    _elementClose("input");
     _elementClose("div");
     _elementClose("div");
     _elementClose("div");
@@ -271,100 +342,20 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr("class", "row");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "birthPlace");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Birth Place");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-6 col-md-6 col-lg-6");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "date");
-    _attr("name", "birthday");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "birthday");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "passportNumber");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Passport Number");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "date");
-    _attr("name", "passportExpiryDate");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Passport Expiry Date");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "text");
-    _attr("name", "passportIssuer");
-    _attr("class", "form-control input-sm");
-    _attr("placeholder", "Passport Issuer");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementOpenStart("input", "");
-    _attr("type", "submit");
-    _attr("value", "Register");
-    _attr("class", "btn btn-info btn-block btn-default");
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("form");
-    _elementOpenStart("div", "");
-    _attr("class", "form-group");
-    _elementOpenEnd("div");
-    _elementOpenStart("input", "");
-    _attr("type", "button");
-    _attr("value", "Payment Detail");
-    _attr("class", "form-control btn btn-info btn-block margin-top-15px");
-    _attr("onclick", function(event) {
-      return calculatePaymentDetail(_data.bookingId);
-    });
-    _elementOpenEnd("input");
-    _elementClose("input");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("element", "dist.action.bookPackage");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         var _array = data || [];
@@ -377,25 +368,26 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
           _elementClose("p");
         });
       }
-      var promise = getPassengers(_data.bookingId);
+      var promise = getPassengers.bind(self)(_props.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
+    _elementClose("div");
+    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

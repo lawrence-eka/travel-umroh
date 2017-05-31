@@ -1,92 +1,32 @@
-<link href="asset/css/registration.css" rel="stylesheet">
+<link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
 
 <div class="container all-5px">
     <div class="row centered-form no-top-margin">
         <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default custom-panel">
                 <div class="panel-heading">
                     <h3 class="panel-title" if.bind="$package">Edit Package Info</h3>
                     <h3 class="panel-title" if.bind="!$package">New Package</h3>
                 </div>
                 <div class="panel-body"  data.load="loadPackage($package)">
-                    <form role="form" submit.trigger="save(this, $onsave)">
-                        <input type="hidden" name="id" value.bind="data.id">
-                        <input type="hidden" name="travelAgentId" value.bind="data.travelAgentId">
+                    <form role="form">
+                        <entry type="hidden" name="id" value.bind="data.id"></entry>
+                        <entry type="hidden" name="travelAgentId" value.bind="data.travelAgentId"></entry>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="packageName" class="form-control input-sm" placeholder="Package Name" value.bind="data.packageName">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="tourLeader" class="form-control input-sm" placeholder="Tour Leader" value.bind="data.tourLeader">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="date" name="validFrom" class="form-control input-sm" placeholder="Valid From"  value.bind="data.validFrom">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="date" name="validUntil" class="form-control input-sm" placeholder="Valid Until" value.bind="data.validUntil">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" name="costLandArrangements" class="form-control input-sm" placeholder="Land Arrangements"  value.bind="data.costLandArrangements">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" name="costTickets" class="form-control input-sm" placeholder="Tickets" value.bind="data.costTickets">
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="checkbox" name="isItineraryConfirmed" id="isItineraryConfirmed" autocomplete="off"  checked.bind="data.isItineraryConfirmed"/>
-                                    <div class="btn-group">
-                                        <label for="isItineraryConfirmed" class="btn btn-default btn-checkbox">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
-                                        </label>
-                                        <label for="isItineraryConfirmed" class="btn btn-default active btn-checkbox">
-                                            Itinerary Confirmed
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="checkbox" name="isPublished" id="isPublished" autocomplete="off"  checked.bind="data.isPublished"/>
-                                    <div class="btn-group">
-                                        <label for="isPublished" class="btn btn-default btn-checkbox">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
-                                        </label>
-                                        <label for="isPublished" class="btn btn-default active btn-checkbox">
-                                            Published
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                            <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
+                            <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
+                            <entry type="date" name="validFrom" prompt="Valid From"  value.bind="data.validFrom"></entry>
+                            <entry type="date" name="validUntil" prompt="Valid Until" value.bind="data.validUntil"></entry>
+                            <entry type="number" name="costLandArrangements" prompt="Land Arrangements"  value.bind="data.costLandArrangements"></entry>
+                            <entry type="number" name="costTickets" prompt="Tickets" value.bind="data.costTickets"></entry>
+                            <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" value.bind="data.isItineraryConfirmed"></entry>
+                            <entry type="checkbox" name="isPublished" prompt="Published" value.bind="data.isPublished"></entry>
+                            <entry type="button" value.bind="$package ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                            <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
                         </div>
                         <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
-                        <div class=row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="submit" value.bind="$package ? 'Save' : 'Register'" class="btn btn-info btn-block">
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <input type="button" value="Cancel" class="form-control btn btn-info btn-block" click.trigger="$oncancel()">
-                                </div>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -102,7 +42,8 @@
 		return package ? package : {};
 	}
 
-	function save(form, onSave){
+	function onSave(){
+		var form = this.target.form;
 		var package = {};
 		package.id = form.elements.id.value;
 		package.travelAgentId = form.elements.travelAgentId.value;
@@ -114,7 +55,11 @@
 		package.costTickets = form.elements.costTickets.value;
 		package.isItineraryConfirmed = (form.elements.isItineraryConfirmed .value == "on");
 		package.isPublished = (form.elements.isPublished.value == "on");
-		onSave(package);
+		this.emitEvent('save', package);
+	}
+
+	function onCancel(){
+		this.emitEvent('cancel');
 	}
 </script>
 

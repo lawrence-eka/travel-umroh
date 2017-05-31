@@ -1,11 +1,18 @@
 yalla.framework.addComponent("/dist/component/list-editor", (function() {
   var $path = "/dist/component/list-editor";
   var $patchChanges = yalla.framework.renderToScreen;
-  var $storeRef = yalla.framework.storeRef;
   var $export = {};
   var $context = {};
-  var $patchRef = yalla.framework.patchRef;
+  var _parentComponent = yalla.framework.getParentComponent;
   var $inject = yalla.framework.createInjector("/dist/component/list-editor");
+
+  function ComponentEvent(type, data, target, currentTarget) {
+    this.data = data;
+    this.target = target;
+    this.type = type;
+    this.currentTarget = currentTarget;
+  }
+
   var _elementOpen = IncrementalDOM.elementOpen,
     _elementClose = IncrementalDOM.elementClose,
     _elementOpenStart = IncrementalDOM.elementOpenStart,
@@ -14,6 +21,10 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     _text = IncrementalDOM.text,
     _attr = IncrementalDOM.attr,
     _skip = IncrementalDOM.skip;
+
+  function initState(props) {
+    return {}
+  };
 
   var message = "";
   var alertType = "";
@@ -104,7 +115,7 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     });
   }
 
-  function $render(_data, _slotView) {
+  function $render(_props, _slotView) {
     $context["card"] = $inject("/component/card");
     var card = $context["card"];
     $context["card-itinerary"] = $inject("/component/card-itinerary");
@@ -118,15 +129,32 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     _text("div\">");
     $context["card"].render({
       "element": "dist.component.list-editor",
-      "title": _data.listTitle
+      "title": _props.listTitle
     }, function(slotName) {
-      if (!_data.editItineraryId) {
+      if (!_props.editItineraryId) {
         _elementOpenStart("input", "");
         _attr("type", "button");
-        _attr("value", _data.addButtonTitle);
+        _attr("value", _props.addButtonTitle);
         _attr("class", "form-control btn btn-info btn-block");
         _attr("onclick", function(event) {
-          return onAdd(_data.packageId);
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          return onAdd.bind(self)(_props.packageId);
         });
         _elementOpenEnd("input");
         _elementClose("input");
@@ -139,72 +167,188 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
         "message": "message"
       }, function(slotName) {});
     }
-    if (_data.editItineraryId == -1) {
+    if (_props.editItineraryId == -1) {
       $context["edit-itinerary"].render({
         "element": "dist.component.list-editor",
         "onsave": function(event) {
-          return onSaveItinerary(event, _data.packageId);
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          return onSaveItinerary.bind(self)(event, _props.packageId);
         },
         "oncancel": function(event) {
-          return onCancelEdit(_data.packageId);
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          return onCancelEdit.bind(self)(_props.packageId);
         }
       }, function(slotName) {});
     }
     _elementOpenStart("div", "");
     _attr("element", "dist.component.list-editor");
     _elementOpenEnd("div");
+    // The component of this object
+    var __component = IncrementalDOM.currentElement();
+    __component.__state = __component.__state || initState.bind(__component)(_props);
+    var __state = __component.__state;
     (function(domNode) {
       var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = __component;
+      self.component.__state = self.component.__state || {};
+      self.state = self.component.__state;
 
       function asyncFunc__1(data) {
         var _array = data || [];
         _array.forEach(function(itr) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          if (itr.id != _data.editItineraryId) {
+          if (itr.id != _props.editItineraryId) {
             $context["card-itinerary"].render({
               "itr": itr,
               "onedit": function(event) {
-                return onEdit(event, _data.packageId);
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return onEdit.bind(self)(event, _props.packageId);
               },
               "ondelete": function(event) {
-                return onDelete(event);
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return onDelete.bind(self)(event);
               }
             }, function(slotName) {});
           }
-          if (itr.id == _data.editItineraryId) {
+          if (itr.id == _props.editItineraryId) {
             $context["edit-itinerary"].render({
               "itinerary": itr,
               "onsave": function(event) {
-                return onSaveItinerary(event, _data.packageId);
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return onSaveItinerary.bind(self)(event, _props.packageId);
               },
               "oncancel": function(event) {
-                return onCancelEdit(_data.packageId);
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return onCancelEdit.bind(self)(_props.packageId);
               }
             }, function(slotName) {});
           }
           _elementClose("p");
         });
       }
-      var promise = queryItineraries(_data.packageId);
+      var promise = queryItineraries.bind(self)(_props.packageId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(node, _result)
+            asyncFunc__1.call(self, _result)
           });
+        }).catch(function(err) {
+          console.log(err);
         });
       } else {
-        asyncFunc__1.call(node, promise)
+        asyncFunc__1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("script", "");
-    _elementOpenEnd("script");
-    _elementClose("script");
   }
   if (typeof $render === "function") {
     $export.render = $render;
