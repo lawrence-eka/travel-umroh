@@ -2,48 +2,36 @@
 <inject from="/component/card-passenger" name="card-passenger"></inject>
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-	<div class="row">
-		<div data.load="queryBooking($bookingId)">
-			<card-booking bkg.bind="data" ></card-booking>
-		</div>
+	<div data.load="queryBooking($bookingId)">
+		<card-booking bkg.bind="data" ></card-booking>
 	</div>
-	<div class="container all-5px">
-		<div class="row centered-form no-top-margin">
-			<div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="panel panel-default custom-panel">
-					<div class="panel-heading">
-						<h3 class="panel-title">Passenger Detail</h3>
-					</div>
-					<div class="panel-body">
-						<form role="form">
-							<div class="row">
-								<entry type="hidden" name="bookingId" value.bind="$bookingId"></entry>
-								<entry type="text" prompt="First Name" name="firstName"></entry>
-								<entry type="text" prompt="Middle Name" name="middleName"></entry>
-								<entry type="text" prompt="Last Name" name="lastName"></entry>
-								<entry type="text" prompt="Birth Place" name="birthPlace"></entry>
-								<entry type="date" prompt="Birthday" name="birthday"></entry>
-								<entry type="text" prompt="Passport Number" name="passportNumber"></entry>
-								<entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate"></entry>
-								<entry type="text" prompt="Passport Issuer" name="passportIssuer"></entry>
-								<entry type="button" name="btnRegister" value="Register" click.trigger="registerPassenger($bookingId)"></entry>
-								<entry type="button" name="btnPaymentDetail" value="Payment Detail" click.trigger="calculatePaymentDetail($bookingId)"></entry>
-							</div>
-						</form>
-					</div>
+	<panel title="Passenger Detail" nofooter>
+		<div slot.name="body">
+			<form role="form">
+				<div class="row">
+					<entry type="hidden" name="bookingId" value.bind="$bookingId"></entry>
+					<entry type="text" prompt="First Name" name="firstName"></entry>
+					<entry type="text" prompt="Middle Name" name="middleName"></entry>
+					<entry type="text" prompt="Last Name" name="lastName"></entry>
+					<entry type="text" prompt="Birth Place" name="birthPlace"></entry>
+					<entry type="date" prompt="Birthday" name="birthday"></entry>
+					<entry type="text" prompt="Passport Number" name="passportNumber"></entry>
+					<entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate"></entry>
+					<entry type="text" prompt="Passport Issuer" name="passportIssuer"></entry>
+					<entry type="button" name="btnRegister" value="Register" click.trigger="registerPassenger($bookingId)"></entry>
+					<entry type="button" name="btnPaymentDetail" value="Payment Detail" click.trigger="calculatePaymentDetail($bookingId)"></entry>
 				</div>
-			</div>
+			</form>
 		</div>
-	</div>
-	<div class="row">
-		<div data.load="getPassengers($bookingId)">
-			<p for.each="psg in data">
-				<card-passenger passenger.bind="psg"></card-passenger>
-			</p>
-		</div>
+	</panel>
+	<div data.load="getPassengers($bookingId)">
+		<p for.each="psg in data">
+			<card-passenger passenger.bind="psg"></card-passenger>
+		</p>
 	</div>
 </div>
 
@@ -90,7 +78,7 @@
    }
 
     function getPassengers(bookingId) {
-    	//debugger;
+    	debugger;
     	return new Promise(function(resolve) {
 	    	dpd.passengers.get({"bookingId":bookingId}, function(passengers, err)
 	    	{

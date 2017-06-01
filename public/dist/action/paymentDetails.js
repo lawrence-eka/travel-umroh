@@ -128,7 +128,7 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   function $render(_props, _slotView) {
     $context["card-booking"] = $inject("/component/card-booking");
     var cardBooking = $context["card-booking"];
-    $context["card"] = $inject("/component/card");
+    $context["card"] = $inject("/component/panel");
     var card = $context["card"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.paymentDetails");
@@ -149,12 +149,6 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "container all-5px");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -177,31 +171,33 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
         }, function(slotName) {});
         $context["card"].render({
           "title": "Payment Info",
-          "remarks": "Please make the payment before booking expires to avoid automatic cancellation of your booking"
+          "footer": "Please make the payment before booking expires to avoid automatic cancellation of your booking"
         }, function(slotName) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          _text("Total: " + ((booking.totalPrice + booking.uniqueCode).toFormattedString()) + "");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
-          _text("Bank: Bank Central Asia");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
-          _text("Branch: Sidoarjo");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
-          _text("Account No:1234567890");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
-          _text("Name: PT Pete Tbk.");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
-          _elementClose("div");
+          if (slotName == "body") {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            _text("Total: " + ((booking.totalPrice + booking.uniqueCode).toFormattedString()) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("Bank: Bank Central Asia");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("Branch: Sidoarjo");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("Account No:1234567890");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("Name: PT Pete Tbk.");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _elementClose("div");
+          }
         });
       }
       var promise = getPaymentDetails.bind(self)(_props.bookingId);
@@ -222,100 +218,78 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "container all-5px");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel panel-default");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-heading");
-    _elementOpenEnd("div");
-    _elementOpenStart("h3", "");
-    _attr("class", "panel-title");
-    _elementOpenEnd("h3");
-    _text("Payment Confirmation");
-    _elementClose("h3");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-body");
-    _elementOpenEnd("div");
-    _elementOpenStart("form", "");
-    _attr("role", "form");
-    _elementOpenEnd("form");
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Bank Name",
-      "name": "fromBank"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Bank Branch",
-      "name": "fromBranch"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Account Number",
-      "name": "fromAccountNumber"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Account Holder",
-      "name": "fromAccountHolder"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "number",
-      "prompt": "Amount Transfered",
-      "name": "actualPayment"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "datetime-local",
-      "prompt": "Transfer Date & Time",
-      "name": "paymentDate"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "button",
-      "name": "btnPaymentConfirmation",
-      "value": "Payment Confirmation",
-      "onclick": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = __component;
-        self.component.__state = self.component.__state || {};
-        self.state = self.component.__state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
+    $context["card"].render({
+      "title": "Payment Confirmation",
+      "nofooter": "nofooter"
+    }, function(slotName) {
+      if (slotName == "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("form", "");
+        _elementOpenEnd("form");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Bank Name",
+          "name": "fromBank"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Bank Branch",
+          "name": "fromBranch"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Account Number",
+          "name": "fromAccountNumber"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Account Holder",
+          "name": "fromAccountHolder"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "number",
+          "prompt": "Amount Transfered",
+          "name": "actualPayment"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "datetime-local",
+          "prompt": "Transfer Date & Time",
+          "name": "paymentDate"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "name": "btnPaymentConfirmation",
+          "value": "Payment Confirmation",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return paymentConfirmation.bind(self)();
           }
-        };
-        return paymentConfirmation.bind(self)();
+        }, function(slotName) {});
+        _elementClose("div");
+        _elementClose("form");
+        _elementClose("div");
       }
-    }, function(slotName) {});
-    _elementClose("div");
-    _elementClose("form");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
+    });
     _elementClose("div");
   }
   if (typeof $render === "function") {

@@ -208,7 +208,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
         }, function(slotName) {});
         _elementClose("div");
         _elementOpenStart("div", "");
-        _attr("class", "row");
+        _attr("class", "row custom-set-hidden");
         _elementOpenEnd("div");
         $context["entry"].render({
           "type": "checkbox",

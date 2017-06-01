@@ -36,6 +36,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     else if (type == 'hidden') return 'hidden';
     else if (type == 'button') return 'button';
     else if (type == 'checkbox') return 'checkbox';
+    else if (type == 'hyperlink') return 'hyperlink';
     else return 'other'
   }
 
@@ -77,6 +78,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _attr("type", _props.type);
       _attr("name", _props.name);
       _attr("class", "form-control input-sm");
+      _attr("required", _props.required);
+      _attr("placeholder", _props.placeholder ? _props.placeholder : '');
       _attr("value", _props.value ? _props.value : '');
       _elementOpenEnd("input");
       _elementClose("input");
@@ -121,10 +124,19 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     if (whatType(_props.type) == 'textarea') {
       _elementOpenStart("textarea", "");
       _attr("name", _props.name);
+      _attr("required", _props.required);
       _attr("class", "form-control input-sm");
       _elementOpenEnd("textarea");
       _text("" + (_props.value ? _props.value : '') + "");
       _elementClose("textarea");
+    }
+    if (whatType(_props.type) == 'hyperlink') {
+      _elementOpenStart("a", "");
+      _attr("href", _props.href);
+      _attr("class", _props.class ? _props.class : '');
+      _elementOpenEnd("a");
+      _text("" + (_props.prompt) + "");
+      _elementClose("a");
     }
     if (whatType(_props.type) == 'checkbox') {
       _elementOpenStart("div", "");

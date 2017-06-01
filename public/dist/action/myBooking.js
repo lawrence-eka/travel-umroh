@@ -57,7 +57,7 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
 
   function generateLink(event) {
     debugger;
-    window.location.hash = '#app/action.bookPackage:bookingId=' + event.data.id;
+    window.location.hash = '#app/action.bookPackage:bookingId=' + event.data;
   }
 
   function $render(_props, _slotView) {

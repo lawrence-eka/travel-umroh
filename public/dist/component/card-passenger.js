@@ -27,7 +27,7 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
   };
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/card");
+    $context["card"] = $inject("/component/panel");
     var card = $context["card"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-passenger");
@@ -37,24 +37,26 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
     $context["card"].render({
-      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase()
+      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase(),
+      "nofooter": "nofooter"
     }, function(slotName) {
-      _elementOpenStart("div", "");
-      _attr("class", "");
-      _elementOpenEnd("div");
-      _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-      _elementOpenStart("br", "");
-      _elementOpenEnd("br");
-      _elementClose("br");
-      _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-      _elementOpenStart("br", "");
-      _elementOpenEnd("br");
-      _elementClose("br");
-      _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-      _elementOpenStart("br", "");
-      _elementOpenEnd("br");
-      _elementClose("br");
-      _elementClose("div");
+      if (slotName == "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
+        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
+        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
+        _elementClose("div");
+      }
     });
     _elementClose("div");
   }

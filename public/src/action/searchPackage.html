@@ -1,34 +1,22 @@
+<inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/card-package" name="card-package"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
-<div class="container all-5px">
-    <div class="row centered-form no-top-margin">
-        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default frosted-glass">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Search Packages</h3>
-                </div>
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="row">
-                            <entry type="date" prompt="Between" name="startDate" value.bind="_startDate"></entry>
-                            <entry type="date" prompt="And" name="endDate" value.bind="_endDate"></entry>
-                            <entry type="button" name="Search" value="Search" click.trigger="search()"></entry>
-                        </div>
-                        <alert alertType.bind="messageType" message.bind="message"></alert>
-                    </form>
-                </div>
-            </div>
+<div>
+    <panel title="Search Packages" nofooter>
+        <div slot.name="body">
+            <form>
+                <entry type="date" prompt="Between" name="startDate" value.bind="_startDate"></entry>
+                <entry type="date" prompt="And" name="endDate" value.bind="_endDate"></entry>
+                <entry type="button" name="Search" value="Search" click.trigger="search()"></entry>
+            </form>
         </div>
-    </div>
-
+    </panel>
     <div data.load="queryPackages()">
-        <div class="row">
-            <div class="col-md-4 col-sm-6" for.each="pkg in data" >
-                <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
-            </div>
+        <div for.each="pkg in data" >
+            <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
         </div>
     </div>
 </div>

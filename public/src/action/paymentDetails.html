@@ -1,16 +1,13 @@
 <inject from="/component/card-booking" name="card-booking"></inject>
-<inject from="/component/card" name="card"></inject>
+<inject from="/component/panel" name="card"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <div class="container all-5px">
-        <div class="row centered-form no-top-margin">
-
             <div data.load="getPaymentDetails($bookingId)" >
                 <card-booking bkg.bind="data"></card-booking>
-                <card title="Payment Info" remarks="Please make the payment before booking expires to avoid automatic cancellation of your booking">
-                    <div>
+                <card title="Payment Info" footer="Please make the payment before booking expires to avoid automatic cancellation of your booking">
+                    <div slot.name="body">
                         Total: {{(booking.totalPrice + booking.uniqueCode).toFormattedString()}}<br/>
                         Bank: Bank Central Asia<br/>
                         Branch: Sidoarjo<br/>
@@ -19,32 +16,21 @@
                     </div>
                 </card>
             </div>
-            <div class="container all-5px">
-                <div class="row centered-form no-top-margin">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Payment Confirmation</h3>
-                            </div>
-                            <div class="panel-body">
-                                <form role="form">
-                                    <div class="row">
-                                        <entry type="text" prompt="Bank Name" name="fromBank"></entry>
-                                        <entry type="text" prompt="Bank Branch" name="fromBranch"></entry>
-                                        <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
-                                        <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
-                                        <entry type="number" prompt="Amount Transfered" name="actualPayment"></entry>
-                                        <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate"></entry>
-                                        <entry type="button" name="btnPaymentConfirmation" value="Payment Confirmation" click.trigger="paymentConfirmation()"></entry>
-                                    </div>
-                                </form>
-                            </div>
+            <card title="Payment Confirmation" nofooter>
+                <div slot.name="body">
+                    <form>
+                        <div class="row">
+                            <entry type="text" prompt="Bank Name" name="fromBank"></entry>
+                            <entry type="text" prompt="Bank Branch" name="fromBranch"></entry>
+                            <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
+                            <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
+                            <entry type="number" prompt="Amount Transfered" name="actualPayment"></entry>
+                            <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate"></entry>
+                            <entry type="button" name="btnPaymentConfirmation" value="Payment Confirmation" click.trigger="paymentConfirmation()"></entry>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </div>
-        </div>
-    </div>
+        </card>
 </div>
 <script>
     var dates = $inject('/common/dates');

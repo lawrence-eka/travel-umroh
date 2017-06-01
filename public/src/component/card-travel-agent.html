@@ -1,10 +1,10 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
-<inject from="/component/card" name="card"></inject>
+<inject from="/component/panel" name="card"></inject>
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <card title.bind="$travelAgent.travelAgentName">
-        <div>
+    <card title.bind="$travelAgent.travelAgentName" nofooter>
+        <div slot.name="body">
             Address: {{$travelAgent.address}}<br/>
             City: {{$travelAgent.city}}
             <div class=row">

@@ -1,21 +1,22 @@
-<inject from="/component/card" name="card"></inject>
+<inject from="/component/panel" name="card"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-    <card click.trigger="onClick($bkg.id)">
-        <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
-            <p class="bg-primary">Package: {{pkg.packageName}}</p>
-            Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
-            Operator: <span data.load="loadAgent(pkg.travelAgentId)">{{data.travelAgentName}}</span><br/>
-            Land Arrangements: {{$bkg.costLandArrangements.toFormattedString()}}<br/>
-            Tickets: {{$bkg.costTickets.toFormattedString()}}<br/>
-            Total passenger: {{$bkg.numberOfPassengers}}<br/>
-            Total Price: {{($bkg.totalPrice ? $bkg.totalPrice.toFormattedString() : '')}}<br/>
-            Unique Code: {{$bkg.uniqueCode}}<br/>
-            Grand Total: {{($bkg.totalPrice + $bkg.uniqueCode).toFormattedString()}}<br/>
-            Expiry Date: {{($bkg.waitingForPaymentUntil ? $bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')}}
-        </div>
-    </card>
+    <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
+        <card click.trigger="onClick($bkg.id)" title.bind="'Package: ' + pkg.packageName" nofooter>
+            <div slot.name="body">
+                Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
+                Operator: <span data.load="loadAgent(pkg.travelAgentId)" data.name='ta'>{{ta.travelAgentName}}</span><br/>
+                Land Arrangements: {{$bkg.costLandArrangements ? $bkg.costLandArrangements.toFormattedString() : ''}}<br/>
+                Tickets: {{$bkg.costTickets ? $bkg.costTickets.toFormattedString() : ''}}<br/>
+                Total passenger: {{$bkg.numberOfPassengers}}<br/>
+                Total Price: {{($bkg.totalPrice ? $bkg.totalPrice.toFormattedString() : '')}}<br/>
+                Unique Code: {{$bkg.uniqueCode ? $bkg.uniqueCode : ''}}<br/>
+                Grand Total: {{($bkg.totalPrice + $bkg.uniqueCode) ? ($bkg.totalPrice + $bkg.uniqueCode).toFormattedString() : ''}}<br/>
+                Expiry Date: {{($bkg.waitingForPaymentUntil ? $bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')}}
+            </div>
+        </card>
+    </div>
 </div>
 
 <script>

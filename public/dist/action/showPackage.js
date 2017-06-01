@@ -103,8 +103,8 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
   function $render(_props, _slotView) {
     $context["card-package"] = $inject("/component/card-package");
     var cardPackage = $context["card-package"];
-    $context["itrLines"] = $inject("/component/card-itinerary");
-    var itrLines = $context["itrLines"];
+    $context["card-itinerary"] = $inject("/component/card-itinerary");
+    var cardItinerary = $context["card-itinerary"];
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
     _elementOpenStart("link", "");
@@ -124,9 +124,6 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -166,9 +163,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "row");
     _elementOpenEnd("div");
     $context["entry"].render({
       "type": "button",
@@ -196,9 +191,6 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     }, function(slotName) {});
     _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
@@ -219,7 +211,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
         _array.forEach(function(itr) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          $context["itrLines"].render({
+          $context["card-itinerary"].render({
             "itr": itr
           }, function(slotName) {});
           _elementClose("p");
@@ -243,9 +235,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "row");
     _elementOpenEnd("div");
     $context["entry"].render({
       "type": "button",

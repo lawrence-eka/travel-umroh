@@ -80,7 +80,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
 
   function isVisible(group) {
     if (x == group) return "";
-    else return "setHidden";
+    else return "custom-set-hidden";
   }
 
   function entryType(data) {
@@ -104,14 +104,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
     var entry = $context["entry"];
     $context["alert"] = $inject("/component/alert");
     var alert = $context["alert"];
-    _elementOpenStart("style", "");
-    _elementOpenEnd("style");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    _text("\n[element='dist.component.edit-itinerary'] .setHidden {display:none;}");
-    _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.edit-itinerary");
     _attr("class", "container all-5px");

@@ -68,7 +68,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   }
 
   function getPassengers(bookingId) {
-    //debugger;
+    debugger;
     return new Promise(function(resolve) {
       dpd.passengers.get({
         "bookingId": bookingId
@@ -146,6 +146,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var alert = $context["alert"];
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
+    $context["panel"] = $inject("/component/panel");
+    var panel = $context["panel"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.bookPackage");
     _attr("href", "asset/css/custom-style.css");
@@ -163,9 +165,6 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -205,142 +204,119 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "container all-5px");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel panel-default custom-panel");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-heading");
-    _elementOpenEnd("div");
-    _elementOpenStart("h3", "");
-    _attr("class", "panel-title");
-    _elementOpenEnd("h3");
-    _text("Passenger Detail");
-    _elementClose("h3");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-body");
-    _elementOpenEnd("div");
-    _elementOpenStart("form", "");
-    _attr("role", "form");
-    _elementOpenEnd("form");
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    $context["entry"].render({
-      "type": "hidden",
-      "name": "bookingId",
-      "value": _props.bookingId
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "First Name",
-      "name": "firstName"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Middle Name",
-      "name": "middleName"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Last Name",
-      "name": "lastName"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Birth Place",
-      "name": "birthPlace"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "date",
-      "prompt": "Birthday",
-      "name": "birthday"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Passport Number",
-      "name": "passportNumber"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "date",
-      "prompt": "Passport Expiry Date",
-      "name": "passportExpiryDate"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "text",
-      "prompt": "Passport Issuer",
-      "name": "passportIssuer"
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "button",
-      "name": "btnRegister",
-      "value": "Register",
-      "onclick": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = __component;
-        self.component.__state = self.component.__state || {};
-        self.state = self.component.__state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
+    $context["panel"].render({
+      "title": "Passenger Detail",
+      "nofooter": "nofooter"
+    }, function(slotName) {
+      if (slotName == "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("form", "");
+        _attr("role", "form");
+        _elementOpenEnd("form");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        $context["entry"].render({
+          "type": "hidden",
+          "name": "bookingId",
+          "value": _props.bookingId
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "First Name",
+          "name": "firstName"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Middle Name",
+          "name": "middleName"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Last Name",
+          "name": "lastName"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Birth Place",
+          "name": "birthPlace"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "date",
+          "prompt": "Birthday",
+          "name": "birthday"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Passport Number",
+          "name": "passportNumber"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "date",
+          "prompt": "Passport Expiry Date",
+          "name": "passportExpiryDate"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "text",
+          "prompt": "Passport Issuer",
+          "name": "passportIssuer"
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "name": "btnRegister",
+          "value": "Register",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return registerPassenger.bind(self)(_props.bookingId);
           }
-        };
-        return registerPassenger.bind(self)(_props.bookingId);
-      }
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "button",
-      "name": "btnPaymentDetail",
-      "value": "Payment Detail",
-      "onclick": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = __component;
-        self.component.__state = self.component.__state || {};
-        self.state = self.component.__state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "name": "btnPaymentDetail",
+          "value": "Payment Detail",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return calculatePaymentDetail.bind(self)(_props.bookingId);
           }
-        };
-        return calculatePaymentDetail.bind(self)(_props.bookingId);
+        }, function(slotName) {});
+        _elementClose("div");
+        _elementClose("form");
+        _elementClose("div");
       }
-    }, function(slotName) {});
-    _elementClose("div");
-    _elementClose("form");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
+    });
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -385,7 +361,6 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    _elementClose("div");
     _elementClose("div");
     _elementClose("div");
   }

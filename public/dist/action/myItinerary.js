@@ -115,7 +115,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/card");
+    $context["card"] = $inject("/component/panel");
     var card = $context["card"];
     $context["card-itinerary"] = $inject("/component/card-itinerary");
     var cardItinerary = $context["card-itinerary"];
@@ -146,35 +146,41 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
 
       function asyncFunc__1(data) {
         $context["card"].render({
-          "title": data.packageName
+          "title": data.packageName,
+          "nofooter": "nofooter"
         }, function(slotName) {
-          if (!_props.editItineraryId) {
-            _elementOpenStart("input", "");
-            _attr("type", "button");
-            _attr("value", "Add Itinerary");
-            _attr("class", "form-control btn btn-info btn-block");
-            _attr("onclick", function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
+          if (slotName == "body") {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            if (!_props.editItineraryId) {
+              _elementOpenStart("input", "");
+              _attr("type", "button");
+              _attr("value", "Add Itinerary");
+              _attr("class", "form-control btn btn-info btn-block");
+              _attr("onclick", function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
                 }
-              };
-              return onAddItinerary.bind(self)(_props.packageId);
-            });
-            _elementOpenEnd("input");
-            _elementClose("input");
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return onAddItinerary.bind(self)(_props.packageId);
+              });
+              _elementOpenEnd("input");
+              _elementClose("input");
+            }
+            _elementClose("div");
           }
         });
         if (message) {

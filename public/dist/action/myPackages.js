@@ -94,7 +94,7 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
     _elementClose("link");
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
-    $context["card"] = $inject("/component/card");
+    $context["card"] = $inject("/component/panel");
     var card = $context["card"];
     $context["card-package"] = $inject("/component/card-package");
     var cardPackage = $context["card-package"];
@@ -107,12 +107,6 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "container all-5px");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -131,33 +125,39 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
 
       function asyncFunc__1(data) {
         $context["card"].render({
-          "title": data.travelAgentName
+          "title": data.travelAgentName,
+          "nofooter": "nofooter"
         }, function(slotName) {
-          if (!_props.editPackageId) {
-            $context["entry"].render({
-              "type": "button",
-              "value": "New Package",
-              "onclick": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
-                }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
+          if (slotName == "body") {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            if (!_props.editPackageId) {
+              $context["entry"].render({
+                "type": "button",
+                "value": "New Package",
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
                   }
-                };
-                return onNewPackage.bind(self)(_props.travelAgentId);
-              }
-            }, function(slotName) {});
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return onNewPackage.bind(self)(_props.travelAgentId);
+                }
+              }, function(slotName) {});
+            }
+            _elementClose("div");
           }
         });
         if (_props.editPackageId == -1) {
@@ -354,8 +354,6 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    _elementClose("div");
-    _elementClose("div");
     _elementClose("div");
     _elementClose("div");
   }
