@@ -43,6 +43,18 @@ body{
     margin-top: 0;
 }
 
+.custom-panel-layout {
+    padding: 10px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+}
+
+.custom-container-layout{
+    margin: 0px 5px 0px 5px !important;
+    padding: 0px 5px 0px 5px !important;
+    border: 0px !important;
+}
+
 .all-5px {
     margin: 5px 5px 5px 5px !important;
     padding: 5px 5px 5px 5px !important;
@@ -59,6 +71,11 @@ body{
 .custom-entry-prompt {
     margin-bottom:0 !important;
     font-size:0.8em !important;
+}
+
+.custom-register-here {
+    font-size:0.8em !important;
+    text-align: center !important;
 }
 .custom-entry-margin {
     margin-bottom:5px !important;
@@ -79,6 +96,10 @@ body{
 .custom-panel-booked-package {
     padding-left:0 !important;
     padding-right:0 !important;
+}
+
+.custom-set-hidden {
+    display:none;
 }
 
 .frosted-glass {

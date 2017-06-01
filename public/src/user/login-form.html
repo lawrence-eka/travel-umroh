@@ -1,25 +1,25 @@
 <inject from="/component/alert" name="alert"></inject>
-<link href="/asset/css/signin.css" rel="stylesheet">
-<link href="asset/css/registration.css" rel="stylesheet">
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
 
-<div class="container  margin-top-login-panel">
 
-    <form class="form-signin" submit.trigger="login(this)">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="userName" class="sr-only">Username</label>
-        <input type="text" id="userName" class="form-control" placeholder="Username" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+<div class="container  margin-top-login-panel" if.bind="hasLoggedIn()">
+    <panel nofooter notitle>
+        <div slot.name="body">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <form>
+                <entry type="text" name="username" required placeholder="Username"></entry>
+                <entry type="text" name="password" placeholder="Password"></entry>
+                <entry type="checkbox" name="rememberMe" prompt="Remember me"></entry>
+                <entry type="button" value="Sign In" click.trigger="login()"></entry>
+                <div class="form-group custom-entry-margin">
+                    <a href="#user.registration" class="custom-entry-prompt">New to MarKiMroh? Register here</a>
+                </div>
+            </form>
+            <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
         </div>
-        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <a href="#user.registration">New to MarKiMroh? Register here</a>
-    </form>
-
+    </panel>
 </div> <!-- /container -->
 
 
@@ -28,14 +28,58 @@
 </body>
 </html>
 <script>
+	function createCookie(name,value,days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+		}
+		else var expires = "";
+		document.cookie = name+"="+value+expires+"; path=/";
+	}
+
+	function readCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+
+	function eraseCookie(name) {
+		createCookie(name,"",-1);
+	}
+    function hasLoggedIn() {
+    	return new Promise(function(resolve){
+            var cookie = readCookie('rememberMe')
+            if(cookie == 'true') {
+                dpd.users.me(function (me) {
+                    if(me) {
+	                    window.location.hash = "#app/action.searchPackage";
+                    	resolve(true);
+                    }
+                    else resolve(false);
+                });
+            }
+            else resolve(false);
+	    });
+    }
 
     var errorMessage = '';
 
-    function login(form){
+    function login(){
+        var form = this.target.form;
         errorMessage = "";
         $patchChanges();
-        var userName = form.elements.userName.value;
+        var userName = form.elements.username.value.toLowerCase();
         var password = form.elements.password.value;
+
+        if(form.elements.rememberMe) createCookie("rememberMe", "true");
+        else eraseCookie("rememberMe");
+
         dpd.users.login({"username": userName, "password": password}, function(user, err) {
             if(err){
                 errorMessage = err.message;

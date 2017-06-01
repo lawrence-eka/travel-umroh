@@ -1,21 +1,25 @@
-<inject from="/component/card" name="card"></inject>
+<inject from="/component/panel" name="card"></inject>
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <card title.bind="$pkg.packageName" click.trigger="onButtonClicked($pkg.id)">
-        <div>
+    <card title.bind="$pkg.packageName" nofooter click.trigger="onClick($pkg.id)">
+        <div slot.name="body">
             Travel Date: {{$pkg.travelDateFrom ? $pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil) : ''}} <br/>
             Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
             Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
             <div class=row" if.bind="$onedit || $onshowItinerary">
                 <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($pkg.id)"></entry>
-                <entry type="button" value="Itinerary..." divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onButtonClicked($pkg.id)"></entry>
+                <entry type="button" value="Itinerary..." divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onItineraryClicked($pkg.id)"></entry>
             </div>
         </div>
     </card>
 </div>
 <script>
-    function onButtonClicked(packageId) {
+    function onClick(packageId) {
+        this.emitEvent('click', packageId);
+    }
+
+    function onItineraryClicked(packageId) {
         this.emitEvent('showItinerary', packageId);
     }
     function onEdit(packageId) {

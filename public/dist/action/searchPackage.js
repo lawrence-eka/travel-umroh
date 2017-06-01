@@ -85,6 +85,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   }
 
   function $render(_props, _slotView) {
+    $context["panel"] = $inject("/component/panel");
+    var panel = $context["panel"];
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
     $context["alert"] = $inject("/component/alert");
@@ -103,86 +105,61 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.searchPackage");
-    _attr("class", "container all-5px");
     _elementOpenEnd("div");
     // The component of this object
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel panel-default frosted-glass");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-heading");
-    _elementOpenEnd("div");
-    _elementOpenStart("h3", "");
-    _attr("class", "panel-title");
-    _elementOpenEnd("h3");
-    _text("Search Packages");
-    _elementClose("h3");
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel-body");
-    _elementOpenEnd("div");
-    _elementOpenStart("form", "");
-    _attr("role", "form");
-    _elementOpenEnd("form");
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    $context["entry"].render({
-      "type": "date",
-      "prompt": "Between",
-      "name": "startDate",
-      "value": _startDate
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "date",
-      "prompt": "And",
-      "name": "endDate",
-      "value": _endDate
-    }, function(slotName) {});
-    $context["entry"].render({
-      "type": "button",
-      "name": "Search",
-      "value": "Search",
-      "onclick": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = __component;
-        self.component.__state = self.component.__state || {};
-        self.state = self.component.__state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
+    $context["panel"].render({
+      "title": "Search Packages",
+      "nofooter": "nofooter"
+    }, function(slotName) {
+      if (slotName == "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("form", "");
+        _elementOpenEnd("form");
+        $context["entry"].render({
+          "type": "date",
+          "prompt": "Between",
+          "name": "startDate",
+          "value": _startDate
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "date",
+          "prompt": "And",
+          "name": "endDate",
+          "value": _endDate
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "name": "Search",
+          "value": "Search",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return search.bind(self)();
           }
-        };
-        return search.bind(self)();
+        }, function(slotName) {});
+        _elementClose("form");
+        _elementClose("div");
       }
-    }, function(slotName) {});
-    _elementClose("div");
-    $context["alert"].render({
-      "alertType": messageType,
-      "message": message
-    }, function(slotName) {});
-    _elementClose("form");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
+    });
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -200,13 +177,9 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
         var _array = data || [];
         _array.forEach(function(pkg) {
           _elementOpenStart("div", "");
-          _attr("class", "col-md-4 col-sm-6");
           _elementOpenEnd("div");
           $context["card-package"].render({
             "onclick": function(event) {
@@ -233,7 +206,6 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           }, function(slotName) {});
           _elementClose("div");
         });
-        _elementClose("div");
       }
       var promise = queryPackages.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {

@@ -2,12 +2,6 @@
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
 
-<style>
-    .setHidden {
-        display:none;
-    }
-
-</style>
 <div class="container all-5px">
     <div class="row centered-form no-top-margin">
         <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -127,7 +121,7 @@
 
 	function isVisible(group) {
 	    if (x==group) return "";
-	    else return "setHidden";
+	    else return "custom-set-hidden";
     }
 
 	function entryType(data)

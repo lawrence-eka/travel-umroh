@@ -48,7 +48,7 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
     _elementClose("link");
-    $context["card"] = $inject("/component/card");
+    $context["card"] = $inject("/component/panel");
     var card = $context["card"];
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
@@ -60,72 +60,75 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
     $context["card"].render({
-      "title": _props.travelAgent.travelAgentName
+      "title": _props.travelAgent.travelAgentName,
+      "nofooter": "nofooter"
     }, function(slotName) {
-      _elementOpenStart("div", "");
-      _elementOpenEnd("div");
-      _text("Address: " + (_props.travelAgent.address) + "");
-      _elementOpenStart("br", "");
-      _elementOpenEnd("br");
-      _elementClose("br");
-      _text("City: " + (_props.travelAgent.city) + "");
-      _elementOpenStart("div", "");
-      _attr("class", "row");
-      _elementOpenEnd("div");
-      $context["entry"].render({
-        "type": "button",
-        "value": "Edit Info",
-        "name": "btnEdit",
-        "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-        "onclick": function(event) {
-          var self = {
-            target: event.target
-          };
-          self.properties = _props;
-          if ('elements' in self.target) {
-            self.elements = self.target.elements;
-          }
-          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = __component;
-          self.component.__state = self.component.__state || {};
-          self.state = self.component.__state;
-          self.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-            if ('on' + eventName in _props) {
-              _props['on' + eventName](event);
+      if (slotName == "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _text("Address: " + (_props.travelAgent.address) + "");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
+        _text("City: " + (_props.travelAgent.city) + "");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        $context["entry"].render({
+          "type": "button",
+          "value": "Edit Info",
+          "name": "btnEdit",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
             }
-          };
-          return onClickEdit.bind(self)(_props.travelAgent.id);
-        }
-      }, function(slotName) {});
-      $context["entry"].render({
-        "type": "button",
-        "value": "Packages...",
-        "name": "btnPackages",
-        "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-        "onclick": function(event) {
-          var self = {
-            target: event.target
-          };
-          self.properties = _props;
-          if ('elements' in self.target) {
-            self.elements = self.target.elements;
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onClickEdit.bind(self)(_props.travelAgent.id);
           }
-          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = __component;
-          self.component.__state = self.component.__state || {};
-          self.state = self.component.__state;
-          self.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-            if ('on' + eventName in _props) {
-              _props['on' + eventName](event);
+        }, function(slotName) {});
+        $context["entry"].render({
+          "type": "button",
+          "value": "Packages...",
+          "name": "btnPackages",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
             }
-          };
-          return onClickPackages.bind(self)(_props.travelAgent.id);
-        }
-      }, function(slotName) {});
-      _elementClose("div");
-      _elementClose("div");
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = __component;
+            self.component.__state = self.component.__state || {};
+            self.state = self.component.__state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            return onClickPackages.bind(self)(_props.travelAgent.id);
+          }
+        }, function(slotName) {});
+        _elementClose("div");
+        _elementClose("div");
+      }
     });
     _elementClose("div");
   }

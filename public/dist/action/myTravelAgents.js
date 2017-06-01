@@ -126,6 +126,8 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
     var alert = $context["alert"];
     $context["entry"] = $inject("/component/entry");
     var entry = $context["entry"];
+    $context["panel"] = $inject("/component/panel");
+    var panel = $context["panel"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.myTravelAgents");
     _attr("href", "asset/css/custom-style.css");
@@ -143,9 +145,6 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    _elementOpenStart("div", "");
-    _attr("class", "container all-5px");
-    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -161,137 +160,198 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        _elementOpenStart("div", "");
-        _attr("class", "row centered-form no-top-margin");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "panel panel-default custom-panel");
-        _elementOpenEnd("div");
-        _elementOpenStart("div", "");
-        _attr("class", "panel-heading");
-        _elementOpenEnd("div");
-        if (!_props.travelAgentId) {
-          _elementOpenStart("h3", "");
-          _attr("class", "panel-title");
-          _elementOpenEnd("h3");
-          _text("New Travel Agent");
-          _elementClose("h3");
-        }
-        if (_props.travelAgentId) {
-          _elementOpenStart("h3", "");
-          _attr("class", "panel-title");
-          _elementOpenEnd("h3");
-          _text("Edit Travel Agent");
-          _elementClose("h3");
-        }
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "panel-body");
-        _elementOpenEnd("div");
-        $context["alert"].render({
-          "alertType": "error",
-          "message": _props.errorMessage
-        }, function(slotName) {});
-        _elementOpenStart("form", "");
-        _attr("role", "form");
-        _elementOpenEnd("form");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        $context["entry"].render({
-          "type": "hidden",
-          "name": "id",
-          "value": data.id
-        }, function(slotName) {});
-        $context["entry"].render({
-          "type": "hidden",
-          "name": "contactPersonId",
-          "value": data.contactPersonId
-        }, function(slotName) {});
-        $context["entry"].render({
-          "type": "text",
-          "prompt": "Name",
-          "name": "travelAgentName",
-          "value": data.travelAgentName
-        }, function(slotName) {});
-        $context["entry"].render({
-          "type": "textarea",
-          "prompt": "Address",
-          "name": "address",
-          "value": data.address
-        }, function(slotName) {});
-        $context["entry"].render({
-          "type": "text",
-          "prompt": "City",
-          "name": "city",
-          "value": data.city
-        }, function(slotName) {});
-        _elementClose("div");
-        _elementOpenStart("div", "");
-        _attr("class", "row");
-        _elementOpenEnd("div");
-        $context["entry"].render({
-          "type": "button",
-          "name": "btnSave",
-          "value": (_props.travelAgentId ? 'Save' : 'Register'),
-          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-          "onclick": function(event) {
-            var self = {
-              target: event.target
-            };
-            self.properties = _props;
-            if ('elements' in self.target) {
-              self.elements = self.target.elements;
-            }
-            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-            self.component = __component;
-            self.component.__state = self.component.__state || {};
-            self.state = self.component.__state;
-            self.emitEvent = function(eventName, data) {
-              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-              if ('on' + eventName in _props) {
-                _props['on' + eventName](event);
-              }
-            };
-            return register.bind(self)();
-          }
-        }, function(slotName) {});
-        if (_props.travelAgentId) {
-          $context["entry"].render({
-            "type": "button",
-            "name": "btnCancel",
-            "value": "Cancel",
-            "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-            "onclick": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
+        $context["panel"].render({
+          "title": (_props.travelAgentId ? 'Edit' : 'New') + ' Travel Agent',
+          "nofooter": "nofooter"
+        }, function(slotName) {
+          if (slotName == "body") {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            $context["alert"].render({
+              "alertType": "error",
+              "message": _props.errorMessage
+            }, function(slotName) {});
+            _elementOpenStart("form", "");
+            _attr("role", "form");
+            _elementOpenEnd("form");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            $context["entry"].render({
+              "type": "hidden",
+              "name": "id",
+              "value": data.id
+            }, function(slotName) {});
+            $context["entry"].render({
+              "type": "hidden",
+              "name": "contactPersonId",
+              "value": data.contactPersonId
+            }, function(slotName) {});
+            $context["entry"].render({
+              "type": "text",
+              "prompt": "Name",
+              "name": "travelAgentName",
+              "value": data.travelAgentName
+            }, function(slotName) {});
+            $context["entry"].render({
+              "type": "textarea",
+              "prompt": "Address",
+              "name": "address",
+              "value": data.address
+            }, function(slotName) {});
+            $context["entry"].render({
+              "type": "text",
+              "prompt": "City",
+              "name": "city",
+              "value": data.city
+            }, function(slotName) {});
+            _elementClose("div");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            $context["entry"].render({
+              "type": "button",
+              "name": "btnSave",
+              "value": (_props.travelAgentId ? 'Save' : 'Register'),
+              "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
                 }
-              };
-              return cancel.bind(self)();
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = __component;
+                self.component.__state = self.component.__state || {};
+                self.state = self.component.__state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                return register.bind(self)();
+              }
+            }, function(slotName) {});
+            if (_props.travelAgentId) {
+              $context["entry"].render({
+                "type": "button",
+                "name": "btnCancel",
+                "value": "Cancel",
+                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
+                  }
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return cancel.bind(self)();
+                }
+              }, function(slotName) {});
             }
-          }, function(slotName) {});
-        }
-        _elementClose("div");
-        _elementClose("form");
-        _elementClose("div");
-        _elementClose("div");
-        _elementClose("div");
+            _elementClose("div");
+            _elementClose("form");
+            _elementClose("div");
+          }
+        });
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        (function(domNode) {
+          var node = domNode.element;
+          var self = {
+            target: node
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = self.target;
+          self.component = __component;
+          self.component.__state = self.component.__state || {};
+          self.state = self.component.__state;
+
+          function asyncFunc__2(data) {
+            var _array = data || [];
+            _array.forEach(function(ta) {
+              _elementOpenStart("p", "");
+              _elementOpenEnd("p");
+              $context["card-travel-agent"].render({
+                "travelAgent": ta,
+                "oneditTA": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
+                  }
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return onEditTA.bind(self)(event);
+                },
+                "onshowPackages": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
+                  }
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return onShowPackages.bind(self)(event);
+                }
+              }, function(slotName) {});
+              _elementClose("p");
+            });
+          }
+          var promise = getTravelAgents.bind(self)(_props.travelAgentId);
+          if (promise && typeof promise == "object" && "then" in promise) {
+            _skip();
+            promise.then(function(_result) {
+              $patchChanges(node, function() {
+                asyncFunc__2.call(self, _result)
+              });
+            }).catch(function(err) {
+              console.log(err);
+            });
+          } else {
+            asyncFunc__2.call(self, promise)
+          }
+        })({
+          element: IncrementalDOM.currentElement(),
+          pointer: IncrementalDOM.currentPointer()
+        });
         _elementClose("div");
       }
       var promise = getOneTravelAgent.bind(self)(_props.travelAgentId);
@@ -311,99 +371,6 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _elementOpenEnd("div");
-    (function(domNode) {
-      var node = domNode.element;
-      var self = {
-        target: node
-      };
-      self.properties = _props;
-      if ('elements' in self.target) {
-        self.elements = self.target.elements;
-      }
-      self.currentTarget = self.target;
-      self.component = __component;
-      self.component.__state = self.component.__state || {};
-      self.state = self.component.__state;
-
-      function asyncFunc__1(data) {
-        var _array = data || [];
-        _array.forEach(function(ta) {
-          _elementOpenStart("p", "");
-          _elementOpenEnd("p");
-          $context["card-travel-agent"].render({
-            "travelAgent": ta,
-            "oneditTA": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
-                }
-              };
-              return onEditTA.bind(self)(event);
-            },
-            "onshowPackages": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
-                }
-              };
-              return onShowPackages.bind(self)(event);
-            }
-          }, function(slotName) {});
-          _elementClose("p");
-        });
-      }
-      var promise = getTravelAgents.bind(self)(_props.travelAgentId);
-      if (promise && typeof promise == "object" && "then" in promise) {
-        _skip();
-        promise.then(function(_result) {
-          $patchChanges(node, function() {
-            asyncFunc__1.call(self, _result)
-          });
-        }).catch(function(err) {
-          console.log(err);
-        });
-      } else {
-        asyncFunc__1.call(self, promise)
-      }
-    })({
-      element: IncrementalDOM.currentElement(),
-      pointer: IncrementalDOM.currentPointer()
-    });
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
     _elementClose("div");
   }
   if (typeof $render === "function") {
