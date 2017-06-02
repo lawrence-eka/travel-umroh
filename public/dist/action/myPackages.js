@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
   var $path = "/dist/action/myPackages";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/myPackages");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -57,7 +62,6 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
   }
 
   function onSavePackage(pkg, travelAgentId) {
-    debugger;
     pkg = pkg.data;
     pkg.travelAgentId = travelAgentId;
     dpd.packages.post(pkg, function(result, err) {
@@ -67,17 +71,14 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
   }
 
   function onEditPackage(packageId, travelAgentId) {
-    debugger;
     window.location.hash = "#app/action.myPackages:travelAgentId=" + travelAgentId + ":editPackageId=" + packageId.data;
   }
 
   function onShowItinerary(packageId) {
-    debugger;
     window.location.hash = "#app/action.myItinerary:packageId=" + packageId.data;
   }
 
   function onNewPackage(event) {
-    debugger;
     window.location.hash = "#app/action.myPackages:travelAgentId=" + event + ":editPackageId=-1";
   }
 
@@ -91,15 +92,22 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
-    $context["card-package"] = $inject("/component/card-package");
-    var cardPackage = $context["card-package"];
-    $context["edit-package"] = $inject("/component/edit-package");
-    var editPackage = $context["edit-package"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
+    _context["card-package"] = $inject("/component/card-package");
+    var cardPackage = _context["card-package"];
+    _context["edit-package"] = $inject("/component/edit-package");
+    var editPackage = _context["edit-package"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myPackages");
     _elementOpenEnd("div");
@@ -107,6 +115,13 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -124,15 +139,16 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["card"].render({
+        var __params = {
           "title": data.travelAgentName,
           "nofooter": "nofooter"
-        }, function(slotName) {
+        };
+        _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
           if (slotName == "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
             if (!_props.editPackageId) {
-              $context["entry"].render({
+              var __params = {
                 "type": "button",
                 "value": "New Package",
                 "onclick": function(event) {
@@ -155,13 +171,14 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
                   };
                   return onNewPackage.bind(self)(_props.travelAgentId);
                 }
-              }, function(slotName) {});
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             }
             _elementClose("div");
           }
         });
         if (_props.editPackageId == -1) {
-          $context["edit-package"].render({
+          var __params = {
             "onsave": function(event) {
               var self = {
                 target: event.target
@@ -202,7 +219,8 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
               };
               return onCancelEdit.bind(self)(_props.travelAgentId);
             }
-          }, function(slotName) {});
+          };
+          _context["edit-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         }
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -226,7 +244,7 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
               _elementOpenStart("div", "");
               _elementOpenEnd("div");
               if (_props.editPackageId != pkg.id) {
-                $context["card-package"].render({
+                var __params = {
                   "pkg": pkg,
                   "onedit": function(event) {
                     var self = {
@@ -268,10 +286,11 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
                     };
                     return onShowItinerary.bind(self)(event);
                   }
-                }, function(slotName) {});
+                };
+                _context["card-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
               }
               if (_props.editPackageId == pkg.id) {
-                $context["edit-package"].render({
+                var __params = {
                   "package": pkg,
                   "onsave": function(event) {
                     var self = {
@@ -313,7 +332,8 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
                     };
                     return onCancelEdit.bind(self)(_props.travelAgentId);
                   }
-                }, function(slotName) {});
+                };
+                _context["edit-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
               }
               _elementClose("div");
             });

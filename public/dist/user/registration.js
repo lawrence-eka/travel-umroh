@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   var $path = "/dist/user/registration";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/user/registration");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -64,8 +69,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["profile"] = $inject("/component/userProfile");
-    var profile = $context["profile"];
+    _context["profile"] = $inject("/component/userProfile");
+    var profile = _context["profile"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.registration");
     _attr("class", "container small-margin-top");
@@ -74,7 +79,14 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["profile"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "error": __state.error.message,
       "onsave": function(event) {
         var self = {
@@ -117,7 +129,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
         return cancelRegistration.bind(self)();
       },
       "errorMessage": __state.error.message
-    }, function(slotName) {});
+    };
+    _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     _elementClose("div");
   }
   if (typeof $render === "function") {

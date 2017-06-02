@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   var $path = "/dist/action/searchPackage";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/searchPackage");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -85,14 +90,14 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["panel"] = $inject("/component/panel");
-    var panel = $context["panel"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
-    $context["card-package"] = $inject("/component/card-package");
-    var cardPackage = $context["card-package"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
+    _context["card-package"] = $inject("/component/card-package");
+    var cardPackage = _context["card-package"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.searchPackage");
     _attr("href", "asset/css/custom-style.css");
@@ -102,6 +107,13 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.searchPackage");
@@ -110,28 +122,38 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["panel"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "title": "Search Packages",
       "nofooter": "nofooter"
-    }, function(slotName) {
+    };
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _elementOpenStart("form", "");
         _elementOpenEnd("form");
-        $context["entry"].render({
+        var __params = {
           "type": "date",
           "prompt": "Between",
           "name": "startDate",
           "value": _startDate
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "date",
           "prompt": "And",
           "name": "endDate",
           "value": _endDate
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "button",
           "name": "Search",
           "value": "Search",
@@ -155,7 +177,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
             };
             return search.bind(self)();
           }
-        }, function(slotName) {});
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         _elementClose("form");
         _elementClose("div");
       }
@@ -181,7 +204,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         _array.forEach(function(pkg) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          $context["card-package"].render({
+          var __params = {
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -203,7 +226,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
               return generateLink.bind(self)(event);
             },
             "pkg": pkg
-          }, function(slotName) {});
+          };
+          _context["card-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("div");
         });
       }

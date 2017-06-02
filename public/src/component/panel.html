@@ -7,7 +7,7 @@
                 <div class="panel panel-default ">
                     <div class="panel-heading custom-panel-layout" if.bind="$test || !$notitle || $title">
                         <h3 class="panel-title">
-                            {{$title ? $title : ''}}
+                            {{($title ? $title : '')}}
                             <div if.bind="$test">
                                 PANEL HEADER
                             </div>

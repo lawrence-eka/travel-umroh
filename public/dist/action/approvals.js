@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/approvals", (function() {
   var $path = "/dist/action/approvals";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/approvals");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,6 +27,10 @@ yalla.framework.addComponent("/dist/action/approvals", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   function $render(_props, _slotView) {
     _elementOpenStart("div", "");
     _attr("element", "dist.action.approvals");
@@ -34,6 +39,13 @@ yalla.framework.addComponent("/dist/action/approvals", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _text("this is myApproval screen");
     _elementClose("div");
   }

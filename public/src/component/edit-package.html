@@ -1,37 +1,30 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
 
-<div class="container all-5px">
-    <div class="row centered-form no-top-margin">
-        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default custom-panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title" if.bind="$package">Edit Package Info</h3>
-                    <h3 class="panel-title" if.bind="!$package">New Package</h3>
+<div>
+    <panel title.bind="$package ? 'Edit Package Info' : 'New Package'" nofooter>
+        <div  slot.name="body" data.load="loadPackage($package)">
+            <form>
+                <entry type="hidden" name="id" value.bind="data.id"></entry>
+                <entry type="hidden" name="travelAgentId" value.bind="data.travelAgentId"></entry>
+                <div class="row">
+                    <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
+                    <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
+                    <entry type="date" name="validFrom" prompt="Valid From"  value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : '')"></entry>
+                    <entry type="date" name="validUntil" prompt="Valid Until" value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : '')"></entry>
+                    <entry type="number" name="costLandArrangements" prompt="Land Arrangements"  value.bind="data.costLandArrangements"></entry>
+                    <entry type="number" name="costTickets" prompt="Tickets" value.bind="data.costTickets"></entry>
+                    <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" checked.bind="data.isItineraryConfirmed"></entry>
+                    <entry type="checkbox" name="isPublished" prompt="Published" checked.bind="data.isPublished"></entry>
+                    <entry type="button" value.bind="$package ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                    <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
                 </div>
-                <div class="panel-body"  data.load="loadPackage($package)">
-                    <form role="form">
-                        <entry type="hidden" name="id" value.bind="data.id"></entry>
-                        <entry type="hidden" name="travelAgentId" value.bind="data.travelAgentId"></entry>
-                        <div class="row">
-                            <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
-                            <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
-                            <entry type="date" name="validFrom" prompt="Valid From"  value.bind="data.validFrom"></entry>
-                            <entry type="date" name="validUntil" prompt="Valid Until" value.bind="data.validUntil"></entry>
-                            <entry type="number" name="costLandArrangements" prompt="Land Arrangements"  value.bind="data.costLandArrangements"></entry>
-                            <entry type="number" name="costTickets" prompt="Tickets" value.bind="data.costTickets"></entry>
-                            <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" value.bind="data.isItineraryConfirmed"></entry>
-                            <entry type="checkbox" name="isPublished" prompt="Published" value.bind="data.isPublished"></entry>
-                            <entry type="button" value.bind="$package ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
-                            <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
-                        </div>
-                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
-                    </form>
-                </div>
-            </div>
+                <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+            </form>
         </div>
-    </div>
+    </panel>
 </div>
 
 <script>
@@ -53,8 +46,8 @@
 		package.validUntil = (new Date(form.elements.validUntil.value)).getTime();
 		package.costLandArrangements = form.elements.costLandArrangements.value;
 		package.costTickets = form.elements.costTickets.value;
-		package.isItineraryConfirmed = (form.elements.isItineraryConfirmed .value == "on");
-		package.isPublished = (form.elements.isPublished.value == "on");
+		package.isItineraryConfirmed = (form.elements.isItineraryConfirmed.checked);
+		package.isPublished = (form.elements.isPublished.checked);
 		this.emitEvent('save', package);
 	}
 

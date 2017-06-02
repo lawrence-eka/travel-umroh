@@ -2,7 +2,7 @@
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <card title.bind="$itr.fromDateTime.toDateComponents()" remarks.bind="$itr.remarks" nofooter>
+    <card title.bind="($itr.fromDateTime.toDateComponents())" remarks.bind="$itr.remarks" nofooter>
         <div slot.name="body">
             <div if.bind="$itr.entry.transport">
                 Airline: {{$itr.entry.transport}} <br/>
@@ -18,9 +18,20 @@
                 Check out: {{$itr.entry.checkOut.toDateComponents()}} <br/>
             </div>
             <div class=row" if.bind="$onedit || $ondelete">
-                <entry type="button" value="Edit" click.trigger="$onedit($itr.id)"></entry>
-                <entry type="button" value="Delete" click.trigger="$ondelete($itr.id)"></entry>
+                <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($itr.id)"></entry>
+                <entry type="button" value="Delete" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onDelete($itr.id)"></entry>
             </div>
         </div>
     </card>
-<div>
+</div>
+<script>
+    function onEdit(itineraryId) {
+    	debugger;
+    	this.emitEvent('edit', itineraryId);
+    }
+
+    function onDelete(itineraryId) {
+    	debugger;
+    	this.emitEvent('delete', itineraryId);
+    }
+</script>

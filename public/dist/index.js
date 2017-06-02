@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/index", (function() {
   var $path = "/dist/index";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/index");
 
   function ComponentEvent(type, data, target, currentTarget) {

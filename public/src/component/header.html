@@ -53,6 +53,7 @@
 
     function logout(){
         dpd.users.logout(function(err) {
+        	storage.me.erase();
             window.location.hash = '#app';
         });
     }

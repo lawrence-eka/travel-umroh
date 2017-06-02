@@ -3,13 +3,13 @@
 <div class.bind="whatDivClass($divClass)">
     <div class="form-group custom-entry-margin">
         <label if.bind="$prompt && whatType($type) != 'checkbox'" class="custom-entry-prompt">{{$prompt}}</label>
-        <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder ? $placeholder : ''" value.bind="$value ? $value : ''">
-        <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value ? $value : ''">
-        <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="$class ? $class : 'form-control btn btn-info btn-block'" value.bind="$value ? $value : ''" click.trigger="buttonClicked()">
-        <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm">{{$value ? $value : ''}}</textarea>
+        <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="($placeholder ? $placeholder : '')" value.bind="($value ? $value : '')">
+        <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="($value ? $value : '')">
+        <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="($value ? $value : '')" click.trigger="buttonClicked()">
+        <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm">{{($value ? $value : '')}}</textarea>
         <a if.bind="whatType($type) == 'hyperlink'" href.bind="$href" class.bind="$class ? $class : ''">{{$prompt}}</a>
         <div if.bind="whatType($type) == 'checkbox'" >
-            <input type="checkbox" name.bind="$name" id.bind="$name" autocomplete="off"  checked.bind="$value"/>
+            <input type="checkbox" name.bind="$name" id.bind="$name" autocomplete="off"  checked.bind="$checked"/>
             <div class="btn-group">
                 <label for.bind="$name" class="btn btn-default btn-checkbox">
                     <span class="glyphicon glyphicon-ok"></span>

@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/card", (function() {
   var $path = "/dist/component/card";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/card");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/card", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -49,6 +54,13 @@ yalla.framework.addComponent("/dist/component/card", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card");
@@ -58,6 +70,13 @@ yalla.framework.addComponent("/dist/component/card", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _attr("class", "row centered-form no-top-margin");
     _elementOpenEnd("div");
@@ -86,7 +105,7 @@ yalla.framework.addComponent("/dist/component/card", (function() {
       return onClick.bind(self)();
     });
     _attr("class", "panel panel-default custom-panel ");
-    _attr("style", isClickable());
+    _attr("style", isClickable.bind(__self)());
     _elementOpenEnd("div");
     if (_props.title) {
       _elementOpenStart("div", "");
@@ -105,7 +124,7 @@ yalla.framework.addComponent("/dist/component/card", (function() {
       _elementOpenStart("div", "");
       _attr("class", "panel-body");
       _elementOpenEnd("div");
-      _slotView("default");
+      _slotView("default", {});
       _elementClose("div");
       if (_props.remarks) {
         _elementOpenStart("div", "");

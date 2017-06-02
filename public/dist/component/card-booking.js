@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
   var $path = "/dist/component/card-booking";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/card-booking");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -55,8 +60,8 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
     _elementOpenStart("link", "");
     _attr("element", "dist.component.card-booking");
     _attr("href", "asset/css/custom-style.css");
@@ -66,6 +71,13 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-booking");
@@ -74,6 +86,13 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -91,7 +110,7 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(pkg) {
-        $context["card"].render({
+        var __params = {
           "onclick": function(event) {
             var self = {
               target: event.target
@@ -114,7 +133,8 @@ yalla.framework.addComponent("/dist/component/card-booking", (function() {
           },
           "title": 'Package: ' + pkg.packageName,
           "nofooter": "nofooter"
-        }, function(slotName) {
+        };
+        _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
           if (slotName == "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");

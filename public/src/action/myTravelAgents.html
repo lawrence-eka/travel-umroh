@@ -33,6 +33,9 @@
 
 
 <script>
+
+    var tempForm = null;
+
     var errorMessage ="";
     function queryTravelAgents(userId, travelAgentId) {
          return new Promise(function(resolve) {
@@ -55,10 +58,9 @@
 
     function getTravelAgents(travelAgentId){
         return new Promise(function(resolve) {
-            dpd.users.me(function(me) {
-                queryTravelAgents(me.id, travelAgentId).then(function(ta) {
-                    resolve(ta);
-                });
+	        var me = storage.me.read();
+            queryTravelAgents(me.id, travelAgentId).then(function(ta) {
+                resolve(ta);
             });
         });
     }
@@ -80,17 +82,17 @@
 				        errorMessage = err.message;
 				        $patchChanges();
 			        } else {
+				        debugger;
 				        resolve(ta);
 			        }
 		        });
 	        }
         	else {
-		        dpd.users.me(function(me) {
-                    var ta = {
-                        "contactPersonId": me.id
-                    }
-                    resolve(ta);
-                });
+        		debugger;
+        		var ta = {
+        			"contactPersonId": storage.me.read().id
+                };
+                resolve(ta);
             }
         });
     }
@@ -103,6 +105,7 @@
     function register() {
     	debugger;
 	    var form = this.target.form;
+	    tempForm = this.target.form;
     	var q = {
     		"travelAgentName": form.elements.travelAgentName.value,
     		"address": form.elements.address.value,
@@ -117,9 +120,18 @@
     }
 
     function cleanupAfterSave(result, err) {
+    	debugger;
 	    if(err) errorMessage = err.message;
 	    else {
-	    	window.location.hash="#app/action.myTravelAgents";
+		    var form = tempForm;
+		    form.elements.id.value = '';
+		    form.elements.travelAgentName.value = '';
+			form.elements.address.value = '';
+			form.elements.city.value = '';
+			form.elements.contactPersonId.value = '';
+
+		    errorMessage = '';
+		    window.location.hash="#app/action.myTravelAgents";
 	    }
 	    $patchChanges();
     }

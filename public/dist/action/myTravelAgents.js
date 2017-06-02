@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
   var $path = "/dist/action/myTravelAgents";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/myTravelAgents");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -25,6 +26,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
   function initState(props) {
     return {}
   };
+
+  function onPropertyChange(event) {
+    return {}
+  };
+
+
+  var tempForm = null;
 
   var errorMessage = "";
 
@@ -50,10 +58,9 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
 
   function getTravelAgents(travelAgentId) {
     return new Promise(function(resolve) {
-      dpd.users.me(function(me) {
-        queryTravelAgents(me.id, travelAgentId).then(function(ta) {
-          resolve(ta);
-        });
+      var me = storage.me.read();
+      queryTravelAgents(me.id, travelAgentId).then(function(ta) {
+        resolve(ta);
       });
     });
   }
@@ -75,16 +82,16 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
             errorMessage = err.message;
             $patchChanges();
           } else {
+            debugger;
             resolve(ta);
           }
         });
       } else {
-        dpd.users.me(function(me) {
-          var ta = {
-            "contactPersonId": me.id
-          }
-          resolve(ta);
-        });
+        debugger;
+        var ta = {
+          "contactPersonId": storage.me.read().id
+        };
+        resolve(ta);
       }
     });
   }
@@ -97,6 +104,7 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
   function register() {
     debugger;
     var form = this.target.form;
+    tempForm = this.target.form;
     var q = {
       "travelAgentName": form.elements.travelAgentName.value,
       "address": form.elements.address.value,
@@ -111,8 +119,17 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
   }
 
   function cleanupAfterSave(result, err) {
+    debugger;
     if (err) errorMessage = err.message;
     else {
+      var form = tempForm;
+      form.elements.id.value = '';
+      form.elements.travelAgentName.value = '';
+      form.elements.address.value = '';
+      form.elements.city.value = '';
+      form.elements.contactPersonId.value = '';
+
+      errorMessage = '';
       window.location.hash = "#app/action.myTravelAgents";
     }
     $patchChanges();
@@ -120,14 +137,14 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
 
 
   function $render(_props, _slotView) {
-    $context["card-travel-agent"] = $inject("/component/card-travel-agent");
-    var cardTravelAgent = $context["card-travel-agent"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
-    $context["panel"] = $inject("/component/panel");
-    var panel = $context["panel"];
+    _context["card-travel-agent"] = $inject("/component/card-travel-agent");
+    var cardTravelAgent = _context["card-travel-agent"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.myTravelAgents");
     _attr("href", "asset/css/custom-style.css");
@@ -137,6 +154,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myTravelAgents");
@@ -145,6 +169,13 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -160,56 +191,63 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["panel"].render({
+        var __params = {
           "title": (_props.travelAgentId ? 'Edit' : 'New') + ' Travel Agent',
           "nofooter": "nofooter"
-        }, function(slotName) {
+        };
+        _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
           if (slotName == "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
-            $context["alert"].render({
+            var __params = {
               "alertType": "error",
               "message": _props.errorMessage
-            }, function(slotName) {});
+            };
+            _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             _elementOpenStart("form", "");
             _attr("role", "form");
             _elementOpenEnd("form");
             _elementOpenStart("div", "");
             _attr("class", "row");
             _elementOpenEnd("div");
-            $context["entry"].render({
+            var __params = {
               "type": "hidden",
               "name": "id",
               "value": data.id
-            }, function(slotName) {});
-            $context["entry"].render({
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            var __params = {
               "type": "hidden",
               "name": "contactPersonId",
               "value": data.contactPersonId
-            }, function(slotName) {});
-            $context["entry"].render({
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            var __params = {
               "type": "text",
               "prompt": "Name",
               "name": "travelAgentName",
               "value": data.travelAgentName
-            }, function(slotName) {});
-            $context["entry"].render({
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            var __params = {
               "type": "textarea",
               "prompt": "Address",
               "name": "address",
               "value": data.address
-            }, function(slotName) {});
-            $context["entry"].render({
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            var __params = {
               "type": "text",
               "prompt": "City",
               "name": "city",
               "value": data.city
-            }, function(slotName) {});
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             _elementClose("div");
             _elementOpenStart("div", "");
             _attr("class", "row");
             _elementOpenEnd("div");
-            $context["entry"].render({
+            var __params = {
               "type": "button",
               "name": "btnSave",
               "value": (_props.travelAgentId ? 'Save' : 'Register'),
@@ -234,9 +272,10 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
                 };
                 return register.bind(self)();
               }
-            }, function(slotName) {});
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             if (_props.travelAgentId) {
-              $context["entry"].render({
+              var __params = {
                 "type": "button",
                 "name": "btnCancel",
                 "value": "Cancel",
@@ -261,7 +300,8 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
                   };
                   return cancel.bind(self)();
                 }
-              }, function(slotName) {});
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             }
             _elementClose("div");
             _elementClose("form");
@@ -289,7 +329,7 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
             _array.forEach(function(ta) {
               _elementOpenStart("p", "");
               _elementOpenEnd("p");
-              $context["card-travel-agent"].render({
+              var __params = {
                 "travelAgent": ta,
                 "oneditTA": function(event) {
                   var self = {
@@ -331,7 +371,8 @@ yalla.framework.addComponent("/dist/action/myTravelAgents", (function() {
                   };
                   return onShowPackages.bind(self)(event);
                 }
-              }, function(slotName) {});
+              };
+              _context["card-travel-agent"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
               _elementClose("p");
             });
           }
