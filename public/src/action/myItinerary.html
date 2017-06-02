@@ -34,6 +34,7 @@
 					alertType="error";
 					$patchChanges();
 				} else {
+					debugger;
 					resolve(itr);
 				}
 			});
@@ -86,13 +87,14 @@
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
     }
 	function onEdit(itineraryId, packageId) {
-		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId;
+		debugger;
+		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
     }
 
     function onDelete(itineraryId, packageId) {
 		debugger;
 		return new Promise(function(resolve){
-			dpd.itineraries.del(itineraryId,function(err){
+			dpd.itineraries.del(itineraryId.data,function(err){
 				debugger;
 				if(err){
 					if (err) {

@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
   var $path = "/dist/component/card-itinerary";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/card-itinerary");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,11 +27,25 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
+  function onEdit(itineraryId) {
+    debugger;
+    this.emitEvent('edit', itineraryId);
+  }
+
+  function onDelete(itineraryId) {
+    debugger;
+    this.emitEvent('delete', itineraryId);
+  }
+
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-itinerary");
     _elementOpenEnd("div");
@@ -38,11 +53,19 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["card"].render({
-      "title": _props.itr.fromDateTime.toDateComponents(),
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
+      "title": (_props.itr.fromDateTime.toDateComponents()),
       "remarks": _props.itr.remarks,
       "nofooter": "nofooter"
-    }, function(slotName) {
+    };
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -96,9 +119,10 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
           _elementOpenStart("div", "");
           _attr("class", "row");
           _elementOpenEnd("div");
-          $context["entry"].render({
+          var __params = {
             "type": "button",
             "value": "Edit",
+            "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -117,12 +141,14 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              return _props.onedit.bind(self)(_props.itr.id);
+              return onEdit.bind(self)(_props.itr.id);
             }
-          }, function(slotName) {});
-          $context["entry"].render({
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+          var __params = {
             "type": "button",
             "value": "Delete",
+            "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -141,17 +167,15 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              return _props.ondelete.bind(self)(_props.itr.id);
+              return onDelete.bind(self)(_props.itr.id);
             }
-          }, function(slotName) {});
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("div");
         }
         _elementClose("div");
       }
     });
-    _elementOpenStart("div", "");
-    _elementOpenEnd("div");
-    _elementClose("div");
     _elementClose("div");
   }
   if (typeof $render === "function") {

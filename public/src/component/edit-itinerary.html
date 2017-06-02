@@ -1,72 +1,63 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/panel" name="panel"></inject>
 
-<div class="container all-5px">
-    <div class="row centered-form no-top-margin">
-        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title" if.bind="$itinerary">Edit Entry</h3>
-                    <h3 class="panel-title" if.bind="!$itinerary">New Entry</h3>
+<div>
+    <panel title.bind="(($itinerary ? 'Edit' : 'New') + ' Entry')" nofooter>
+        <div slot.name="body" data.load="loadItinerary($itinerary)">
+            <form role="form">
+                <input type="hidden" name="id" value.bind="data.id">
+                <input type="hidden" name="packageId" value.bind="data.packageId">
+                <div class=row">
+                    <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
+                    <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
                 </div>
-                <div class="panel-body"  data.load="loadItinerary($itinerary)">
 
-                    <form role="form">
-                        <input type="hidden" name="id" value.bind="data.id">
-                        <input type="hidden" name="packageId" value.bind="data.packageId">
-                        <div class=row">
-                            <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
-                            <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
-                        </div>
-
-                        <div class.bind="isVisible('Transport')">
-                            <!--
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <select class="form-control" name="transport" id="entryType">
-                                            <option value="Airline" selected.bind="entryType(data.entry)=='Transport'">Airline</option>
-                                            <option value="Train" selected.bind="entryType(data.entry)=='Train'">Train</option>
-                                            <option value="Bus/Car" selected.bind="entryType(data.entry)=='Bus/Car'">Bus/Car</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            -->
-                            <div class="row">
-                                <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):'')"></entry>
-                                <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
-                                <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')"></entry>
-                                <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
-                                <entry type="text" name="airline" prompt="Airline" value.bind="data.entry.transport"></entry>
+                <div class.bind="isVisible('Transport')">
+                    <!--
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <select class="form-control" name="transport" id="entryType">
+                                    <option value="Airline" selected.bind="entryType(data.entry)=='Transport'">Airline</option>
+                                    <option value="Train" selected.bind="entryType(data.entry)=='Train'">Train</option>
+                                    <option value="Bus/Car" selected.bind="entryType(data.entry)=='Bus/Car'">Bus/Car</option>
+                                </select>
                             </div>
                         </div>
-                        <div class.bind ="isVisible('Hotel')">
-                            <div class="row">
-                                <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):'')"></entry>
-                                <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):'')"></entry>
-                                <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
-                                <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <entry type="textarea" name="remarks" prompt="Remarks" value.bind="data.remarks"></entry>
-                        </div>
-
-                        <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
-
-                        <div class=row">
-                            <entry type="button" value.bind="$itinerary ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="save()"></entry>
-                            <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
-                        </div>
-                    </form>
+                    </div>
+                    -->
+                    <div class="row">
+                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):'')"></entry>
+                        <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
+                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')"></entry>
+                        <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
+                        <entry type="text" name="airline" prompt="Airline" value.bind="data.entry.transport"></entry>
+                    </div>
                 </div>
-            </div>
+                <div class.bind ="isVisible('Hotel')">
+                    <div class="row">
+                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):'')"></entry>
+                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):'')"></entry>
+                        <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
+                        <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
+                    </div>
+                </div>
+                <div class="row">
+                    <entry type="textarea" name="remarks" prompt="Remarks" value.bind="data.remarks"></entry>
+                </div>
+
+                <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+
+                <div class=row">
+                    <entry type="button" value.bind="$itinerary ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                    <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                </div>
+            </form>
         </div>
-    </div>
+    </panel>
 </div>
-
 <script>
 
     function onClick(){
@@ -96,7 +87,7 @@
 	    this.emitEvent('cancel');
     }
 
-	function save(event, itinerary){
+	function onSave(event, itinerary){
 		debugger;
 		var form = this.target.form;
 		var itinerary = {};

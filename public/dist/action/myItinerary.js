@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   var $path = "/dist/action/myItinerary";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/myItinerary");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,6 +27,10 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   var message = "";
   var alertType = "";
 
@@ -43,6 +48,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
           alertType = "error";
           $patchChanges();
         } else {
+          debugger;
           resolve(itr);
         }
       });
@@ -94,13 +100,14 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   }
 
   function onEdit(itineraryId, packageId) {
-    window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId;
+    debugger;
+    window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
   }
 
   function onDelete(itineraryId, packageId) {
     debugger;
     return new Promise(function(resolve) {
-      dpd.itineraries.del(itineraryId, function(err) {
+      dpd.itineraries.del(itineraryId.data, function(err) {
         debugger;
         if (err) {
           if (err) {
@@ -115,14 +122,14 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
-    $context["card-itinerary"] = $inject("/component/card-itinerary");
-    var cardItinerary = $context["card-itinerary"];
-    $context["edit-itinerary"] = $inject("/component/edit-itinerary");
-    var editItinerary = $context["edit-itinerary"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
+    _context["card-itinerary"] = $inject("/component/card-itinerary");
+    var cardItinerary = _context["card-itinerary"];
+    _context["edit-itinerary"] = $inject("/component/edit-itinerary");
+    var editItinerary = _context["edit-itinerary"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myItinerary");
     _elementOpenEnd("div");
@@ -130,6 +137,13 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -145,10 +159,11 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["card"].render({
+        var __params = {
           "title": data.packageName,
           "nofooter": "nofooter"
-        }, function(slotName) {
+        };
+        _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
           if (slotName == "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
@@ -184,13 +199,14 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
           }
         });
         if (message) {
-          $context["alert"].render({
+          var __params = {
             "alertType": alertType,
             "message": message
-          }, function(slotName) {});
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         }
         if (_props.editItineraryId == -1) {
-          $context["edit-itinerary"].render({
+          var __params = {
             "onsave": function(event) {
               var self = {
                 target: event.target
@@ -231,7 +247,8 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
               };
               return onCancelEdit.bind(self)(_props.packageId);
             }
-          }, function(slotName) {});
+          };
+          _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         }
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -255,7 +272,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
               _elementOpenStart("p", "");
               _elementOpenEnd("p");
               if (itr.id != _props.editItineraryId) {
-                $context["card-itinerary"].render({
+                var __params = {
                   "itr": itr,
                   "onedit": function(event) {
                     var self = {
@@ -297,10 +314,11 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                     };
                     return onDelete.bind(self)(event);
                   }
-                }, function(slotName) {});
+                };
+                _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
               }
               if (itr.id == _props.editItineraryId) {
-                $context["edit-itinerary"].render({
+                var __params = {
                   "itinerary": itr,
                   "onsave": function(event) {
                     var self = {
@@ -342,7 +360,8 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                     };
                     return onCancelEdit.bind(self)(_props.packageId);
                   }
-                }, function(slotName) {});
+                };
+                _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
               }
               _elementClose("p");
             });

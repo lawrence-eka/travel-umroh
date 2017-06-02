@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/app", (function() {
   var $path = "/dist/app";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/app");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,27 +27,28 @@ yalla.framework.addComponent("/dist/app", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   //$inject("/common/prototypes");
 
   function path() {
+    debugger;
     return $path;
   }
 
   function checkCurrentUser() {
-    return new Promise(function(resolve) {
-      dpd.users.me(function(me) {
-        //alert('current user');
-        resolve(me);
-      });
-    });
+    //debugger;
+    return storage.me.read();
   }
 
 
   function $render(_props, _slotView) {
-    $context["login-panel"] = $inject("/user/login-form");
-    var loginPanel = $context["login-panel"];
-    $context["app-header"] = $inject("/component/header");
-    var appHeader = $context["app-header"];
+    _context["login-panel"] = $inject("/user/login-form");
+    var loginPanel = _context["login-panel"];
+    _context["app-header"] = $inject("/component/header");
+    var appHeader = _context["app-header"];
     _elementOpenStart("link", "");
     _attr("element", "dist.app");
     _attr("href", "asset/css/registration.css");
@@ -56,6 +58,13 @@ yalla.framework.addComponent("/dist/app", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.app");
@@ -65,6 +74,13 @@ yalla.framework.addComponent("/dist/app", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -85,14 +101,16 @@ yalla.framework.addComponent("/dist/app", (function() {
         if (data || (path().indexOf('registration') >= 0)) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          $context["app-header"].render({}, function(slotName) {});
-          _slotView("default");
+          var __params = {};
+          _context["app-header"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+          _slotView("default", {});
           _elementClose("div");
         }
         if (!data) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          $context["login-panel"].render({}, function(slotName) {});
+          var __params = {};
+          _context["login-panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("div");
         }
       }

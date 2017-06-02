@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
   var $path = "/dist/component/panel";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/panel");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -48,6 +53,13 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.panel");
@@ -56,6 +68,13 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _attr("class", "container custom-container-layout");
     _attr("onclick", function(event) {
@@ -78,7 +97,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
       };
       return onClick.bind(self)();
     });
-    _attr("style", isClickable());
+    _attr("style", isClickable.bind(__self)());
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
     _attr("class", "row centered-form no-top-margin");
@@ -96,7 +115,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
       _elementOpenStart("h3", "");
       _attr("class", "panel-title");
       _elementOpenEnd("h3");
-      _text("" + (_props.title ? _props.title : '') + "");
+      _text("" + ((_props.title ? _props.title : '')) + "");
       if (_props.test) {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -104,7 +123,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
         _elementClose("div");
       }
       _elementClose("h3");
-      _slotView("header");
+      _slotView("header", {});
       _elementClose("div");
     }
     _elementOpenStart("div", "");
@@ -117,7 +136,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
       _text("PANEL BODY");
       _elementClose("div");
     }
-    _slotView("body");
+    _slotView("body", {});
     _elementClose("div");
     if (_props.test || !_props.nofooter || _props.footer) {
       _elementOpenStart("div", "");
@@ -130,7 +149,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
         _text("PANEL FOOTER");
         _elementClose("div");
       }
-      _slotView("footer");
+      _slotView("footer", {});
       _elementClose("div");
     }
     _elementClose("div");

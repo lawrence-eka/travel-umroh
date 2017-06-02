@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
   var $path = "/dist/component/list-editor";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/list-editor");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -116,21 +121,22 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/card");
-    var card = $context["card"];
-    $context["card-itinerary"] = $inject("/component/card-itinerary");
-    var cardItinerary = $context["card-itinerary"];
-    $context["edit-itinerary"] = $inject("/component/edit-itinerary");
-    var editItinerary = $context["edit-itinerary"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
+    _context["card"] = $inject("/component/card");
+    var card = _context["card"];
+    _context["card-itinerary"] = $inject("/component/card-itinerary");
+    var cardItinerary = _context["card-itinerary"];
+    _context["edit-itinerary"] = $inject("/component/edit-itinerary");
+    var editItinerary = _context["edit-itinerary"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _text("<div\">");
     _text("<");
     _text("div\">");
-    $context["card"].render({
+    var __params = {
       "element": "dist.component.list-editor",
       "title": _props.listTitle
-    }, function(slotName) {
+    };
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (!_props.editItineraryId) {
         _elementOpenStart("input", "");
         _attr("type", "button");
@@ -161,14 +167,15 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
       }
     });
     if (message) {
-      $context["alert"].render({
+      var __params = {
         "element": "dist.component.list-editor",
         "alertType": alertType,
         "message": "message"
-      }, function(slotName) {});
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     }
     if (_props.editItineraryId == -1) {
-      $context["edit-itinerary"].render({
+      var __params = {
         "element": "dist.component.list-editor",
         "onsave": function(event) {
           var self = {
@@ -210,7 +217,8 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
           };
           return onCancelEdit.bind(self)(_props.packageId);
         }
-      }, function(slotName) {});
+      };
+      _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     }
     _elementOpenStart("div", "");
     _attr("element", "dist.component.list-editor");
@@ -219,6 +227,13 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -239,7 +254,7 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
           if (itr.id != _props.editItineraryId) {
-            $context["card-itinerary"].render({
+            var __params = {
               "itr": itr,
               "onedit": function(event) {
                 var self = {
@@ -281,10 +296,11 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                 };
                 return onDelete.bind(self)(event);
               }
-            }, function(slotName) {});
+            };
+            _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           }
           if (itr.id == _props.editItineraryId) {
-            $context["edit-itinerary"].render({
+            var __params = {
               "itinerary": itr,
               "onsave": function(event) {
                 var self = {
@@ -326,7 +342,8 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                 };
                 return onCancelEdit.bind(self)(_props.packageId);
               }
-            }, function(slotName) {});
+            };
+            _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           }
           _elementClose("p");
         });

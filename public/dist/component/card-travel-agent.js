@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
   var $path = "/dist/component/card-travel-agent";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/card-travel-agent");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -47,11 +52,18 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-travel-agent");
     _elementOpenEnd("div");
@@ -59,10 +71,18 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["card"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "title": _props.travelAgent.travelAgentName,
       "nofooter": "nofooter"
-    }, function(slotName) {
+    };
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -74,7 +94,7 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        $context["entry"].render({
+        var __params = {
           "type": "button",
           "value": "Edit Info",
           "name": "btnEdit",
@@ -99,8 +119,9 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
             };
             return onClickEdit.bind(self)(_props.travelAgent.id);
           }
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "button",
           "value": "Packages...",
           "name": "btnPackages",
@@ -125,7 +146,8 @@ yalla.framework.addComponent("/dist/component/card-travel-agent", (function() {
             };
             return onClickPackages.bind(self)(_props.travelAgent.id);
           }
-        }, function(slotName) {});
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("div");
       }

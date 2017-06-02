@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
   var $path = "/dist/action/myBooking";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/myBooking");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -61,10 +66,10 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card-booking"] = $inject("/component/card-booking");
-    var cardBooking = $context["card-booking"];
-    $context["card"] = $inject("/component/card");
-    var card = $context["card"];
+    _context["card-booking"] = $inject("/component/card-booking");
+    var cardBooking = _context["card-booking"];
+    _context["card"] = $inject("/component/card");
+    var card = _context["card"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myBooking");
     _elementOpenEnd("div");
@@ -72,6 +77,13 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -91,7 +103,7 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
         _array.forEach(function(bkg) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          $context["card-booking"].render({
+          var __params = {
             "bkg": bkg,
             "onclick": function(event) {
               var self = {
@@ -113,7 +125,8 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
               };
               return generateLink.bind(self)(event);
             }
-          }, function(slotName) {});
+          };
+          _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("p");
         });
       }

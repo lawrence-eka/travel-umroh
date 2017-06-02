@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
   var $path = "/dist/component/alert";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/alert");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -79,17 +84,31 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     if (_props.message) {
       _elementOpenStart("div", "");
       _attr("element", "dist.component.alert");
-      _attr("class", className(_props.alertType));
+      _attr("class", className.bind(__self)(_props.alertType));
       _attr("role", "alert");
       _elementOpenEnd("div");
       // The component of this object
       var __component = IncrementalDOM.currentElement();
       __component.__state = __component.__state || initState.bind(__component)(_props);
       var __state = __component.__state;
+      var __self = {
+        component: __component,
+        properties: _props,
+        state: __component.__state
+      };
+      yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+      __component.__properties = _props;
       var _array = messages(_props.message, _props.alertType, _props.titleCase) || [];
       _array.forEach(function(error) {
         _elementOpenStart("p", "");

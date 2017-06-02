@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   var $path = "/dist/action/bookPackage";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -138,16 +143,16 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card-booking"] = $inject("/component/card-booking");
-    var cardBooking = $context["card-booking"];
-    $context["card-passenger"] = $inject("/component/card-passenger");
-    var cardPassenger = $context["card-passenger"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
-    $context["panel"] = $inject("/component/panel");
-    var panel = $context["panel"];
+    _context["card-booking"] = $inject("/component/card-booking");
+    var cardBooking = _context["card-booking"];
+    _context["card-passenger"] = $inject("/component/card-passenger");
+    var cardPassenger = _context["card-passenger"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.bookPackage");
     _attr("href", "asset/css/custom-style.css");
@@ -157,6 +162,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.bookPackage");
@@ -165,6 +177,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -182,9 +201,10 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["card-booking"].render({
+        var __params = {
           "bkg": data
-        }, function(slotName) {});
+        };
+        _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
       }
       var promise = queryBooking.bind(self)(_props.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
@@ -204,10 +224,11 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    $context["panel"].render({
+    var __params = {
       "title": "Passenger Detail",
       "nofooter": "nofooter"
-    }, function(slotName) {
+    };
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -217,52 +238,61 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        $context["entry"].render({
+        var __params = {
           "type": "hidden",
           "name": "bookingId",
           "value": _props.bookingId
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "First Name",
           "name": "firstName"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Middle Name",
           "name": "middleName"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Last Name",
           "name": "lastName"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Birth Place",
           "name": "birthPlace"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "date",
           "prompt": "Birthday",
           "name": "birthday"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Passport Number",
           "name": "passportNumber"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "date",
           "prompt": "Passport Expiry Date",
           "name": "passportExpiryDate"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Passport Issuer",
           "name": "passportIssuer"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "button",
           "name": "btnRegister",
           "value": "Register",
@@ -286,8 +316,9 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
             };
             return registerPassenger.bind(self)(_props.bookingId);
           }
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "button",
           "name": "btnPaymentDetail",
           "value": "Payment Detail",
@@ -311,7 +342,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
             };
             return calculatePaymentDetail.bind(self)(_props.bookingId);
           }
-        }, function(slotName) {});
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         _elementClose("div");
@@ -338,9 +370,10 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         _array.forEach(function(psg) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          $context["card-passenger"].render({
+          var __params = {
             "passenger": psg
-          }, function(slotName) {});
+          };
+          _context["card-passenger"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("p");
         });
       }

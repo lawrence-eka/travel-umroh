@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/test", (function() {
   var $path = "/dist/component/test";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/test");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,6 +27,10 @@ yalla.framework.addComponent("/dist/component/test", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   var dates = $inject('/common/dates');
 
   function $render(_props, _slotView) {
@@ -36,6 +41,13 @@ yalla.framework.addComponent("/dist/component/test", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _text("" + (JSON.stringify(_props.itr)) + "");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");

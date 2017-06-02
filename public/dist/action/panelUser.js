@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/panelUser", (function() {
   var $path = "/dist/action/panelUser";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/panelUser");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,9 +27,13 @@ yalla.framework.addComponent("/dist/action/panelUser", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   function $render(_props, _slotView) {
-    $context["panel"] = $inject("/component/panel");
-    var panel = $context["panel"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.panelUser");
     _elementOpenEnd("div");
@@ -36,11 +41,19 @@ yalla.framework.addComponent("/dist/action/panelUser", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["panel"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "title": "PANEL HEADER",
       "body": "PANEL BODY",
       "footer": "PANEL FOOTER"
-    }, function(slotName) {});
+    };
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     _elementClose("div");
   }
   if (typeof $render === "function") {

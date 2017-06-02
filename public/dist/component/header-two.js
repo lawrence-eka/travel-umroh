@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/header-two", (function() {
   var $path = "/dist/component/header-two";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/header-two");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,6 +27,10 @@ yalla.framework.addComponent("/dist/component/header-two", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   function $render(_props, _slotView) {
     _elementOpenStart("nav", "");
     _attr("element", "dist.component.header-two");
@@ -35,6 +40,13 @@ yalla.framework.addComponent("/dist/component/header-two", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _attr("class", "container");
     _elementOpenEnd("div");

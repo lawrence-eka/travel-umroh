@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   var $path = "/dist/action/paymentDetails";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/paymentDetails");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -126,10 +131,10 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card-booking"] = $inject("/component/card-booking");
-    var cardBooking = $context["card-booking"];
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
+    _context["card-booking"] = $inject("/component/card-booking");
+    var cardBooking = _context["card-booking"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.paymentDetails");
     _attr("href", "asset/css/custom-style.css");
@@ -139,9 +144,16 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.paymentDetails");
     _elementOpenEnd("div");
@@ -149,6 +161,13 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -166,13 +185,15 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["card-booking"].render({
+        var __params = {
           "bkg": data
-        }, function(slotName) {});
-        $context["card"].render({
+        };
+        _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "title": "Payment Info",
           "footer": "Please make the payment before booking expires to avoid automatic cancellation of your booking"
-        }, function(slotName) {
+        };
+        _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
           if (slotName == "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
@@ -218,10 +239,11 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    $context["card"].render({
+    var __params = {
       "title": "Payment Confirmation",
       "nofooter": "nofooter"
-    }, function(slotName) {
+    };
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -230,37 +252,43 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        $context["entry"].render({
+        var __params = {
           "type": "text",
           "prompt": "Bank Name",
           "name": "fromBank"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Bank Branch",
           "name": "fromBranch"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Account Number",
           "name": "fromAccountNumber"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "text",
           "prompt": "Account Holder",
           "name": "fromAccountHolder"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "number",
           "prompt": "Amount Transfered",
           "name": "actualPayment"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "datetime-local",
           "prompt": "Transfer Date & Time",
           "name": "paymentDate"
-        }, function(slotName) {});
-        $context["entry"].render({
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        var __params = {
           "type": "button",
           "name": "btnPaymentConfirmation",
           "value": "Payment Confirmation",
@@ -284,7 +312,8 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
             };
             return paymentConfirmation.bind(self)();
           }
-        }, function(slotName) {});
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         _elementClose("div");

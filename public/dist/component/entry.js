@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
   var $path = "/dist/component/entry";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/entry");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -54,15 +59,29 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.component.entry");
-    _attr("class", whatDivClass(_props.divClass));
+    _attr("class", whatDivClass.bind(__self)(_props.divClass));
     _elementOpenEnd("div");
     // The component of this object
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _attr("class", "form-group custom-entry-margin");
     _elementOpenEnd("div");
@@ -79,8 +98,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _attr("name", _props.name);
       _attr("class", "form-control input-sm");
       _attr("required", _props.required);
-      _attr("placeholder", _props.placeholder ? _props.placeholder : '');
-      _attr("value", _props.value ? _props.value : '');
+      _attr("placeholder", (_props.placeholder ? _props.placeholder : ''));
+      _attr("value", (_props.value ? _props.value : ''));
       _elementOpenEnd("input");
       _elementClose("input");
     }
@@ -88,7 +107,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _elementOpenStart("input", "");
       _attr("type", _props.type);
       _attr("name", _props.name);
-      _attr("value", _props.value ? _props.value : '');
+      _attr("value", (_props.value ? _props.value : ''));
       _elementOpenEnd("input");
       _elementClose("input");
     }
@@ -96,8 +115,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _elementOpenStart("input", "");
       _attr("type", _props.type);
       _attr("name", _props.name);
-      _attr("class", _props.class ? _props.class : 'form-control btn btn-info btn-block');
-      _attr("value", _props.value ? _props.value : '');
+      _attr("class", (_props.class ? _props.class : 'form-control btn btn-info btn-block'));
+      _attr("value", (_props.value ? _props.value : ''));
       _attr("onclick", function(event) {
         var self = {
           target: event.target
@@ -127,7 +146,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _attr("required", _props.required);
       _attr("class", "form-control input-sm");
       _elementOpenEnd("textarea");
-      _text("" + (_props.value ? _props.value : '') + "");
+      _text("" + ((_props.value ? _props.value : '')) + "");
       _elementClose("textarea");
     }
     if (whatType(_props.type) == 'hyperlink') {
@@ -146,7 +165,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _attr("name", _props.name);
       _attr("id", _props.name);
       _attr("autocomplete", "off");
-      _attr("checked", _props.value);
+      _attr("checked", _props.checked);
       _elementOpenEnd("input");
       _elementClose("input");
       _elementOpenStart("div", "");

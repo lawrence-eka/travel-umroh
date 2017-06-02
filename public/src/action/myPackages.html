@@ -51,7 +51,6 @@
     }
 
     function onSavePackage(pkg, travelAgentId) {
-    	debugger;
     	pkg = pkg.data;
     	pkg.travelAgentId = travelAgentId;
     	dpd.packages.post(pkg, function(result,err){
@@ -60,16 +59,13 @@
         });
     }
     function onEditPackage(packageId, travelAgentId) {
-    	debugger;
 	    window.location.hash="#app/action.myPackages:travelAgentId=" + travelAgentId + ":editPackageId=" + packageId.data;
     }
     function onShowItinerary(packageId) {
-    	debugger;
 	    window.location.hash="#app/action.myItinerary:packageId=" + packageId.data;
     }
 
     function onNewPackage(event) {
-    	debugger;
 	    window.location.hash="#app/action.myPackages:travelAgentId=" + event + ":editPackageId=-1";
     }
 </script>

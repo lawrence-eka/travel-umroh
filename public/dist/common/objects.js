@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/common/objects", (function() {
   var $path = "/dist/common/objects";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/common/objects");
 
   function ComponentEvent(type, data, target, currentTarget) {

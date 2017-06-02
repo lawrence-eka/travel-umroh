@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/paymentConfirmation", (function() {
   var $path = "/dist/action/paymentConfirmation";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/paymentConfirmation");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,9 +27,13 @@ yalla.framework.addComponent("/dist/action/paymentConfirmation", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   function $render(_props, _slotView) {
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.paymentConfirmation");
     _elementOpenEnd("div");
@@ -36,10 +41,18 @@ yalla.framework.addComponent("/dist/action/paymentConfirmation", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["alert"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "alertType": "info",
       "message": "Payment confirmed! Thank you and have a nice umroh!"
-    }, function(slotName) {});
+    };
+    _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     _elementClose("div");
   }
   if (typeof $render === "function") {

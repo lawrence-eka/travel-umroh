@@ -31,8 +31,8 @@
 
 	function onApprove(user, isApproved) {
 		return new Promise(function(resolve){
-			if(isApproved) user.needApproval.isApproved=true;
-			else user.needApproval=false;
+			user = user.data;
+			user.needApproval.isApproved = isApproved;
 			dpd.users.put(user.id, user, function(result,err){
 				if(err)
                 {

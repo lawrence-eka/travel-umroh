@@ -1,51 +1,44 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
 
 <div class="container all-5px">
-    <div class="row centered-form no-top-margin">
-        <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="panel panel-default frosted-glass">
-                <div class="panel-heading">
-                    <h3 class="panel-title" if.bind="$profile">Your Profile</h3>
-                    <h3 class="panel-title" if.bind="!$profile">Please Sign Up <small> It's free!</small></h3>
+    <panel title.bind="($profile ? 'Your Profile' : 'Please Sign Up')" nofooter>
+        <div slot.name="body" data.load="loadProfile($profile, $errorMessage)">
+            <form>
+                <input type="hidden" name="id" value.bind="data.id">
+                <div class="row">
+                    <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
+                    <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
                 </div>
-                <div class="panel-body custom-panel-body"  data.load="loadProfile($profile, $errorMessage)">
-                    <form role="form">
-                        <input type="hidden" name="id" value.bind="data.id">
-                        <div class="row">
-                            <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
-                            <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
-                        </div>
 
-                        <div class="row">
-                            <entry type="email" prompt="Email" name="email" value.bind="data.email"></entry>
-                            <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
-                        </div>
-                        <div class="row">
-                            <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
-                        </div>
-                        <div class="row">
-                            <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
-                        </div>
-                        <div class="row custom-set-hidden">
-                            <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" value.bind="data.isTravelAgent"></entry>
-                            <entry type="checkbox" prompt="Administrator" name="isAdmin" value.bind="data.isAdmin"></entry>
-                        </div>
-                        <div class="row">
-                            <entry type="password" prompt="Password" name="password" value.bind="data.password"></entry>
-                            <entry type="password" prompt="Repeat Password" name="repeatPassword" ></entry>
-                        </div>
-                        <alert alertType.bind="'error'" message.bind="@error.message"></alert>
-                        <div class=row">
-                            <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
-                            <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
-                        </div>
-                    </form>
+                <div class="row">
+                    <entry type="email" prompt="Email" name="email" value.bind="data.email"></entry>
+                    <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
                 </div>
-            </div>
+                <div class="row">
+                    <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
+                </div>
+                <div class="row">
+                    <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
+                </div>
+                <div class="row custom-set-hidden">
+                    <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" value.bind="data.isTravelAgent"></entry>
+                    <entry type="checkbox" prompt="Administrator" name="isAdmin" value.bind="data.isAdmin"></entry>
+                </div>
+                <div class="row">
+                    <entry type="password" prompt="Password" name="password" value.bind="data.password"></entry>
+                    <entry type="password" prompt="Repeat Password" name="repeatPassword" ></entry>
+                </div>
+                <alert alertType.bind="'error'" message.bind="@error.message"></alert>
+                <div class=row">
+                    <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
+                    <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                </div>
+            </form>
         </div>
-    </div>
+    </panel>
 </div>
 
 <script>

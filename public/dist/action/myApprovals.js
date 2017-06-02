@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
   var $path = "/dist/action/myApprovals";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/myApprovals");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -49,6 +54,7 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
 
   function onApprove(user, isApproved) {
     return new Promise(function(resolve) {
+      user = user.data;
       if (isApproved) user.needApproval.isApproved = true;
       else user.needApproval = false;
       dpd.users.put(user.id, user, function(result, err) {
@@ -62,10 +68,10 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
   }
 
   function $render(_props, _slotView) {
-    $context["card-user-approvals"] = $inject("/component/card-user-approvals");
-    var cardUserApprovals = $context["card-user-approvals"];
-    $context["alert"] = $inject("/component/alert");
-    var alert = $context["alert"];
+    _context["card-user-approvals"] = $inject("/component/card-user-approvals");
+    var cardUserApprovals = _context["card-user-approvals"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.myApprovals");
     _attr("href", "asset/css/registration.css");
@@ -75,6 +81,13 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myApprovals");
@@ -83,6 +96,13 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -98,21 +118,23 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["alert"].render({
+        var __params = {
           "message": errorMessage,
           "alertType": alertType
-        }, function(slotName) {});
+        };
+        _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         if (!data || data.length == 0) {
-          $context["alert"].render({
+          var __params = {
             "message": 'No user needs approval for now.',
             "alertType": 'info'
-          }, function(slotName) {});
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         }
         var _array = data || [];
         _array.forEach(function(user) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          $context["card-user-approvals"].render({
+          var __params = {
             "user": user,
             "onapprove": function(event) {
               var self = {
@@ -154,7 +176,8 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
               };
               return onApprove.bind(self)(event, false);
             }
-          }, function(slotName) {});
+          };
+          _context["card-user-approvals"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("p");
         });
       }

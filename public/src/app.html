@@ -20,15 +20,12 @@
 	//$inject("/common/prototypes");
 
     function path() {
+    	debugger;
         return $path;
     }
     function checkCurrentUser(){
-        return new Promise(function(resolve){
-            dpd.users.me(function(me) {
-                //alert('current user');
-                resolve(me);
-            });
-        });
+    	//debugger;
+    	return storage.me.read();
     }
 
 </script>

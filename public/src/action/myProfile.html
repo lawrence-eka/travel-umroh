@@ -25,7 +25,7 @@
 	}
 
 	function onCancel() {
-		window.location.hash = "#app";
+		window.location.hash = "#app/action.searchPackage";
 	}
 	function onSave(profile){
 	    profile = profile.data;
@@ -34,7 +34,7 @@
             if(err) {
                 self.state.error.message = err;
             } else {
-                window.location.hash = '#app';
+                window.location.hash = '#app/action.searchPackage';
             }
         });
 	}

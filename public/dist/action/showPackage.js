@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
   var $path = "/dist/action/showPackage";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/action/showPackage");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -23,6 +24,10 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _skip = IncrementalDOM.skip;
 
   function initState(props) {
+    return {}
+  };
+
+  function onPropertyChange(event) {
     return {}
   };
 
@@ -101,12 +106,12 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
 
 
   function $render(_props, _slotView) {
-    $context["card-package"] = $inject("/component/card-package");
-    var cardPackage = $context["card-package"];
-    $context["card-itinerary"] = $inject("/component/card-itinerary");
-    var cardItinerary = $context["card-itinerary"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
+    _context["card-package"] = $inject("/component/card-package");
+    var cardPackage = _context["card-package"];
+    _context["card-itinerary"] = $inject("/component/card-itinerary");
+    var cardItinerary = _context["card-itinerary"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.showPackage");
     _attr("href", "asset/css/custom-style.css");
@@ -116,6 +121,13 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.showPackage");
@@ -124,6 +136,13 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -141,9 +160,10 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        $context["card-package"].render({
+        var __params = {
           "pkg": data
-        }, function(slotName) {});
+        };
+        _context["card-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
       }
       var promise = queryPackage.bind(self)(_props.packageId);
       if (promise && typeof promise == "object" && "then" in promise) {
@@ -165,7 +185,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
-    $context["entry"].render({
+    var __params = {
       "type": "button",
       "value": "Book This!",
       "onclick": function(event) {
@@ -188,7 +208,8 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
         };
         return book.bind(self)(_props.packageId);
       }
-    }, function(slotName) {});
+    };
+    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
@@ -211,9 +232,10 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
         _array.forEach(function(itr) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          $context["card-itinerary"].render({
+          var __params = {
             "itr": itr
-          }, function(slotName) {});
+          };
+          _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("p");
         });
       }
@@ -237,7 +259,7 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
-    $context["entry"].render({
+    var __params = {
       "type": "button",
       "value": "Book This!",
       "onclick": function(event) {
@@ -260,7 +282,8 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
         };
         return book.bind(self)(_props.packageId);
       }
-    }, function(slotName) {});
+    };
+    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
     _elementClose("div");
     _elementClose("div");
   }

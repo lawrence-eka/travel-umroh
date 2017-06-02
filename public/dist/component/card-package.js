@@ -2,8 +2,9 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
   var $path = "/dist/component/card-package";
   var $patchChanges = yalla.framework.renderToScreen;
   var $export = {};
-  var $context = {};
+  var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
+  var _merge = yalla.utils.merge;
   var $inject = yalla.framework.createInjector("/dist/component/card-package");
 
   function ComponentEvent(type, data, target, currentTarget) {
@@ -26,6 +27,10 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
     return {}
   };
 
+  function onPropertyChange(event) {
+    return {}
+  };
+
   function onClick(packageId) {
     this.emitEvent('click', packageId);
   }
@@ -40,10 +45,10 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
 
 
   function $render(_props, _slotView) {
-    $context["card"] = $inject("/component/panel");
-    var card = $context["card"];
-    $context["entry"] = $inject("/component/entry");
-    var entry = $context["entry"];
+    _context["card"] = $inject("/component/panel");
+    var card = _context["card"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-package");
     _elementOpenEnd("div");
@@ -51,7 +56,14 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
     var __component = IncrementalDOM.currentElement();
     __component.__state = __component.__state || initState.bind(__component)(_props);
     var __state = __component.__state;
-    $context["card"].render({
+    var __self = {
+      component: __component,
+      properties: _props,
+      state: __component.__state
+    };
+    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
+    __component.__properties = _props;
+    var __params = {
       "title": _props.pkg.packageName,
       "nofooter": "nofooter",
       "onclick": function(event) {
@@ -74,7 +86,8 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
         };
         return onClick.bind(self)(_props.pkg.id);
       }
-    }, function(slotName) {
+    };
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -91,7 +104,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
           _elementOpenStart("div", "");
           _attr("class", "row");
           _elementOpenEnd("div");
-          $context["entry"].render({
+          var __params = {
             "type": "button",
             "value": "Edit",
             "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
@@ -115,8 +128,9 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
               };
               return onEdit.bind(self)(_props.pkg.id);
             }
-          }, function(slotName) {});
-          $context["entry"].render({
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+          var __params = {
             "type": "button",
             "value": "Itinerary...",
             "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
@@ -140,7 +154,8 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
               };
               return onItineraryClicked.bind(self)(_props.pkg.id);
             }
-          }, function(slotName) {});
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
           _elementClose("div");
         }
         _elementClose("div");
