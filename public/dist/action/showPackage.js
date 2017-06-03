@@ -109,6 +109,8 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     var cardPackage = _context["card-package"];
     _context["card-itinerary"] = $inject("/component/card-itinerary");
     var cardItinerary = _context["card-itinerary"];
+    _context["card-itineraryList"] = $inject("/component/card-itineraryList");
+    var cardItineraryList = _context["card-itineraryList"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
     _elementOpenStart("link", "");
@@ -184,34 +186,6 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
     _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
-    var __params = {
-      "type": "button",
-      "value": "Book This!",
-      "onclick": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = __component;
-        self.component.__state = self.component.__state || {};
-        self.state = self.component.__state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
-          }
-        };
-        return book.bind(self)(_props.packageId);
-      }
-    };
-    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -227,16 +201,10 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
       self.state = self.component.__state;
 
       function asyncFunc__1(data) {
-        var _array = data || [];
-        _array.forEach(function(itr) {
-          _elementOpenStart("p", "");
-          _elementOpenEnd("p");
-          var __params = {
-            "itr": itr
-          };
-          _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-          _elementClose("p");
-        });
+        var __params = {
+          "itinerary": data
+        };
+        _context["card-itineraryList"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
       }
       var promise = queryItineraries.bind(self)(_props.packageId);
       if (promise && typeof promise == "object" && "then" in promise) {
