@@ -100,6 +100,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       _attr("required", _props.required);
       _attr("placeholder", (_props.placeholder ? _props.placeholder : ''));
       _attr("value", (_props.value ? _props.value : ''));
+      _attr("min", _props.min);
+      _attr("max", _props.max);
       _elementOpenEnd("input");
       _elementClose("input");
     }

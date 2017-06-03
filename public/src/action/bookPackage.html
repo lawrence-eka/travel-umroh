@@ -18,9 +18,9 @@
 					<entry type="text" prompt="Middle Name" name="middleName"></entry>
 					<entry type="text" prompt="Last Name" name="lastName"></entry>
 					<entry type="text" prompt="Birth Place" name="birthPlace"></entry>
-					<entry type="date" prompt="Birthday" name="birthday"></entry>
+					<entry type="date" prompt="Birthday" name="birthday" max.bind="(new Date()).toYYYYMMDD()"></entry>
 					<entry type="text" prompt="Passport Number" name="passportNumber"></entry>
-					<entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate"></entry>
+					<entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate" min="(new Date()).toYYYYMMDD()"></entry>
 					<entry type="text" prompt="Passport Issuer" name="passportIssuer"></entry>
 					<entry type="button" name="btnRegister" value="Register" click.trigger="registerPassenger($bookingId)"></entry>
 					<entry type="button" name="btnPaymentDetail" value="Payment Detail" click.trigger="calculatePaymentDetail($bookingId)"></entry>

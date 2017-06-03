@@ -3,7 +3,7 @@
 <div class.bind="whatDivClass($divClass)">
     <div class="form-group custom-entry-margin">
         <label if.bind="$prompt && whatType($type) != 'checkbox'" class="custom-entry-prompt">{{$prompt}}</label>
-        <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="($placeholder ? $placeholder : '')" value.bind="($value ? $value : '')">
+        <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="($placeholder ? $placeholder : '')" value.bind="($value ? $value : '')" min.bind="$min" max.bind="$max">
         <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="($value ? $value : '')">
         <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="($value ? $value : '')" click.trigger="buttonClicked()">
         <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm">{{($value ? $value : '')}}</textarea>

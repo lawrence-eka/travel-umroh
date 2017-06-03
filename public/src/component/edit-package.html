@@ -12,8 +12,8 @@
                 <div class="row">
                     <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
                     <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
-                    <entry type="date" name="validFrom" prompt="Valid From"  value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : '')"></entry>
-                    <entry type="date" name="validUntil" prompt="Valid Until" value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : '')"></entry>
+                    <entry type="date" name="validFrom" prompt="Valid From"  value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))"></entry>
+                    <entry type="date" name="validUntil" prompt="Valid Until" value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))"></entry>
                     <entry type="number" name="costLandArrangements" prompt="Land Arrangements"  value.bind="data.costLandArrangements"></entry>
                     <entry type="number" name="costTickets" prompt="Tickets" value.bind="data.costTickets"></entry>
                     <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" checked.bind="data.isItineraryConfirmed"></entry>

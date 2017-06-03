@@ -89,7 +89,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   }
 
   function entryType(data) {
-    if (!entry) return 'Transport';
+    if (!entry) return 'Hotel';
     else return entry.transport;
   }
 
@@ -170,66 +170,68 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
             _attr("value", data.packageId);
             _elementOpenEnd("input");
             _elementClose("input");
-            _elementOpenStart("div", "");
-            _attr("class", "row");
-            _elementOpenEnd("div");
-            var __params = {
-              "type": "button",
-              "value": "Hotel",
-              "name": "btnHotel",
-              "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-              "class": setButtonClass.bind(__self)('Hotel'),
-              "onclick": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
-                }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
+            if (!_props.itinerary) {
+              _elementOpenStart("div", "");
+              _attr("class", "row");
+              _elementOpenEnd("div");
+              var __params = {
+                "type": "button",
+                "value": "Transport",
+                "name": "btnTransport",
+                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+                "class": setButtonClass.bind(__self)('Transport'),
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
                   }
-                };
-                return onClick.bind(self)();
-              }
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-            var __params = {
-              "type": "button",
-              "value": "Transport",
-              "name": "btnTransport",
-              "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-              "class": setButtonClass.bind(__self)('Transport'),
-              "onclick": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return onClick.bind(self)();
                 }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+              var __params = {
+                "type": "button",
+                "value": "Hotel",
+                "name": "btnHotel",
+                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+                "class": setButtonClass.bind(__self)('Hotel'),
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
                   }
-                };
-                return onClick.bind(self)();
-              }
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-            _elementClose("div");
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = __component;
+                  self.component.__state = self.component.__state || {};
+                  self.state = self.component.__state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  return onClick.bind(self)();
+                }
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+              _elementClose("div");
+            }
             _elementOpenStart("div", "");
             _attr("class", isVisible.bind(__self)('Transport'));
             _elementOpenEnd("div");
@@ -240,7 +242,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
               "type": "datetime-local",
               "name": "departure",
               "prompt": "Departure",
-              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : '')
+              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
@@ -254,7 +256,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
               "type": "datetime-local",
               "name": "arrival",
               "prompt": "Arrival",
-              "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')
+              "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
@@ -279,12 +281,13 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
             _elementOpenStart("div", "");
             _attr("class", "row");
             _elementOpenEnd("div");
+            _text("0");
             var __params = {
               "type": "datetime-local",
               "name": "checkIn",
               "class": "form-control input-sm",
               "prompt": "Check In",
-              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : '')
+              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
@@ -292,7 +295,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
               "name": "checkOut",
               "class": "form-control input-sm",
               "prompt": "Check Out",
-              "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : '')
+              "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
@@ -332,7 +335,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
             _elementOpenEnd("div");
             var __params = {
               "type": "button",
-              "value": _props.itinerary ? 'Save' : 'Register',
+              "value": "Save",
               "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
               "onclick": function(event) {
                 var self = {

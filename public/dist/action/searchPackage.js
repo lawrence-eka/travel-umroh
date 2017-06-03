@@ -31,6 +31,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     return {}
   };
 
+  var recordsFound = "";
   var message = '';
   var messageType = '';
   var _startDate = (new Date()).toYYYYMMDD();
@@ -43,7 +44,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
 
   function queryPackages() {
     return new Promise(function(resolve) {
-      //debugger;
+      debugger;
       if (_startDate == "" || _endDate == "") resolve([]);
       var startDate = (new Date(_startDate)).setHours(0, 0, 0, 0);
       var endDate = (new Date(_endDate)).setHours(23, 59, 59, 999);
@@ -71,11 +72,10 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         if (err) {
           message = err;
           messageType = "error";
+          recordsFound = "";
         } else {
-          message = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
-          messageType = "info";
+          recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
         }
-        $patchChanges();
         resolve(pkg);
       });
     });
@@ -132,7 +132,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     __component.__properties = _props;
     var __params = {
       "title": "Search Packages",
-      "nofooter": "nofooter"
+      "footer": recordsFound
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
       if (slotName == "body") {
