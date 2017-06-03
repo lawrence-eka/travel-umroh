@@ -1,5 +1,6 @@
 <inject from="/component/card-package" name="card-package"></inject>
 <inject from="/component/card-itinerary" name="card-itinerary"></inject>
+<inject from="/component/card-itineraryList" name="card-itineraryList"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
@@ -7,14 +8,17 @@
     <div data.load="queryPackage($packageId)">
         <card-package pkg.bind="data"></card-package>
     </div>
-    <div>
-        <entry type="button" value="Book This!" click.trigger="book($packageId)"></entry>
+    <div data.load="queryItineraries($packageId)">
+        <card-itineraryList itinerary.bind="data">
+        </card-itineraryList>
     </div>
+<!--
     <div data.load="queryItineraries($packageId)">
         <p for.each="itr in data">
             <card-itinerary itr.bind="itr"></card-itinerary>
         </p>
     </div>
+    -->
     <div>
         <entry type="button" value="Book This!" click.trigger="book($packageId)"></entry>
     </div>
