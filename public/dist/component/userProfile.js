@@ -68,8 +68,8 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
 
     profile.address1 = form.elements.address1.value;
     profile.city = form.elements.city.value;
-    profile.isAdmin = (form.elements.isAdmin.value == "on");
-    profile.isTravelAgent = (form.elements.isTravelAgent.value == "on");
+    profile.isAdmin = (form.elements.isAdmin.checked);
+    profile.isTravelAgent = (form.elements.isTravelAgent.checked);
     debugger;
     this.emitEvent('save', profile);
   }
@@ -214,14 +214,14 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
               "type": "checkbox",
               "prompt": "Travel Agent",
               "name": "isTravelAgent",
-              "value": data.isTravelAgent
+              "checked": data.isTravelAgent
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
               "type": "checkbox",
               "prompt": "Administrator",
               "name": "isAdmin",
-              "value": data.isAdmin
+              "checked": data.isAdmin
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             _elementClose("div");

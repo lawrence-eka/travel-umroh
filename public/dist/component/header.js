@@ -71,11 +71,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
 
 
   function getMe() {
-    return new Promise(function(resolve) {
-      dpd.users.me(function(me) {
-        resolve(me);
-      });
-    });
+    return storage.me.read();
   }
 
   function logout() {

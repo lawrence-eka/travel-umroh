@@ -14,6 +14,9 @@
             </form>
         </div>
     </panel>
+    <div>
+        <alert alertType.bind="messageType" message.bind="message"></alert>
+    </div>
     <div data.load="queryPackages()">
         <div for.each="pkg in data" >
             <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
@@ -34,19 +37,20 @@
 
     function queryPackages(){
         return new Promise(function(resolve){
-            //var form = formGlobal;
+            //debugger;
             if(_startDate == "" || _endDate == "") resolve([]);
-            var startDate = new Date(_startDate + " 00:00:00");
-            var endDate = new Date(_endDate + " 23:59:59");
+            var startDate = (new Date(_startDate)).setHours(0,0,0,0);
+            var endDate = (new Date(_endDate)).setHours(23,59,59,999);
             var query = {};
             query.isPublished = "true";
             query.validUntil = {"$gte": (new Date()).getTime()};
             query.$and = [
-                {travelDateFrom: {"$gte": startDate.getTime()}},
-                {travelDateFrom: {"$lte": endDate.getTime()}}
+                {travelDateFrom: {"$gte": startDate}},
+                {travelDateFrom: {"$lte": endDate}}
             ];
             query.$sort={"travelDateFrom":1};
             dpd.packages.get(query, function(pkg, err) {
+	            //debugger;
                 if(err){
                     message = err;
                     messageType = "error";
@@ -54,8 +58,8 @@
                 	message = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
                 	messageType = "info";
                 }
+	            $patchChanges();
 	            resolve(pkg);
-                $patchChanges();
             });
         });
 

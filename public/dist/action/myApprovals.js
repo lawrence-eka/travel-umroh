@@ -55,8 +55,7 @@ yalla.framework.addComponent("/dist/action/myApprovals", (function() {
   function onApprove(user, isApproved) {
     return new Promise(function(resolve) {
       user = user.data;
-      if (isApproved) user.needApproval.isApproved = true;
-      else user.needApproval = false;
+      user.needApproval.isApproved = isApproved;
       dpd.users.put(user.id, user, function(result, err) {
         if (err) {
           errorMessage = JSON.stringify(err);

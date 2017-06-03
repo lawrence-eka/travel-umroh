@@ -31,8 +31,6 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     return {}
   };
 
-  var dates = $inject('/common/dates');
-  var numbers = $inject('/common/numbers');
   var errorMessage = "";
 
   var package = {};
