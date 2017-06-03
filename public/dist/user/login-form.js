@@ -120,7 +120,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           "type": "text",
           "name": "username",
           "required": "required",
-          "placeholder": "Username"
+          "placeholder": "Email"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         var __params = {
