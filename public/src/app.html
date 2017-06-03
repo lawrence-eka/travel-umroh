@@ -4,7 +4,7 @@
 
 <div class="container">
     <div data.load="checkCurrentUser()">
-        <div if.bind="data || (path().indexOf('registration') >= 0)">
+        <div if.bind="data || isRegistrationPage()">
             <app-header></app-header>
             <slot-view></slot-view>
         </div>
@@ -14,17 +14,12 @@
     </div>
 </div>
 
-
-
 <script>
-	//$inject("/common/prototypes");
 
-    function path() {
-    	debugger;
-        return $path;
+    function isRegistrationPage() {
+    	return location.hash == '#user.registration';
     }
     function checkCurrentUser(){
-    	//debugger;
     	return storage.me.read();
     }
 

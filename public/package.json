@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bootstrap": "^4.0.0-alpha.6",
-    "yallajs": "0.0.22"
+    "bootstrap": "^4.0.0-alpha.6"
+  },
+  "dependencies": {
+    "yallajs": "0.0.54"
   }
 }
