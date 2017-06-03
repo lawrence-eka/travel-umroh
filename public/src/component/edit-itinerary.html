@@ -9,9 +9,9 @@
             <form role="form">
                 <input type="hidden" name="id" value.bind="data.id">
                 <input type="hidden" name="packageId" value.bind="data.packageId">
-                <div class=row">
-                    <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
+                <div class=row" if.bind="!$itinerary">
                     <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
+                    <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
                 </div>
 
                 <div class.bind="isVisible('Transport')">
@@ -29,17 +29,17 @@
                     </div>
                     -->
                     <div class="row">
-                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):'')"></entry>
+                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
                         <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
-                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : '')"></entry>
+                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))" ></entry>
                         <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
                         <entry type="text" name="airline" prompt="Airline" value.bind="data.entry.transport"></entry>
                     </div>
                 </div>
                 <div class.bind ="isVisible('Hotel')">
-                    <div class="row">
-                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):'')"></entry>
-                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):'')"></entry>
+                    <div class="row">0
+                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
+                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
                         <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
                         <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
                     </div>
@@ -51,7 +51,7 @@
                 <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
 
                 <div class=row">
-                    <entry type="button" value.bind="$itinerary ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                    <entry type="button" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
                     <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
                 </div>
             </form>
@@ -117,7 +117,7 @@
 
 	function entryType(data)
     {
-    	if(!entry) return 'Transport';
+    	if(!entry) return 'Hotel';
     	else return entry.transport;
     }
 

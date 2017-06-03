@@ -271,7 +271,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         var __params = {
           "type": "date",
           "prompt": "Birthday",
-          "name": "birthday"
+          "name": "birthday",
+          "max": (new Date()).toYYYYMMDD()
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         var __params = {
@@ -283,7 +284,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         var __params = {
           "type": "date",
           "prompt": "Passport Expiry Date",
-          "name": "passportExpiryDate"
+          "name": "passportExpiryDate",
+          "min": "(new Date()).toYYYYMMDD()"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
         var __params = {

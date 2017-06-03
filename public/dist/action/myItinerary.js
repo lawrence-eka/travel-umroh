@@ -74,7 +74,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
           message = err;
         }
         if (result) {
-          window.location.hash = "#app/action.myItinerary:packageId=" + packageId;
+          window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
         }
       });
     } else {

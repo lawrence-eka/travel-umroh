@@ -154,14 +154,14 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
               "type": "date",
               "name": "validFrom",
               "prompt": "Valid From",
-              "value": (data.validFrom ? data.validFrom.toYYYYMMDD() : '')
+              "value": (data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
               "type": "date",
               "name": "validUntil",
               "prompt": "Valid Until",
-              "value": (data.validUntil ? data.validUntil.toYYYYMMDD() : '')
+              "value": (data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
             var __params = {
