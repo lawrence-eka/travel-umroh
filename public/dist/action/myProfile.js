@@ -42,7 +42,6 @@ yalla.framework.addComponent("/dist/action/myProfile", (function() {
   }
 
   function getMyProfile() {
-
     return new Promise(function(resolve) {
       dpd.users.me(function(me) {
         resolve(me);
@@ -61,6 +60,7 @@ yalla.framework.addComponent("/dist/action/myProfile", (function() {
       if (err) {
         self.state.error.message = err;
       } else {
+        storage.me.save(me, storage.me.isRemembered());
         window.location.hash = '#app/action.searchPackage';
       }
     });

@@ -43,10 +43,10 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
 
   function queryPackages() {
     return new Promise(function(resolve) {
-      //var form = formGlobal;
+      //debugger;
       if (_startDate == "" || _endDate == "") resolve([]);
-      var startDate = new Date(_startDate + " 00:00:00");
-      var endDate = new Date(_endDate + " 23:59:59");
+      var startDate = (new Date(_startDate)).setHours(0, 0, 0, 0);
+      var endDate = (new Date(_endDate)).setHours(23, 59, 59, 999);
       var query = {};
       query.isPublished = "true";
       query.validUntil = {
@@ -54,12 +54,12 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
       };
       query.$and = [{
           travelDateFrom: {
-            "$gte": startDate.getTime()
+            "$gte": startDate
           }
         },
         {
           travelDateFrom: {
-            "$lte": endDate.getTime()
+            "$lte": endDate
           }
         }
       ];
@@ -67,6 +67,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         "travelDateFrom": 1
       };
       dpd.packages.get(query, function(pkg, err) {
+        //debugger;
         if (err) {
           message = err;
           messageType = "error";
@@ -74,8 +75,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           message = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
           messageType = "info";
         }
-        resolve(pkg);
         $patchChanges();
+        resolve(pkg);
       });
     });
 
@@ -183,6 +184,14 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         _elementClose("div");
       }
     });
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
+    var __params = {
+      "alertType": messageType,
+      "message": message
+    };
+    _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+    _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {

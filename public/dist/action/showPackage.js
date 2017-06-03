@@ -34,23 +34,22 @@ yalla.framework.addComponent("/dist/action/showPackage", (function() {
   var errorMessage = "";
 
   function book(packageId) {
-    dpd.users.me(function(me) {
-      queryPackage(packageId).then(function(pkg) {
-        var q = {
-          "userId": me.id,
-          "packageId": pkg.id,
-          "costTickets": pkg.costTickets,
-          "costLandArrangements": pkg.costLandArrangements
-        };
-        dpd.bookings.post(q, function(booking, err) {
-          if (err) {
-            errorMessage = JSON.stringify(err);
-            $patchChanges();
-          } else {
-            var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
-            window.location.hash = '#app/action.bookPackage:bookingId=' + bookingId;
-          }
-        });
+    var me = storage.me.read();
+    queryPackage(packageId).then(function(pkg) {
+      var q = {
+        "userId": me.id,
+        "packageId": pkg.id,
+        "costTickets": pkg.costTickets,
+        "costLandArrangements": pkg.costLandArrangements
+      };
+      dpd.bookings.post(q, function(booking, err) {
+        if (err) {
+          errorMessage = JSON.stringify(err);
+          $patchChanges();
+        } else {
+          var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
+          window.location.hash = '#app/action.bookPackage:bookingId=' + bookingId;
+        }
       });
     });
   }

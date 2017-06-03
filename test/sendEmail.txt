@@ -1,0 +1,11 @@
+{
+    "options": {
+      "sandbox": true
+    },
+    "content": {
+      "from": "sandbox@sparkpostbox.com",
+      "subject": "Thundercats are GO!!!",
+      "text": "Sword of Omens, give me sight BEYOND sight"
+    },
+    "recipients": [{ "address": "lawrence.eka@gmail.com" }]
+}

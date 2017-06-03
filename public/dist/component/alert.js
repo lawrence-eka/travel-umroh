@@ -111,10 +111,10 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       __component.__properties = _props;
       var _array = messages(_props.message, _props.alertType, _props.titleCase) || [];
       _array.forEach(function(error) {
-        _elementOpenStart("p", "");
-        _elementOpenEnd("p");
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
         _text("" + (error) + "");
-        _elementClose("p");
+        _elementClose("div");
       });
       _elementClose("div");
     }

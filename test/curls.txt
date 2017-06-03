@@ -1,3 +1,5 @@
+curl -X POST https://api.sparkpost.com/api/v1/transmissions -H "Authorization: 1f8c7dfcc815728b497537c263d73f9e1fc52193" -H "Content-Type: application/json" -d @sendEmail.txt > result.txt
+
 curl -k -X POST -H "Content-Type: application/json" -d @newUser.txt https://localhost/users > result.txt
 
 curl -k -X POST -H "Content-Type: application/json" -d @login.txt https://localhost/users/login -c cookie.txt > result.txt

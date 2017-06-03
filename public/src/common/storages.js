@@ -71,6 +71,11 @@ storage.me.read = function() {
 	else return JSON.parse(me);
 }
 
+storage.me.isRemembered = function() {
+	if(storage.local.read("me")) return true;
+	else return false;
+}
+
 storage.me.erase = function() {
 	storage.local.erase("me");
 	storage.session.erase("me");

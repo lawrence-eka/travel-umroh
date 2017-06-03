@@ -51,11 +51,9 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
 
   function getBookings() {
     return new Promise(function(resolve) {
-      dpd.users.me(function(me) {
-        queryBookings(me.id).then(function(bkg) {
-          resolve(bkg);
-        });
-
+      var me = storage.me.read();
+      queryBookings(me.id).then(function(bkg) {
+        resolve(bkg);
       });
     });
   }

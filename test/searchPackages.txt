@@ -1,0 +1,1 @@
+{"isPublished":"true","validUntil":{"$gte":1496474843657},"$and":[{"travelDateFrom":{"$gte":1496433600000}},{"travelDateFrom":{"$lte":1528055999999}}]}

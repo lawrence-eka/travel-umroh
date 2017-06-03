@@ -1,6 +1,6 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <div class.bind="className($alertType)" role="alert" if.bind="$message">
-    <p for.each="error in messages($message, $alertType, $titleCase)">{{error}}</p>
+    <div for.each="error in messages($message, $alertType, $titleCase)">{{error}}</div>
 </div>
 
 <script>
