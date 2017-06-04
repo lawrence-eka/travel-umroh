@@ -1,11 +1,12 @@
 yalla.framework.addComponent("/dist/component/list-editor", (function() {
-  var $path = "/dist/component/list-editor";
   var $patchChanges = yalla.framework.renderToScreen;
+  var $inject = yalla.framework.createInjector("/dist/component/list-editor");
   var $export = {};
+  var $path = "/dist/component/list-editor";
+  var _elementName = "dist.component.list-editor";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
-  var $inject = yalla.framework.createInjector("/dist/component/list-editor");
 
   function ComponentEvent(type, data, target, currentTarget) {
     this.data = data;
@@ -14,22 +15,20 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     this.currentTarget = currentTarget;
   }
 
-  var _elementOpen = IncrementalDOM.elementOpen,
-    _elementClose = IncrementalDOM.elementClose,
-    _elementOpenStart = IncrementalDOM.elementOpenStart,
-    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    _elementVoid = IncrementalDOM.elementVoid,
-    _text = IncrementalDOM.text,
-    _attr = IncrementalDOM.attr,
-    _skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen;
+  var _elementClose = IncrementalDOM.elementClose;
+  var _elementOpenStart = IncrementalDOM.elementOpenStart;
+  var _elementOpenEnd = IncrementalDOM.elementOpenEnd;
+  var _elementVoid = IncrementalDOM.elementVoid;
+  var _text = IncrementalDOM.text;
+  var _attr = IncrementalDOM.attr;
+  var _skip = IncrementalDOM.skip;
 
   function initState(props) {
     return {}
   };
 
-  function onPropertyChange(event) {
-    return {}
-  };
+  function onPropertyChange(event) {};
 
   var message = "";
   var alertType = "";
@@ -132,11 +131,11 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
     _text("<div\">");
     _text("<");
     _text("div\">");
-    var __params = {
+    var _params = {
       "element": "dist.component.list-editor",
       "title": _props.listTitle
     };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (!_props.editItineraryId) {
         _elementOpenStart("input", "");
         _attr("type", "button");
@@ -151,31 +150,31 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
             self.elements = self.target.elements;
           }
           self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = __component;
-          self.component.__state = self.component.__state || {};
-          self.state = self.component.__state;
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
           self.emitEvent = function(eventName, data) {
             var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
             if ('on' + eventName in _props) {
               _props['on' + eventName](event);
             }
           };
-          return onAdd.bind(self)(_props.packageId);
+          onAdd.bind(self)(_props.packageId);
         });
         _elementOpenEnd("input");
         _elementClose("input");
       }
     });
     if (message) {
-      var __params = {
+      var _params = {
         "element": "dist.component.list-editor",
         "alertType": alertType,
         "message": "message"
       };
-      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
     if (_props.editItineraryId == -1) {
-      var __params = {
+      var _params = {
         "element": "dist.component.list-editor",
         "onsave": function(event) {
           var self = {
@@ -186,16 +185,16 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
             self.elements = self.target.elements;
           }
           self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = __component;
-          self.component.__state = self.component.__state || {};
-          self.state = self.component.__state;
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
           self.emitEvent = function(eventName, data) {
             var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
             if ('on' + eventName in _props) {
               _props['on' + eventName](event);
             }
           };
-          return onSaveItinerary.bind(self)(event, _props.packageId);
+          onSaveItinerary.bind(self)(event, _props.packageId);
         },
         "oncancel": function(event) {
           var self = {
@@ -206,34 +205,37 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
             self.elements = self.target.elements;
           }
           self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = __component;
-          self.component.__state = self.component.__state || {};
-          self.state = self.component.__state;
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
           self.emitEvent = function(eventName, data) {
             var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
             if ('on' + eventName in _props) {
               _props['on' + eventName](event);
             }
           };
-          return onCancelEdit.bind(self)(_props.packageId);
+          onCancelEdit.bind(self)(_props.packageId);
         }
       };
-      _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+      _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
     _elementOpenStart("div", "");
     _attr("element", "dist.component.list-editor");
     _elementOpenEnd("div");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    var __self = {
-      component: __component,
+    var _component = IncrementalDOM.currentElement();
+    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
+    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
+    _component._state._name = _elementName;
+    var _state = _component._state;
+    var _self = {
+      component: _component,
       properties: _props,
-      state: __component.__state
+      state: _component._state
     };
-    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
-    __component.__properties = _props;
+    if (_validComponent) {
+      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
+    }
+    _component._properties = _props;
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -244,17 +246,17 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
         self.elements = self.target.elements;
       }
       self.currentTarget = self.target;
-      self.component = __component;
-      self.component.__state = self.component.__state || {};
-      self.state = self.component.__state;
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
 
-      function asyncFunc__1(data) {
+      function asyncFunc_1(data) {
         var _array = data || [];
         _array.forEach(function(itr) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
           if (itr.id != _props.editItineraryId) {
-            var __params = {
+            var _params = {
               "itr": itr,
               "onedit": function(event) {
                 var self = {
@@ -265,16 +267,16 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                   self.elements = self.target.elements;
                 }
                 self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
                 self.emitEvent = function(eventName, data) {
                   var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                   if ('on' + eventName in _props) {
                     _props['on' + eventName](event);
                   }
                 };
-                return onEdit.bind(self)(event, _props.packageId);
+                onEdit.bind(self)(event, _props.packageId);
               },
               "ondelete": function(event) {
                 var self = {
@@ -285,22 +287,22 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                   self.elements = self.target.elements;
                 }
                 self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
                 self.emitEvent = function(eventName, data) {
                   var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                   if ('on' + eventName in _props) {
                     _props['on' + eventName](event);
                   }
                 };
-                return onDelete.bind(self)(event);
+                onDelete.bind(self)(event);
               }
             };
-            _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           }
           if (itr.id == _props.editItineraryId) {
-            var __params = {
+            var _params = {
               "itinerary": itr,
               "onsave": function(event) {
                 var self = {
@@ -311,16 +313,16 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                   self.elements = self.target.elements;
                 }
                 self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
                 self.emitEvent = function(eventName, data) {
                   var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                   if ('on' + eventName in _props) {
                     _props['on' + eventName](event);
                   }
                 };
-                return onSaveItinerary.bind(self)(event, _props.packageId);
+                onSaveItinerary.bind(self)(event, _props.packageId);
               },
               "oncancel": function(event) {
                 var self = {
@@ -331,19 +333,19 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
                   self.elements = self.target.elements;
                 }
                 self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = __component;
-                self.component.__state = self.component.__state || {};
-                self.state = self.component.__state;
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
                 self.emitEvent = function(eventName, data) {
                   var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                   if ('on' + eventName in _props) {
                     _props['on' + eventName](event);
                   }
                 };
-                return onCancelEdit.bind(self)(_props.packageId);
+                onCancelEdit.bind(self)(_props.packageId);
               }
             };
-            _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+            _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           }
           _elementClose("p");
         });
@@ -353,13 +355,13 @@ yalla.framework.addComponent("/dist/component/list-editor", (function() {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(self, _result)
+            asyncFunc_1.call(self, _result)
           });
         }).catch(function(err) {
           console.log(err);
         });
       } else {
-        asyncFunc__1.call(self, promise)
+        asyncFunc_1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),

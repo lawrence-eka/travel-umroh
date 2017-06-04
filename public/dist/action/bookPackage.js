@@ -1,11 +1,12 @@
 yalla.framework.addComponent("/dist/action/bookPackage", (function() {
-  var $path = "/dist/action/bookPackage";
   var $patchChanges = yalla.framework.renderToScreen;
+  var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
   var $export = {};
+  var $path = "/dist/action/bookPackage";
+  var _elementName = "dist.action.bookPackage";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
-  var $inject = yalla.framework.createInjector("/dist/action/bookPackage");
 
   function ComponentEvent(type, data, target, currentTarget) {
     this.data = data;
@@ -14,22 +15,20 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     this.currentTarget = currentTarget;
   }
 
-  var _elementOpen = IncrementalDOM.elementOpen,
-    _elementClose = IncrementalDOM.elementClose,
-    _elementOpenStart = IncrementalDOM.elementOpenStart,
-    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    _elementVoid = IncrementalDOM.elementVoid,
-    _text = IncrementalDOM.text,
-    _attr = IncrementalDOM.attr,
-    _skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen;
+  var _elementClose = IncrementalDOM.elementClose;
+  var _elementOpenStart = IncrementalDOM.elementOpenStart;
+  var _elementOpenEnd = IncrementalDOM.elementOpenEnd;
+  var _elementVoid = IncrementalDOM.elementVoid;
+  var _text = IncrementalDOM.text;
+  var _attr = IncrementalDOM.attr;
+  var _skip = IncrementalDOM.skip;
 
   function initState(props) {
     return {}
   };
 
-  function onPropertyChange(event) {
-    return {}
-  };
+  function onPropertyChange(event) {};
 
   var package = {};
   var booking = {};
@@ -158,32 +157,38 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    var __self = {
-      component: __component,
+    var _component = IncrementalDOM.currentElement();
+    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
+    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
+    _component._state._name = _elementName;
+    var _state = _component._state;
+    var _self = {
+      component: _component,
       properties: _props,
-      state: __component.__state
+      state: _component._state
     };
-    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
-    __component.__properties = _props;
+    if (_validComponent) {
+      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
+    }
+    _component._properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.action.bookPackage");
     _elementOpenEnd("div");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    var __self = {
-      component: __component,
+    var _component = IncrementalDOM.currentElement();
+    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
+    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
+    _component._state._name = _elementName;
+    var _state = _component._state;
+    var _self = {
+      component: _component,
       properties: _props,
-      state: __component.__state
+      state: _component._state
     };
-    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
-    __component.__properties = _props;
+    if (_validComponent) {
+      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
+    }
+    _component._properties = _props;
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -196,39 +201,39 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         self.elements = self.target.elements;
       }
       self.currentTarget = self.target;
-      self.component = __component;
-      self.component.__state = self.component.__state || {};
-      self.state = self.component.__state;
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
 
-      function asyncFunc__1(data) {
-        var __params = {
+      function asyncFunc_1(data) {
+        var _params = {
           "bkg": data
         };
-        _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       }
       var promise = queryBooking.bind(self)(_props.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(self, _result)
+            asyncFunc_1.call(self, _result)
           });
         }).catch(function(err) {
           console.log(err);
         });
       } else {
-        asyncFunc__1.call(self, promise)
+        asyncFunc_1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
-    var __params = {
+    var _params = {
       "title": "Passenger Detail",
       "nofooter": "nofooter"
     };
-    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -238,63 +243,63 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        var __params = {
+        var _params = {
           "type": "hidden",
           "name": "bookingId",
           "value": _props.bookingId
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "First Name",
           "name": "firstName"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "Middle Name",
           "name": "middleName"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "Last Name",
           "name": "lastName"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "Birth Place",
           "name": "birthPlace"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "date",
           "prompt": "Birthday",
           "name": "birthday",
           "max": (new Date()).toYYYYMMDD()
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "Passport Number",
           "name": "passportNumber"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "date",
           "prompt": "Passport Expiry Date",
           "name": "passportExpiryDate",
           "min": "(new Date()).toYYYYMMDD()"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "text",
           "prompt": "Passport Issuer",
           "name": "passportIssuer"
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "button",
           "name": "btnRegister",
           "value": "Register",
@@ -307,20 +312,20 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
               self.elements = self.target.elements;
             }
             self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-            self.component = __component;
-            self.component.__state = self.component.__state || {};
-            self.state = self.component.__state;
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
             self.emitEvent = function(eventName, data) {
               var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
               if ('on' + eventName in _props) {
                 _props['on' + eventName](event);
               }
             };
-            return registerPassenger.bind(self)(_props.bookingId);
+            registerPassenger.bind(self)(_props.bookingId);
           }
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-        var __params = {
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
           "type": "button",
           "name": "btnPaymentDetail",
           "value": "Payment Detail",
@@ -333,19 +338,19 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
               self.elements = self.target.elements;
             }
             self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-            self.component = __component;
-            self.component.__state = self.component.__state || {};
-            self.state = self.component.__state;
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
             self.emitEvent = function(eventName, data) {
               var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
               if ('on' + eventName in _props) {
                 _props['on' + eventName](event);
               }
             };
-            return calculatePaymentDetail.bind(self)(_props.bookingId);
+            calculatePaymentDetail.bind(self)(_props.bookingId);
           }
         };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         _elementClose("div");
@@ -363,19 +368,19 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         self.elements = self.target.elements;
       }
       self.currentTarget = self.target;
-      self.component = __component;
-      self.component.__state = self.component.__state || {};
-      self.state = self.component.__state;
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
 
-      function asyncFunc__1(data) {
+      function asyncFunc_1(data) {
         var _array = data || [];
         _array.forEach(function(psg) {
           _elementOpenStart("p", "");
           _elementOpenEnd("p");
-          var __params = {
+          var _params = {
             "passenger": psg
           };
-          _context["card-passenger"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+          _context["card-passenger"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _elementClose("p");
         });
       }
@@ -384,13 +389,13 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         _skip();
         promise.then(function(_result) {
           $patchChanges(node, function() {
-            asyncFunc__1.call(self, _result)
+            asyncFunc_1.call(self, _result)
           });
         }).catch(function(err) {
           console.log(err);
         });
       } else {
-        asyncFunc__1.call(self, promise)
+        asyncFunc_1.call(self, promise)
       }
     })({
       element: IncrementalDOM.currentElement(),

@@ -29,17 +29,17 @@
                     </div>
                     -->
                     <div class="row">
-                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
+                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
                         <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
-                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : (new Date()).toYYYYMMDD(true))" ></entry>
+                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : $defaults.date.default.toYYYYMMDD(true))" ></entry>
                         <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
                         <entry type="text" name="airline" prompt="Airline" value.bind="data.entry.transport"></entry>
                     </div>
                 </div>
                 <div class.bind ="isVisible('Hotel')">
-                    <div class="row">0
-                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
-                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):(new Date()).toYYYYMMDD(true))"></entry>
+                    <div class="row">
+                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
+                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
                         <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
                         <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
                     </div>
@@ -60,23 +60,27 @@
 </div>
 <script>
 
+    function initState(props){
+        return {
+            entryType: props.defaults.entryType
+        };
+    }
     function onClick(){
-        x = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
+        this.state.entryType = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
     	$patchChanges();
     }
 
     function setButtonClass(btn) {
-        return (btn == x ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
+        return (btn == this.state.entryType ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
     }
 
 	var errorMessage = '';
-    var x ="";
 
 	function loadItinerary(itinerary){
         itinerary = (itinerary ? itinerary : {entry: {}});
-        if(x == "") {
-            if(itinerary && itinerary.entry && itinerary.entry.hotel) x = 'Hotel';
-            else x = 'Transport';
+        if(this.state.entryType == "") {
+            if(itinerary && itinerary.entry && itinerary.entry.hotel) this.state.entryType = 'Hotel';
+            else this.state.entryType = 'Transport';
         }
         return itinerary;
 
@@ -94,7 +98,7 @@
 		itinerary.id = form.elements.id.value;
 		itinerary.entry = {};
 		itinerary.remarks = form.elements.remarks.value;
-		if(x=='Hotel'){
+		if(this.state.entryType=='Hotel'){
 			itinerary.entry.hotel = form.elements.hotel.value;
 			itinerary.entry.city = form.elements.city.value;
 			itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
@@ -111,7 +115,7 @@
 	}
 
 	function isVisible(group) {
-	    if (x==group) return "";
+	    if (this.state.entryType==group) return "";
 	    else return "custom-set-hidden";
     }
 

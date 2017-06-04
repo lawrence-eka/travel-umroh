@@ -1,9 +1,16 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
-<div class.bind="className($alertType)" role="alert" if.bind="$message">
-    <div for.each="error in messages($message, $alertType, $titleCase)">{{error}}</div>
+<div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
+    <div for.each="error in @messages">{{error}}</div>
 </div>
 
 <script>
+
+    function initState(props) {
+    	return {
+		    messages: toArrayofMessages(props.message, props.alertType, props.titleCase)
+	    };
+    }
+
     function className(alertType)
     {
     	var base = "alert custom-alert ";
@@ -14,18 +21,21 @@
 	    return base;
     }
 
-    toErrorMessages = function(err) {
+    function toArrayofMessages(message, alertType, titleCase) {
         var result = [];
-        if (typeof err === "string") {
-            result.push(err);
+        if(!message) {
+        	result = [];
         }
-        else if (err.hasOwnProperty("error")) {
-            result.push(err.error);
+        else if (typeof message === "string") {
+            result.push(message);
         }
-        else if (err.hasOwnProperty("errors")) {
+        else if (message.hasOwnProperty("error")) {
+            result.push(message.error);
+        }
+        else if (message.hasOwnProperty("errors")) {
             var errorList = [];
-            if (!err.errors.length) errorList.push(err.errors)
-            else errorList = err.errors;
+            if (!message.errors.length) errorList.push(message.errors)
+            else errorList = message.errors;
 
             for (var i in errorList) {
                 for (var name in errorList[i]) {
@@ -35,17 +45,18 @@
                 }
             }
         }
-        return result;
-    }
-    function messages(msg, alertType, titleCase) {
-        var msgs = [];
-        if(alertType != "error") {
-            msgs.push(titleCase ? msg.toTitleCase() : msg.toSentenceCase());
-        } else {
-            var msgs = toErrorMessages(msg);
-            for(var i = 0; i < msgs.length; i++) msgs[i]  = msgs[i].toSentenceCase();
+        var finalResult = [];
+        for(i = 0 ; i < result.length; i++) {
+        	if (result[i] != "") {
+        		var msg = result[i];
+		        if(alertType != "error") {
+			        msg = (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
+		        } else {
+		        	msg = msgs.toSentenceCase();
+		        }
+        		finalResult.push(msg);
+	        }
         }
-        return msgs;
+        return finalResult;
     }
-
 </script>
