@@ -5,17 +5,17 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-    <panel title="Search Packages" footer.bind="recordsFound">
+    <panel title="Search Packages" footer.bind="@recordsFound">
         <div slot.name="body">
             <form>
-                <entry type="date" prompt="Between" name="startDate" value.bind="_startDate"></entry>
-                <entry type="date" prompt="And" name="endDate" value.bind="_endDate"></entry>
+                <entry type="date" prompt="Between" name="startDate" value.bind="@date.start"></entry>
+                <entry type="date" prompt="And" name="endDate" value.bind="@date.end"></entry>
                 <entry type="button" name="Search" value="Search" click.trigger="search()"></entry>
             </form>
         </div>
     </panel>
     <div>
-        <alert alertType.bind="messageType" message.bind="message"></alert>
+        <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
     </div>
     <div data.load="queryPackages()">
         <div for.each="pkg in data" >
@@ -25,23 +25,30 @@
 </div>
 
 <script>
-    var recordsFound="";
-    var message = '';
-    var messageType ='';
-    var _startDate = (new Date()).toYYYYMMDD();
-    var _endDate = ((new Date()).getTime() + 31536000000).toYYYYMMDD();
-    var numOfPackagesFound='';
+    function initState(props) {
+        return {
+            recordsFound: '',
+            alert:{
+                text: '',
+                type:''
+            },
+            date: {
+                start: (new Date()).toYYYYMMDD(),
+                end: ((new Date()).getTime() + 31536000000).toYYYYMMDD()
+            }
+        };
+    }
 
     function generateLink(event){
         window.location.hash = '#app/action.showPackage:packageId='+event.data;
     }
 
     function queryPackages(){
+        var self = this;
         return new Promise(function(resolve){
-            debugger;
-            if(_startDate == "" || _endDate == "") resolve([]);
-            var startDate = (new Date(_startDate)).setHours(0,0,0,0);
-            var endDate = (new Date(_endDate)).setHours(23,59,59,999);
+            if(self.state.date.start == "" || self.state.date.end == "") resolve([]);
+            var startDate = (new Date(self.state.date.start)).setHours(0,0,0,0);
+            var endDate = (new Date(self.state.date.end)).setHours(23,59,59,999);
             var query = {};
             query.isPublished = "true";
             query.validUntil = {"$gte": (new Date()).getTime()};
@@ -53,11 +60,11 @@
             dpd.packages.get(query, function(pkg, err) {
 	            //debugger;
                 if(err){
-                    message = err;
-                    messageType = "error";
-                    recordsFound = "";
+                    self.state.alert.text = err;
+                    self.state.alert.type = "error";
+                    self.state.recordsFound = "";
                 }else {
-                	recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
+                	self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
                 }
 	            resolve(pkg);
             });
@@ -67,8 +74,8 @@
 
     function search(){
     	var form = this.target.form;
-        _startDate = form.elements.startDate.value;
-        _endDate = form.elements.endDate.value;
+        this.state.date.start = form.elements.startDate.value;
+        this.state.date.end = form.elements.endDate.value;
         $patchChanges();
         return false;
     }

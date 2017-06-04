@@ -1,11 +1,12 @@
 yalla.framework.addComponent("/dist/common/storages", (function() {
-  var $path = "/dist/common/storages";
   var $patchChanges = yalla.framework.renderToScreen;
+  var $inject = yalla.framework.createInjector("/dist/common/storages");
   var $export = {};
+  var $path = "/dist/common/storages";
+  var _elementName = "dist.common.storages";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
-  var $inject = yalla.framework.createInjector("/dist/common/storages");
 
   function ComponentEvent(type, data, target, currentTarget) {
     this.data = data;
