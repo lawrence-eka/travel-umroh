@@ -12,6 +12,6 @@
     "bootstrap": "^4.0.0-alpha.6"
   },
   "dependencies": {
-    "yallajs": "0.0.54"
+    "yallajs": "0.0.55"
   }
 }
