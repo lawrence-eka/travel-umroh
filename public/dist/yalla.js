@@ -1823,6 +1823,10 @@ var yalla = (function () {
         return null;
     };
 
+    framework.validComponentName = function(component,componentName){
+        return component._state && component._state._name == componentName;
+    };
+
     framework.renderChain = function (address) {
         return address.reduceRight(function (current, path) {
             return current.then(function () {
@@ -1969,7 +1973,7 @@ var yalla = (function () {
                 var path = framework.composePathFromBase(component.componentPath);
                 var comp = yalla.components[path];
                 return function (slotName) {
-                    if (undefined == slotName || slotName == 'default') {
+                    if (comp && (undefined == slotName || slotName == 'default')) {
                         comp.render(component.params, slotView);
                     }
                 }

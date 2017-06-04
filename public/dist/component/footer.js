@@ -1,11 +1,12 @@
 yalla.framework.addComponent("/dist/component/footer", (function() {
-  var $path = "/dist/component/footer";
   var $patchChanges = yalla.framework.renderToScreen;
+  var $inject = yalla.framework.createInjector("/dist/component/footer");
   var $export = {};
+  var $path = "/dist/component/footer";
+  var _elementName = "dist.component.footer";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
-  var $inject = yalla.framework.createInjector("/dist/component/footer");
 
   function ComponentEvent(type, data, target, currentTarget) {
     this.data = data;
@@ -14,39 +15,40 @@ yalla.framework.addComponent("/dist/component/footer", (function() {
     this.currentTarget = currentTarget;
   }
 
-  var _elementOpen = IncrementalDOM.elementOpen,
-    _elementClose = IncrementalDOM.elementClose,
-    _elementOpenStart = IncrementalDOM.elementOpenStart,
-    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    _elementVoid = IncrementalDOM.elementVoid,
-    _text = IncrementalDOM.text,
-    _attr = IncrementalDOM.attr,
-    _skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen;
+  var _elementClose = IncrementalDOM.elementClose;
+  var _elementOpenStart = IncrementalDOM.elementOpenStart;
+  var _elementOpenEnd = IncrementalDOM.elementOpenEnd;
+  var _elementVoid = IncrementalDOM.elementVoid;
+  var _text = IncrementalDOM.text;
+  var _attr = IncrementalDOM.attr;
+  var _skip = IncrementalDOM.skip;
 
   function initState(props) {
     return {}
   };
 
-  function onPropertyChange(event) {
-    return {}
-  };
+  function onPropertyChange(event) {};
 
   function $render(_props, _slotView) {
     _elementOpenStart("footer", "");
     _attr("element", "dist.component.footer");
     _attr("class", "footer");
     _elementOpenEnd("footer");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    var __self = {
-      component: __component,
+    var _component = IncrementalDOM.currentElement();
+    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
+    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
+    _component._state._name = _elementName;
+    var _state = _component._state;
+    var _self = {
+      component: _component,
       properties: _props,
-      state: __component.__state
+      state: _component._state
     };
-    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
-    __component.__properties = _props;
+    if (_validComponent) {
+      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
+    }
+    _component._properties = _props;
     _elementOpenStart("div", "");
     _attr("class", "container");
     _elementOpenEnd("div");

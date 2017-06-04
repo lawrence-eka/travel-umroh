@@ -1,11 +1,12 @@
 yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
-  var $path = "/dist/component/card-itinerary";
   var $patchChanges = yalla.framework.renderToScreen;
+  var $inject = yalla.framework.createInjector("/dist/component/card-itinerary");
   var $export = {};
+  var $path = "/dist/component/card-itinerary";
+  var _elementName = "dist.component.card-itinerary";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
-  var $inject = yalla.framework.createInjector("/dist/component/card-itinerary");
 
   function ComponentEvent(type, data, target, currentTarget) {
     this.data = data;
@@ -14,22 +15,20 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     this.currentTarget = currentTarget;
   }
 
-  var _elementOpen = IncrementalDOM.elementOpen,
-    _elementClose = IncrementalDOM.elementClose,
-    _elementOpenStart = IncrementalDOM.elementOpenStart,
-    _elementOpenEnd = IncrementalDOM.elementOpenEnd,
-    _elementVoid = IncrementalDOM.elementVoid,
-    _text = IncrementalDOM.text,
-    _attr = IncrementalDOM.attr,
-    _skip = IncrementalDOM.skip;
+  var _elementOpen = IncrementalDOM.elementOpen;
+  var _elementClose = IncrementalDOM.elementClose;
+  var _elementOpenStart = IncrementalDOM.elementOpenStart;
+  var _elementOpenEnd = IncrementalDOM.elementOpenEnd;
+  var _elementVoid = IncrementalDOM.elementVoid;
+  var _text = IncrementalDOM.text;
+  var _attr = IncrementalDOM.attr;
+  var _skip = IncrementalDOM.skip;
 
   function initState(props) {
     return {}
   };
 
-  function onPropertyChange(event) {
-    return {}
-  };
+  function onPropertyChange(event) {};
 
   function onEdit(itineraryId) {
     debugger;
@@ -49,23 +48,26 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
     _elementOpenStart("div", "");
     _attr("element", "dist.component.card-itinerary");
     _elementOpenEnd("div");
-    // The component of this object
-    var __component = IncrementalDOM.currentElement();
-    __component.__state = __component.__state || initState.bind(__component)(_props);
-    var __state = __component.__state;
-    var __self = {
-      component: __component,
+    var _component = IncrementalDOM.currentElement();
+    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
+    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
+    _component._state._name = _elementName;
+    var _state = _component._state;
+    var _self = {
+      component: _component,
       properties: _props,
-      state: __component.__state
+      state: _component._state
     };
-    yalla.framework.propertyCheckChanges(__component.__properties, _props, onPropertyChange.bind(__self));
-    __component.__properties = _props;
-    var __params = {
+    if (_validComponent) {
+      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
+    }
+    _component._properties = _props;
+    var _params = {
       "title": (_props.itr.fromDateTime.toDateComponents()),
       "remarks": _props.itr.remarks,
       "nofooter": "nofooter"
     };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {
+    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName == "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
@@ -119,7 +121,7 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
           _elementOpenStart("div", "");
           _attr("class", "row");
           _elementOpenEnd("div");
-          var __params = {
+          var _params = {
             "type": "button",
             "value": "Edit",
             "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
@@ -132,20 +134,20 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
                 self.elements = self.target.elements;
               }
               self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
               self.emitEvent = function(eventName, data) {
                 var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                 if ('on' + eventName in _props) {
                   _props['on' + eventName](event);
                 }
               };
-              return onEdit.bind(self)(_props.itr.id);
+              onEdit.bind(self)(_props.itr.id);
             }
           };
-          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
-          var __params = {
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          var _params = {
             "type": "button",
             "value": "Delete",
             "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
@@ -158,19 +160,19 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
                 self.elements = self.target.elements;
               }
               self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = __component;
-              self.component.__state = self.component.__state || {};
-              self.state = self.component.__state;
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
               self.emitEvent = function(eventName, data) {
                 var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
                 if ('on' + eventName in _props) {
                   _props['on' + eventName](event);
                 }
               };
-              return onDelete.bind(self)(_props.itr.id);
+              onDelete.bind(self)(_props.itr.id);
             }
           };
-          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], __params) : __params, function(slotName, slotProps) {});
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _elementClose("div");
         }
         _elementClose("div");

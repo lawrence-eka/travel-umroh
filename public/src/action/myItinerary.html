@@ -1,4 +1,5 @@
 <inject from="/component/panel" name="card"></inject>
+<inject from="/component/entry" name="entry"></inject>
 <inject from="/component/card-itinerary" name="card-itinerary"></inject>
 <inject from="/component/edit-itinerary" name="edit-itinerary"></inject>
 <inject from="/component/alert" name="alert"></inject>
@@ -6,23 +7,32 @@
 <div data.load="getPackage($packageId)">
     <card title.bind="data.packageName" nofooter>
         <div slot.name="body">
-            <input type="button" value="Add Itinerary" class="form-control btn btn-info btn-block" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId">
+            <entry type="button" value="Add Itinerary" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
         </div>
     </card>
-    <alert alertType.bind="alertType" message.bind="message" if.bind="message"></alert>
-    <edit-itinerary if.bind="$editItineraryId == -1" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+    <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
+    <edit-itinerary if.bind="$editItineraryId == -1" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)" defaults.bind="calculateDefaults($editItineraryId)"></edit-itinerary>
     <div data.load="queryItineraries($packageId)">
         <p for.each="itr in data">
             <card-itinerary if.bind="itr.id != $editItineraryId" itr.bind="itr" edit.trigger="onEdit(event, $packageId)" delete.trigger="onDelete(event)"></card-itinerary>
-            <edit-itinerary if.bind="itr.id == $editItineraryId" itinerary.bind="itr" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)"></edit-itinerary>
+            <edit-itinerary if.bind="itr.id == $editItineraryId" itinerary.bind="itr" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)" defaults.bind="calculateDefaults($editItineraryId)"></edit-itinerary>
         </p>
     </div>
 </div>
 
 <script>
-    var message="";
-    var alertType="";
+    function initState(props) {
+        return {
+            itinerary: [],
+            alert : {
+                text: null,
+                type: ""
+            }
+        }
+    }
+
 	function queryItineraries(packageId) {
+	    var self = this;
 		return new Promise(function (resolve) {
 			var q = {
 				"packageId": packageId,
@@ -30,11 +40,14 @@
             }
 			dpd.itineraries.get(q, function (itr, err) {
 				if(err) {
-					errorMessage = err.message;
-					alertType="error";
+					self.state.alert.text = err;
+                    self.state.alert.type="error";
+                    self.itinerary=[];
 					$patchChanges();
 				} else {
-					debugger;
+                    self.state.alert.text = null;
+                    self.state.alert.type="";
+                    self.itinerary=itr;
 					resolve(itr);
 				}
 			});
@@ -57,10 +70,14 @@
             dpd.itineraries.post(itinerary, function(result, err) {
                 debugger;
                 if (err) {
-                    message = err;
+                    self.state.alert.text = err;
+                    self.state.alert.type="error";
                 }
                 if(result) {
-                    window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
+                    self.state.alert.text = null;
+                    self.state.alert.type="";
+                    $patchChanges();
+                    //window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
                 }
             });
         }
@@ -69,17 +86,49 @@
             dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
                 debugger;
                 if(err) {
-	                message = err;
+                    self.state.alert.text = err;
+                    self.state.alert.type="error";
                 }
                 else {
+                    self.state.alert.text = null;
+                    self.state.alert.type="";
                     window.location.hash="#app/action.myItinerary:packageId=" + packageId;
                 }
             });
         }
 	}
 
+	function calculateDefaults(itineraryId) {
+	    var result = {
+	        date: {
+                default: (new Date())
+            },
+            entryType:'Transport'
+        };
+	    debugger;
+	    if(this.state && this.state.itinerary && this.state.itinerary.length > 0) {
+            if (itineraryId != -1) {
+                for (var i = 0; i < this.state.itinerary.length; i++) {
+                    if (this.state.itinerary[i].id == itineraryId) {
+                        if (i > 0) {
+                            result.date.min = this.state.itinerary[i - 1].toDateTime;
+                        }
+                        if (i < this.state.itinerary.length - 1) {
+                            result.date.max = this.state.itinerary[i + 1].fromDateTime;
+                        }
+                        return result;
+                    }
+                }
+            }
+            else {
+                result.date.default = this.state.itinerary[this.state.itinerary.length - 1].toDateTime;
+                result.entryType = this.state.itinerary[this.state.itinerary.length - 1].entry.transport ? 'Hotel' : 'Transport';
+            }
+        }
+        return result;
+    }
+
 	function onCancelEdit(packageId) {
-		debugger;
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId;
 	}
 
@@ -87,7 +136,7 @@
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
     }
 	function onEdit(itineraryId, packageId) {
-		debugger;
+	    var dateLimits = calculateDateLimits(itineraryId);
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
     }
 
@@ -98,11 +147,13 @@
 				debugger;
 				if(err){
 					if (err) {
-						message=JSON.stringify(err);
-						alertType="error";
+                        self.state.alert.text = err;
+                        self.state.alert.type="error";
 					}
                 }
                 else {
+                    self.state.alert.text = null;
+                    self.state.alert.type="";
 					window.location.hash="#app/action.myItinerary:packageId=" + packageId;
 				}
             });
