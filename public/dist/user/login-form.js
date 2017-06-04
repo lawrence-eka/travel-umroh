@@ -174,6 +174,12 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _elementOpenEnd("a");
         _text("New to MarKiMroh? Register here");
         _elementClose("a");
+        _elementOpenStart("a", "");
+        _attr("href", "#common.privacyPolicy");
+        _attr("class", "custom-entry-prompt");
+        _elementOpenEnd("a");
+        _text("Privacy Policy");
+        _elementClose("a");
         _elementClose("div");
         _elementClose("form");
         var _params = {

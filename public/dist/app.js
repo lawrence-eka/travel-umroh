@@ -30,15 +30,12 @@ yalla.framework.addComponent("/dist/app", (function() {
 
   function onPropertyChange(event) {};
 
-  //$inject("/common/prototypes");
 
-  function path() {
-    debugger;
-    return $path;
+  function isRegistrationPage() {
+    return location.hash == '#user.registration';
   }
 
   function checkCurrentUser() {
-    //debugger;
     return storage.me.read();
   }
 
@@ -103,7 +100,7 @@ yalla.framework.addComponent("/dist/app", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        if (data || (path().indexOf('registration') >= 0)) {
+        if (data || isRegistrationPage()) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
           var _params = {};
