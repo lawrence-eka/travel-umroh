@@ -68,6 +68,8 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["ppLink"] = $inject("/component/ppLink");
+    var ppLink = _context["ppLink"];
     _elementOpenStart("link", "");
     _attr("element", "dist.user.login-form");
     _attr("href", "asset/css/custom-style.css");
@@ -107,11 +109,17 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "nofooter": "nofooter",
       "notitle": "notitle"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        var _params = {};
+        _context["ppLink"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+      }
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _elementOpenStart("h2", "");
@@ -168,18 +176,13 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _elementOpenStart("div", "");
         _attr("class", "form-group custom-entry-margin");
         _elementOpenEnd("div");
-        _elementOpenStart("a", "");
-        _attr("href", "#user.registration");
-        _attr("class", "custom-entry-prompt");
-        _elementOpenEnd("a");
-        _text("New to MarKiMroh? Register here");
-        _elementClose("a");
-        _elementOpenStart("a", "");
-        _attr("href", "#common.privacyPolicy");
-        _attr("class", "custom-entry-prompt");
-        _elementOpenEnd("a");
-        _text("Privacy Policy");
-        _elementClose("a");
+        var _params = {
+          "type": "hyperlink",
+          "href": "#user.registration",
+          "class": "custom-entry-prompt",
+          "prompt": "New to MarKiMroh? Register here"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         var _params = {

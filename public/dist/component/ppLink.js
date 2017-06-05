@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/component/card-passenger", (function() {
+yalla.framework.addComponent("/dist/component/ppLink", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/component/card-passenger");
+  var $inject = yalla.framework.createInjector("/dist/component/ppLink");
   var $export = {};
-  var $path = "/dist/component/card-passenger";
-  var _elementName = "dist.component.card-passenger";
+  var $path = "/dist/component/ppLink";
+  var _elementName = "dist.component.ppLink";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -31,10 +31,10 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
   function onPropertyChange(event) {};
 
   function $render(_props, _slotView) {
-    _context["card"] = $inject("/component/panel");
-    var card = _context["card"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.component.card-passenger");
+    _attr("element", "dist.component.ppLink");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -51,28 +51,12 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase(),
-      "nofooter": "nofooter"
+      "type": "hyperlink",
+      "href": "#common.privacyPolicy",
+      "prompt": "Privacy Policy",
+      "divClass": " "
     };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "body") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _elementClose("div");
-      }
-    });
+    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");
   }
   if (typeof $render === "function") {

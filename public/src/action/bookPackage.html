@@ -3,15 +3,19 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
+<inject from="/component/ppLink" name="ppLink"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
 	<div data.load="queryBooking($bookingId)">
 		<card-booking bkg.bind="data" ></card-booking>
 	</div>
-	<panel title="Passenger Detail" nofooter>
+	<panel title="Passenger Detail">
 		<div slot.name="body">
 			<form role="form">
+				<div slot.name="footer">
+					<ppLink></ppLink>
+				</div>
 				<div class="row">
 					<entry type="hidden" name="bookingId" value.bind="$bookingId"></entry>
 					<entry type="text" prompt="First Name" name="firstName"></entry>

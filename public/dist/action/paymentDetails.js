@@ -154,6 +154,8 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     _elementClose("link");
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["ppLink"] = $inject("/component/ppLink");
+    var ppLink = _context["ppLink"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.paymentDetails");
     _elementOpenEnd("div");
@@ -197,7 +199,7 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
           "footer": "Please make the payment before booking expires to avoid automatic cancellation of your booking"
         };
         _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-          if (slotName == "body") {
+          if (slotName === "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
             _text("Total: " + ((booking.totalPrice + booking.uniqueCode).toFormattedString()) + "");
@@ -243,11 +245,17 @@ yalla.framework.addComponent("/dist/action/paymentDetails", (function() {
     });
     _elementClose("div");
     var _params = {
-      "title": "Payment Confirmation",
-      "nofooter": "nofooter"
+      "title": "Payment Confirmation"
     };
     _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        var _params = {};
+        _context["ppLink"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+      }
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _elementOpenStart("form", "");

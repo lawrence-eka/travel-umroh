@@ -102,6 +102,19 @@ body{
     display:none;
 }
 
+.custom-privacy-policy {
+    font-size: 10px;
+    text-align: justify;
+}
+
+.custom-privacy-policy-link {
+    text-align: right;
+}
+
+.custom-ul-indent {
+    padding-left:15px !important;
+}
+
 .frosted-glass {
     position: relative;
 }

@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/user/registration", (function() {
+yalla.framework.addComponent("/dist/comp/shell", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/user/registration");
+  var $inject = yalla.framework.createInjector("/dist/comp/shell");
   var $export = {};
-  var $path = "/dist/user/registration";
-  var _elementName = "dist.user.registration";
+  var $path = "/dist/comp/shell";
+  var _elementName = "dist.comp.shell";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,48 +30,24 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
 
   function onPropertyChange(event) {};
 
-  function initState() {
-    return {
-      error: {
-        message: ''
-      }
-    };
-  }
-
-  function cancelRegistration() {
-    window.location.hash = "#app";
-  }
-
-  function register(profile) {
-    profile = profile.data;
-    var self = this;
-    dpd.users.post(profile, function(user, err) {
-      if (err) {
-        self.state.error.message = err;
-        $patchChanges();
-      } else {
-        dpd.users.login({
-          "username": profile.username,
-          "password": profile.password
-        }, function(user, err) {
-          if (err) {
-            self.state.error.message = err;
-            $patchChanges();
-          } else {
-            window.location.hash = '#app';
-          }
-        });
-      }
-
-    });
+  function toggleDrawer() {
+    this.state.toggleDrawer = !this.state.toggleDrawer;
+    $patchChanges();
   }
 
   function $render(_props, _slotView) {
-    _context["profile"] = $inject("/component/userProfile");
-    var profile = _context["profile"];
+    _context["header"] = $inject("/comp/header");
+    var header = _context["header"];
+    _context["drawer"] = $inject("/comp/drawer");
+    var drawer = _context["drawer"];
+    _context["content"] = $inject("/comp/content");
+    var content = _context["content"];
+    _elementOpenStart("style", "");
+    _elementOpenEnd("style");
+    _text("\n[element='dist.comp.shell'] {background-color: #0f0f0f;position: fixed;top:0;left: 0;right: 0;bottom: 0;}");
+    _elementClose("style");
     _elementOpenStart("div", "");
-    _attr("element", "dist.user.registration");
-    _attr("class", "container small-margin-top");
+    _attr("element", "dist.comp.shell");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -88,8 +64,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "error": _state.error.message,
-      "onsave": function(event) {
+      "onburger-button-clicked": function(event) {
         var self = {
           target: event.target
         };
@@ -107,31 +82,19 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
             _props['on' + eventName](event);
           }
         };
-        register.bind(self)(event);
+        toggleDrawer.bind(self)();
       },
-      "oncancel": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
-          }
-        };
-        cancelRegistration.bind(self)();
-      },
-      "errorMessage": _state.error.message
+      "drawerOpened": _state.toggleDrawer
     };
-    _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    _context["header"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    var _params = {};
+    _context["content"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+      _slotView("default", {});
+    });
+    var _params = {
+      "displayDrawer": _state.toggleDrawer
+    };
+    _context["drawer"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");
   }
   if (typeof $render === "function") {

@@ -152,6 +152,8 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     var entry = _context["entry"];
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
+    _context["ppLink"] = $inject("/component/ppLink");
+    var ppLink = _context["ppLink"];
     _elementOpenStart("link", "");
     _attr("element", "dist.action.bookPackage");
     _attr("href", "asset/css/custom-style.css");
@@ -230,16 +232,22 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     });
     _elementClose("div");
     var _params = {
-      "title": "Passenger Detail",
-      "nofooter": "nofooter"
+      "title": "Passenger Detail"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _elementOpenStart("form", "");
         _attr("role", "form");
         _elementOpenEnd("form");
+        if (slotName === "footer") {
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          var _params = {};
+          _context["ppLink"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementClose("div");
+        }
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");

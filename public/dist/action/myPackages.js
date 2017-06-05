@@ -149,7 +149,7 @@ yalla.framework.addComponent("/dist/action/myPackages", (function() {
           "nofooter": "nofooter"
         };
         _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-          if (slotName == "body") {
+          if (slotName === "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
             if (!_props.editPackageId) {

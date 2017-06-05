@@ -1,11 +1,15 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/ppLink" name="ppLink"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 
 <div class="container  margin-top-login-panel">
-    <panel nofooter notitle>
+    <panel notitle>
+        <div slot.name="footer">
+            <ppLink></ppLink>
+        </div>
         <div slot.name="body">
             <h2 class="form-signin-heading">Please sign in</h2>
             <form>
@@ -14,8 +18,7 @@
                 <entry type="checkbox" name="rememberMe" prompt="Remember me"></entry>
                 <entry type="button" value="Sign In" click.trigger="login()"></entry>
                 <div class="form-group custom-entry-margin">
-                    <a href="#user.registration" class="custom-entry-prompt">New to MarKiMroh? Register here</a>
-                    <a href="#common.privacyPolicy" class="custom-entry-prompt">Privacy Policy</a>
+                    <entry type="hyperlink" href="#user.registration" class="custom-entry-prompt" prompt="New to MarKiMroh? Register here"></entry>
                 </div>
             </form>
             <alert alertType.bind="'error'" message.bind="errorMessage"></alert>

@@ -2,6 +2,7 @@
 <inject from="/component/panel" name="card"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/ppLink" name="ppLink"></inject>
 
 <div>
             <div data.load="getPaymentDetails($bookingId)" >
@@ -16,7 +17,10 @@
                     </div>
                 </card>
             </div>
-            <card title="Payment Confirmation" nofooter>
+            <card title="Payment Confirmation">
+                <div slot.name="footer">
+                    <ppLink></ppLink>
+                </div>
                 <div slot.name="body">
                     <form>
                         <div class="row">

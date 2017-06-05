@@ -90,7 +90,7 @@ yalla.framework.addComponent("/dist/component/card-package", (function() {
       }
     };
     _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _text("Travel Date: " + (_props.pkg.travelDateFrom ? _props.pkg.travelDateFrom.toStringDateRange(_props.pkg.travelDateUntil) : '') + "");
