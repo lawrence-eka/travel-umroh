@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/component/card-passenger", (function() {
+yalla.framework.addComponent("/dist/comp/drawer", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/component/card-passenger");
+  var $inject = yalla.framework.createInjector("/dist/comp/drawer");
   var $export = {};
-  var $path = "/dist/component/card-passenger";
-  var _elementName = "dist.component.card-passenger";
+  var $path = "/dist/comp/drawer";
+  var _elementName = "dist.comp.drawer";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,11 +30,23 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
 
   function onPropertyChange(event) {};
 
+
+  function initRootStyle(displayDrawer) {
+    if (!displayDrawer) {
+      return 'transform:translateX(-100%)'
+    }
+    return '';
+  }
+
+
   function $render(_props, _slotView) {
-    _context["card"] = $inject("/component/panel");
-    var card = _context["card"];
+    _elementOpenStart("style", "");
+    _elementOpenEnd("style");
+    _text("\n[element='dist.comp.drawer'] {position: fixed;top:50px;left: 0;right: 0;bottom: 0;background-color: #5e5e5e;transition: 0.5s all ease;padding:1rem;color: white;}\n[element='dist.comp.drawer'] .close{-webkit-transform: translateX(-100%);-moz-transform: translateX(-100%);-ms-transform: translateX(-100%);-o-transform: translateX(-100%);transform: translateX(-100%);}");
+    _elementClose("style");
     _elementOpenStart("div", "");
-    _attr("element", "dist.component.card-passenger");
+    _attr("element", "dist.comp.drawer");
+    _attr("style", initRootStyle.bind(self)(_props.displayDrawer));
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -50,29 +62,7 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase(),
-      "nofooter": "nofooter"
-    };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "body") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _elementClose("div");
-      }
-    });
+    _text("THIS IS THE MENU");
     _elementClose("div");
   }
   if (typeof $render === "function") {

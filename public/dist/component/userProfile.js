@@ -105,6 +105,8 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     var entry = _context["entry"];
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
+    _context["ppLink"] = $inject("/component/ppLink");
+    var ppLink = _context["ppLink"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.userProfile");
     _attr("class", "container all-5px");
@@ -124,11 +126,17 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "title": (_props.profile ? 'Your Profile' : 'Please Sign Up'),
-      "nofooter": "nofooter"
+      "title": (_props.profile ? 'Your Profile' : 'Please Sign Up')
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        var _params = {};
+        _context["ppLink"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+      }
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         (function(domNode) {

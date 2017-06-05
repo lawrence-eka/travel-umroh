@@ -5,7 +5,7 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-    <panel title="Search Packages" footer.bind="@recordsFound">
+    <panel title="Search Packages" footer.bind="@recordsFound" refname="panelParam">
         <div slot.name="body">
             <form>
                 <entry type="date" prompt="Between" name="startDate" value.bind="@date.start"></entry>
@@ -65,6 +65,8 @@
                     self.state.recordsFound = "";
                 }else {
                 	self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
+                	debugger;
+                	$patchChanges("panelParam");
                 }
 	            resolve(pkg);
             });

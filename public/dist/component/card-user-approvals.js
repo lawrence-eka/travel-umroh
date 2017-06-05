@@ -69,7 +69,7 @@ yalla.framework.addComponent("/dist/component/card-user-approvals", (function() 
       "nofooter": "nofooter"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _text("Admin: " + (_props.user.needApproval.isAdmin ? 'Yes' : 'No') + "");

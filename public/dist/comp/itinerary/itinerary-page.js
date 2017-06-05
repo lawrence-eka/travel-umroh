@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/component/card-passenger", (function() {
+yalla.framework.addComponent("/dist/comp/itinerary/itinerary-page", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/component/card-passenger");
+  var $inject = yalla.framework.createInjector("/dist/comp/itinerary/itinerary-page");
   var $export = {};
-  var $path = "/dist/component/card-passenger";
-  var _elementName = "dist.component.card-passenger";
+  var $path = "/dist/comp/itinerary/itinerary-page";
+  var _elementName = "dist.comp.itinerary.itinerary-page";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,11 +30,13 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
 
   function onPropertyChange(event) {};
 
+  var items = ['one', 'two', 'three', 'four', 'one', 'two', 'three', 'four']
+
   function $render(_props, _slotView) {
-    _context["card"] = $inject("/component/panel");
+    _context["card"] = $inject("/comp/card");
     var card = _context["card"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.component.card-passenger");
+    _attr("element", "dist.comp.itinerary.itinerary-page");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -50,28 +52,17 @@ yalla.framework.addComponent("/dist/component/card-passenger", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase(),
-      "nofooter": "nofooter"
-    };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "body") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _elementClose("div");
-      }
+    _elementOpenStart("h1", "");
+    _elementOpenEnd("h1");
+    _text("Schedule for Package One");
+    _elementClose("h1");
+    _elementOpenStart("hr", "");
+    _elementOpenEnd("hr");
+    _elementClose("hr");
+    var _array = items || [];
+    _array.forEach(function(item) {
+      var _params = {};
+      _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     });
     _elementClose("div");
   }

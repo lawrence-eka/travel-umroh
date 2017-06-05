@@ -2,9 +2,13 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
+<inject from="/component/ppLink" name="ppLink"></inject>
 
 <div class="container all-5px">
-    <panel title.bind="($profile ? 'Your Profile' : 'Please Sign Up')" nofooter>
+    <panel title.bind="($profile ? 'Your Profile' : 'Please Sign Up')">
+        <div slot.name="footer">
+            <ppLink></ppLink>
+        </div>
         <div slot.name="body" data.load="loadProfile($profile, $errorMessage)">
             <form>
                 <input type="hidden" name="id" value.bind="data.id">

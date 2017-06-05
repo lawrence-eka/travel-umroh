@@ -147,7 +147,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
       "nofooter": "nofooter"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         (function(domNode) {

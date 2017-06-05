@@ -81,6 +81,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
           self.state.recordsFound = "";
         } else {
           self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
+          debugger;
+          $patchChanges("panelParam");
         }
         resolve(pkg);
       });
@@ -144,10 +146,11 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     _component._properties = _props;
     var _params = {
       "title": "Search Packages",
-      "footer": _state.recordsFound
+      "footer": _state.recordsFound,
+      "refname": "panelParam"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName == "body") {
+      if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
         _elementOpenStart("form", "");

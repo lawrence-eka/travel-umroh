@@ -35,6 +35,11 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
   }
 
+  function whatInnerDivClass(innerDivClass) {
+    if (innerDivClass) return innerDivClass;
+    else return "form-group custom-entry-margin";
+  }
+
   function whatType(type) {
     if (type == 'textarea') return 'textarea';
     else if (type == 'hidden') return 'hidden';
@@ -88,9 +93,9 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
-    _attr("class", "form-group custom-entry-margin");
+    _attr("class", whatInnerDivClass.bind(self)(_props.innerDivClass));
     _elementOpenEnd("div");
-    if (_props.prompt && whatType(_props.type) != 'checkbox') {
+    if (_props.prompt && whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink') {
       _elementOpenStart("label", "");
       _attr("class", "custom-entry-prompt");
       _elementOpenEnd("label");
@@ -159,7 +164,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     if (whatType(_props.type) == 'hyperlink') {
       _elementOpenStart("a", "");
       _attr("href", _props.href);
-      _attr("class", _props.class ? _props.class : '');
+      _attr("class", _props.class ? _props.class : 'custom-entry-prompt');
       _elementOpenEnd("a");
       _text("" + (_props.prompt) + "");
       _elementClose("a");

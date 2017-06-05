@@ -104,62 +104,64 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     });
     _attr("style", isClickable.bind(self)());
     _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "row centered-form no-top-margin");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "panel panel-default ");
-    _elementOpenEnd("div");
-    if (_props.test || !_props.notitle || _props.title) {
+    yalla.framework.registerRef("panelParam", IncrementalDOM.currentElement(), function() {
       _elementOpenStart("div", "");
-      _attr("class", "panel-heading custom-panel-layout");
+      _attr("class", "row centered-form no-top-margin");
       _elementOpenEnd("div");
-      _elementOpenStart("h3", "");
-      _attr("class", "panel-title");
-      _elementOpenEnd("h3");
-      _text("" + ((_props.title ? _props.title : '')) + "");
+      _elementOpenStart("div", "");
+      _attr("class", "form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12");
+      _elementOpenEnd("div");
+      _elementOpenStart("div", "");
+      _attr("class", "panel panel-default ");
+      _elementOpenEnd("div");
+      if (_props.test || !_props.notitle || _props.title) {
+        _elementOpenStart("div", "");
+        _attr("class", "panel-heading custom-panel-layout");
+        _elementOpenEnd("div");
+        _elementOpenStart("h3", "");
+        _attr("class", "panel-title");
+        _elementOpenEnd("h3");
+        _text("" + ((_props.title ? _props.title : '')) + "");
+        if (_props.test) {
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          _text("PANEL HEADER");
+          _elementClose("div");
+        }
+        _elementClose("h3");
+        _slotView("title", {});
+        _elementClose("div");
+      }
+      _elementOpenStart("div", "");
+      _attr("class", "panel-body custom-panel-layout");
+      _elementOpenEnd("div");
+      _text("" + (_props.body ? _props.body : '') + "");
       if (_props.test) {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _text("PANEL HEADER");
+        _text("PANEL BODY");
         _elementClose("div");
       }
-      _elementClose("h3");
-      _slotView("header", {});
+      _slotView("body", {});
       _elementClose("div");
-    }
-    _elementOpenStart("div", "");
-    _attr("class", "panel-body custom-panel-layout");
-    _elementOpenEnd("div");
-    _text("" + (_props.body ? _props.body : '') + "");
-    if (_props.test) {
-      _elementOpenStart("div", "");
-      _elementOpenEnd("div");
-      _text("PANEL BODY");
-      _elementClose("div");
-    }
-    _slotView("body", {});
-    _elementClose("div");
-    if (_props.test || !_props.nofooter || _props.footer) {
-      _elementOpenStart("div", "");
-      _attr("class", "panel-footer custom-panel-layout");
-      _elementOpenEnd("div");
-      _text("" + (_props.footer ? _props.footer : '') + "");
-      if (_props.test) {
+      if (_props.test || !_props.nofooter || _props.footer) {
         _elementOpenStart("div", "");
+        _attr("class", "panel-footer custom-panel-layout");
         _elementOpenEnd("div");
-        _text("PANEL FOOTER");
+        _text("" + (_props.footer ? _props.footer : '') + "");
+        if (_props.test) {
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          _text("PANEL FOOTER");
+          _elementClose("div");
+        }
+        _slotView("footer", {});
         _elementClose("div");
       }
-      _slotView("footer", {});
       _elementClose("div");
-    }
-    _elementClose("div");
-    _elementClose("div");
-    _elementClose("div");
+      _elementClose("div");
+      _elementClose("div");
+    })()
     _elementClose("div");
     _elementClose("div");
   }
