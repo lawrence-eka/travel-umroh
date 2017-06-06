@@ -30,11 +30,25 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
 
   function onPropertyChange(event) {};
 
-
   function initState(props) {
     return {
-      entryType: props.defaults.entryType
+      entryType: props.defaults.entryType,
+      datePair: {
+        departure: new DatePair(),
+        checkIn: new DatePair(),
+      },
+      transportType: '',
     };
+  }
+
+  function onTransportTypeChange() {
+    this.state.transportType = this.target.value;
+    $patchChanges('spanTransport');
+  }
+
+  function whatTransportType() {
+    if (this.state.transportType == 'Plane') return 'Airline';
+    else return this.state.transportType + ' Info';
   }
 
   function onClick() {
@@ -49,6 +63,7 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   var errorMessage = '';
 
   function loadItinerary(itinerary) {
+    debugger;
     itinerary = (itinerary ? itinerary : {
       entry: {}
     });
@@ -56,6 +71,8 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
       if (itinerary && itinerary.entry && itinerary.entry.hotel) this.state.entryType = 'Hotel';
       else this.state.entryType = 'Transport';
     }
+    if (this.state.entryType == 'Transport')
+      this.state.transportType = itinerary.entry.transportType ? itinerary.entry.transportType : 'Plane';
     return itinerary;
 
   }
@@ -78,7 +95,8 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
       itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
       itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
     } else {
-      itinerary.entry.transport = form.elements.airline.value;
+      itinerary.entry.transport = form.elements.transport.value;
+      itinerary.entry.transportType = form.elements.transportType.value;
       itinerary.entry.departFrom = form.elements.departFrom.value;
       itinerary.entry.arriveAt = form.elements.arriveAt.value;
       itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
@@ -90,11 +108,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
   function isVisible(group) {
     if (this.state.entryType == group) return "";
     else return "custom-set-hidden";
-  }
-
-  function entryType(data) {
-    if (!entry) return 'Hotel';
-    else return entry.transport;
   }
 
 
@@ -166,7 +179,6 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
 
           function asyncFunc_1(data) {
             _elementOpenStart("form", "");
-            _attr("role", "form");
             _elementOpenEnd("form");
             _elementOpenStart("input", "");
             _attr("type", "hidden");
@@ -249,10 +261,75 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
             _attr("class", "row");
             _elementOpenEnd("div");
             var _params = {
+              "type": "select",
+              "name": "transportType",
+              "value": data.entry.transportType,
+              "prompt": "Transport",
+              "entries": ['Plane', 'Bus', 'Train', 'Car', 'Ship'],
+              "onchange": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onTransportTypeChange.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementClose("div");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            yalla.framework.registerRef("spanTransport", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "type": "text",
+                "name": "transport",
+                "prompt": whatTransportType.bind(self)(),
+                "value": data.entry.transport
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("div");
+            var _params = {
               "type": "datetime-local",
               "name": "departure",
               "prompt": "Departure",
-              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true))
+              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true)),
+              "min": (new Date()).toYYYYMMDD(),
+              "onfocusout": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                _state.datePair.departure.onFocusOut.bind(self)('arrival');
+              }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
@@ -262,25 +339,24 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
               "value": data.entry.departFrom
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            var _params = {
-              "type": "datetime-local",
-              "name": "arrival",
-              "prompt": "Arrival",
-              "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true))
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            yalla.framework.registerRef("arrival", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "type": "datetime-local",
+                "name": "arrival",
+                "prompt": "Arrival",
+                "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true)),
+                "min": _state.datePair.departure.minDate.bind(self)()
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("div");
             var _params = {
               "type": "text",
               "name": "arriveAt",
               "prompt": "Arrive At",
               "value": data.entry.arriveAt
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            var _params = {
-              "type": "text",
-              "name": "airline",
-              "prompt": "Airline",
-              "value": data.entry.transport
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
@@ -292,21 +368,48 @@ yalla.framework.addComponent("/dist/component/edit-itinerary", (function() {
             _attr("class", "row");
             _elementOpenEnd("div");
             var _params = {
-              "type": "datetime-local",
+              "type": "datetime",
               "name": "checkIn",
               "class": "form-control input-sm",
               "prompt": "Check In",
-              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true))
+              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true)),
+              "min": (new Date()).toYYYYMMDD(),
+              "onfocusout": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                _state.datePair.checkIn.onFocusOut.bind(self)('checkOut');
+              }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            var _params = {
-              "type": "datetime-local",
-              "name": "checkOut",
-              "class": "form-control input-sm",
-              "prompt": "Check Out",
-              "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true))
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("checkOut", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "type": "datetime",
+                "name": "checkOut",
+                "class": "form-control input-sm",
+                "prompt": "Check Out",
+                "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : _props.defaults.date.default.toYYYYMMDD(true)),
+                "min": _state.datePair.checkIn.minDate.bind(self)()
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
             var _params = {
               "type": "text",
               "name": "hotel",

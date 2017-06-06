@@ -1,0 +1,69 @@
+<span>
+    <label if.bind="$prompt && whatType($type) != 'checkbox' && whatType($type) != 'hyperlink'" class="custom-entry-prompt">{{$prompt}}</label>
+    <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" focusout.trigger="onFocusOut()">
+    <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value">
+    <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="$value" click.trigger="buttonClicked()">
+    <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm" focusout.trigger="onFocusOut()">{{($value ? $value : '')}}</textarea>
+    <a if.bind="whatType($type) == 'hyperlink'" href.bind="$href" class.bind="$class ? $class : 'custom-entry-prompt'">{{$prompt}}</a>
+    <div if.bind="whatType($type) == 'checkbox'" >
+        <input type="checkbox" name.bind="$name" id.bind="$name" autocomplete="off"  checked.bind="$checked" focusout.trigger="onFocusOut()"/>
+        <div class="btn-group" focusout.trigger="onFocusOut()">
+            <label for.bind="$name" class="btn btn-default btn-checkbox">
+                <span class="glyphicon glyphicon-ok" focusout.trigger="onFocusOut()"></span>
+                <span> </span>
+            </label>
+            <label for.bind="$name" class="btn btn-default active btn-checkbox" focusout.trigger="onFocusOut()">
+                {{$prompt}}
+            </label>
+        </div>
+    </div>
+    <div if.bind="whatType($type) == 'select'" change.trigger="onChange()">
+        <select class="form-control input-sm" name.bind="$name">
+            <option for.each="entry in $entries" value.bind="entry" selected.bind="entry==$value">{{entry}}</option>
+        </select>
+    </div>
+
+</span>
+
+<script>
+    function setValue(value, min, max){
+        if(value && min && value < min) return min;
+        else if(value && max && value > max) return max;
+        else return value;
+    }
+
+	function whatDivClass(divClass){
+		if(divClass) return divClass;
+		else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
+	}
+
+	function whatInnerDivClass(innerDivClass){
+		if(innerDivClass) return innerDivClass;
+		else return "form-group custom-entry-margin";
+	}
+
+	function whatType(type) {
+		if(type == 'textarea') return 'textarea';
+		else if(type == 'hidden') return 'hidden';
+		else if(type == 'button') return 'button';
+		else if(type == 'checkbox') return 'checkbox';
+        else if(type == 'hyperlink') return 'hyperlink';
+        else if(type == 'select') return 'select';
+		else return 'other'
+	}
+
+	function buttonClicked() {
+		this.emitEvent('click');
+	}
+
+	function onFocusOut() {
+		this.emitEvent("focusout");
+	}
+
+	function onChange() {
+		this.emitEvent("change");
+    }
+
+</script>
+
+

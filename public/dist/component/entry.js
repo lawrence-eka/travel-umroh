@@ -40,17 +40,16 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     else return "form-group custom-entry-margin";
   }
 
-  function whatType(type) {
-    if (type == 'textarea') return 'textarea';
-    else if (type == 'hidden') return 'hidden';
-    else if (type == 'button') return 'button';
-    else if (type == 'checkbox') return 'checkbox';
-    else if (type == 'hyperlink') return 'hyperlink';
-    else return 'other'
+  function onButtonClicked() {
+    this.emitEvent('click');
   }
 
-  function buttonClicked() {
-    this.emitEvent('click');
+  function onFocusOut() {
+    this.emitEvent("focusout");
+  }
+
+  function onChange() {
+    this.emitEvent('change');
   }
 
   function $render(_props, _slotView) {
@@ -74,10 +73,11 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     }
     _component._properties = _props;
     _elementClose("link");
-    _elementOpenStart("div", "");
+    _context["entry-naked"] = $inject("/component/entry-naked");
+    var entryNaked = _context["entry-naked"];
+    _elementOpenStart("span", "");
     _attr("element", "dist.component.entry");
-    _attr("class", whatDivClass.bind(self)(_props.divClass));
-    _elementOpenEnd("div");
+    _elementOpenEnd("span");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
     _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
@@ -92,120 +92,169 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    _elementOpenStart("div", "");
-    _attr("class", whatInnerDivClass.bind(self)(_props.innerDivClass));
-    _elementOpenEnd("div");
-    if (_props.prompt && whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink') {
-      _elementOpenStart("label", "");
-      _attr("class", "custom-entry-prompt");
-      _elementOpenEnd("label");
-      _text("" + (_props.prompt) + "");
-      _elementClose("label");
-    }
-    if (whatType(_props.type) == 'other') {
-      _elementOpenStart("input", "");
-      _attr("type", _props.type);
-      _attr("name", _props.name);
-      _attr("class", "form-control input-sm");
-      _attr("required", _props.required);
-      _attr("placeholder", (_props.placeholder ? _props.placeholder : ''));
-      _attr("value", (_props.value ? _props.value : ''));
-      _attr("min", _props.min);
-      _attr("max", _props.max);
-      _elementOpenEnd("input");
-      _elementClose("input");
-    }
-    if (whatType(_props.type) == 'hidden') {
-      _elementOpenStart("input", "");
-      _attr("type", _props.type);
-      _attr("name", _props.name);
-      _attr("value", (_props.value ? _props.value : ''));
-      _elementOpenEnd("input");
-      _elementClose("input");
-    }
-    if (whatType(_props.type) == 'button') {
-      _elementOpenStart("input", "");
-      _attr("type", _props.type);
-      _attr("name", _props.name);
-      _attr("class", (_props.class ? _props.class : 'form-control btn btn-info btn-block'));
-      _attr("value", (_props.value ? _props.value : ''));
-      _attr("onclick", function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
+    if (_props.naked) {
+      var _params = {
+        "type": _props.type,
+        "prompt": _props.prompt,
+        "href": _props.href,
+        "value": _props.value,
+        "name": _props.name,
+        "class": _props.class,
+        "required": _props.required,
+        "placeholder": _props.placeholder,
+        "min": _props.min,
+        "max": _props.max,
+        "checked": _props.checked,
+        "entries": _props.entries,
+        "onchange": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
           }
-        };
-        buttonClicked.bind(self)();
-      });
-      _elementOpenEnd("input");
-      _elementClose("input");
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onChange.bind(self)();
+        },
+        "onclick": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onButtonClicked.bind(self)();
+        },
+        "onfocusout": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onFocusOut.bind(self)();
+        }
+      };
+      _context["entry-naked"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
-    if (whatType(_props.type) == 'textarea') {
-      _elementOpenStart("textarea", "");
-      _attr("name", _props.name);
-      _attr("required", _props.required);
-      _attr("class", "form-control input-sm");
-      _elementOpenEnd("textarea");
-      _text("" + ((_props.value ? _props.value : '')) + "");
-      _elementClose("textarea");
-    }
-    if (whatType(_props.type) == 'hyperlink') {
-      _elementOpenStart("a", "");
-      _attr("href", _props.href);
-      _attr("class", _props.class ? _props.class : 'custom-entry-prompt');
-      _elementOpenEnd("a");
-      _text("" + (_props.prompt) + "");
-      _elementClose("a");
-    }
-    if (whatType(_props.type) == 'checkbox') {
+    if (!_props.naked) {
       _elementOpenStart("div", "");
+      _attr("class", whatDivClass.bind(self)(_props.divClass));
       _elementOpenEnd("div");
-      _elementOpenStart("input", "");
-      _attr("type", "checkbox");
-      _attr("name", _props.name);
-      _attr("id", _props.name);
-      _attr("autocomplete", "off");
-      _attr("checked", _props.checked);
-      _elementOpenEnd("input");
-      _elementClose("input");
       _elementOpenStart("div", "");
-      _attr("class", "btn-group");
+      _attr("class", whatInnerDivClass.bind(self)(_props.innerDivClass));
       _elementOpenEnd("div");
-      _elementOpenStart("label", "");
-      _attr("for", _props.name);
-      _attr("class", "btn btn-default btn-checkbox");
-      _elementOpenEnd("label");
-      _elementOpenStart("span", "");
-      _attr("class", "glyphicon glyphicon-ok");
-      _elementOpenEnd("span");
-      _elementClose("span");
-      _elementOpenStart("span", "");
-      _elementOpenEnd("span");
-      _elementClose("span");
-      _elementClose("label");
-      _elementOpenStart("label", "");
-      _attr("for", _props.name);
-      _attr("class", "btn btn-default active btn-checkbox");
-      _elementOpenEnd("label");
-      _text("" + (_props.prompt) + "");
-      _elementClose("label");
+      var _params = {
+        "type": _props.type,
+        "prompt": _props.prompt,
+        "href": _props.href,
+        "value": _props.value,
+        "name": _props.name,
+        "class": _props.class,
+        "required": _props.required,
+        "placeholder": _props.placeholder,
+        "min": _props.min,
+        "max": _props.max,
+        "checked": _props.checked,
+        "entries": _props.entries,
+        "onchange": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onChange.bind(self)();
+        },
+        "onclick": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onButtonClicked.bind(self)();
+        },
+        "onfocusout": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onFocusOut.bind(self)();
+        }
+      };
+      _context["entry-naked"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       _elementClose("div");
       _elementClose("div");
     }
-    _elementClose("div");
-    _elementClose("div");
+    _elementClose("span");
   }
   if (typeof $render === "function") {
     $export.render = $render;

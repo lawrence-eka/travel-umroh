@@ -107,6 +107,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     q.birthday = (new Date(form.elements.birthday.value)).getTime();
     q.passportNumber = form.elements.passportNumber.value;
     q.passportIssuer = form.elements.passportIssuer.value;
+    q.passportIssueDate = (new Date(form.elements.passportIssueDate.value)).getTime();
     q.passportExpiryDate = (new Date(form.elements.passportExpiryDate.value)).getTime();
 
     form.elements.firstName.value = "";
@@ -116,6 +117,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
     form.elements.birthday.value = "";
     form.elements.passportNumber.value = "";
     form.elements.passportIssuer.value = "";
+    form.elements.passportIssueDate.value = "";
     form.elements.passportExpiryDate.value = "";
     debugger;
     dpd.passengers.post(q, function(user, err) {
@@ -285,6 +287,7 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
           "type": "date",
           "prompt": "Birthday",
           "name": "birthday",
+          "value": (new Date()).toYYYYMMDD(),
           "max": (new Date()).toYYYYMMDD()
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -296,9 +299,18 @@ yalla.framework.addComponent("/dist/action/bookPackage", (function() {
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
           "type": "date",
+          "prompt": "Passport Issue Date",
+          "name": "passportIssueDate",
+          "value": (new Date()).toYYYYMMDD(),
+          "max": (new Date()).toYYYYMMDD()
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "date",
           "prompt": "Passport Expiry Date",
           "name": "passportExpiryDate",
-          "min": "(new Date()).toYYYYMMDD()"
+          "value": (new Date()).toYYYYMMDD(),
+          "min": (new Date()).toYYYYMMDD()
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {

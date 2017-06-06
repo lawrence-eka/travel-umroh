@@ -12,10 +12,12 @@
                 <div class="row">
                     <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
                     <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
-                    <entry type="date" name="validFrom" prompt="Valid From"  value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))"></entry>
-                    <entry type="date" name="validUntil" prompt="Valid Until" value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))"></entry>
-                    <entry type="number" name="costLandArrangements" prompt="Land Arrangements"  value.bind="data.costLandArrangements"></entry>
-                    <entry type="number" name="costTickets" prompt="Tickets" value.bind="data.costTickets"></entry>
+                    <entry type="date" name="validFrom" prompt="Valid From"  value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD())" min.bind="(new Date()).toYYYYMMDD()" focusout.trigger="@datePair.onFocusOut('validUntil')"></entry>
+                    <span ref.name="validUntil">
+                        <entry type="date" name="validUntil" prompt="Valid Until" value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD())" min.bind="@datePair.minDate()"></entry>
+                    </span>
+                    <entry type="number" name="costLandArrangements" prompt="Land Arrangements (Rp)"  value.bind="data.costLandArrangements"></entry>
+                    <entry type="number" name="costTickets" prompt="Tickets (Rp)" value.bind="data.costTickets"></entry>
                     <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" checked.bind="data.isItineraryConfirmed"></entry>
                     <entry type="checkbox" name="isPublished" prompt="Published" checked.bind="data.isPublished"></entry>
                     <entry type="button" value.bind="$package ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
@@ -28,6 +30,12 @@
 </div>
 
 <script>
+
+    function initState(props) {
+    	return {
+            datePair: new DatePair(),
+        }
+    }
 
 	var errorMessage = '';
 

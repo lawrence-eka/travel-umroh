@@ -5,18 +5,20 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
 
 <div>
-    <panel title="Search Packages" footer.bind="@recordsFound" refname="panelParam">
-        <div slot.name="body">
-            <form>
-                <entry type="date" prompt="Between" name="startDate" value.bind="@date.start"></entry>
-                <entry type="date" prompt="And" name="endDate" value.bind="@date.end"></entry>
-                <entry type="button" name="Search" value="Search" click.trigger="search()"></entry>
-            </form>
-        </div>
-    </panel>
-    <div>
-        <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
+    <div ref.name="panelParam">
+        <panel title="Search Packages" footer.bind="@recordsFound">
+            <div slot.name="body">
+                <form>
+                    <entry type="date" prompt="Between" name="startDate" value.bind="@date.start" focusout.trigger="@datePair.onFocusOut('endDate')"></entry>
+                    <span ref.name="endDate">
+                        <entry type="date" prompt="And" name="endDate" value.bind="@date.end" min.bind="@datePair.minDate()"></entry>
+                    </span>
+                    <entry type="button" value="Search" click.trigger="search()"></entry>
+                </form>
+            </div>
+        </panel>
     </div>
+    <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
     <div data.load="queryPackages()">
         <div for.each="pkg in data" >
             <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
@@ -26,6 +28,7 @@
 
 <script>
     function initState(props) {
+        debugger;
         return {
             recordsFound: '',
             alert:{
@@ -34,8 +37,10 @@
             },
             date: {
                 start: (new Date()).toYYYYMMDD(),
-                end: ((new Date()).getTime() + 31536000000).toYYYYMMDD()
-            }
+                end: ((new Date()).getTime() + 31536000000).toYYYYMMDD(),
+                minEndDate: (new Date()).toYYYYMMDD(),
+            },
+            datePair: new DatePair(),
         };
     }
 
@@ -58,14 +63,12 @@
             ];
             query.$sort={"travelDateFrom":1};
             dpd.packages.get(query, function(pkg, err) {
-	            //debugger;
                 if(err){
                     self.state.alert.text = err;
                     self.state.alert.type = "error";
                     self.state.recordsFound = "";
                 }else {
                 	self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
-                	debugger;
                 	$patchChanges("panelParam");
                 }
 	            resolve(pkg);
@@ -78,8 +81,7 @@
     	var form = this.target.form;
         this.state.date.start = form.elements.startDate.value;
         this.state.date.end = form.elements.endDate.value;
-        $patchChanges();
-        return false;
+	    $patchChanges();
     }
 </script>
 

@@ -31,6 +31,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
+    debugger;
     return {
       recordsFound: '',
       alert: {
@@ -39,8 +40,10 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
       },
       date: {
         start: (new Date()).toYYYYMMDD(),
-        end: ((new Date()).getTime() + 31536000000).toYYYYMMDD()
-      }
+        end: ((new Date()).getTime() + 31536000000).toYYYYMMDD(),
+        minEndDate: (new Date()).toYYYYMMDD(),
+      },
+      datePair: new DatePair(),
     };
   }
 
@@ -74,14 +77,12 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         "travelDateFrom": 1
       };
       dpd.packages.get(query, function(pkg, err) {
-        //debugger;
         if (err) {
           self.state.alert.text = err;
           self.state.alert.type = "error";
           self.state.recordsFound = "";
         } else {
           self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
-          debugger;
           $patchChanges("panelParam");
         }
         resolve(pkg);
@@ -95,7 +96,6 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     this.state.date.start = form.elements.startDate.value;
     this.state.date.end = form.elements.endDate.value;
     $patchChanges();
-    return false;
   }
 
   function $render(_props, _slotView) {
@@ -144,69 +144,95 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "title": "Search Packages",
-      "footer": _state.recordsFound,
-      "refname": "panelParam"
-    };
-    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "body") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _elementOpenStart("form", "");
-        _elementOpenEnd("form");
-        var _params = {
-          "type": "date",
-          "prompt": "Between",
-          "name": "startDate",
-          "value": _state.date.start
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        var _params = {
-          "type": "date",
-          "prompt": "And",
-          "name": "endDate",
-          "value": _state.date.end
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        var _params = {
-          "type": "button",
-          "name": "Search",
-          "value": "Search",
-          "onclick": function(event) {
-            var self = {
-              target: event.target
-            };
-            self.properties = _props;
-            if ('elements' in self.target) {
-              self.elements = self.target.elements;
-            }
-            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-            self.component = _component;
-            self.component._state = self.component._state || {};
-            self.state = self.component._state;
-            self.emitEvent = function(eventName, data) {
-              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-              if ('on' + eventName in _props) {
-                _props['on' + eventName](event);
-              }
-            };
-            search.bind(self)();
-          }
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("form");
-        _elementClose("div");
-      }
-    });
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
+    yalla.framework.registerRef("panelParam", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "title": "Search Packages",
+        "footer": _state.recordsFound
+      };
+      _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+        if (slotName === "body") {
+          _elementOpenStart("div", "");
+          _elementOpenEnd("div");
+          _elementOpenStart("form", "");
+          _elementOpenEnd("form");
+          var _params = {
+            "type": "date",
+            "prompt": "Between",
+            "name": "startDate",
+            "value": _state.date.start,
+            "onfocusout": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              _state.datePair.onFocusOut.bind(self)('endDate');
+            }
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          yalla.framework.registerRef("endDate", IncrementalDOM.currentElement(), function() {
+            var _params = {
+              "type": "date",
+              "prompt": "And",
+              "name": "endDate",
+              "value": _state.date.end,
+              "min": _state.datePair.minDate.bind(self)()
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          })()
+          _elementClose("span");
+          var _params = {
+            "type": "button",
+            "value": "Search",
+            "onclick": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              search.bind(self)();
+            }
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementClose("form");
+          _elementClose("div");
+        }
+      });
+    })()
+    _elementClose("div");
     var _params = {
       "alertType": _state.alert.type,
       "message": _state.alert.text
     };
     _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-    _elementClose("div");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {

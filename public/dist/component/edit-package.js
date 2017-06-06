@@ -31,6 +31,12 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
   function onPropertyChange(event) {};
 
 
+  function initState(props) {
+    return {
+      datePair: new DatePair(),
+    }
+  }
+
   var errorMessage = '';
 
   function loadPackage(package) {
@@ -159,27 +165,54 @@ yalla.framework.addComponent("/dist/component/edit-package", (function() {
               "type": "date",
               "name": "validFrom",
               "prompt": "Valid From",
-              "value": (data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))
+              "value": (data.validFrom ? data.validFrom.toYYYYMMDD() : (new Date()).toYYYYMMDD()),
+              "min": (new Date()).toYYYYMMDD(),
+              "onfocusout": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                _state.datePair.onFocusOut.bind(self)('validUntil');
+              }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            var _params = {
-              "type": "date",
-              "name": "validUntil",
-              "prompt": "Valid Until",
-              "value": (data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD(true))
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("validUntil", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "type": "date",
+                "name": "validUntil",
+                "prompt": "Valid Until",
+                "value": (data.validUntil ? data.validUntil.toYYYYMMDD() : (new Date()).toYYYYMMDD()),
+                "min": _state.datePair.minDate.bind(self)()
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
             var _params = {
               "type": "number",
               "name": "costLandArrangements",
-              "prompt": "Land Arrangements",
+              "prompt": "Land Arrangements (Rp)",
               "value": data.costLandArrangements
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
               "type": "number",
               "name": "costTickets",
-              "prompt": "Tickets",
+              "prompt": "Tickets (Rp)",
               "value": data.costTickets
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

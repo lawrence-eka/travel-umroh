@@ -1,27 +1,46 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
+<inject from="/component/entry-naked" name="entry-naked"></inject>
 
-<div class.bind="whatDivClass($divClass)">
-    <div class.bind="whatInnerDivClass($innerDivClass)">
-        <label if.bind="$prompt && whatType($type) != 'checkbox' && whatType($type) != 'hyperlink'" class="custom-entry-prompt">{{$prompt}}</label>
-        <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="($placeholder ? $placeholder : '')" value.bind="($value ? $value : '')" min.bind="$min" max.bind="$max">
-        <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="($value ? $value : '')">
-        <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="($value ? $value : '')" click.trigger="buttonClicked()">
-        <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm">{{($value ? $value : '')}}</textarea>
-        <a if.bind="whatType($type) == 'hyperlink'" href.bind="$href" class.bind="$class ? $class : 'custom-entry-prompt'">{{$prompt}}</a>
-        <div if.bind="whatType($type) == 'checkbox'" >
-            <input type="checkbox" name.bind="$name" id.bind="$name" autocomplete="off"  checked.bind="$checked"/>
-            <div class="btn-group">
-                <label for.bind="$name" class="btn btn-default btn-checkbox">
-                    <span class="glyphicon glyphicon-ok"></span>
-                    <span> </span>
-                </label>
-                <label for.bind="$name" class="btn btn-default active btn-checkbox">
-                    {{$prompt}}
-                </label>
-            </div>
+<span>
+    <entry-naked if.bind="$naked"
+        type.bind="$type"
+        prompt.bind="$prompt"
+        href.bind="$href"
+        value.bind="$value"
+        name.bind="$name"
+        class.bind="$class"
+        required.bind="$required"
+        placeholder.bind="$placeholder"
+        min.bind="$min"
+        max.bind="$max"
+        checked.bind="$checked"
+        entries.bind="$entries"
+        change.trigger="onChange()"
+        click.trigger="onButtonClicked()"
+        focusout.trigger="onFocusOut()">
+    </entry-naked>
+    <div if.bind="!$naked" class.bind="whatDivClass($divClass)">
+        <div class.bind="whatInnerDivClass($innerDivClass)">
+            <entry-naked
+                type.bind="$type"
+                prompt.bind="$prompt"
+                href.bind="$href"
+                value.bind="$value"
+                name.bind="$name"
+                class.bind="$class"
+                required.bind="$required"
+                placeholder.bind="$placeholder"
+                min.bind="$min"
+                max.bind="$max"
+                checked.bind="$checked"
+                entries.bind="$entries"
+                change.trigger="onChange()"
+                click.trigger="onButtonClicked()"
+                focusout.trigger="onFocusOut()">
+            </entry-naked>
         </div>
     </div>
-</div>
+</span>
 
 <script>
     function whatDivClass(divClass){
@@ -34,17 +53,16 @@
         else return "form-group custom-entry-margin";
     }
 
-    function whatType(type) {
-        if(type == 'textarea') return 'textarea';
-        else if(type == 'hidden') return 'hidden';
-        else if(type == 'button') return 'button';
-        else if(type == 'checkbox') return 'checkbox';
-        else if(type == 'hyperlink') return 'hyperlink';
-        else return 'other'
+    function onButtonClicked() {
+    	this.emitEvent('click');
     }
 
-    function buttonClicked() {
-    	this.emitEvent('click');
+    function onFocusOut() {
+    	this.emitEvent("focusout");
+    }
+
+    function onChange() {
+    	this.emitEvent('change');
     }
 </script>
 

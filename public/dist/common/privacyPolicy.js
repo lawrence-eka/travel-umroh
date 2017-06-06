@@ -108,16 +108,16 @@ yalla.framework.addComponent("/dist/common/privacyPolicy", (function() {
         _elementOpenEnd("p");
         _text("When you use Markimroh services, you trust us with your information. This Privacy Policy is meant to help you                understand what data we collect, why we collect it, and what we do with it. This is important;                we hope you will take time to read it carefully. And remember, you can find controls to manage your                information and protect your privacy and security at" + (nbsp) + "");
         if (storage.me.read()) {
-          _elementOpenStart("span", "");
-          _elementOpenEnd("span");
-          _elementOpenStart("a", "");
-          _attr("href", "#app/action.myProfile");
-          _elementOpenEnd("a");
-          _text("Your Profile");
-          _elementClose("a");
-          _text("" + (nbsp) + "screen.");
-          _elementClose("span");
+          var _params = {
+            "type": "hyperlink",
+            "naked": "naked",
+            "href": "#app/action.myProfile",
+            "class": " ",
+            "prompt": "Your Profile"
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
+        _text("" + (nbsp) + "screen.");
         if (!storage.me.read()) {
           _elementOpenStart("span", "");
           _elementOpenEnd("span");

@@ -6,7 +6,7 @@
 <div>
     <panel title.bind="(($itinerary ? 'Edit' : 'New') + ' Entry')" nofooter>
         <div slot.name="body" data.load="loadItinerary($itinerary)">
-            <form role="form">
+            <form>
                 <input type="hidden" name="id" value.bind="data.id">
                 <input type="hidden" name="packageId" value.bind="data.packageId">
                 <div class=row" if.bind="!$itinerary">
@@ -15,31 +15,27 @@
                 </div>
 
                 <div class.bind="isVisible('Transport')">
-                    <!--
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control" name="transport" id="entryType">
-                                    <option value="Airline" selected.bind="entryType(data.entry)=='Transport'">Airline</option>
-                                    <option value="Train" selected.bind="entryType(data.entry)=='Train'">Train</option>
-                                    <option value="Bus/Car" selected.bind="entryType(data.entry)=='Bus/Car'">Bus/Car</option>
-                                </select>
-                            </div>
-                        </div>
+                        <entry type="select" name="transportType" value.bind="data.entry.transportType" prompt="Transport" entries.bind="['Plane', 'Bus', 'Train', 'Car', 'Ship']" change.trigger="onTransportTypeChange()"></entry>
                     </div>
-                    -->
                     <div class="row">
-                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
+                        <div ref.name="spanTransport">
+                            <entry type="text" name="transport" prompt.bind="whatTransportType()" value.bind="data.entry.transport"></entry>
+                        </div>
+                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))" min.bind="(new Date()).toYYYYMMDD()" focusout.trigger="@datePair.departure.onFocusOut('arrival')"></entry>
                         <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
-                        <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : $defaults.date.default.toYYYYMMDD(true))" ></entry>
+                        <div ref.name="arrival">
+                            <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : $defaults.date.default.toYYYYMMDD(true))" min.bind="@datePair.departure.minDate()"></entry>
+                        </div>
                         <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
-                        <entry type="text" name="airline" prompt="Airline" value.bind="data.entry.transport"></entry>
                     </div>
                 </div>
                 <div class.bind ="isVisible('Hotel')">
                     <div class="row">
-                        <entry type="datetime-local" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
-                        <entry type="datetime-local" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))"></entry>
+                        <entry type="datetime" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))" min.bind="(new Date()).toYYYYMMDD()" focusout.trigger="@datePair.checkIn.onFocusOut('checkOut')"></entry>
+                        <span ref.name="checkOut">
+                            <entry type="datetime" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true):$defaults.date.default.toYYYYMMDD(true))" min.bind="@datePair.checkIn.minDate()"></entry>
+                        </span>
                         <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
                         <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
                     </div>
@@ -59,12 +55,27 @@
     </panel>
 </div>
 <script>
+	function initState(props){
+		return {
+			entryType: props.defaults.entryType,
+			datePair: {
+				departure: new DatePair(),
+				checkIn: new DatePair(),
+			},
+            transportType:'',
+		};
+	}
 
-    function initState(props){
-        return {
-            entryType: props.defaults.entryType
-        };
+	function onTransportTypeChange(){
+    	this.state.transportType = this.target.value;
+    	$patchChanges('spanTransport');
     }
+
+    function whatTransportType() {
+        if(this.state.transportType == 'Plane') return 'Airline';
+        else return this.state.transportType + ' Info';
+    }
+
     function onClick(){
         this.state.entryType = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
     	$patchChanges();
@@ -77,11 +88,14 @@
 	var errorMessage = '';
 
 	function loadItinerary(itinerary){
-        itinerary = (itinerary ? itinerary : {entry: {}});
+        debugger;
+		itinerary = (itinerary ? itinerary : {entry: {}});
         if(this.state.entryType == "") {
             if(itinerary && itinerary.entry && itinerary.entry.hotel) this.state.entryType = 'Hotel';
             else this.state.entryType = 'Transport';
         }
+        if(this.state.entryType=='Transport')
+            this.state.transportType = itinerary.entry.transportType ? itinerary.entry.transportType : 'Plane';
         return itinerary;
 
     }
@@ -105,7 +119,8 @@
 			itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
 		}
         else {
-			itinerary.entry.transport = form.elements.airline.value;
+			itinerary.entry.transport = form.elements.transport.value;
+			itinerary.entry.transportType = form.elements.transportType.value;
 			itinerary.entry.departFrom = form.elements.departFrom.value;
 			itinerary.entry.arriveAt = form.elements.arriveAt.value;
 			itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
@@ -117,12 +132,6 @@
 	function isVisible(group) {
 	    if (this.state.entryType==group) return "";
 	    else return "custom-set-hidden";
-    }
-
-	function entryType(data)
-    {
-    	if(!entry) return 'Hotel';
-    	else return entry.transport;
     }
 
 </script>

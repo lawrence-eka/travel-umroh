@@ -13,7 +13,7 @@
                 understand what data we collect, why we collect it, and what we do with it. This is important;
                 we hope you will take time to read it carefully. And remember, you can find controls to manage your
                 information and protect your privacy and security at{{nbsp}}
-                <span if.bind="storage.me.read()"><a href="#app/action.myProfile">Your Profile</a>{{nbsp}}screen.</span>
+                <entry type="hyperlink" naked if.bind="storage.me.read()" href="#app/action.myProfile"  class=" " prompt="Your Profile"></entry>{{nbsp}}screen.
                 <span if.bind="!storage.me.read()">Your Profile screen, once you logged in to the system.</span></p>
             <p>There are many different ways you can use our services – to search for and share information, to communicate with
                 other people or to create new content. When you share information with us, for example by creating a Markimroh Account,

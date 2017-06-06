@@ -20,10 +20,10 @@ var toDateTime = null;
 errorIf(!this.entry || (!this.entry.transport && !this.entry.hotel), "invalidEntry", "Itinerary must contain information about either 'hotel' or 'transport'");
 if(this.entry.transport)
 {
-    errorIf(!this.entry.departure, "invalidDepartureDate", "Flight is missing Departure Date Info ('departure')");
-    errorIf(!this.entry.arrival, "invalidArrivalDate", "Flight is missing Arrival Date Info ('arrival')");
-    errorIf(!this.entry.departFrom, "invalidDepartureAirport", "Flight is missing Departure Airport Info ('departFrom')");
-    errorIf(!this.entry.arriveAt, "invalidArrivalAirport", "Flight is missing Arrival Airport Info ('arriveAt')");
+    errorIf(!this.entry.departure, "invalidDepartureDate", "Transport is missing Departure Date Info ('departure')");
+    errorIf(!this.entry.arrival, "invalidArrivalDate", "Transport is missing Arrival Date Info ('arrival')");
+    errorIf(!this.entry.departFrom, "invalidDepartureAirport", "Transport is missing Departure Info ('departFrom')");
+    errorIf(!this.entry.arriveAt, "invalidArrivalAirport", "Transport is missing Arrival Info ('arriveAt')");
 
     fromDateTime = new Date(this.entry.departure);
     toDateTime = new Date(this.entry.arrival);
@@ -53,6 +53,7 @@ var query = {
     "id": {"$ne": this.id},
     "$and":
     [
+        {"entry.transport": {"$exists":this.entry.hasOwnProperty("transport")}},
         {"packageId":this.packageId}, 
         { 
             "$or":

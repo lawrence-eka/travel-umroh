@@ -30,7 +30,7 @@ yalla.framework.addComponent("/dist/comp/itinerary/itinerary-page", (function() 
 
   function onPropertyChange(event) {};
 
-  var items = ['one', 'two', 'three', 'four', 'one', 'two', 'three', 'four']
+  var items = ['plane', 'hotel', 'bus', 'hotel', 'ship', 'taxi', 'bus', 'train', 'car', 'plane']
 
   function $render(_props, _slotView) {
     _context["card"] = $inject("/comp/card");
@@ -61,7 +61,9 @@ yalla.framework.addComponent("/dist/comp/itinerary/itinerary-page", (function() 
     _elementClose("hr");
     var _array = items || [];
     _array.forEach(function(item) {
-      var _params = {};
+      var _params = {
+        "item": item
+      };
       _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     });
     _elementClose("div");

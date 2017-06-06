@@ -1,4 +1,5 @@
 <inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
 <style>
     .custom-indent {
         padding-left:10px !important;
@@ -6,7 +7,7 @@
 </style>
 
 <div>
-    <panel notitle nofooter>
+    <panel notitle>
         <div slot.name="body">
             <div for.each="itr in $itinerary">
                 <strong>{{itr.fromDateTime.toDateComponents()}}</strong>
@@ -28,5 +29,15 @@
                 <br/>
             </div>
         </div>
+        <div slot.name="footer">
+            <entry type="button" value="Book This!" naked click.trigger="onBook()"></entry>
+        </div>
+
     </panel>
 </div>
+
+<script>
+    function onBook() {
+        this.emitEvent('book');
+    }
+</script>

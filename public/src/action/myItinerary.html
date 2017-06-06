@@ -7,7 +7,8 @@
 <div data.load="getPackage($packageId)">
     <card title.bind="data.packageName" nofooter>
         <div slot.name="body">
-            <entry type="button" value="Add Itinerary" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
+            <entry type="button" value="Add Transport" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
+            <entry type="button" value="Add Hotel" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
         </div>
     </card>
     <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
@@ -66,6 +67,7 @@
 		debugger;
 		itinerary = itinerary.data;
         itinerary.packageId = packageId;
+        var self = this;
         if(itinerary.id=="") {
             dpd.itineraries.post(itinerary, function(result, err) {
                 debugger;
@@ -76,9 +78,9 @@
                 if(result) {
                     self.state.alert.text = null;
                     self.state.alert.type="";
-                    $patchChanges();
                     //window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
                 }
+	            $patchChanges();
             });
         }
         else {
@@ -88,6 +90,7 @@
                 if(err) {
                     self.state.alert.text = err;
                     self.state.alert.type="error";
+	                $patchChanges();
                 }
                 else {
                     self.state.alert.text = null;
@@ -105,7 +108,6 @@
             },
             entryType:'Transport'
         };
-	    debugger;
 	    if(this.state && this.state.itinerary && this.state.itinerary.length > 0) {
             if (itineraryId != -1) {
                 for (var i = 0; i < this.state.itinerary.length; i++) {
@@ -136,12 +138,12 @@
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
     }
 	function onEdit(itineraryId, packageId) {
-	    var dateLimits = calculateDateLimits(itineraryId);
+	    var dateLimits = calculateDefaults(itineraryId);
 		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
     }
 
     function onDelete(itineraryId, packageId) {
-		debugger;
+		//debugger;
 		return new Promise(function(resolve){
 			dpd.itineraries.del(itineraryId.data,function(err){
 				debugger;

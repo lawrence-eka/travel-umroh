@@ -30,9 +30,15 @@ yalla.framework.addComponent("/dist/component/card-itineraryList", (function() {
 
   function onPropertyChange(event) {};
 
+  function onBook() {
+    this.emitEvent('book');
+  }
+
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
     _text("\n[element='dist.component.card-itineraryList'] .custom-indent {padding-left:10px !important;}");
@@ -55,8 +61,7 @@ yalla.framework.addComponent("/dist/component/card-itineraryList", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "notitle": "notitle",
-      "nofooter": "nofooter"
+      "notitle": "notitle"
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
@@ -125,6 +130,37 @@ yalla.framework.addComponent("/dist/component/card-itineraryList", (function() {
           _elementClose("br");
           _elementClose("div");
         });
+        _elementClose("div");
+      }
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        var _params = {
+          "type": "button",
+          "value": "Book This!",
+          "naked": "naked",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onBook.bind(self)();
+          }
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
       }
     });

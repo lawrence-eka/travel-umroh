@@ -31,12 +31,12 @@ yalla.framework.addComponent("/dist/component/card-itinerary", (function() {
   function onPropertyChange(event) {};
 
   function onEdit(itineraryId) {
-    debugger;
+    //debugger;
     this.emitEvent('edit', itineraryId);
   }
 
   function onDelete(itineraryId) {
-    debugger;
+    //debugger;
     this.emitEvent('delete', itineraryId);
   }
 

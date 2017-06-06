@@ -77,6 +77,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
     debugger;
     itinerary = itinerary.data;
     itinerary.packageId = packageId;
+    var self = this;
     if (itinerary.id == "") {
       dpd.itineraries.post(itinerary, function(result, err) {
         debugger;
@@ -87,9 +88,9 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
         if (result) {
           self.state.alert.text = null;
           self.state.alert.type = "";
-          $patchChanges();
           //window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
         }
+        $patchChanges();
       });
     } else {
       debugger;
@@ -98,6 +99,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
         if (err) {
           self.state.alert.text = err;
           self.state.alert.type = "error";
+          $patchChanges();
         } else {
           self.state.alert.text = null;
           self.state.alert.type = "";
@@ -114,7 +116,6 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
       },
       entryType: 'Transport'
     };
-    debugger;
     if (this.state && this.state.itinerary && this.state.itinerary.length > 0) {
       if (itineraryId != -1) {
         for (var i = 0; i < this.state.itinerary.length; i++) {
@@ -145,12 +146,12 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
   }
 
   function onEdit(itineraryId, packageId) {
-    var dateLimits = calculateDateLimits(itineraryId);
+    var dateLimits = calculateDefaults(itineraryId);
     window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
   }
 
   function onDelete(itineraryId, packageId) {
-    debugger;
+    //debugger;
     return new Promise(function(resolve) {
       dpd.itineraries.del(itineraryId.data, function(err) {
         debugger;
@@ -222,7 +223,34 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
             if (!_props.editItineraryId) {
               var _params = {
                 "type": "button",
-                "value": "Add Itinerary",
+                "value": "Add Transport",
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
+                  }
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = _component;
+                  self.component._state = self.component._state || {};
+                  self.state = self.component._state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  onAddItinerary.bind(self)(_props.packageId);
+                }
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            }
+            if (!_props.editItineraryId) {
+              var _params = {
+                "type": "button",
+                "value": "Add Hotel",
                 "onclick": function(event) {
                   var self = {
                     target: event.target

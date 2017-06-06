@@ -65,8 +65,6 @@ yalla.framework.addComponent("/dist/action/myBooking", (function() {
   function $render(_props, _slotView) {
     _context["card-booking"] = $inject("/component/card-booking");
     var cardBooking = _context["card-booking"];
-    _context["card"] = $inject("/component/card");
-    var card = _context["card"];
     _elementOpenStart("div", "");
     _attr("element", "dist.action.myBooking");
     _elementOpenEnd("div");

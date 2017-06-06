@@ -9,18 +9,7 @@
         <card-package pkg.bind="data"></card-package>
     </div>
     <div data.load="queryItineraries($packageId)">
-        <card-itineraryList itinerary.bind="data">
-        </card-itineraryList>
-    </div>
-<!--
-    <div data.load="queryItineraries($packageId)">
-        <p for.each="itr in data">
-            <card-itinerary itr.bind="itr"></card-itinerary>
-        </p>
-    </div>
-    -->
-    <div>
-        <entry type="button" value="Book This!" click.trigger="book($packageId)"></entry>
+        <card-itineraryList itinerary.bind="data" book.trigger="book($packageId)"></card-itineraryList>
     </div>
 </div>
 
