@@ -4,19 +4,19 @@
 <inject from="/component/edit-itinerary" name="edit-itinerary"></inject>
 <inject from="/component/alert" name="alert"></inject>
 
-<div data.load="getPackage($packageId)">
+<div data.load="getPackage()">
     <card title.bind="data.packageName" nofooter>
         <div slot.name="body">
-            <entry type="button" value="Add Transport" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
-            <entry type="button" value="Add Hotel" click.trigger="onAddItinerary($packageId)" if.bind="!$editItineraryId"></entry>
+            <entry type="button" value="Add Transport" click.trigger="onAddItinerary()" if.bind="!@editItineraryId"></entry>
+            <entry type="button" value="Add Hotel" click.trigger="onAddItinerary()" if.bind="!@editItineraryId"></entry>
         </div>
     </card>
-    <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
-    <edit-itinerary if.bind="$editItineraryId == -1" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)" defaults.bind="calculateDefaults($editItineraryId)"></edit-itinerary>
-    <div data.load="queryItineraries($packageId)">
+    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    <edit-itinerary if.bind="@editItineraryId == -1" save.trigger="onSaveItinerary(event)" cancel.trigger="onCancelEdit()" defaults.bind="calculateDefaults()"></edit-itinerary>
+    <div data.load="queryItineraries()">
         <p for.each="itr in data">
-            <card-itinerary if.bind="itr.id != $editItineraryId" itr.bind="itr" edit.trigger="onEdit(event, $packageId)" delete.trigger="onDelete(event)"></card-itinerary>
-            <edit-itinerary if.bind="itr.id == $editItineraryId" itinerary.bind="itr" save.trigger="onSaveItinerary(event, $packageId)" cancel.trigger="onCancelEdit($packageId)" defaults.bind="calculateDefaults($editItineraryId)"></edit-itinerary>
+            <card-itinerary if.bind="itr.id != @editItineraryId" itr.bind="itr" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></card-itinerary>
+            <edit-itinerary if.bind="itr.id == @editItineraryId" itinerary.bind="itr" save.trigger="onSaveItinerary(event)" cancel.trigger="onCancelEdit()" defaults.bind="calculateDefaults()"></edit-itinerary>
         </p>
     </div>
 </div>
@@ -24,61 +24,56 @@
 <script>
     function initState(props) {
         return {
+            packageId: props.packageId,
             itinerary: [],
-            alert : {
-                text: null,
-                type: ""
-            }
+            editItineraryId: null,
+            alert : new Alert(),
         }
     }
 
-	function queryItineraries(packageId) {
+	function queryItineraries() {
 	    var self = this;
 		return new Promise(function (resolve) {
 			var q = {
-				"packageId": packageId,
+				"packageId": self.state.packageId,
                 "$sort": {"fromDateTime":1}
             }
-			dpd.itineraries.get(q, function (itr, err) {
-				if(err) {
-					self.state.alert.text = err;
-                    self.state.alert.type="error";
-                    self.itinerary=[];
-					$patchChanges();
-				} else {
-                    self.state.alert.text = null;
-                    self.state.alert.type="";
-                    self.itinerary=itr;
-					resolve(itr);
-				}
-			});
+            dpd.itineraries.get(q, function (itr, err) {
+                if (err) {
+                    self.state.alert.alert(err);
+                    self.state.itinerary = [];
+                } else {
+                    self.state.alert.alert(null);
+                    self.state.itinerary = itr;
+                }
+                resolve(self.state.itinerary);
+            });
 		});
 	}
 
-	function getPackage(id){
+	function getPackage(){
+        var self = this;
 		return new Promise(function(resolve){
-			dpd.packages.get(id, function(result, err){
+			dpd.packages.get(self.state.packageId, function(result, err){
 				resolve(result);
 			});
 		});
 	}
 
-	function onSaveItinerary(itinerary, packageId) {
+	function onSaveItinerary(itinerary) {
 		debugger;
 		itinerary = itinerary.data;
-        itinerary.packageId = packageId;
+        itinerary.packageId = this.state.packageId;
         var self = this;
         if(itinerary.id=="") {
             dpd.itineraries.post(itinerary, function(result, err) {
                 debugger;
                 if (err) {
-                    self.state.alert.text = err;
-                    self.state.alert.type="error";
+                    self.state.alert.alert(err);
                 }
                 if(result) {
-                    self.state.alert.text = null;
-                    self.state.alert.type="";
-                    //window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
+                    self.state.alert.alert(null);
+                    self.state.editItineraryId = -1;
                 }
 	            $patchChanges();
             });
@@ -88,20 +83,18 @@
             dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
                 debugger;
                 if(err) {
-                    self.state.alert.text = err;
-                    self.state.alert.type="error";
-	                $patchChanges();
+                    self.state.alert.alert(err);
                 }
                 else {
-                    self.state.alert.text = null;
-                    self.state.alert.type="";
-                    window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+                    self.state.alert.alert(null);
+                    self.state.editItineraryId = null;
                 }
+                $patchChanges();
             });
         }
 	}
 
-	function calculateDefaults(itineraryId) {
+	function calculateDefaults() {
 	    var result = {
 	        date: {
                 default: (new Date())
@@ -111,7 +104,7 @@
 	    if(this.state && this.state.itinerary && this.state.itinerary.length > 0) {
             if (itineraryId != -1) {
                 for (var i = 0; i < this.state.itinerary.length; i++) {
-                    if (this.state.itinerary[i].id == itineraryId) {
+                    if (this.state.itinerary[i].id == this.state.editItineraryId) {
                         if (i > 0) {
                             result.date.min = this.state.itinerary[i - 1].toDateTime;
                         }
@@ -130,35 +123,34 @@
         return result;
     }
 
-	function onCancelEdit(packageId) {
-		window.location.hash="#app/action.myItinerary:packageId=" + packageId;
+	function onCancelEdit() {
+        this.state.editItineraryId=null;
+		$patchChanges();
 	}
 
-	function onAddItinerary(packageId) {
-		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
+	function onAddItinerary() {
+		this.state.editItineraryId=-1;
+		$patchChanges();
     }
-	function onEdit(itineraryId, packageId) {
-	    var dateLimits = calculateDefaults(itineraryId);
-		window.location.hash="#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
+	function onEdit(itineraryId) {
+        this.state.editItineraryId = itineraryId.data;
+		$patchChanges();
     }
 
-    function onDelete(itineraryId, packageId) {
+    function onDelete(itineraryId) {
 		//debugger;
-		return new Promise(function(resolve){
-			dpd.itineraries.del(itineraryId.data,function(err){
-				debugger;
-				if(err){
-					if (err) {
-                        self.state.alert.text = err;
-                        self.state.alert.type="error";
-					}
+        var self = this;
+        dpd.itineraries.del(itineraryId.data,function(err){
+            debugger;
+            if(err){
+                if (err) {
+                    self.state.alert.alert(err);
                 }
-                else {
-                    self.state.alert.text = null;
-                    self.state.alert.type="";
-					window.location.hash="#app/action.myItinerary:packageId=" + packageId;
-				}
-            });
+            }
+            else {
+                self.state.alert.alert(null);
+            }
+            $patchChanges();
         });
     }
 </script>

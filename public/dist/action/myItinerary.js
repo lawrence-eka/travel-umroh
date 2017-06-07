@@ -32,63 +32,58 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
 
   function initState(props) {
     return {
+      packageId: props.packageId,
       itinerary: [],
-      alert: {
-        text: null,
-        type: ""
-      }
+      editItineraryId: null,
+      alert: new Alert(),
     }
   }
 
-  function queryItineraries(packageId) {
+  function queryItineraries() {
     var self = this;
     return new Promise(function(resolve) {
       var q = {
-        "packageId": packageId,
+        "packageId": self.state.packageId,
         "$sort": {
           "fromDateTime": 1
         }
       }
       dpd.itineraries.get(q, function(itr, err) {
         if (err) {
-          self.state.alert.text = err;
-          self.state.alert.type = "error";
-          self.itinerary = [];
-          $patchChanges();
+          self.state.alert.alert(err);
+          self.state.itinerary = [];
         } else {
-          self.state.alert.text = null;
-          self.state.alert.type = "";
-          self.itinerary = itr;
-          resolve(itr);
+          self.state.alert.alert(null);
+          self.state.itinerary = itr;
         }
+        resolve(self.state.itinerary);
       });
     });
   }
 
-  function getPackage(id) {
+  function getPackage() {
+    var self = this;
     return new Promise(function(resolve) {
-      dpd.packages.get(id, function(result, err) {
+      dpd.packages.get(self.state.packageId, function(result, err) {
         resolve(result);
       });
     });
   }
 
-  function onSaveItinerary(itinerary, packageId) {
+  function onSaveItinerary(itinerary) {
     debugger;
     itinerary = itinerary.data;
-    itinerary.packageId = packageId;
+    itinerary.packageId = this.state.packageId;
     var self = this;
     if (itinerary.id == "") {
       dpd.itineraries.post(itinerary, function(result, err) {
         debugger;
         if (err) {
-          self.state.alert.text = err;
-          self.state.alert.type = "error";
+          self.state.alert.alert(err);
         }
         if (result) {
-          self.state.alert.text = null;
-          self.state.alert.type = "";
-          //window.location.hash="#app/action.myItinerary:packageId=" + packageId+ ":editItineraryId=-1";
+          self.state.alert.alert(null);
+          self.state.editItineraryId = -1;
         }
         $patchChanges();
       });
@@ -97,19 +92,17 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
       dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
         debugger;
         if (err) {
-          self.state.alert.text = err;
-          self.state.alert.type = "error";
-          $patchChanges();
+          self.state.alert.alert(err);
         } else {
-          self.state.alert.text = null;
-          self.state.alert.type = "";
-          window.location.hash = "#app/action.myItinerary:packageId=" + packageId;
+          self.state.alert.alert(null);
+          self.state.editItineraryId = null;
         }
+        $patchChanges();
       });
     }
   }
 
-  function calculateDefaults(itineraryId) {
+  function calculateDefaults() {
     var result = {
       date: {
         default: (new Date())
@@ -119,7 +112,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
     if (this.state && this.state.itinerary && this.state.itinerary.length > 0) {
       if (itineraryId != -1) {
         for (var i = 0; i < this.state.itinerary.length; i++) {
-          if (this.state.itinerary[i].id == itineraryId) {
+          if (this.state.itinerary[i].id == this.state.editItineraryId) {
             if (i > 0) {
               result.date.min = this.state.itinerary[i - 1].toDateTime;
             }
@@ -137,35 +130,34 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
     return result;
   }
 
-  function onCancelEdit(packageId) {
-    window.location.hash = "#app/action.myItinerary:packageId=" + packageId;
+  function onCancelEdit() {
+    this.state.editItineraryId = null;
+    $patchChanges();
   }
 
-  function onAddItinerary(packageId) {
-    window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=-1";
+  function onAddItinerary() {
+    this.state.editItineraryId = -1;
+    $patchChanges();
   }
 
-  function onEdit(itineraryId, packageId) {
-    var dateLimits = calculateDefaults(itineraryId);
-    window.location.hash = "#app/action.myItinerary:packageId=" + packageId + ":editItineraryId=" + itineraryId.data;
+  function onEdit(itineraryId) {
+    this.state.editItineraryId = itineraryId.data;
+    $patchChanges();
   }
 
-  function onDelete(itineraryId, packageId) {
+  function onDelete(itineraryId) {
     //debugger;
-    return new Promise(function(resolve) {
-      dpd.itineraries.del(itineraryId.data, function(err) {
-        debugger;
+    var self = this;
+    dpd.itineraries.del(itineraryId.data, function(err) {
+      debugger;
+      if (err) {
         if (err) {
-          if (err) {
-            self.state.alert.text = err;
-            self.state.alert.type = "error";
-          }
-        } else {
-          self.state.alert.text = null;
-          self.state.alert.type = "";
-          window.location.hash = "#app/action.myItinerary:packageId=" + packageId;
+          self.state.alert.alert(err);
         }
-      });
+      } else {
+        self.state.alert.alert(null);
+      }
+      $patchChanges();
     });
   }
 
@@ -220,7 +212,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
           if (slotName === "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
-            if (!_props.editItineraryId) {
+            if (!_state.editItineraryId) {
               var _params = {
                 "type": "button",
                 "value": "Add Transport",
@@ -242,12 +234,12 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                       _props['on' + eventName](event);
                     }
                   };
-                  onAddItinerary.bind(self)(_props.packageId);
+                  onAddItinerary.bind(self)();
                 }
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             }
-            if (!_props.editItineraryId) {
+            if (!_state.editItineraryId) {
               var _params = {
                 "type": "button",
                 "value": "Add Hotel",
@@ -269,7 +261,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                       _props['on' + eventName](event);
                     }
                   };
-                  onAddItinerary.bind(self)(_props.packageId);
+                  onAddItinerary.bind(self)();
                 }
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -278,11 +270,11 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
           }
         });
         var _params = {
-          "alertType": _state.alert.type,
-          "message": _state.alert.text
+          "alertType": _state.alert.type.bind(self)(),
+          "message": _state.alert.text.bind(self)()
         };
         _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        if (_props.editItineraryId == -1) {
+        if (_state.editItineraryId == -1) {
           var _params = {
             "onsave": function(event) {
               var self = {
@@ -302,7 +294,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              onSaveItinerary.bind(self)(event, _props.packageId);
+              onSaveItinerary.bind(self)(event);
             },
             "oncancel": function(event) {
               var self = {
@@ -322,9 +314,9 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              onCancelEdit.bind(self)(_props.packageId);
+              onCancelEdit.bind(self)();
             },
-            "defaults": calculateDefaults.bind(self)(_props.editItineraryId)
+            "defaults": calculateDefaults.bind(self)()
           };
           _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
@@ -349,7 +341,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
             _array.forEach(function(itr) {
               _elementOpenStart("p", "");
               _elementOpenEnd("p");
-              if (itr.id != _props.editItineraryId) {
+              if (itr.id != _state.editItineraryId) {
                 var _params = {
                   "itr": itr,
                   "onedit": function(event) {
@@ -370,7 +362,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                         _props['on' + eventName](event);
                       }
                     };
-                    onEdit.bind(self)(event, _props.packageId);
+                    onEdit.bind(self)(event);
                   },
                   "ondelete": function(event) {
                     var self = {
@@ -395,7 +387,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                 };
                 _context["card-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               }
-              if (itr.id == _props.editItineraryId) {
+              if (itr.id == _state.editItineraryId) {
                 var _params = {
                   "itinerary": itr,
                   "onsave": function(event) {
@@ -416,7 +408,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                         _props['on' + eventName](event);
                       }
                     };
-                    onSaveItinerary.bind(self)(event, _props.packageId);
+                    onSaveItinerary.bind(self)(event);
                   },
                   "oncancel": function(event) {
                     var self = {
@@ -436,16 +428,16 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
                         _props['on' + eventName](event);
                       }
                     };
-                    onCancelEdit.bind(self)(_props.packageId);
+                    onCancelEdit.bind(self)();
                   },
-                  "defaults": calculateDefaults.bind(self)(_props.editItineraryId)
+                  "defaults": calculateDefaults.bind(self)()
                 };
                 _context["edit-itinerary"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               }
               _elementClose("p");
             });
           }
-          var promise = queryItineraries.bind(self)(_props.packageId);
+          var promise = queryItineraries.bind(self)();
           if (promise && typeof promise == "object" && "then" in promise) {
             _skip();
             promise.then(function(_result) {
@@ -464,7 +456,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
         });
         _elementClose("div");
       }
-      var promise = getPackage.bind(self)(_props.packageId);
+      var promise = getPackage.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {

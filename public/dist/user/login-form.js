@@ -31,11 +31,14 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   function onPropertyChange(event) {};
 
 
-  var errorMessage = '';
+  function initState(props) {
+    return {
+      alert: new Alert(),
+    }
+  }
 
   function login() {
     var form = this.target.form;
-    errorMessage = "";
     var userName = form.elements.username.value.toLowerCase();
     var password = form.elements.password.value;
     var rememberMe = form.elements.rememberMe.checked;
@@ -44,13 +47,15 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     form.elements.password.value = '';
     form.elements.rememberMe.checked = false;
 
+    var self = this;
     dpd.users.login({
       "username": userName,
       "password": password
     }, function(user, err) {
       if (err) {
-        errorMessage = err.message;
-        $patchChanges();
+        debugger;
+        self.state.alert.alert(err);
+        $patchChanges("alert");
       } else {
         dpd.users.me(function(me) {
           storage.me.save(me, rememberMe);
@@ -185,11 +190,16 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
-        var _params = {
-          "alertType": 'error',
-          "message": errorMessage
-        };
-        _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "alertType": _state.alert.type.bind(self)(),
+            "message": _state.alert.text.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
         _elementClose("div");
       }
     });

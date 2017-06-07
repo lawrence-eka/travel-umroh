@@ -40,6 +40,32 @@ Date.prototype.toYYYYMMDD = function(withHHMM) {
 	return y + "-" + m + "-" + d + (withHHMM ? 'T' + h + ':' + mi : '');
 },
 
+Date.prototype.toTimeComponents = function(asComponents) {
+    if(!this|| ((typeof this.getMonth) !== 'function') || (isNaN(this.getTime())))
+    {
+        if(asComponents) return undefined;
+        else return "";
+    }
+
+    var h = this.getHours();
+    var m = this.getMinutes();
+
+    if(asComponents)
+    {
+        var result = {};
+		result["hour"] = h;
+		result["minutes"] = m;
+
+        return result;
+    }
+    else {
+        h = (h < 10 ? '0' : '') + h.toString();
+        m = (m < 10 ? '0' : '') + m.toString();
+        return h + ":" + m;
+    }
+
+}
+
 Date.prototype.toDateComponents = function(asComponents, withHHMM)
 {
 	if(!this|| ((typeof this.getMonth) !== 'function') || (isNaN(this.getTime())))
@@ -51,12 +77,9 @@ Date.prototype.toDateComponents = function(asComponents, withHHMM)
 	var dt = this.getDate();
 	var mo = "JanFebMarAprMayJunJulAugSepOctNovDec".substr(this.getMonth() * 3, 3);
 	var yr = this.getFullYear();
-	if(withHHMM)
-	{
-		var hr = this.getHours();
-		var mn = this.getMinutes();
-	}
-	
+
+    if(withHHMM) var time = this.toTimeComponents(asComponents);
+
 	if(asComponents)
 	{
 		var result = {};
@@ -66,12 +89,12 @@ Date.prototype.toDateComponents = function(asComponents, withHHMM)
 		
 		if(withHHMM)
 		{
-			result["hour"] = hr;
-			result["minutes"] = mn;
+			result["hour"] = time["hour"];
+			result["minutes"] = time["minutes"];
 		}
 		return result;
 	}
-	else return dt.toString() + " " + mo + " " + yr.toString() + (withHHMM ? " " + hr.toString() + ":" + mn.toString() : "");
+	else return dt.toString() + " " + mo + " " + yr.toString() + (withHHMM ? " " + time : "");
 }
 
 Date.prototype.toStringDateRange = function(endDate)
@@ -88,8 +111,16 @@ Date.prototype.toStringDateRange = function(endDate)
 	else return s.date.toString() + " " + s.month + " " + s.year.toString() + "-" + e.date.toString() + " " + e.month + " " + e.year.toString();
 }
 
+Date.prototype.toDayOffset = function(endDate) {
+	return Math.floor((endDate - this)/86400000)
+}
+
 Number.prototype.toDateComponents = function(asComponents, withHHMM) {
-	return (new Date(this)).toDateComponents(asComponents, withHHMM);
+    return (new Date(this)).toDateComponents(asComponents, withHHMM);
+}
+
+Number.prototype.toTimeComponents = function(asComponents) {
+    return (new Date(this)).toTimeComponents(asComponents);
 }
 
 Number.prototype.toStringDateRange = function(endDate)
@@ -110,6 +141,11 @@ Number.prototype.toFormattedString = function( c, d, t){
 Number.prototype.toYYYYMMDD = function(withHHMM) {
 	return (new Date(this)).toYYYYMMDD(withHHMM);
 }
+
+Number.prototype.toDayOffset = function(endDate) {
+    return Math.floor((endDate - this)/86400000)
+}
+
 /*
 
 */

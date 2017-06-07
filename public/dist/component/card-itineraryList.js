@@ -34,11 +34,18 @@ yalla.framework.addComponent("/dist/component/card-itineraryList", (function() {
     this.emitEvent('book');
   }
 
+  function whatClass(item) {
+    item = item ? item : 'hotel';
+    return "fa fa-" + item + " icon-center";
+  }
+
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["card"] = $inject("/component/card-itinerary-bulleted");
+    var card = _context["card"];
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
     _text("\n[element='dist.component.card-itineraryList'] .custom-indent {padding-left:10px !important;}");
@@ -71,63 +78,10 @@ yalla.framework.addComponent("/dist/component/card-itineraryList", (function() {
         _array.forEach(function(itr) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          _elementOpenStart("strong", "");
-          _elementOpenEnd("strong");
-          _text("" + (itr.fromDateTime.toDateComponents()) + "");
-          _elementClose("strong");
-          _elementOpenStart("div", "");
-          _attr("class", "custom-indent");
-          _elementOpenEnd("div");
-          if (itr.entry.transport) {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            _text("Airline: " + (itr.entry.transport) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("Departure: " + (itr.entry.departure.toDateComponents(false, true)) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("From: " + (itr.entry.departFrom) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("Arrival: " + (itr.entry.arrival.toDateComponents(false, true)) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("At: " + (itr.entry.arriveAt) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _elementClose("div");
-          }
-          if (itr.entry.hotel) {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            _text("Hotel: " + (itr.entry.hotel) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("City: " + (itr.entry.city) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("Check in: " + (itr.entry.checkIn.toDateComponents()) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _text("Check out: " + (itr.entry.checkOut.toDateComponents()) + "");
-            _elementOpenStart("br", "");
-            _elementOpenEnd("br");
-            _elementClose("br");
-            _elementClose("div");
-          }
-          _elementClose("div");
-          _elementOpenStart("br", "");
-          _elementOpenEnd("br");
-          _elementClose("br");
+          var _params = {
+            "itr": itr
+          };
+          _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _elementClose("div");
         });
         _elementClose("div");

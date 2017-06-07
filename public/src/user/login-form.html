@@ -21,7 +21,9 @@
                     <entry type="hyperlink" href="#user.registration" class="custom-entry-prompt" prompt="New to MarKiMroh? Register here"></entry>
                 </div>
             </form>
-            <alert alertType.bind="'error'" message.bind="errorMessage"></alert>
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
         </div>
     </panel>
 </div> <!-- /container -->
@@ -29,15 +31,16 @@
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-</html>
 <script>
 
-    var errorMessage = '';
+    function initState(props) {
+    	return {
+    		alert: new Alert(),
+        }
+    }
 
     function login(){
         var form = this.target.form;
-        errorMessage = "";
         var userName = form.elements.username.value.toLowerCase();
         var password = form.elements.password.value;
         var rememberMe = form.elements.rememberMe.checked;
@@ -46,10 +49,12 @@
         form.elements.password.value = '';
         form.elements.rememberMe.checked = false;
 
+        var self = this;
         dpd.users.login({"username": userName, "password": password}, function(user, err) {
-            if(err){
-                errorMessage = err.message;
-	            $patchChanges();
+        	if(err){
+        		debugger;
+                self.state.alert.alert(err);
+	            $patchChanges("alert");
             } else {
                 dpd.users.me(function(me){
 	                storage.me.save(me, rememberMe);
