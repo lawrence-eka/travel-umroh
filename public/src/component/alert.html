@@ -1,7 +1,9 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
-<div>
-    <div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
-        <div for.each="error in @messages">{{error}}</div>
+<div class="container">
+    <div class="row">
+        <div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
+            <div for.each="error in @messages">{{error}}</div>
+        </div>
     </div>
 </div>
 <script>
@@ -14,6 +16,7 @@
     }
 
     function onPropertyChange(event){
+    	debugger;
         this.state.messages = toArrayofMessages(event.newVal, this.properties.alertType, this.properties.titleCase);
     }
 
@@ -35,8 +38,11 @@
         else if (typeof message === "string") {
             result.push(message);
         }
+        else if (message.hasOwnProperty("message")) {
+	        result.push(message.message);
+        }
         else if (message.hasOwnProperty("error")) {
-            result.push(message.error);
+	        result.push(message.error);
         }
         else if (message.hasOwnProperty("errors")) {
             var errorList = [];

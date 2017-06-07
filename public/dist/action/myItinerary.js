@@ -110,7 +110,7 @@ yalla.framework.addComponent("/dist/action/myItinerary", (function() {
       entryType: 'Transport'
     };
     if (this.state && this.state.itinerary && this.state.itinerary.length > 0) {
-      if (itineraryId != -1) {
+      if (this.state.editItineraryId != -1) {
         for (var i = 0; i < this.state.itinerary.length; i++) {
           if (this.state.itinerary[i].id == this.state.editItineraryId) {
             if (i > 0) {

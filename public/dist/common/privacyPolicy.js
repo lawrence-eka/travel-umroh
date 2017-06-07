@@ -42,20 +42,6 @@ yalla.framework.addComponent("/dist/common/privacyPolicy", (function() {
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
-    var _component = IncrementalDOM.currentElement();
-    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
-    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
-    _component._state._name = _elementName;
-    var _state = _component._state;
-    var _self = {
-      component: _component,
-      properties: _props,
-      state: _component._state
-    };
-    if (_validComponent) {
-      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
-    }
-    _component._properties = _props;
     _elementClose("link");
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];

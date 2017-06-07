@@ -7,7 +7,6 @@ function Alert(alertType) {
     self._type = alertType ? alertType : 'error';
 
     self.text = function() {
-        debugger;
         return self._text;
     }
 
@@ -16,7 +15,6 @@ function Alert(alertType) {
     }
 
     self.alert = function(text, type) {
-        debugger;
         self._text = text;
         self._type = type ? type : self._type;
     }
