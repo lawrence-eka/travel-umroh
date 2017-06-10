@@ -31,20 +31,21 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    debugger;
-    return {
+    //debugger;
+    var state = {
       recordsFound: '',
-      alert: {
-        text: '',
-        type: ''
-      },
-      date: {
-        start: (new Date()).toYYYYMMDD(),
-        end: ((new Date()).getTime() + 31536000000).toYYYYMMDD(),
-        minEndDate: (new Date()).toYYYYMMDD(),
-      },
-      datePair: new DatePair(),
+      alert: new Alert(),
+      datePair: new DatePair($patchChanges, null, '1y'),
+      date: {},
     };
+    state.date.start = new Date(state.datePair.defaultStartDate());
+    state.date.end = new Date(state.datePair.defaultEndDate());
+
+    return state;
+  }
+
+  function onPropertyChange(event) {
+    //debugger;
   }
 
   function generateLink(event) {
@@ -52,6 +53,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
   }
 
   function queryPackages() {
+    //debugger;
     var self = this;
     return new Promise(function(resolve) {
       if (self.state.date.start == "" || self.state.date.end == "") resolve([]);
@@ -77,11 +79,12 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
         "travelDateFrom": 1
       };
       dpd.packages.get(query, function(pkg, err) {
+        debugger;
         if (err) {
-          self.state.alert.text = err;
-          self.state.alert.type = "error";
+          self.state.alert.alert(err);
           self.state.recordsFound = "";
         } else {
+          self.state.alert.alert('');
           self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';
           $patchChanges("panelParam");
         }
@@ -147,7 +150,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
             "type": "date",
             "prompt": "Between",
             "name": "startDate",
-            "value": _state.date.start,
+            "value": _state.datePair.defaultStartDate.bind(self)(),
+            "min": _state.datePair.minStartDate.bind(self)(),
             "onfocusout": function(event) {
               var self = {
                 target: event.target
@@ -166,7 +170,7 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              _state.datePair.onFocusOut.bind(self)('endDate');
+              _state.datePair.onStartDateFocusOut.bind(self)('endDate');
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -177,8 +181,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
               "type": "date",
               "prompt": "And",
               "name": "endDate",
-              "value": _state.date.end,
-              "min": _state.datePair.minDate.bind(self)()
+              "value": _state.datePair.defaultEndDate.bind(self)(),
+              "min": _state.datePair.minEndDate.bind(self)()
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           })()
@@ -215,8 +219,8 @@ yalla.framework.addComponent("/dist/action/searchPackage", (function() {
     })()
     _elementClose("div");
     var _params = {
-      "alertType": _state.alert.type,
-      "message": _state.alert.text
+      "alertType": _state.alert.type.bind(self)(),
+      "message": _state.alert.text.bind(self)()
     };
     _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementOpenStart("div", "");

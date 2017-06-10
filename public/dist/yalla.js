@@ -1961,6 +1961,8 @@ var yalla = (function () {
                 }
             }
         }
+        var propertyChangesEvent = {};
+
         for (var prop in result){
             if(result[prop].leftValue !== result[prop].rightValue){
                 var operation = '';
@@ -1971,8 +1973,17 @@ var yalla = (function () {
                 }else{
                     operation = 'change';
                 }
-                onPropertyChange({property:prop,type:operation,oldVal:result[prop].leftValue,newVal:result[prop].rightValue});
+                propertyChangesEvent[prop] = {
+                    type : operation,
+                    oldValue : result[prop].leftValue,
+                    newValue : result[prop].rightValue
+                };
+                propertyChangesEvent.hasValue = true;
             }
+        }
+        if(propertyChangesEvent.hasValue){
+            delete propertyChangesEvent.hasValue;
+            onPropertyChange(propertyChangesEvent);
         }
     };
 

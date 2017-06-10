@@ -31,9 +31,10 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
   function onPropertyChange(event) {};
 
   function setValue(value, min, max) {
-    if (value && min && value < min) return min;
-    else if (value && max && value > max) return max;
-    else return value;
+    if (value && min && (value < min)) return min;
+    else if (value && max && (value > max)) return max;
+    else if (value) return value;
+    else return '';
   }
 
   function whatDivClass(divClass) {

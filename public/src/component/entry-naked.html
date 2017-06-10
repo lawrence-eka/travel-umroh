@@ -27,9 +27,10 @@
 
 <script>
     function setValue(value, min, max){
-        if(value && min && value < min) return min;
-        else if(value && max && value > max) return max;
-        else return value;
+    	if(value && min && (value < min)) return min;
+        else if(value && max && (value > max)) return max;
+        else if(value) return value;
+        else return '';
     }
 
 	function whatDivClass(divClass){

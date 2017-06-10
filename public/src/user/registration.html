@@ -1,16 +1,17 @@
 <inject from="/component/userProfile" name="profile"></inject>
 
 <div class="container small-margin-top">
-    <profile error.bind="@error.message" save.trigger="register(event)" cancel.trigger="cancelRegistration()" errorMessage.bind="@error.message"></profile>
+    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()" errorMessage.bind="@alert.text()"></profile>
 </div>
 
 <script>
     function initState() {
-        return {
-            error : {
-                message : ''
-            }
-        };
+        return {alert: new Alert(),}
+        //{
+        //    error : {
+        //        message : ''
+        //    }
+        //};
     }
 
     function cancelRegistration() {
@@ -22,12 +23,14 @@
         var self = this;
         dpd.users.post(profile, function(user, err) {
             if(err){
-                self.state.error.message = err;
+                //self.state.error.message = err;
+                self.state.alert.alert(err);
                 $patchChanges();
             }else{
                 dpd.users.login({"username": profile.username, "password": profile.password}, function(user, err) {
                     if(err){
-                        self.state.error.message = err;
+                        //self.state.error.message = err;
+                        self.state.alert.alert(err);
                         $patchChanges();
                     }else{
                         window.location.hash = '#app';

@@ -56,7 +56,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     if (me.isTravelAgent) {
       menusBase.push({
         label: 'My Travel Agent',
-        ref: '#app/action.myTravelAgents'
+        ref: '#app/travel-agent.home'
       });
     }
     if (me.isAdmin) {

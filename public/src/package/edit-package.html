@@ -1,0 +1,135 @@
+<link href="asset/css/custom-style.css" rel="stylesheet">
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+
+<div>
+    <panel title.bind="@packageId && @packageId != -1 ? 'Edit Package Info' : 'New Package'" nofooter>
+        <div  slot.name="body" data.load="getOnePackage(@packageId)">
+            <form>
+                <entry type="hidden" name="id" value.bind="data.id"></entry>
+                <entry type="hidden" name="travelAgentId" value.bind="data.travelAgentId"></entry>
+                <div class="row">
+                    <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
+                    <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
+                    <entry type="date" name="validFrom" prompt="Valid From"
+                           value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : @datePair.defaultStartDate())"
+                           min.bind="@datePair.minStartDate()"
+                           focusout.trigger="@datePair.onStartDateFocusOut('validUntil')"></entry>
+                    <span ref.name="validUntil">
+                        <entry type="date" name="validUntil" prompt="Valid Until"
+                               value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : @datePair.defaultEndDate())"
+                               min.bind="@datePair.minEndDate()"></entry>
+                    </span>
+                    <entry type="number" name="costLandArrangements" prompt="Land Arrangements (Rp)"
+                           value.bind="data.costLandArrangements"></entry>
+                    <entry type="number" name="costTickets" prompt="Tickets (Rp)" value.bind="data.costTickets"></entry>
+                    <!--
+                    <entry type="checkbox" name="isItineraryConfirmed" prompt="Itinerary Confirmed" checked.bind="data.isItineraryConfirmed"></entry>
+                    -->
+                    <entry type="checkbox" name="isPublished" prompt="Published" checked.bind="data.isPublished"></entry>
+                    <entry type="button" value.bind="@packageId ? 'Save' : 'Register'"
+                           divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                    <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                           click.trigger="onCancel()"></entry>
+                </div>
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </form>
+        </div>
+    </panel>
+</div>
+
+<script>
+
+    function initState(props) {
+    	debugger;
+    	return {
+            datePair: new DatePair($patchChanges),
+            packageId: props.packageId,
+            travelAgentId:props.travelAgentId,
+            alert:new Alert(),
+        }
+    }
+
+    function getOnePackage(id) {
+	    var self = this;
+	    return new Promise(function (resolve) {
+	    	debugger;
+		    if(id != -1) {
+			    dpd.packages.get(id, function (pkg, err) {
+			    	debugger;
+				    self.state.alert.alert(err);
+				    if (err) {
+					    pkg={};
+				    } else {
+					    if(!pkg) {
+						    var pkg = {
+							    "travelAgentId": self.state.travelAgentId
+						    };
+					    }
+				    }
+				    resolve(pkg);
+				    //$patchChanges();
+			    });
+		    }
+		    else {
+			    var pkg = {
+				    "travelAgentId": self.state.travelAgentId
+			    };
+			    resolve(pkg);
+		    }
+	    });
+    }
+
+	function onSave(){
+    	//debugger;
+		var form = this.target.form;
+		var self = this;
+		var package = {};
+
+		package.id = form.elements.id.value;
+		package.travelAgentId = form.elements.travelAgentId.value;
+		package.packageName = form.elements.packageName.value;
+		package.tourLeader = form.elements.tourLeader.value;
+		package.validFrom = (new Date(form.elements.validFrom.value)).getTime();
+		package.validUntil = (new Date(form.elements.validUntil.value)).getTime();
+		package.costLandArrangements = form.elements.costLandArrangements.value;
+		package.costTickets = form.elements.costTickets.value;
+		//package.isItineraryConfirmed = (form.elements.isItineraryConfirmed.checked);
+		package.isPublished = (form.elements.isPublished.checked);
+
+		if(form.elements.id.value == "") {
+			dpd.packages.post(package, function(result,err){cleanupAfterSave(result, err, self);});
+		} else {
+			dpd.packages.put(form.elements.id.value, package, function(result,err){cleanupAfterSave(result, err, self);});
+		}
+	}
+
+    function cleanupAfterSave(result, err, self) {
+		//debugger;
+		var form = self.target.form;
+	    self.state.alert.alert(err);
+	    if(!err) {
+		    form.elements.id.value = "";
+		    form.elements.travelAgentId.value = "";
+		    form.elements.packageName.value = "";
+		    form.elements.tourLeader.value = "";
+		    form.elements.validFrom.value="";
+		    form.elements.validUntil.value="";
+		    form.elements.costLandArrangements.value="";
+		    form.elements.costTickets.value="";
+		    //package.isItineraryConfirmed = (form.elements.isItineraryConfirmed.checked);
+		    form.elements.isPublished.checked = false;
+
+		    self.state.alert.alert(null);
+		    self.state.travelAgentId=null;
+		    self.emitEvent('close');
+	    }
+	    $patchChanges();
+    }
+
+	function onCancel(){
+		this.emitEvent('close');
+	}
+</script>
+

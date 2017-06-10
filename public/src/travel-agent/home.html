@@ -1,0 +1,69 @@
+<inject from="/travel-agent/card-travel-agent" name="card-travel-agent"></inject>
+<inject from="/travel-agent/edit-travel-agent" name="edit-travel-agent"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
+
+<div>
+    <edit-travel-agent if.bind="@editTravelAgentId" travelAgentId.bind="@editTravelAgentId" close.trigger="onCloseEditor()"></edit-travel-agent>
+    <panel if.bind="!@editTravelAgentId" nofooter title="My Travel Agencies">
+        <span slot.name="body">
+            <entry type="button" naked value="Add New Travel Agency" click.trigger="onAddTA()"></entry>
+        </span>
+    </panel>
+    <div if.bind="!@editTravelAgentId" data.load="getTravelAgents()">
+        <p for.each="ta in data">
+            <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></card-travel-agent>
+        </p>
+    </div>
+</div>
+
+
+<script>
+
+    function initState(props) {
+    	return {
+    		alert: new Alert(),
+		    editTravelAgentId:null
+        }
+    }
+
+    function getTravelAgents(){
+	    var self = this;
+        return new Promise(function(resolve) {
+	        var me = storage.me.read();
+	        var q = {
+		        "contactPersonId": me.id
+	        };
+	        dpd.travelagents.get(q, function (ta, err) {
+		        if (err) {
+			        self.state.alert.alert(err);
+			        resolve(null);
+		        } else {
+			        self.state.alert.alert(null);
+			        resolve(ta);
+		        };
+	        });
+        });
+    }
+
+    function onAddTA() {
+	    this.state.editTravelAgentId=-1;
+	    $patchChanges();
+    }
+
+    function onEditTA(event) {
+	    this.state.editTravelAgentId=event.data;
+	    $patchChanges();
+    }
+
+    function onCloseEditor() {
+	    this.state.editTravelAgentId=null;
+	    $patchChanges();
+    }
+
+    function onShowPackages(event) {
+    	//debugger;
+    	window.location.hash ="#app/package.home:travelAgentId=" + event.data;
+    }
+</script>

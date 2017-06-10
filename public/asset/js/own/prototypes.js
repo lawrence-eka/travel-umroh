@@ -115,6 +115,21 @@ Date.prototype.toDayOffset = function(endDate) {
 	return Math.floor((endDate - this)/86400000)
 }
 
+Date.prototype.addYears = function(numOfYears) {
+	var newThis = new Date(this);
+	return new Date(newThis.setFullYear(newThis.getFullYear() + parseInt(numOfYears)));
+}
+
+Date.prototype.addMonths = function(numOfMonths) {
+	var newThis = new Date(this);
+	return new Date(newThis.setMonth(newThis.getMonth() + parseInt(numOfMonths)));
+}
+
+Date.prototype.addDays = function(numOfDays) {
+	var newThis = new Date(this);
+	return new Date(newThis.setDate(newThis.getDate() + parseInt(numOfDays)));
+}
+
 Number.prototype.toDateComponents = function(asComponents, withHHMM) {
     return (new Date(this)).toDateComponents(asComponents, withHHMM);
 }
@@ -126,6 +141,18 @@ Number.prototype.toTimeComponents = function(asComponents) {
 Number.prototype.toStringDateRange = function(endDate)
 {
 	return (new Date(this)).toStringDateRange(new Date(endDate));
+}
+
+Number.prototype.addYears = function(numOfYears) {
+	return (new Date(this)).addYears(numOfYears).getTime();
+}
+
+Number.prototype.addMonths = function(numOfMonths) {
+	return (new Date(this)).addMonths(numOfMonths).getTime();
+}
+
+Number.prototype.addDays = function(numOfDays) {
+	return (new Date(this)).addDays(numOfDays).getTime();
 }
 
 Number.prototype.toFormattedString = function( c, d, t){

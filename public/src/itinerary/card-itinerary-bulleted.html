@@ -1,0 +1,94 @@
+<style>
+    root{
+        /*
+        background-color: #ffffff;
+        */
+        position: relative;
+    }
+    .leftLine{
+        width: 50px;
+        float: left;
+        position: absolute;
+        top:0;
+        bottom: 0;
+    }
+
+    .content{
+        margin-left:50px;
+        display: block;
+        padding-top:5px;
+        /*
+        background: url('/asset/img/image5.jpg') no-repeat center center fixed;
+        */
+    }
+
+    .circle{
+        border:2px solid #cccccc;
+        border-radius: 100%;
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        text-align: center;
+    }
+    .lineVertical{
+        border-left : 2px solid #cccccc;
+        width: 2px;
+        margin: auto;
+        position: absolute;
+        top:30px;
+        bottom: 0px;
+        left: 25px;
+    }
+
+    .leftLineContainer{
+
+    }
+    .icon-center {
+        font-size:1.5rem;
+        color : #666666;
+        margin-top:0.5rem;
+    }
+    h3{
+        margin-top:0px;
+    }
+    h5{
+        margin-top:0px;
+        margin-bottom:0px;
+    }
+
+</style>
+<div>
+    <div class="leftLine">
+        <div class="leftLineContainer">
+            <div class="circle">
+                <i class.bind="whatClass($itr.entry.transportType)" aria-hidden="true"></i>
+            </div>
+            <div class="lineVertical"></div>
+        </div>
+    </div>
+    <div class="content">
+        <div if.bind="$itr.entry.transport">
+            <h3>{{$itr.entry.departure.toDateComponents(false)}}</h3>
+            <h5>Dep: <label>{{$itr.entry.departure.toTimeComponents()}}</label>{{nbsp}}/ Arr: <label>{{$itr.entry.arrival.toTimeComponents() + ($itr.entry.departure.toDayOffset($itr.entry.arrival) ? ' ' + $itr.entry.departure.toDayOffset($itr.entry.arrival) : '')}}</label></h5>
+            Airline: {{$itr.entry.transport}} <br/>
+            From: {{$itr.entry.departFrom}} <br/>
+            To: {{$itr.entry.arriveAt}} <br/>
+        </div>
+        <div if.bind="$itr.entry.hotel">
+            <h3>{{$itr.entry.checkIn.toDateComponents(false)}}</h3>
+            <h5>Check out: <label>{{$itr.entry.checkOut.toDateComponents()}}</label></h5>
+            Hotel: {{$itr.entry.hotel}} <br/>
+            City: {{$itr.entry.city}} <br/>
+        </div>
+        {{$itr.remarks}}
+    </div>
+</div>
+
+<script>
+    var nbsp=' ';
+    function whatClass(item) {
+        item = item ? item : 'hotel';
+        item = item.toLowerCase();
+        return "fa fa-" + item + " icon-center";
+    }
+</script>

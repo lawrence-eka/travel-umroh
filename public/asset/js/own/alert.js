@@ -15,6 +15,7 @@ function Alert(alertType) {
     }
 
     self.alert = function(text, type) {
+        //debugger;
         self._text = text;
         self._type = type ? type : self._type;
     }

@@ -30,6 +30,11 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
 
   function onPropertyChange(event) {};
 
+  function initState(props) {
+    //debugger;
+    return {};
+  }
+
   function onClick() {
     this.emitEvent('click');
   }

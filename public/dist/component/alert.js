@@ -32,15 +32,13 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
 
 
   function initState(props) {
-    debugger;
     return {
       messages: toArrayofMessages(props.message, props.alertType, props.titleCase)
     };
   }
 
   function onPropertyChange(event) {
-    debugger;
-    this.state.messages = toArrayofMessages(event.newVal, this.properties.alertType, this.properties.titleCase);
+    this.state.messages = toArrayofMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
   }
 
   function className(alertType) {

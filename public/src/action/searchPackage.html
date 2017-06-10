@@ -9,16 +9,16 @@
         <panel title="Search Packages" footer.bind="@recordsFound">
             <div slot.name="body">
                 <form>
-                    <entry type="date" prompt="Between" name="startDate" value.bind="@date.start" focusout.trigger="@datePair.onFocusOut('endDate')"></entry>
+                    <entry type="date" prompt="Between" name="startDate" value.bind="@datePair.defaultStartDate()" min.bind="@datePair.minStartDate()" focusout.trigger="@datePair.onStartDateFocusOut('endDate')"></entry>
                     <span ref.name="endDate">
-                        <entry type="date" prompt="And" name="endDate" value.bind="@date.end" min.bind="@datePair.minDate()"></entry>
+                        <entry type="date" prompt="And" name="endDate" value.bind="@datePair.defaultEndDate()" min.bind="@datePair.minEndDate()"></entry>
                     </span>
                     <entry type="button" value="Search" click.trigger="search()"></entry>
                 </form>
             </div>
         </panel>
     </div>
-    <alert alertType.bind="@alert.type" message.bind="@alert.text"></alert>
+    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
     <div data.load="queryPackages()">
         <div for.each="pkg in data" >
             <card-package click.trigger="generateLink(event)" pkg.bind="pkg"></card-package>
@@ -28,27 +28,28 @@
 
 <script>
     function initState(props) {
-        debugger;
-        return {
-            recordsFound: '',
-            alert:{
-                text: '',
-                type:''
-            },
-            date: {
-                start: (new Date()).toYYYYMMDD(),
-                end: ((new Date()).getTime() + 31536000000).toYYYYMMDD(),
-                minEndDate: (new Date()).toYYYYMMDD(),
-            },
-            datePair: new DatePair(),
+    	//debugger;
+        var state = {
+	        recordsFound: '',
+	        alert:new Alert(),
+	        datePair: new DatePair($patchChanges, null, '1y'),
+            date: {},
         };
+	    state.date.start = new Date(state.datePair.defaultStartDate());
+	    state.date.end = new Date(state.datePair.defaultEndDate());
+
+    	return state;
     }
 
+    function onPropertyChange(event) {
+    	//debugger;
+    }
     function generateLink(event){
         window.location.hash = '#app/action.showPackage:packageId='+event.data;
     }
 
     function queryPackages(){
+    	//debugger;
         var self = this;
         return new Promise(function(resolve){
             if(self.state.date.start == "" || self.state.date.end == "") resolve([]);
@@ -63,11 +64,12 @@
             ];
             query.$sort={"travelDateFrom":1};
             dpd.packages.get(query, function(pkg, err) {
+            	debugger;
                 if(err){
-                    self.state.alert.text = err;
-                    self.state.alert.type = "error";
+                    self.state.alert.alert(err);
                     self.state.recordsFound = "";
                 }else {
+                    self.state.alert.alert('');
                 	self.state.recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
                 	$patchChanges("panelParam");
                 }
@@ -81,7 +83,7 @@
     	var form = this.target.form;
         this.state.date.start = form.elements.startDate.value;
         this.state.date.end = form.elements.endDate.value;
-	    $patchChanges();
+        $patchChanges();
     }
 </script>
 
