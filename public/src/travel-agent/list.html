@@ -1,0 +1,39 @@
+<inject from="/travel-agent/card-travel-agent" name="card-travel-agent"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    <span data.load="getTravelAgents()">
+        <span for.each="ta in data">
+            <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></card-travel-agent>
+        </span>
+    </span>
+</div>
+<script>
+    function initState(props) {
+    	return {
+    		alert: new Alert(),
+        }
+    }
+
+	function getTravelAgents(){
+		var self = this;
+		return new Promise(function(resolve) {
+			var me = storage.me.read();
+			var q = {
+				"contactPersonId": me.id
+			};
+			dpd.travelagents.get(q, function (ta, err) {
+				self.state.alert.alert(err);
+                resolve(ta);
+			});
+		});
+	}
+	function onEditTA(event) {
+		this.emitEvent('editTA', event.data);
+    }
+
+    function onShowPackages(event) {
+		this.emitEvent("showPackages", event.data);
+    }
+</script>

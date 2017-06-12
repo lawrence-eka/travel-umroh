@@ -88,7 +88,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    if (_props.prompt && whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink') {
+    if (_props.prompt && whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink' && whatType(_props.type) != 'hidden') {
       _elementOpenStart("label", "");
       _attr("class", "custom-entry-prompt");
       _elementOpenEnd("label");

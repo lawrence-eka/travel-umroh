@@ -35,15 +35,15 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     if (!me) return [];
     var menusBase = [{
         label: (me.firstName + " " + me.lastName).toTitleCase(),
-        ref: '#app/action.myProfile'
+        ref: '#app/user.myProfile'
       },
       {
         label: 'Find Package',
-        ref: '#app/action.searchPackage'
+        ref: '#app/booking.searchPackage'
       },
       {
         label: 'My Booking',
-        ref: '#app/action.myBooking'
+        ref: '#app/booking.myBooking'
       }
     ];
 
@@ -62,7 +62,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     if (me.isAdmin) {
       menusBase.push({
         label: 'Approvals',
-        ref: '#app/action.myApprovals'
+        ref: '#app/user.myApprovals'
       });
     }
     return menusBase.concat(menuEnd);

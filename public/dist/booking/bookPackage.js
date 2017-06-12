@@ -65,7 +65,7 @@ yalla.framework.addComponent("/dist/booking/bookPackage", (function() {
       if (err) {
         errorMessage = err.message;
       } else {
-        window.location.hash = '#app/action.paymentDetails:bookingId=' + bookingId;
+        window.location.hash = '#app/booking.paymentDetails:bookingId=' + bookingId;
       }
       $patchChanges();
     });
@@ -144,9 +144,9 @@ yalla.framework.addComponent("/dist/booking/bookPackage", (function() {
   }
 
   function $render(_props, _slotView) {
-    _context["card-booking"] = $inject("/component/card-booking");
+    _context["card-booking"] = $inject("/booking/card-booking");
     var cardBooking = _context["card-booking"];
-    _context["card-passenger"] = $inject("/component/card-passenger");
+    _context["card-passenger"] = $inject("/booking/card-passenger");
     var cardPassenger = _context["card-passenger"];
     _context["alert"] = $inject("/component/alert");
     var alert = _context["alert"];

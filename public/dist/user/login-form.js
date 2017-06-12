@@ -59,7 +59,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
       } else {
         dpd.users.me(function(me) {
           storage.me.save(me, rememberMe);
-          window.location.hash = "#app/action.searchPackage"
+          window.location.hash = "#app/booking.searchPackage"
           $patchChanges();
         });
       }

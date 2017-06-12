@@ -44,7 +44,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
-    _context["card"] = $inject("/component/card-itinerary-bulleted");
+    _context["card"] = $inject("/itinerary/card-itinerary-bulleted");
     var card = _context["card"];
     _elementOpenStart("style", "");
     _elementOpenEnd("style");

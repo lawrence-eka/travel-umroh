@@ -34,52 +34,36 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
   function initState(props) {
     return {
       alert: new Alert(),
-      editTravelAgentId: null
+      editTravelAgentId: null,
+      isEditMode: false,
     }
   }
 
-  function getTravelAgents() {
-    var self = this;
-    return new Promise(function(resolve) {
-      var me = storage.me.read();
-      var q = {
-        "contactPersonId": me.id
-      };
-      dpd.travelagents.get(q, function(ta, err) {
-        if (err) {
-          self.state.alert.alert(err);
-          resolve(null);
-        } else {
-          self.state.alert.alert(null);
-          resolve(ta);
-        };
-      });
-    });
-  }
-
   function onAddTA() {
-    this.state.editTravelAgentId = -1;
-    $patchChanges();
-  }
-
-  function onEditTA(event) {
-    this.state.editTravelAgentId = event.data;
+    this.state.editTravelAgentId = null;
+    this.state.isEditMode = true;
     $patchChanges();
   }
 
   function onCloseEditor() {
     this.state.editTravelAgentId = null;
+    this.state.isEditMode = false;
+    $patchChanges();
+  }
+
+  function onEditTA(event) {
+    this.state.editTravelAgentId = event.data;
+    this.state.isEditMode = true;
     $patchChanges();
   }
 
   function onShowPackages(event) {
-    //debugger;
     window.location.hash = "#app/package.home:travelAgentId=" + event.data;
   }
 
   function $render(_props, _slotView) {
-    _context["card-travel-agent"] = $inject("/travel-agent/card-travel-agent");
-    var cardTravelAgent = _context["card-travel-agent"];
+    _context["list"] = $inject("/travel-agent/list");
+    var list = _context["list"];
     _context["edit-travel-agent"] = $inject("/travel-agent/edit-travel-agent");
     var editTravelAgent = _context["edit-travel-agent"];
     _context["entry"] = $inject("/component/entry");
@@ -109,7 +93,7 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    if (_state.editTravelAgentId) {
+    if (_state.isEditMode) {
       var _params = {
         "travelAgentId": _state.editTravelAgentId,
         "onclose": function(event) {
@@ -135,7 +119,9 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
       };
       _context["edit-travel-agent"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
-    if (!_state.editTravelAgentId) {
+    if (!_state.isEditMode) {
+      _elementOpenStart("span", "");
+      _elementOpenEnd("span");
       var _params = {
         "nofooter": "nofooter",
         "title": "My Travel Agencies"
@@ -173,94 +159,50 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
           _elementClose("span");
         }
       });
-    }
-    if (!_state.editTravelAgentId) {
-      _elementOpenStart("div", "");
-      _elementOpenEnd("div");
-      (function(domNode) {
-        var node = domNode.element;
-        var self = {
-          target: node
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
+      var _params = {
+        "oneditTA": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onEditTA.bind(self)(event);
+        },
+        "onshowPackages": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onShowPackages.bind(self)(event);
         }
-        self.currentTarget = self.target;
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-
-        function asyncFunc_1(data) {
-          var _array = data || [];
-          _array.forEach(function(ta) {
-            _elementOpenStart("p", "");
-            _elementOpenEnd("p");
-            var _params = {
-              "travelAgent": ta,
-              "oneditTA": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
-                }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = _component;
-                self.component._state = self.component._state || {};
-                self.state = self.component._state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
-                  }
-                };
-                onEditTA.bind(self)(event);
-              },
-              "onshowPackages": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
-                }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = _component;
-                self.component._state = self.component._state || {};
-                self.state = self.component._state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
-                  }
-                };
-                onShowPackages.bind(self)(event);
-              }
-            };
-            _context["card-travel-agent"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            _elementClose("p");
-          });
-        }
-        var promise = getTravelAgents.bind(self)();
-        if (promise && typeof promise == "object" && "then" in promise) {
-          _skip();
-          promise.then(function(_result) {
-            $patchChanges(node, function() {
-              asyncFunc_1.call(self, _result)
-            });
-          }).catch(function(err) {
-            console.log(err);
-          });
-        } else {
-          asyncFunc_1.call(self, promise)
-        }
-      })({
-        element: IncrementalDOM.currentElement(),
-        pointer: IncrementalDOM.currentPointer()
-      });
-      _elementClose("div");
+      };
+      _context["list"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+      _elementClose("span");
     }
     _elementClose("div");
   }

@@ -15,4 +15,21 @@ function Utils() {
 		}
 		return target;
 	}
+	
+	self.itineraries = {};
+	self.itineraries.recommendedNewDates = function(packageId) {
+		//debugger;
+		return new Promise(function(resolve) {
+			//debugger;
+			var q = {
+				"packageId": packageId,
+				"$sort":{"fromDateTime":-1},
+				"$limit":1,
+			}
+			dpd.itineraries.get(q, function (res, err) {
+				//debugger;
+				resolve(res.length ? new Date(res[0].toDateTime): (new Date()));
+			});
+		});
+	}
 }

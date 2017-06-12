@@ -1,5 +1,5 @@
 <span>
-    <label if.bind="$prompt && whatType($type) != 'checkbox' && whatType($type) != 'hyperlink'" class="custom-entry-prompt">{{$prompt}}</label>
+    <label if.bind="$prompt && whatType($type) != 'checkbox' && whatType($type) != 'hyperlink' && whatType($type) != 'hidden'" class="custom-entry-prompt">{{$prompt}}</label>
     <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" focusout.trigger="onFocusOut()">
     <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value">
     <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="$value" click.trigger="buttonClicked()">

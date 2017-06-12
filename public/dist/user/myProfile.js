@@ -49,7 +49,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   }
 
   function onCancel() {
-    window.location.hash = "#app/action.searchPackage";
+    window.location.hash = "#app/booking.searchPackage";
   }
 
   function onSave(profile) {
@@ -60,7 +60,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
         self.state.error.message = err;
       } else {
         storage.me.save(me, storage.me.isRemembered());
-        window.location.hash = '#app/action.searchPackage';
+        window.location.hash = '#app/booking.searchPackage';
       }
     });
   }

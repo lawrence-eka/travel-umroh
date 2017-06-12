@@ -36,14 +36,14 @@
 	function getOneTravelAgent(id) {
 		var self = this;
 		return new Promise(function (resolve) {
-			if(id != -1) {
+			if(id) {
 				dpd.travelagents.get(id, function (ta, err) {
 					self.state.alert.alert(err);
 					if (err) {
 						ta={};
 					} else {
 						if(!ta) {
-							var ta = {
+							ta = {
 								"contactPersonId": storage.me.read().id
 							};
 						}
@@ -53,7 +53,7 @@
 				});
 			}
 			else {
-				var ta = {
+				ta = {
 					"contactPersonId": storage.me.read().id
 				};
 				resolve(ta);

@@ -59,11 +59,11 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
 
   function generateLink(event) {
     debugger;
-    window.location.hash = '#app/action.bookPackage:bookingId=' + event.data;
+    window.location.hash = '#app/booking.bookPackage:bookingId=' + event.data;
   }
 
   function $render(_props, _slotView) {
-    _context["card-booking"] = $inject("/component/card-booking");
+    _context["card-booking"] = $inject("/booking/card-booking");
     var cardBooking = _context["card-booking"];
     _elementOpenStart("div", "");
     _attr("element", "dist.booking.myBooking");

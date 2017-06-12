@@ -1,101 +1,62 @@
-<inject from="/package/card-package" name="card-package"></inject>
+<inject from="/package/list" name="list"></inject>
 <inject from="/package/edit-package" name="edit-package"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
-<link href="asset/css/custom-style.css" rel="styleshe">
+<link href="asset/css/custom-style.css" rel="stylesheet">
 
 
 <div data.load="getTravelAgent()">
-    <edit-package if.bind="@editPackageId" travelAgentId.bind="@travelAgentId" packageId.bind=@editPackageId" close.trigger="onCloseEditor()"></edit-package>
-    <span if.bind="!@editPackageId" >
+    <edit-package if.bind="@isEditMode" travelAgentId.bind="@travelAgentId" packageId.bind="@editPackageId" close.trigger="onCloseEditor()"></edit-package>
+    <span if.bind="!@isEditMode" >
         <panel title.bind="data.travelAgentName" nofooter>
             <span slot.name="body">
                 <entry type="button" naked value="Add New Package" click.trigger="onAddPackage()"></entry>
             </span>
         </panel>
+        <list travelAgentId.bind=@travelAgentId" editPackage.trigger="onEditPackage(event)" showItinerary.trigger="onShowItinerary(event)"></list>
     </span>
-    <div if.bind="!@editPackageId" data.load="getPackages()">
-        <p for.each="pkg in data">
-            <card-package pkg.bind="pkg" edit.trigger="onEditPackage(event)" showItinerary.trigger="onShowItinerary(event)"></card-package>
-        </p>
-    </div>
 </div>
 
 <script>
 
     function initState(props) {
-    	//debugger;
     	return {
 		    travelAgentId:props.travelAgentId,
 		    editPackageId:null,
+            isEditMode: false,
             alert: new Alert(),
         }
     }
 
     function getTravelAgent() {
-    	debugger;
     	var self = this;
 	    return new Promise(function (resolve) {
 		    dpd.travelagents.get(self.state.travelAgentId, function (ta, err) {
-		    	debugger;
 			    self.state.alert.alert(err);
-			    if(!err) {
-				    resolve(ta);
-			    }
-			    else resolve({});
-//			    $patchChanges();
+                resolve(ta);
 		    });
 	    });
     }
 
-    function getPackages(){
-    	//debugger;
-    	var self = this;
-    	return new Promise(function(resolve){
-    		//debugger;
-    		var q = {
-    			"travelAgentId": self.state.travelAgentId
-            }
-    		dpd.packages.get(q, function(result, err){
-    			//debugger;
-			    self.state.alert.alert(err);
-			    if(!err) {
-				    resolve(result);
-			    };
-            });
-        });0
-    }
-
     function onCloseEditor() {
-    	debugger;
 	    this.state.editPackageId=null;
+	    this.state.isEditMode=false;
 	    $patchChanges();
     }
 
-    function onSavePackage(pkg) {
-    	pkg = pkg.data;
-    	var self = this;
-    	pkg.travelAgentId = self.state.travelAgentId;
-    	dpd.packages.post(pkg, function(result,err){
-		    self.state.alert.alert(err);
-		    if(!err){
-		    	self.state.editackageId=null;
-			    resolve(result);
-		    };
-    		$patchChanges();
-        });
-    }
     function onEditPackage(packageId) {
     	this.state.editPackageId = packageId.data;
+	    this.state.isEditMode=true;
     	$patchChanges();
     }
+
     function onShowItinerary(packageId) {
 	    window.location.hash="#app/itinerary.home:packageId=" + packageId.data;
     }
 
     function onAddPackage() {
-    	this.state.editPackageId=-1;
+    	this.state.editPackageId=null;
+	    this.isEditMode=true;
     	$patchChanges();
-	    //window.location.hash="#app/action.myPackages:travelAgentId=" + event + ":editPackageId=-1";
     }
 </script>

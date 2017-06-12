@@ -66,7 +66,7 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
   }
 
   function $render(_props, _slotView) {
-    _context["card-user-approvals"] = $inject("/component/card-user-approvals");
+    _context["card-user-approvals"] = $inject("/user/card-user-approvals");
     var cardUserApprovals = _context["card-user-approvals"];
     _context["alert"] = $inject("/component/alert");
     var alert = _context["alert"];

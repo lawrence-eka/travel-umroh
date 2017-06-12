@@ -1,5 +1,5 @@
-<inject from="/component/card-booking" name="card-booking"></inject>
-<inject from="/component/card-passenger" name="card-passenger"></inject>
+<inject from="/booking/card-booking" name="card-booking"></inject>
+<inject from="/booking/card-passenger" name="card-passenger"></inject>
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
@@ -76,7 +76,7 @@
             if(err){
                 errorMessage = err.message;
             } else {
-                window.location.hash = '#app/action.paymentDetails:bookingId=' + bookingId;
+                window.location.hash = '#app/booking.paymentDetails:bookingId=' + bookingId;
             }
             $patchChanges();
         });

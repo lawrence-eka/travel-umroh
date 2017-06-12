@@ -32,7 +32,6 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
 
 
   function initState(props) {
-    debugger;
     return {
       datePair: new DatePair($patchChanges),
       packageId: props.packageId,
@@ -44,16 +43,14 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
   function getOnePackage(id) {
     var self = this;
     return new Promise(function(resolve) {
-      debugger;
-      if (id != -1) {
+      if (id) {
         dpd.packages.get(id, function(pkg, err) {
-          debugger;
           self.state.alert.alert(err);
           if (err) {
             pkg = {};
           } else {
             if (!pkg) {
-              var pkg = {
+              pkg = {
                 "travelAgentId": self.state.travelAgentId
               };
             }
@@ -210,9 +207,9 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
-              "type": "date",
+              "type": "hidden",
               "name": "validFrom",
-              "prompt": "Valid From",
+              "naked": "naked",
               "value": (data.validFrom ? data.validFrom.toYYYYMMDD() : _state.datePair.defaultStartDate()),
               "min": _state.datePair.minStartDate.bind(self)(),
               "onfocusout": function(event) {
@@ -243,7 +240,7 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
               var _params = {
                 "type": "date",
                 "name": "validUntil",
-                "prompt": "Valid Until",
+                "prompt": "Registeration Open Until",
                 "value": (data.validUntil ? data.validUntil.toYYYYMMDD() : _state.datePair.defaultEndDate()),
                 "min": _state.datePair.minEndDate.bind(self)()
               };

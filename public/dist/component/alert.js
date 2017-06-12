@@ -68,7 +68,7 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       for (var i in errorList) {
         for (var name in errorList[i]) {
           if (errorList[i].hasOwnProperty(name)) {
-            result.push(name + ": " + errorList[i][name]);
+            result.push((name == 'email' || name == 'username' || name == 'email' ? name + ": " : '') + errorList[i][name]);
           }
         }
       }

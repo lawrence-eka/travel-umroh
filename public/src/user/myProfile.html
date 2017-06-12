@@ -24,7 +24,7 @@
 	}
 
 	function onCancel() {
-		window.location.hash = "#app/action.searchPackage";
+		window.location.hash = "#app/booking.searchPackage";
 	}
 	function onSave(profile){
 	    profile = profile.data;
@@ -34,7 +34,7 @@
                 self.state.error.message = err;
             } else {
             	storage.me.save(me, storage.me.isRemembered());
-                window.location.hash = '#app/action.searchPackage';
+                window.location.hash = '#app/booking.searchPackage';
             }
         });
 	}

@@ -32,70 +32,33 @@ yalla.framework.addComponent("/dist/package/home", (function() {
 
 
   function initState(props) {
-    //debugger;
     return {
       travelAgentId: props.travelAgentId,
       editPackageId: null,
+      isEditMode: false,
       alert: new Alert(),
     }
   }
 
   function getTravelAgent() {
-    debugger;
     var self = this;
     return new Promise(function(resolve) {
       dpd.travelagents.get(self.state.travelAgentId, function(ta, err) {
-        debugger;
         self.state.alert.alert(err);
-        if (!err) {
-          resolve(ta);
-        } else resolve({});
-        //			    $patchChanges();
+        resolve(ta);
       });
     });
-  }
-
-  function getPackages() {
-    //debugger;
-    var self = this;
-    return new Promise(function(resolve) {
-      //debugger;
-      var q = {
-        "travelAgentId": self.state.travelAgentId
-      }
-      dpd.packages.get(q, function(result, err) {
-        //debugger;
-        self.state.alert.alert(err);
-        if (!err) {
-          resolve(result);
-        };
-      });
-    });
-    0
   }
 
   function onCloseEditor() {
-    debugger;
     this.state.editPackageId = null;
+    this.state.isEditMode = false;
     $patchChanges();
-  }
-
-  function onSavePackage(pkg) {
-    pkg = pkg.data;
-    var self = this;
-    pkg.travelAgentId = self.state.travelAgentId;
-    dpd.packages.post(pkg, function(result, err) {
-      self.state.alert.alert(err);
-      if (!err) {
-        self.state.editackageId = null;
-        resolve(result);
-      };
-      $patchChanges();
-    });
   }
 
   function onEditPackage(packageId) {
     this.state.editPackageId = packageId.data;
+    this.state.isEditMode = true;
     $patchChanges();
   }
 
@@ -104,14 +67,14 @@ yalla.framework.addComponent("/dist/package/home", (function() {
   }
 
   function onAddPackage() {
-    this.state.editPackageId = -1;
+    this.state.editPackageId = null;
+    this.isEditMode = true;
     $patchChanges();
-    //window.location.hash="#app/action.myPackages:travelAgentId=" + event + ":editPackageId=-1";
   }
 
   function $render(_props, _slotView) {
-    _context["card-package"] = $inject("/package/card-package");
-    var cardPackage = _context["card-package"];
+    _context["list"] = $inject("/package/list");
+    var list = _context["list"];
     _context["edit-package"] = $inject("/package/edit-package");
     var editPackage = _context["edit-package"];
     _context["entry"] = $inject("/component/entry");
@@ -121,7 +84,7 @@ yalla.framework.addComponent("/dist/package/home", (function() {
     _elementOpenStart("link", "");
     _attr("element", "dist.package.home");
     _attr("href", "asset/css/custom-style.css");
-    _attr("rel", "styleshe");
+    _attr("rel", "stylesheet");
     _elementOpenEnd("link");
     _elementClose("link");
     _elementOpenStart("div", "");
@@ -156,7 +119,7 @@ yalla.framework.addComponent("/dist/package/home", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        if (_state.editPackageId) {
+        if (_state.isEditMode) {
           var _params = {
             "travelAgentId": _state.travelAgentId,
             "packageId": _state.editPackageId,
@@ -183,7 +146,7 @@ yalla.framework.addComponent("/dist/package/home", (function() {
           };
           _context["edit-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
-        if (!_state.editPackageId) {
+        if (!_state.isEditMode) {
           _elementOpenStart("span", "");
           _elementOpenEnd("span");
           var _params = {
@@ -223,95 +186,51 @@ yalla.framework.addComponent("/dist/package/home", (function() {
               _elementClose("span");
             }
           });
+          var _params = {
+            "travelAgentId": _state.travelAgentId,
+            "oneditPackage": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onEditPackage.bind(self)(event);
+            },
+            "onshowItinerary": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onShowItinerary.bind(self)(event);
+            }
+          };
+          _context["list"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _elementClose("span");
-        }
-        if (!_state.editPackageId) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          (function(domNode) {
-            var node = domNode.element;
-            var self = {
-              target: node
-            };
-            self.properties = _props;
-            if ('elements' in self.target) {
-              self.elements = self.target.elements;
-            }
-            self.currentTarget = self.target;
-            self.component = _component;
-            self.component._state = self.component._state || {};
-            self.state = self.component._state;
-
-            function asyncFunc_2(data) {
-              var _array = data || [];
-              _array.forEach(function(pkg) {
-                _elementOpenStart("p", "");
-                _elementOpenEnd("p");
-                var _params = {
-                  "pkg": pkg,
-                  "onedit": function(event) {
-                    var self = {
-                      target: event.target
-                    };
-                    self.properties = _props;
-                    if ('elements' in self.target) {
-                      self.elements = self.target.elements;
-                    }
-                    self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                    self.component = _component;
-                    self.component._state = self.component._state || {};
-                    self.state = self.component._state;
-                    self.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                      if ('on' + eventName in _props) {
-                        _props['on' + eventName](event);
-                      }
-                    };
-                    onEditPackage.bind(self)(event);
-                  },
-                  "onshowItinerary": function(event) {
-                    var self = {
-                      target: event.target
-                    };
-                    self.properties = _props;
-                    if ('elements' in self.target) {
-                      self.elements = self.target.elements;
-                    }
-                    self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                    self.component = _component;
-                    self.component._state = self.component._state || {};
-                    self.state = self.component._state;
-                    self.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                      if ('on' + eventName in _props) {
-                        _props['on' + eventName](event);
-                      }
-                    };
-                    onShowItinerary.bind(self)(event);
-                  }
-                };
-                _context["card-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("p");
-              });
-            }
-            var promise = getPackages.bind(self)();
-            if (promise && typeof promise == "object" && "then" in promise) {
-              _skip();
-              promise.then(function(_result) {
-                $patchChanges(node, function() {
-                  asyncFunc_2.call(self, _result)
-                });
-              }).catch(function(err) {
-                console.log(err);
-              });
-            } else {
-              asyncFunc_2.call(self, promise)
-            }
-          })({
-            element: IncrementalDOM.currentElement(),
-            pointer: IncrementalDOM.currentPointer()
-          });
-          _elementClose("div");
         }
       }
       var promise = getTravelAgent.bind(self)();

@@ -12,12 +12,14 @@
                 <div class="row">
                     <entry type="text" name="packageName" prompt="Package Name" value.bind="data.packageName"></entry>
                     <entry type="text" name="tourLeader" prompt="Tour Leader" value.bind="data.tourLeader"></entry>
-                    <entry type="date" name="validFrom" prompt="Valid From"
+
+                    <entry type="hidden" name="validFrom" naked
                            value.bind="(data.validFrom ? data.validFrom.toYYYYMMDD() : @datePair.defaultStartDate())"
                            min.bind="@datePair.minStartDate()"
                            focusout.trigger="@datePair.onStartDateFocusOut('validUntil')"></entry>
+
                     <span ref.name="validUntil">
-                        <entry type="date" name="validUntil" prompt="Valid Until"
+                        <entry type="date" name="validUntil" prompt="Registeration Open Until"
                                value.bind="(data.validUntil ? data.validUntil.toYYYYMMDD() : @datePair.defaultEndDate())"
                                min.bind="@datePair.minEndDate()"></entry>
                     </span>
@@ -42,7 +44,6 @@
 <script>
 
     function initState(props) {
-    	debugger;
     	return {
             datePair: new DatePair($patchChanges),
             packageId: props.packageId,
@@ -54,16 +55,14 @@
     function getOnePackage(id) {
 	    var self = this;
 	    return new Promise(function (resolve) {
-	    	debugger;
-		    if(id != -1) {
+		    if(id) {
 			    dpd.packages.get(id, function (pkg, err) {
-			    	debugger;
 				    self.state.alert.alert(err);
 				    if (err) {
 					    pkg={};
 				    } else {
 					    if(!pkg) {
-						    var pkg = {
+						    pkg = {
 							    "travelAgentId": self.state.travelAgentId
 						    };
 					    }

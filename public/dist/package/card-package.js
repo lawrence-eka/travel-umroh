@@ -30,6 +30,16 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
 
   function onPropertyChange(event) {};
 
+  function whatStatus(pkg) {
+    var today = new Date();
+    if (!pkg.isPublished) return "Draft";
+    else if (pkg.validFrom > today) return "Published, Not Open Yet";
+    else if (pkg.validFrom <= today && pkg.validUntil >= today) return "Published, Registration Open";
+    else if (pkg.validUntil <= today && pkg.travelDateFrom >= today) return "Published, Closed";
+    else if (pkg.travelDateFrom <= today && pkg.travelDateUntil >= today) return "On Going";
+    else return "Done";
+  }
+
   function onClick(packageId) {
     this.emitEvent('click', packageId);
   }
@@ -93,6 +103,13 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
       if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
+        _elementOpenStart("strong", "");
+        _elementOpenEnd("strong");
+        _text("Status:" + (whatStatus(_props.pkg)) + "");
+        _elementClose("strong");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
         _text("Travel Date: " + (_props.pkg.travelDateFrom ? _props.pkg.travelDateFrom.toStringDateRange(_props.pkg.travelDateUntil) : '') + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");

@@ -33,7 +33,6 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
   function initState(props) {
     //debugger;
     return {
-      //entryType: props.defaults.entryType,
       entryType: props.entryType,
       itineraryId: props.itineraryId,
       packageId: props.packageId,
@@ -47,24 +46,32 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
   }
 
   function getItinerary() {
-    //debugger;
     var self = this;
     return new Promise(function(resolve) {
-      debugger;
-      var q = {
-        "packageId": self.state.packageId,
-        "id": self.state.itineraryId,
-      }
-      dpd.itineraries.get(q, function(itr, err) {
-        debugger;
-        if (err) {
-          self.state.alert.alert(err);
+      (new Utils()).itineraries.recommendedNewDates(self.state.packageId).then(function(data) {
+        //debugger;
+        self.state.datePair.departure.setDefaults(null, null, data);
+        self.state.datePair.checkIn.setDefaults(null, null, data);
+
+        if (self.state.itineraryId) {
+          var q = {
+            "packageId": self.state.packageId,
+            "id": self.state.itineraryId,
+          }
+          dpd.itineraries.get(q, function(itr, err) {
+            //debugger;
+            self.state.alert.alert(err);
+            if (itr) {
+              self.state.entryType = (itr.entry.transport ? 'Transport' : 'Hotel');
+              resolve(itr);
+            }
+          });
         } else {
-          self.state.alert.alert(null);
+          resolve({
+            packageId: self.state.packageId,
+            entry: {},
+          });
         }
-        resolve(itr.constructor === Array ? {
-          entry: {}
-        } : itr);
       });
     });
   }
@@ -90,28 +97,13 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
 
   var errorMessage = '';
 
-  function loadItinerary(itinerary) {
-    debugger;
-    itinerary = (itinerary ? itinerary : {
-      entry: {}
-    });
-    if (this.state.entryType == "") {
-      if (itinerary && itinerary.entry && itinerary.entry.hotel) this.state.entryType = 'Hotel';
-      else this.state.entryType = 'Transport';
-    }
-    if (this.state.entryType == 'Transport')
-      this.state.transportType = itinerary.entry.transportType ? itinerary.entry.transportType : 'Plane';
-    return itinerary;
-
-  }
-
   function onCancel() {
-    debugger;
+    //debugger;
     this.emitEvent('close');
   }
 
   function onSave(event, itinerary) {
-    debugger;
+    //debugger;
     var form = this.target.form;
     var itinerary = {};
     itinerary.id = form.elements.id.value;
@@ -121,8 +113,8 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
     if (this.state.entryType == 'Hotel') {
       itinerary.entry.hotel = form.elements.hotel.value;
       itinerary.entry.city = form.elements.city.value;
-      itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).getTime();
-      itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).getTime();
+      itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).setHours(23, 59, 59);
+      itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).setHours(23, 59, 59);
     } else {
       itinerary.entry.transport = form.elements.transport.value;
       itinerary.entry.transportType = form.elements.transportType.value;
@@ -134,12 +126,9 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
     var self = this;
     if (itinerary.id == "") {
       dpd.itineraries.post(itinerary, function(result, err) {
-        debugger;
-        if (err) {
-          self.state.alert.alert(err);
-        }
+        //debugger;
+        self.state.alert.alert(err);
         if (result) {
-          self.state.alert.alert(null);
           self.emitEvent('close');
         }
         $patchChanges();
@@ -147,11 +136,9 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
     } else {
       debugger;
       dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
-        debugger;
-        if (err) {
-          self.state.alert.alert(err);
-        } else {
-          self.state.alert.alert(null);
+        //debugger;
+        self.state.alert.alert(err);
+        if (result) {
           self.emitEvent('close');
         }
         $patchChanges();
@@ -232,68 +219,6 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
             _attr("value", data.packageId);
             _elementOpenEnd("input");
             _elementClose("input");
-            if (!_props.itinerary) {
-              _elementOpenStart("div", "");
-              _attr("class", "row");
-              _elementOpenEnd("div");
-              var _params = {
-                "type": "button",
-                "value": "Transport",
-                "name": "btnTransport",
-                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-                "class": setButtonClass.bind(self)('Transport'),
-                "onclick": function(event) {
-                  var self = {
-                    target: event.target
-                  };
-                  self.properties = _props;
-                  if ('elements' in self.target) {
-                    self.elements = self.target.elements;
-                  }
-                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                  self.component = _component;
-                  self.component._state = self.component._state || {};
-                  self.state = self.component._state;
-                  self.emitEvent = function(eventName, data) {
-                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                    if ('on' + eventName in _props) {
-                      _props['on' + eventName](event);
-                    }
-                  };
-                  onClick.bind(self)();
-                }
-              };
-              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-              var _params = {
-                "type": "button",
-                "value": "Hotel",
-                "name": "btnHotel",
-                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-                "class": setButtonClass.bind(self)('Hotel'),
-                "onclick": function(event) {
-                  var self = {
-                    target: event.target
-                  };
-                  self.properties = _props;
-                  if ('elements' in self.target) {
-                    self.elements = self.target.elements;
-                  }
-                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                  self.component = _component;
-                  self.component._state = self.component._state || {};
-                  self.state = self.component._state;
-                  self.emitEvent = function(eventName, data) {
-                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                    if ('on' + eventName in _props) {
-                      _props['on' + eventName](event);
-                    }
-                  };
-                  onClick.bind(self)();
-                }
-              };
-              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-              _elementClose("div");
-            }
             _elementOpenStart("div", "");
             _attr("class", isVisible.bind(self)('Transport'));
             _elementOpenEnd("div");
@@ -348,8 +273,8 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
               "type": "datetime-local",
               "name": "departure",
               "prompt": "Departure",
-              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : _state.datePair.departure.defaultStartDate()),
-              "min": _state.datePair.departure.minStartDate.bind(self)(),
+              "value": (data.entry.departure ? data.entry.departure.toYYYYMMDD(true) : _state.datePair.departure.defaultStartDate(true)),
+              "min": _state.datePair.departure.minStartDate.bind(self)(true),
               "onfocusout": function(event) {
                 var self = {
                   target: event.target
@@ -368,7 +293,7 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
                     _props['on' + eventName](event);
                   }
                 };
-                _state.datePair.departure.onFocusOut.bind(self)('arrival');
+                _state.datePair.departure.onStartDateFocusOut.bind(self)('arrival');
               }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -386,8 +311,8 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
                 "type": "datetime-local",
                 "name": "arrival",
                 "prompt": "Arrival",
-                "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : _state.datePair.departure.defaultEndDate()),
-                "min": _state.datePair.departure.minEndDate.bind(self)()
+                "value": (data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : _state.datePair.departure.defaultEndDate(true)),
+                "min": _state.datePair.departure.minEndDate.bind(self)(true)
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             })()
@@ -408,11 +333,11 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
             _attr("class", "row");
             _elementOpenEnd("div");
             var _params = {
-              "type": "datetime",
+              "type": "date",
               "name": "checkIn",
               "class": "form-control input-sm",
               "prompt": "Check In",
-              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD(true) : _state.datePair.checkIn.defaultStartDate()),
+              "value": (data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD() : _state.datePair.checkIn.defaultStartDate()),
               "min": _state.datePair.checkIn.minStartDate.bind(self)(),
               "onfocusout": function(event) {
                 var self = {
@@ -432,7 +357,7 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
                     _props['on' + eventName](event);
                   }
                 };
-                _state.datePair.checkIn.onFocusOut.bind(self)('checkOut');
+                _state.datePair.checkIn.onStartDateFocusOut.bind(self)('checkOut');
               }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -440,11 +365,11 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
             _elementOpenEnd("span");
             yalla.framework.registerRef("checkOut", IncrementalDOM.currentElement(), function() {
               var _params = {
-                "type": "datetime",
+                "type": "date",
                 "name": "checkOut",
                 "class": "form-control input-sm",
                 "prompt": "Check Out",
-                "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD(true) : _state.datePair.checkIn.defaultEndDate()),
+                "value": (data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD() : _state.datePair.checkIn.defaultEndDate()),
                 "min": _state.datePair.checkIn.minEndDate.bind(self)()
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -478,8 +403,8 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
             var _params = {
-              "alertType": 'error',
-              "message": errorMessage
+              "alertType": _state.alert.type.bind(self)(),
+              "message": _state.alert.text.bind(self)()
             };
             _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementOpenStart("div", "");

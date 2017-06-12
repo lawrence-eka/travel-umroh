@@ -48,8 +48,8 @@ yalla.framework.addComponent("/dist/travel-agent/card-travel-agent", (function()
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
     _elementClose("link");
-    _context["card"] = $inject("/component/panel");
-    var card = _context["card"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
     _elementOpenStart("div", "");
@@ -73,7 +73,7 @@ yalla.framework.addComponent("/dist/travel-agent/card-travel-agent", (function()
       "title": _props.travelAgent.travelAgentName,
       "nofooter": "nofooter"
     };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");

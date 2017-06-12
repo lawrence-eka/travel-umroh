@@ -1,4 +1,4 @@
-<inject from="/component/card-booking" name="card-booking"></inject>
+<inject from="/bookinf/card-booking" name="card-booking"></inject>
 <inject from="/component/panel" name="card"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/entry" name="entry"></inject>
@@ -78,7 +78,7 @@
 	                errorMessage = JSON.stringify(err);
 	                $patchChanges();
 	            } else {
-			        window.location.hash = '#app/action.paymentConfirmation:bookingId=' + booking.id;
+			        window.location.hash = '#app/booking.paymentConfirmation:bookingId=' + booking.id;
 	            }
 	        });
         });

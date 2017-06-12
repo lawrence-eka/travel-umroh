@@ -1,58 +1,32 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
-<inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
+<inject from="/itinerary/list" name="list"></inject>
 <inject from="/itinerary/edit-itinerary" name="edit-itinerary"></inject>
 
 <div data.load="getPackage()">
-    <edit-itinerary if.bind="@editItineraryId == -1" close.trigger="onCloseEdit(event)" itineraryId.bind="@editItineraryId" entryType.bind="@entryType" packageId.bind="@packageId"></edit-itinerary>
-    <panel if.bind="!@editItineraryId" title.bind="data.packageName" nofooter>
-        <div slot.name="body">
-            <entry type="button" value="Add Transport" click.trigger="onAddItinerary('Transport')" if.bind="!@editItineraryId"></entry>
-            <entry type="button" value="Add Hotel" click.trigger="onAddItinerary('Hotel')" if.bind="!@editItineraryId"></entry>
-        </div>
-    </panel>
-    <div if.bind="!@editItineraryId" data.load="queryItineraries()">
-        <p for.each="itr in data">
-            <card-itinerary itr.bind="itr" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></card-itinerary>
-        </p>
-    </div>
+    <edit-itinerary if.bind="@isEditMode" close.trigger="onCloseEdit(event)" itineraryId.bind="@editItineraryId" entryType.bind="@entryType" packageId.bind="@packageId"></edit-itinerary>
+    <span if.bind="!@isEditMode">
+        <panel title.bind="data.packageName" nofooter>
+            <div slot.name="body">
+                <entry type="button" value="Add Transport" click.trigger="onAddItinerary('Transport')" ></entry>
+                <entry type="button" value="Add Hotel" click.trigger="onAddItinerary('Hotel')" ></entry>
+            </div>
+        </panel>
+        <list packageId.bind="@packageId" editItinerary.trigger="onEditItinerary(event)" deleteItinerary.trigger="onDeleteItinerary(event)"></list>
+    </span>
 </div>
 
 <script>
 	function initState(props) {
 		return {
 			packageId: props.packageId,
-			itinerary: [],
+			//itinerary: [],
             entryType: '',
 			editItineraryId: null,
 			alert : new Alert(),
+            isEditMode: false,
 		}
 	}
-
-	function queryItineraries() {
-		var self = this;
-		return new Promise(function (resolve) {
-			var q = {
-				"packageId": self.state.packageId,
-				"$sort": {"fromDateTime":1}
-			}
-			dpd.itineraries.get(q, function (itr, err) {
-				if (err) {
-					self.state.alert.alert(err);
-					self.state.itinerary = [];
-				} else {
-					self.state.alert.alert(null);
-					self.state.itinerary = itr;
-				}
-				resolve(self.state.itinerary);
-			});
-		});
-	}
-
-	function onCloseEdit() {
-		this.state.editItineraryId = null;
-		$patchChanges();
-    }
 
 	function getPackage(){
 		var self = this;
@@ -63,58 +37,29 @@
 		});
 	}
 
-	function calculateDefaults() {
-		var result = {
-			date: {
-				default: (new Date())
-			},
-			entryType:'Transport'
-		};
-		if(this.state && this.state.itinerary && this.state.itinerary.length > 0) {
-			if (this.state.editItineraryId != -1) {
-				for (var i = 0; i < this.state.itinerary.length; i++) {
-					if (this.state.itinerary[i].id == this.state.editItineraryId) {
-						if (i > 0) {
-							result.date.min = this.state.itinerary[i - 1].toDateTime;
-						}
-						if (i < this.state.itinerary.length - 1) {
-							result.date.max = this.state.itinerary[i + 1].fromDateTime;
-						}
-						return result;
-					}
-				}
-			}
-			else {
-				result.date.default = this.state.itinerary[this.state.itinerary.length - 1].toDateTime;
-				result.entryType = this.state.itinerary[this.state.itinerary.length - 1].entry.transport ? 'Hotel' : 'Transport';
-			}
-		}
-		return result;
+	function onCloseEdit() {
+		this.state.editItineraryId = null;
+		this.state.isEditMode=false;
+		$patchChanges();
 	}
 
 	function onAddItinerary(entryType) {
-		this.state.editItineraryId=-1;
+		this.state.editItineraryId=null;
+		this.state.isEditMode=true;
 		this.state.entryType = entryType;
 		$patchChanges();
 	}
-	function onEdit(itineraryId) {
+	function onEditItinerary(itineraryId) {
 		this.state.editItineraryId = itineraryId.data;
+		this.state.isEditMode=true;
 		$patchChanges();
 	}
 
-	function onDelete(itineraryId) {
+	function onDeleteItinerary(itineraryId) {
 		//debugger;
 		var self = this;
 		dpd.itineraries.del(itineraryId.data,function(err){
 			debugger;
-			if(err){
-				if (err) {
-					self.state.alert.alert(err);
-				}
-			}
-			else {
-				self.state.alert.alert(null);
-			}
 			$patchChanges();
 		});
 	}

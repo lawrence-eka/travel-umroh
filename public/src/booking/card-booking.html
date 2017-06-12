@@ -1,0 +1,50 @@
+<inject from="/component/panel" name="card"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
+
+<div>
+    <div data.load="loadPackage($bkg.packageId)" data.name="pkg">
+        <card click.trigger="onClick($bkg.id)" title.bind="'Package: ' + pkg.packageName" nofooter>
+            <div slot.name="body">
+                Travel Date: {{(pkg.travelDateFrom).toStringDateRange(pkg.travelDateUntil)}}<br/>
+                Operator: <span data.load="loadAgent(pkg.travelAgentId)" data.name='ta'>{{ta.travelAgentName}}</span><br/>
+                Land Arrangements: {{$bkg.costLandArrangements ? $bkg.costLandArrangements.toFormattedString() : ''}}<br/>
+                Tickets: {{$bkg.costTickets ? $bkg.costTickets.toFormattedString() : ''}}<br/>
+                Total passenger: {{$bkg.numberOfPassengers}}<br/>
+                Total Price: {{($bkg.totalPrice ? $bkg.totalPrice.toFormattedString() : '')}}<br/>
+                Unique Code: {{$bkg.uniqueCode ? $bkg.uniqueCode : ''}}<br/>
+                Grand Total: {{($bkg.totalPrice + $bkg.uniqueCode) ? ($bkg.totalPrice + $bkg.uniqueCode).toFormattedString() : ''}}<br/>
+                Expiry Date: {{($bkg.waitingForPaymentUntil ? $bkg.waitingForPaymentUntil.toDateComponents(false, true) : '')}}
+            </div>
+        </card>
+    </div>
+</div>
+
+<script>
+
+    function onClick(bookingId){
+    	debugger;
+    	this.emitEvent('click', bookingId);
+    }
+
+    function loadPackage(packageId){
+        return new Promise(function(resolve){
+            dpd.packages.get(packageId,function(pkg){
+                resolve(pkg);
+            });
+        });
+    }
+
+
+    function loadAgent(travelAgentId){
+        return new Promise(function(resolve){
+            dpd.travelagents.get(travelAgentId, function(agent, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(agent);
+                }
+            });
+        });
+    }
+</script>

@@ -40,14 +40,14 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
   function getOneTravelAgent(id) {
     var self = this;
     return new Promise(function(resolve) {
-      if (id != -1) {
+      if (id) {
         dpd.travelagents.get(id, function(ta, err) {
           self.state.alert.alert(err);
           if (err) {
             ta = {};
           } else {
             if (!ta) {
-              var ta = {
+              ta = {
                 "contactPersonId": storage.me.read().id
               };
             }
@@ -56,7 +56,7 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
           $patchChanges();
         });
       } else {
-        var ta = {
+        ta = {
           "contactPersonId": storage.me.read().id
         };
         resolve(ta);

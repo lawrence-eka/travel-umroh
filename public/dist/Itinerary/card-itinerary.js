@@ -74,7 +74,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itinerary", (function() {
         if (_props.itr.entry.transport) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
-          _text("Airline: " + (_props.itr.entry.transport) + "");
+          _text("" + (_props.itr.entry.transportType) + ": " + (_props.itr.entry.transport) + "");
           _elementOpenStart("br", "");
           _elementOpenEnd("br");
           _elementClose("br");

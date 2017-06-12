@@ -1,4 +1,4 @@
-<inject from="/component/card-booking" name="card-booking"></inject>
+<inject from="/booking/card-booking" name="card-booking"></inject>
 
 <div data.load="getBookings()">
     <p for.each="bkg in data">
@@ -35,6 +35,6 @@
 
     function generateLink(event){
     	debugger;
-	    window.location.hash = '#app/action.bookPackage:bookingId='+event.data;
+	    window.location.hash = '#app/booking.bookPackage:bookingId='+event.data;
     }
 </script>
