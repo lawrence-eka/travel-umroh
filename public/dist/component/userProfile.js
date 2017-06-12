@@ -32,24 +32,27 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
 
 
   function initState(props) {
-    return {
-      error: {
-        message: props.errorMessage
-      }
+    var state = {
+      alert: new Alert()
     };
+    state.alert.alert(props.errorMessage);
+    return state;
   }
 
-  function loadProfile(profile, errorMessage) {
-    if (!this.state.error.message) this.state.error.message = errorMessage;
+  function onPropertyChange(event) {
+    if (event.property == 'errorMessage') this.state.alert.alert(event.newVal);
+  }
+
+  function loadProfile(profile) {
     return profile ? profile : {};
   }
 
   function onRegister() {
-    this.state.error.message = '';
+    this.state.alert.alert('');
     var form = this.target.form;
 
     if (form.elements.password.value != form.elements.repeatPassword.value) {
-      this.state.error.message = "Please repeat your password correctly";
+      this.state.alert.alert("Please repeat your password correctly");
       $patchChanges();
       return;
     }
@@ -84,20 +87,6 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
-    var _component = IncrementalDOM.currentElement();
-    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
-    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
-    _component._state._name = _elementName;
-    var _state = _component._state;
-    var _self = {
-      component: _component,
-      properties: _props,
-      state: _component._state
-    };
-    if (_validComponent) {
-      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
-    }
-    _component._properties = _props;
     _elementClose("link");
     _context["alert"] = $inject("/component/alert");
     var alert = _context["alert"];
@@ -256,8 +245,8 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
             var _params = {
-              "alertType": 'error',
-              "message": _state.error.message
+              "alertType": _state.alert.type.bind(self)(),
+              "message": _state.alert.text.bind(self)()
             };
             _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementOpenStart("div", "");
@@ -320,7 +309,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
             _elementClose("div");
             _elementClose("form");
           }
-          var promise = loadProfile.bind(self)(_props.profile, _props.errorMessage);
+          var promise = loadProfile.bind(self)(_props.profile);
           if (promise && typeof promise == "object" && "then" in promise) {
             _skip();
             promise.then(function(_result) {

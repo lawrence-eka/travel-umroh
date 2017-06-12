@@ -2,9 +2,9 @@
 <div>
     <h1>Schedule for Package One</h1>
     <hr>
-    <card for.each="item in items"></card>
+    <card for.each="item in items" item.bind="item"></card>
 </div>
 
 <script>
-    var items = ['one','two','three','four','one','two','three','four']
+    var items = ['plane','hotel','bus','hotel','ship','taxi','bus', 'train', 'car', 'plane']
 </script>

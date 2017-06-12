@@ -30,10 +30,14 @@ yalla.framework.addComponent("/dist/comp/card", (function() {
 
   function onPropertyChange(event) {};
 
+  function whatClass(item) {
+    return "fa fa-" + item + " icon-center";
+  }
+
   function $render(_props, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\n[element='dist.comp.card']{background-color: #ffffff;position: relative;}\n[element='dist.comp.card'] .leftLine{width: 100px;float: left;position: absolute;top:0;bottom: 0;}\n[element='dist.comp.card'] .content{margin-left:100px;display: block;padding-top:10px;}\n[element='dist.comp.card'] .circle{border:2px solid #cccccc;border-radius: 100%;width: 50px;height: 50px;margin: auto;text-align: center;}\n[element='dist.comp.card'] .lineVertical{border-left : 2px solid #cccccc;width: 2px;margin: auto;position: absolute;top:50px;bottom: -20px;left: 50px;}\n[element='dist.comp.card'] .leftLineContainer{}\n[element='dist.comp.card'] .icon-center {font-size:2.5rem;color : #666666;margin-top:0.7rem;}\n[element='dist.comp.card'] h3{margin-top:0px;}");
+    _text("\n[element='dist.comp.card']{/*background-color: #ffffff;*/position: relative;}\n[element='dist.comp.card'] .leftLine{width: 50px;float: left;position: absolute;top:0;bottom: 0;}\n[element='dist.comp.card'] .content{margin-left:50px;display: block;padding-top:5px;}\n[element='dist.comp.card'] .circle{border:2px solid #cccccc;border-radius: 100%;width: 30px;height: 30px;margin: auto;text-align: center;}\n[element='dist.comp.card'] .lineVertical{border-left : 2px solid #cccccc;width: 2px;margin: auto;position: absolute;top:30px;bottom: -20px;left: 25px;}\n[element='dist.comp.card'] .leftLineContainer{}\n[element='dist.comp.card'] .icon-center {font-size:1.5rem;color : #666666;margin-top:0.5rem;}\n[element='dist.comp.card'] h3{margin-top:0px;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.comp.card");
@@ -62,7 +66,7 @@ yalla.framework.addComponent("/dist/comp/card", (function() {
     _attr("class", "circle");
     _elementOpenEnd("div");
     _elementOpenStart("i", "");
-    _attr("class", "fa fa-taxi icon-center");
+    _attr("class", whatClass.bind(self)(_props.item));
     _attr("aria-hidden", "true");
     _elementOpenEnd("i");
     _elementClose("i");

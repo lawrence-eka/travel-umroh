@@ -1,0 +1,156 @@
+<inject from="/booking/card-booking" name="card-booking"></inject>
+<inject from="/booking/card-passenger" name="card-passenger"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/ppLink" name="ppLink"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
+
+<div>
+	<div data.load="queryBooking($bookingId)">
+		<card-booking bkg.bind="data" ></card-booking>
+	</div>
+	<panel title="Passenger Detail">
+		<div slot.name="body">
+			<form role="form">
+				<div slot.name="footer">
+					<ppLink></ppLink>
+				</div>
+				<div class="row">
+					<entry type="hidden" name="bookingId" value.bind="$bookingId"></entry>
+					<entry type="text" prompt="First Name" name="firstName"></entry>
+					<entry type="text" prompt="Middle Name" name="middleName"></entry>
+					<entry type="text" prompt="Last Name" name="lastName"></entry>
+					<entry type="text" prompt="Birth Place" name="birthPlace"></entry>
+					<entry type="date" prompt="Birthday" name="birthday" value.bind = "(new Date()).toYYYYMMDD()" max.bind="(new Date()).toYYYYMMDD()"></entry>
+					<entry type="text" prompt="Passport Number" name="passportNumber"></entry>
+					<entry type="date" prompt="Passport Issue Date" name="passportIssueDate" value.bind = "(new Date()).toYYYYMMDD()" max.bind="(new Date()).toYYYYMMDD()"></entry>
+					<entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate" value.bind = "(new Date()).toYYYYMMDD()" min.bind="(new Date()).toYYYYMMDD()"></entry>
+					<entry type="text" prompt="Passport Issuer" name="passportIssuer"></entry>
+					<entry type="button" name="btnRegister" value="Register" click.trigger="registerPassenger($bookingId)"></entry>
+					<entry type="button" name="btnPaymentDetail" value="Payment Detail" click.trigger="calculatePaymentDetail($bookingId)"></entry>
+				</div>
+			</form>
+		</div>
+	</panel>
+	<div data.load="getPassengers($bookingId)">
+		<p for.each="psg in data">
+			<card-passenger passenger.bind="psg"></card-passenger>
+		</p>
+	</div>
+</div>
+
+
+<script>
+    var package = {};
+    var booking = {};
+
+    //var numOfPassenger = 0;
+    var errorMessage = '';
+
+    function setPackage(pkg) {
+    	package = pkg;
+    }
+
+    function getPackage() {
+    	return package;
+    }
+
+    function setBooking(bkg) {
+    	var nop = booking.numberOfPassengers?booking.numberOfPassengers:0;
+    	booking = bkg;
+    	booking.numberOfPassengers = nop;
+    }
+
+    function setNumberOfPassengers(numberOfPassengers) {
+    	booking.numberOfPassengers = numberOfPassengers
+    }
+    function getBooking() {
+    	return booking;
+    }
+
+    function calculatePaymentDetail(bookingId) {
+        booking.uniqueCode = Math.floor(Math.random() * 1000);
+        booking.waitingForPaymentUntil = (new Date()).getTime() + 10800000;
+        dpd.bookings.put(booking, function(bkg, err) {
+            if(err){
+                errorMessage = err.message;
+            } else {
+                window.location.hash = '#app/booking.paymentDetails:bookingId=' + bookingId;
+            }
+            $patchChanges();
+        });
+   }
+
+    function getPassengers(bookingId) {
+    	debugger;
+    	return new Promise(function(resolve) {
+	    	dpd.passengers.get({"bookingId":bookingId}, function(passengers, err)
+	    	{
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                }else {
+                	setNumberOfPassengers(passengers.length);
+                    resolve(passengers);
+                }
+	    	});
+	    });
+    }
+
+    function registerPassenger(bookingId){
+    	//booking.uniqueCode = Math.floor(Math.random() * 1000);
+    	booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
+        dpd.bookings.put(booking, function(booking, err) {
+            if(err){
+                errorMessage = err.message;
+                $patchChanges();
+            } else {
+            }
+        });
+	    var form = this.target.form;
+
+    	var q = {};
+    	q.bookingId = form.elements.bookingId.value;
+        q.firstName = form.elements.firstName.value;
+        q.middleName = form.elements.middleName.value;
+        q.lastName = form.elements.lastName.value;
+        q.birthPlace = form.elements.birthPlace.value;
+        q.birthday = (new Date(form.elements.birthday.value)).getTime();
+        q.passportNumber = form.elements.passportNumber.value;
+        q.passportIssuer = form.elements.passportIssuer.value;
+        q.passportIssueDate = (new Date(form.elements.passportIssueDate.value)).getTime();
+        q.passportExpiryDate = (new Date(form.elements.passportExpiryDate.value)).getTime();
+
+        form.elements.firstName.value = "";
+        form.elements.middleName.value = "";
+        form.elements.lastName.value = "";
+        form.elements.birthPlace.value = "";
+        form.elements.birthday.value = "";
+	    form.elements.passportNumber.value = "";
+	    form.elements.passportIssuer.value = "";
+        form.elements.passportIssueDate.value = "";
+        form.elements.passportExpiryDate.value = "";
+debugger;
+        dpd.passengers.post(q, function(user, err) {
+        	debugger;
+            if(err){
+                errorMessage = JSON.stringify(err);
+            }
+            $patchChanges();
+        });
+	    return false;
+    }
+
+    function queryBooking(id){
+    	return new Promise(function(resolve){
+    		dpd.bookings.get(id, function(bkg, err) {
+    			if(err) {
+    				errorMessage = JSON.stringify(err);
+    			} else {
+    			    resolve(bkg);
+    				setBooking(bkg);
+    			}
+    		});
+    	});
+    }
+</script>

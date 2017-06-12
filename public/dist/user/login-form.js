@@ -31,11 +31,14 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   function onPropertyChange(event) {};
 
 
-  var errorMessage = '';
+  function initState(props) {
+    return {
+      alert: new Alert(),
+    }
+  }
 
   function login() {
     var form = this.target.form;
-    errorMessage = "";
     var userName = form.elements.username.value.toLowerCase();
     var password = form.elements.password.value;
     var rememberMe = form.elements.rememberMe.checked;
@@ -44,17 +47,19 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     form.elements.password.value = '';
     form.elements.rememberMe.checked = false;
 
+    var self = this;
     dpd.users.login({
       "username": userName,
       "password": password
     }, function(user, err) {
       if (err) {
-        errorMessage = err.message;
+
+        self.state.alert.alert(err);
         $patchChanges();
       } else {
         dpd.users.me(function(me) {
           storage.me.save(me, rememberMe);
-          window.location.hash = "#app/action.searchPackage"
+          window.location.hash = "#app/booking.searchPackage"
           $patchChanges();
         });
       }
@@ -75,20 +80,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
-    var _component = IncrementalDOM.currentElement();
-    var _validComponent = yalla.framework.validComponentName(_component, _elementName)
-    _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
-    _component._state._name = _elementName;
-    var _state = _component._state;
-    var _self = {
-      component: _component,
-      properties: _props,
-      state: _component._state
-    };
-    if (_validComponent) {
-      yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
-    }
-    _component._properties = _props;
     _elementClose("link");
     _elementOpenStart("div", "");
     _attr("element", "dist.user.login-form");
@@ -127,6 +118,9 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _elementOpenEnd("h2");
         _text("Please sign in");
         _elementClose("h2");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
         _elementOpenStart("form", "");
         _elementOpenEnd("form");
         var _params = {
@@ -185,9 +179,10 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
+        _elementClose("div");
         var _params = {
-          "alertType": 'error',
-          "message": errorMessage
+          "alertType": _state.alert.type.bind(self)(),
+          "message": _state.alert.text.bind(self)()
         };
         _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");

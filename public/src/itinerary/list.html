@@ -1,0 +1,43 @@
+<inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    <span data.load="queryItineraries()">
+        <span for.each="itr in data">
+            <card-itinerary itr.bind="itr" edit.trigger="onEditItinerary(event)" delete.trigger="onDeleteItinerary(event)"></card-itinerary>
+        </span>
+    </span>
+</div>
+
+<script>
+	function initState(props) {
+		return {
+			alert: new Alert(),
+			packageId:props.packageId,
+		};
+	}
+
+	function queryItineraries() {
+		var self = this;
+		return new Promise(function (resolve) {
+			var q = {
+				"packageId": self.state.packageId,
+				"$sort": {"fromDateTime":1}
+			}
+
+			dpd.itineraries.get(q, function (itr, err) {
+                self.state.alert.alert(err);
+				resolve(itr);
+			});
+		});
+	}
+
+	function onEditItinerary(event){
+		this.emitEvent('editItinerary', event.data);
+    }
+
+    function onDeleteItinerary(event){
+		this.emitEvent('deleteItinerary', event.data);
+    }
+</script>

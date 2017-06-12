@@ -1,0 +1,44 @@
+<inject from="/package/card-package" name="card-package"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    <span data.load="getPackages()">
+        <span for.each="pkg in data">
+            <card-package pkg.bind="pkg" edit.trigger="onEditPackage(event)" showItinerary.trigger="onShowItinerary(event)"></card-package>
+        </span>
+    </span>
+</div>
+
+<script>
+	function initState(props) {
+		return {
+			alert: new Alert(),
+            travelAgentId:props.travelAgentId,
+		};
+	}
+
+	function getPackages(){
+		//debugger;
+		var self = this;
+		return new Promise(function(resolve){
+			//debugger;
+			var q = {
+				"travelAgentId": self.state.travelAgentId,
+                "$sort": {"travelDateFrom":-1},
+			}
+			dpd.packages.get(q, function(result, err){
+				self.state.alert.alert(err);
+                resolve(result);
+			});
+		});
+	}
+
+	function onEditPackage(event) {
+		this.emitEvent('editPackage', event.data);
+    }
+
+    function onShowItinerary(event){
+		this.emitEvent('showItinerary', event.data);
+    }
+</script>

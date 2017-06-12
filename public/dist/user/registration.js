@@ -32,10 +32,13 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
 
   function initState() {
     return {
-      error: {
-        message: ''
-      }
-    };
+      alert: new Alert(),
+    }
+    //{
+    //    error : {
+    //        message : ''
+    //    }
+    //};
   }
 
   function cancelRegistration() {
@@ -47,7 +50,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     var self = this;
     dpd.users.post(profile, function(user, err) {
       if (err) {
-        self.state.error.message = err;
+        //self.state.error.message = err;
+        self.state.alert.alert(err);
         $patchChanges();
       } else {
         dpd.users.login({
@@ -55,7 +59,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
           "password": profile.password
         }, function(user, err) {
           if (err) {
-            self.state.error.message = err;
+            //self.state.error.message = err;
+            self.state.alert.alert(err);
             $patchChanges();
           } else {
             window.location.hash = '#app';
@@ -88,7 +93,6 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "error": _state.error.message,
       "onsave": function(event) {
         var self = {
           target: event.target
@@ -129,7 +133,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
         };
         cancelRegistration.bind(self)();
       },
-      "errorMessage": _state.error.message
+      "errorMessage": _state.alert.text.bind(self)()
     };
     _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");

@@ -1,0 +1,40 @@
+<inject from="/component/panel" name="card"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <card title.bind="$pkg.packageName" nofooter click.trigger="onClick($pkg.id)">
+        <div slot.name="body">
+            <strong>Status:{{whatStatus($pkg)}}</strong><br/>
+            Travel Date: {{$pkg.travelDateFrom ? $pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil) : ''}} <br/>
+            Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
+            Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
+            <div class=row" if.bind="$onedit || $onshowItinerary">
+                <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($pkg.id)"></entry>
+                <entry type="button" value="Itinerary..." divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onItineraryClicked($pkg.id)"></entry>
+            </div>
+        </div>
+    </card>
+</div>
+<script>
+    function whatStatus(pkg) {
+    	var today = new Date();
+    	if(!pkg.isPublished) return "Draft";
+	    else if(pkg.validFrom > today) return "Published, Not Open Yet";
+	    else if(pkg.validFrom <= today && pkg.validUntil >= today) return "Published, Registration Open";
+    	else if(pkg.validUntil <= today && pkg.travelDateFrom >= today) return "Published, Closed";
+    	else if(pkg.travelDateFrom <= today && pkg.travelDateUntil >= today) return "On Going";
+    	else return "Done";
+    }
+
+    function onClick(packageId) {
+        this.emitEvent('click', packageId);
+    }
+
+    function onItineraryClicked(packageId) {
+        this.emitEvent('showItinerary', packageId);
+    }
+    function onEdit(packageId) {
+	    this.emitEvent('edit', packageId);
+    }
+
+</script>

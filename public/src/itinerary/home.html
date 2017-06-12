@@ -1,0 +1,66 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/itinerary/list" name="list"></inject>
+<inject from="/itinerary/edit-itinerary" name="edit-itinerary"></inject>
+
+<div data.load="getPackage()">
+    <edit-itinerary if.bind="@isEditMode" close.trigger="onCloseEdit(event)" itineraryId.bind="@editItineraryId" entryType.bind="@entryType" packageId.bind="@packageId"></edit-itinerary>
+    <span if.bind="!@isEditMode">
+        <panel title.bind="data.packageName" nofooter>
+            <div slot.name="body">
+                <entry type="button" value="Add Transport" click.trigger="onAddItinerary('Transport')" ></entry>
+                <entry type="button" value="Add Hotel" click.trigger="onAddItinerary('Hotel')" ></entry>
+            </div>
+        </panel>
+        <list packageId.bind="@packageId" editItinerary.trigger="onEditItinerary(event)" deleteItinerary.trigger="onDeleteItinerary(event)"></list>
+    </span>
+</div>
+
+<script>
+	function initState(props) {
+		return {
+			packageId: props.packageId,
+			//itinerary: [],
+            entryType: '',
+			editItineraryId: null,
+			alert : new Alert(),
+            isEditMode: false,
+		}
+	}
+
+	function getPackage(){
+		var self = this;
+		return new Promise(function(resolve){
+			dpd.packages.get(self.state.packageId, function(result, err){
+				resolve(result);
+			});
+		});
+	}
+
+	function onCloseEdit() {
+		this.state.editItineraryId = null;
+		this.state.isEditMode=false;
+		$patchChanges();
+	}
+
+	function onAddItinerary(entryType) {
+		this.state.editItineraryId=null;
+		this.state.isEditMode=true;
+		this.state.entryType = entryType;
+		$patchChanges();
+	}
+	function onEditItinerary(itineraryId) {
+		this.state.editItineraryId = itineraryId.data;
+		this.state.isEditMode=true;
+		$patchChanges();
+	}
+
+	function onDeleteItinerary(itineraryId) {
+		//debugger;
+		var self = this;
+		dpd.itineraries.del(itineraryId.data,function(err){
+			debugger;
+			$patchChanges();
+		});
+	}
+</script>

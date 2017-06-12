@@ -25,19 +25,19 @@
     function generateMenu(me){
         if(!me) return [];
         var menusBase = [
-            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/action.myProfile'},
-            {label:'Find Package',ref:'#app/action.searchPackage'},
-            {label:'My Booking',ref:'#app/action.myBooking'}
+            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
+            {label:'Find Package',ref:'#app/booking.searchPackage'},
+            {label:'My Booking',ref:'#app/booking.myBooking'}
         ];
 
         var menuEnd = [
             {label:'Logout',ref:'#', clickTrigger: logout}];
 
         if(me.isTravelAgent){
-            menusBase.push({label:'My Travel Agent',ref:'#app/action.myTravelAgents'});
+            menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
         }
         if(me.isAdmin){
-            menusBase.push({label:'Approvals',ref:'#app/action.myApprovals'});
+            menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
         }
         return menusBase.concat(menuEnd);
     }

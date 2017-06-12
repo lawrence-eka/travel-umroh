@@ -1,10 +1,12 @@
 <style>
     root{
+        /*
         background-color: #ffffff;
+        */
         position: relative;
     }
     .leftLine{
-        width: 100px;
+        width: 50px;
         float: left;
         position: absolute;
         top:0;
@@ -12,16 +14,16 @@
     }
 
     .content{
-        margin-left:100px;
+        margin-left:50px;
         display: block;
-        padding-top:10px;
+        padding-top:5px;
     }
 
     .circle{
         border:2px solid #cccccc;
         border-radius: 100%;
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         margin: auto;
         text-align: center;
     }
@@ -30,18 +32,18 @@
         width: 2px;
         margin: auto;
         position: absolute;
-        top:50px;
+        top:30px;
         bottom: -20px;
-        left: 50px;
+        left: 25px;
     }
 
     .leftLineContainer{
 
     }
     .icon-center {
-        font-size:2.5rem;
+        font-size:1.5rem;
         color : #666666;
-        margin-top:0.7rem;
+        margin-top:0.5rem;
     }
     h3{
         margin-top:0px;
@@ -51,7 +53,7 @@
     <div class="leftLine">
         <div class="leftLineContainer">
             <div class="circle">
-                <i class="fa fa-taxi icon-center" aria-hidden="true"></i>
+                <i class.bind="whatClass($item)" aria-hidden="true"></i>
             </div>
             <div class="lineVertical"></div>
         </div>
@@ -62,3 +64,9 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
 </div>
+
+<script>
+    function whatClass(item) {
+        return "fa fa-" + item + " icon-center";
+    }
+</script>

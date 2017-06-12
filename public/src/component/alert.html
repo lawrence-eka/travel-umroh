@@ -1,14 +1,21 @@
 <link href="asset/css/custom-style.css" rel="stylesheet">
-<div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
-    <div for.each="error in @messages">{{error}}</div>
+<div class="container">
+    <div class="row">
+        <div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
+            <div for.each="error in @messages">{{error}}</div>
+        </div>
+    </div>
 </div>
-
 <script>
 
     function initState(props) {
     	return {
 		    messages: toArrayofMessages(props.message, props.alertType, props.titleCase)
 	    };
+    }
+
+    function onPropertyChange(event){
+        this.state.messages = toArrayofMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
     }
 
     function className(alertType)
@@ -29,8 +36,11 @@
         else if (typeof message === "string") {
             result.push(message);
         }
+        else if (message.hasOwnProperty("message")) {
+	        result.push(message.message);
+        }
         else if (message.hasOwnProperty("error")) {
-            result.push(message.error);
+	        result.push(message.error);
         }
         else if (message.hasOwnProperty("errors")) {
             var errorList = [];
@@ -40,7 +50,7 @@
             for (var i in errorList) {
                 for (var name in errorList[i]) {
                     if (errorList[i].hasOwnProperty(name)) {
-                        result.push(name + ": " + errorList[i][name]);
+                        result.push((name == 'email' || name == 'username' || name == 'email' ? name + ": " : '') + errorList[i][name]);
                     }
                 }
             }
@@ -52,7 +62,7 @@
 		        if(alertType != "error") {
 			        msg = (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
 		        } else {
-		        	msg = msgs.toSentenceCase();
+		        	msg = msg.toSentenceCase();
 		        }
         		finalResult.push(msg);
 	        }

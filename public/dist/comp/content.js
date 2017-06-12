@@ -33,7 +33,7 @@ yalla.framework.addComponent("/dist/comp/content", (function() {
   function $render(_props, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\n[element='dist.comp.content'] {position: fixed;top:50px;left: 0;right: 0;bottom: 0;}\n[element='dist.comp.content'] .panel{width: 100%;height: 100%;background-color: white;padding-left:1rem;padding-right:5rem;padding-top:0rem;overflow: auto;}");
+    _text("\n[element='dist.comp.content'] {position: fixed;top:50px;left: 0;right: 0;bottom: 0;}\n[element='dist.comp.content'] .panel{width: 100%;height: 100%;background-color: white;padding-left:1rem;padding-right:2.5rem;padding-top:0rem;overflow: auto;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.comp.content");

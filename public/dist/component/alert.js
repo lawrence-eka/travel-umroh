@@ -37,6 +37,10 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     };
   }
 
+  function onPropertyChange(event) {
+    this.state.messages = toArrayofMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
+  }
+
   function className(alertType) {
     var base = "alert custom-alert ";
     if (alertType == "error") base = base + "alert-danger";
@@ -52,6 +56,8 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       result = [];
     } else if (typeof message === "string") {
       result.push(message);
+    } else if (message.hasOwnProperty("message")) {
+      result.push(message.message);
     } else if (message.hasOwnProperty("error")) {
       result.push(message.error);
     } else if (message.hasOwnProperty("errors")) {
@@ -62,7 +68,7 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       for (var i in errorList) {
         for (var name in errorList[i]) {
           if (errorList[i].hasOwnProperty(name)) {
-            result.push(name + ": " + errorList[i][name]);
+            result.push((name == 'email' || name == 'username' || name == 'email' ? name + ": " : '') + errorList[i][name]);
           }
         }
       }
@@ -74,7 +80,7 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
         if (alertType != "error") {
           msg = (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
         } else {
-          msg = msgs.toSentenceCase();
+          msg = msg.toSentenceCase();
         }
         finalResult.push(msg);
       }
@@ -88,6 +94,11 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
+    _elementClose("link");
+    _elementOpenStart("div", "");
+    _attr("element", "dist.component.alert");
+    _attr("class", "container");
+    _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
     _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
@@ -102,27 +113,14 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    _elementClose("link");
+    _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
     if (_state.messages.length != 0) {
       _elementOpenStart("div", "");
-      _attr("element", "dist.component.alert");
       _attr("class", className.bind(self)(_props.alertType));
       _attr("role", "alert");
       _elementOpenEnd("div");
-      var _component = IncrementalDOM.currentElement();
-      var _validComponent = yalla.framework.validComponentName(_component, _elementName)
-      _component._state = _component._state && _validComponent ? _component._state : initState.bind(_component)(_props);
-      _component._state._name = _elementName;
-      var _state = _component._state;
-      var _self = {
-        component: _component,
-        properties: _props,
-        state: _component._state
-      };
-      if (_validComponent) {
-        yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
-      }
-      _component._properties = _props;
       var _array = _state.messages || [];
       _array.forEach(function(error) {
         _elementOpenStart("div", "");
@@ -132,6 +130,8 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       });
       _elementClose("div");
     }
+    _elementClose("div");
+    _elementClose("div");
   }
   if (typeof $render === "function") {
     $export.render = $render;

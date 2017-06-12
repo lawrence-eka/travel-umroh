@@ -1,0 +1,86 @@
+<inject from="/package/card-package" name="card-package"></inject>
+<inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
+<inject from="/itinerary/card-itineraryList" name="card-itineraryList"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<link href="asset/css/custom-style.css" rel="stylesheet">
+
+<div>
+    <div data.load="queryPackage($packageId)">
+        <card-package pkg.bind="data"></card-package>
+    </div>
+    <div data.load="queryItineraries($packageId)">
+        <card-itineraryList itinerary.bind="data" book.trigger="book($packageId)"></card-itineraryList>
+    </div>
+</div>
+
+<script>
+    var errorMessage ="";
+    function book(packageId){
+        var me = storage.me.read();
+        queryPackage(packageId).then(function(pkg){
+            var q = {
+                "userId": me.id,
+                "packageId": pkg.id,
+                "costTickets": pkg.costTickets,
+                "costLandArrangements": pkg.costLandArrangements
+            };
+            dpd.bookings.post(q, function(booking, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                } else {
+                    var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
+                    window.location.hash = '#app/booking.bookPackage:bookingId=' + bookingId;
+                }
+            });
+        });
+    }
+
+
+    function queryPackage(id){
+        return new Promise(function(resolve){
+            dpd.packages.get(id, function(pkg, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    queryTravelAgent(pkg.travelAgentId).then(function(agent){
+                        pkg.agent = agent;
+                        resolve(pkg);
+                    });
+                }
+            });
+        });
+    }
+
+    function queryTravelAgent(id) {
+        return new Promise(function(resolve){
+            dpd.travelagents.get(id, function(agent, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(agent);
+                }
+            });
+        });
+    }
+
+    function queryItineraries(packageId){
+        return new Promise(function(resolve){
+            var q = {
+                packageId: packageId,
+                $sort:{"fromDateTime":1}
+            }
+            dpd.itineraries.get(q, function(itineraries, err) {
+                if(err){
+                    errorMessage = JSON.stringify(err);
+                    $patchChanges();
+                }else {
+                    resolve(itineraries);
+                }
+            });
+        });
+    }
+
+</script>

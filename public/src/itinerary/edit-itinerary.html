@@ -1,0 +1,184 @@
+<link href="asset/css/custom-style.css" rel="stylesheet">
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/panel" name="panel"></inject>
+
+<div>
+    <panel title.bind="((@itineraryId ? 'Edit' : 'New') + ' Entry')" nofooter>
+        <div slot.name="body" data.load="getItinerary()">
+            <form>
+                <input type="hidden" name="id" value.bind="data.id">
+                <input type="hidden" name="packageId" value.bind="data.packageId">
+<!--
+                <div class=row" if.bind="false">
+                    <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
+                    <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
+                </div>
+-->
+                <div class.bind="isVisible('Transport')">
+                    <div class="row">
+                        <entry type="select" name="transportType" value.bind="data.entry.transportType" prompt="Transport" entries.bind="['Plane', 'Bus', 'Train', 'Car', 'Ship']" change.trigger="onTransportTypeChange()"></entry>
+                    </div>
+                    <div class="row">
+                        <div ref.name="spanTransport">
+                            <entry type="text" name="transport" prompt.bind="whatTransportType()" value.bind="data.entry.transport"></entry>
+                        </div>
+                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):@datePair.departure.defaultStartDate(true))" min.bind="@datePair.departure.minStartDate(true)" focusout.trigger="@datePair.departure.onStartDateFocusOut('arrival')"></entry>
+                        <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
+                        <div ref.name="arrival">
+                            <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : @datePair.departure.defaultEndDate(true))" min.bind="@datePair.departure.minEndDate(true)"></entry>
+                        </div>
+                        <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
+                    </div>
+                </div>
+                <div class.bind ="isVisible('Hotel')">
+                    <div class="row">
+                        <entry type="date" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD():@datePair.checkIn.defaultStartDate())" min.bind="@datePair.checkIn.minStartDate()" focusout.trigger="@datePair.checkIn.onStartDateFocusOut('checkOut')"></entry>
+                        <span ref.name="checkOut">
+                            <entry type="date" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD():@datePair.checkIn.defaultEndDate())" min.bind="@datePair.checkIn.minEndDate()"></entry>
+                        </span>
+                        <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
+                        <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
+                    </div>
+                </div>
+                <div class="row">
+                    <entry type="textarea" name="remarks" prompt="Remarks" value.bind="data.remarks"></entry>
+                </div>
+
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+
+                <div class=row">
+                    <entry type="button" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                    <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                </div>
+            </form>
+        </div>
+    </panel>
+</div>
+
+<script>
+	function initState(props){
+		//debugger;
+        return {
+            entryType: props.entryType,
+            itineraryId: props.itineraryId,
+            packageId: props.packageId,
+            datePair: {
+                departure: new DatePair($patchChanges),
+                checkIn: new DatePair($patchChanges, null, 1),
+            },
+            transportType:'',
+            alert: new Alert(),
+        };
+	}
+
+	function getItinerary() {
+		var self = this;
+		return new Promise(function (resolve) {
+			(new Utils()).itineraries.recommendedNewDates(self.state.packageId).then(function(data){
+				//debugger;
+				self.state.datePair.departure.setDefaults(null, null, data);
+				self.state.datePair.checkIn.setDefaults(null, null, data);
+
+				if(self.state.itineraryId) {
+					var q = {
+						"packageId": self.state.packageId,
+						"id": self.state.itineraryId,
+					}
+					dpd.itineraries.get(q, function (itr, err) {
+						//debugger;
+						self.state.alert.alert(err);
+						if(itr) {
+							self.state.entryType = (itr.entry.transport ? 'Transport' : 'Hotel');
+							resolve(itr);
+						}
+					});
+				}
+				else {
+					resolve({
+						packageId: self.state.packageId,
+						entry:{},
+					});
+				}
+			});
+		});
+	}
+	function onTransportTypeChange(){
+    	this.state.transportType = this.target.value;
+    	$patchChanges('spanTransport');
+    }
+
+    function whatTransportType() {
+        if(this.state.transportType == 'Plane') return 'Airline';
+        else return this.state.transportType + ' Info';
+    }
+
+    function onClick(){
+        this.state.entryType = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
+    	$patchChanges();
+    }
+
+    function setButtonClass(btn) {
+        return (btn == this.state.entryType ? "form-control btn btn-info btn-block" : "form-control btn btn-default btn-block");
+    }
+
+	var errorMessage = '';
+
+    function onCancel() {
+		//debugger;
+	    this.emitEvent('close');
+    }
+
+	function onSave(event, itinerary){
+		//debugger;
+		var form = this.target.form;
+		var itinerary = {};
+		itinerary.id = form.elements.id.value;
+		itinerary.packageId = form.elements.packageId.value;
+		itinerary.entry = {};
+		itinerary.remarks = form.elements.remarks.value;
+		if(this.state.entryType=='Hotel'){
+			itinerary.entry.hotel = form.elements.hotel.value;
+			itinerary.entry.city = form.elements.city.value;
+			itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).setHours(23,59,59);
+			itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).setHours(23,59,59);
+		}
+        else {
+			itinerary.entry.transport = form.elements.transport.value;
+			itinerary.entry.transportType = form.elements.transportType.value;
+			itinerary.entry.departFrom = form.elements.departFrom.value;
+			itinerary.entry.arriveAt = form.elements.arriveAt.value;
+			itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
+			itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
+        }
+		var self = this;
+		if(itinerary.id=="") {
+			dpd.itineraries.post(itinerary, function(result, err) {
+				//debugger;
+                self.state.alert.alert(err);
+				if(result) {
+					self.emitEvent('close');
+				}
+				$patchChanges();
+			});
+		}
+		else {
+			debugger;
+			dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
+				//debugger;
+                self.state.alert.alert(err);
+				if(result) {
+					self.emitEvent('close');
+				}
+				$patchChanges();
+			});
+		}
+	}
+
+	function isVisible(group) {
+	    if (this.state.entryType==group) return "";
+	    else return "custom-set-hidden";
+    }
+
+</script>
+

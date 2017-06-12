@@ -19,40 +19,70 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="searchPackage.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/action/searchPackage.html">
+        <entry file="file://$PROJECT_DIR$/src/booking/searchPackage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="70" lean-forward="false" selection-start-line="7" selection-start-column="70" selection-end-line="7" selection-end-column="70" />
+            <state relative-caret-position="210">
+              <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="panel.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/component/panel.html">
+      <file leaf-file-name="showPackage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/booking/showPackage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="124" lean-forward="false" selection-start-line="3" selection-start-column="124" selection-end-line="3" selection-end-column="124" />
+            <state relative-caret-position="-286">
+              <caret line="11" column="57" lean-forward="true" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="card-booking.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/card-booking.html">
+      <file leaf-file-name="edit-package.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/package/edit-package.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="15" column="63" lean-forward="false" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="entry.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/entry.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+            <state relative-caret-position="330">
+              <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entry-naked.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/entry-naked.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookPackage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/booking/bookPackage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="78" column="52" lean-forward="false" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="edit-itinerary.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2254">
+              <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -71,18 +101,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>numbers</find>
-      <find>_data.</find>
-      <find>cleanScript</find>
-      <find>trigger</find>
-      <find>onEntryTypeChanged</find>
-      <find>.trigger</find>
       <find>margin-top</find>
       <find>$on</find>
       <find>sethidden</find>
       <find>register</find>
       <find>getMe</find>
-      <find>entryType</find>
       <find>google</find>
       <find>how we</find>
       <find>how we use information</find>
@@ -91,6 +114,23 @@
       <find>maxcdn</find>
       <find>&lt;ul&gt;</find>
       <find>transpar</find>
+      <find>focusout.trigger</find>
+      <find>ship</find>
+      <find>bus</find>
+      <find>plane</find>
+      <find>car</find>
+      <find>-car</find>
+      <find>airline</find>
+      <find>box</find>
+      <find>queryTravelAgent</find>
+      <find>getOneTravelAgent</find>
+      <find>ta</find>
+      <find>errorMessage</find>
+      <find>defaults</find>
+      <find>entryType</find>
+      <find>loadItinerary</find>
+      <find>package.search</find>
+      <find>package.</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -98,67 +138,76 @@
       <replace>&lt;ul class='custom-indent</replace>
       <replace>&lt;ul class='custom-ul-indent'&gt;</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>C:\Workspace\deployd\travel-umroh\public\src</dir>
+    </dirStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/component/editPackage.html" />
-        <option value="$PROJECT_DIR$/src/component/card-approvals.html" />
-        <option value="$PROJECT_DIR$/src/component/list-editor.html" />
-        <option value="$PROJECT_DIR$/src/test.html" />
-        <option value="$PROJECT_DIR$/node_modules/yallajs/yalla-cli.js" />
-        <option value="$PROJECT_DIR$/src/app-two.html" />
-        <option value="$PROJECT_DIR$/src/component/header-two.html" />
-        <option value="$PROJECT_DIR$/src/common/prototypes.js" />
-        <option value="$PROJECT_DIR$/asset/css/registration.css" />
-        <option value="$PROJECT_DIR$/src/app-2.html" />
-        <option value="$PROJECT_DIR$/src/action/paymentConfirmation.html" />
-        <option value="$PROJECT_DIR$/src/component/card.html" />
-        <option value="$PROJECT_DIR$/src/action/panel.user.html" />
-        <option value="$PROJECT_DIR$/src/action/panelUser.html" />
-        <option value="$PROJECT_DIR$/src/component/card-package.html" />
-        <option value="$PROJECT_DIR$/src/component/card-booking.html" />
-        <option value="$PROJECT_DIR$/src/component/card-passenger.html" />
-        <option value="$PROJECT_DIR$/src/common/cookies.js" />
-        <option value="$PROJECT_DIR$/src/component/card-travel-agent.html" />
-        <option value="$PROJECT_DIR$/public/src/action/paymentDetails.html" />
-        <option value="$PROJECT_DIR$/src/action/myPackages.html" />
-        <option value="$PROJECT_DIR$/src/component/card-itinerary.html" />
-        <option value="$PROJECT_DIR$/src/component/card-user-approvals.html" />
-        <option value="$PROJECT_DIR$/src/action/myApprovals.html" />
-        <option value="$PROJECT_DIR$/public/src/action/bookPackage.html" />
-        <option value="$PROJECT_DIR$/public/dist/component/card-booking.js" />
-        <option value="$PROJECT_DIR$/src/component/header.html" />
-        <option value="$PROJECT_DIR$/src/common/storages.js" />
-        <option value="$PROJECT_DIR$/src/action/myProfile.html" />
-        <option value="$PROJECT_DIR$/src/action/myBooking.html" />
-        <option value="$PROJECT_DIR$/src/action/showPackage.html" />
-        <option value="$PROJECT_DIR$/src/component/card-itineraryList.html" />
-        <option value="$PROJECT_DIR$/src/component/edit-package.html" />
-        <option value="$PROJECT_DIR$/src/action/myTravelAgents.html" />
-        <option value="$PROJECT_DIR$/src/action/myItinerary.html" />
-        <option value="$PROJECT_DIR$/src/component/edit-itinerary.html" />
-        <option value="$PROJECT_DIR$/src/component/alert.html" />
-        <option value="$PROJECT_DIR$/src/app.html" />
-        <option value="$PROJECT_DIR$/src/user/registration.html" />
-        <option value="$PROJECT_DIR$/asset/css/custom-style.css" />
-        <option value="$PROJECT_DIR$/src/component/entry.html" />
         <option value="$PROJECT_DIR$/src/comp/itinerary/itinerary-page.html" />
-        <option value="$PROJECT_DIR$/src/common/privacyPolicy.html" />
-        <option value="$PROJECT_DIR$/src/component/ppLink.html" />
-        <option value="$PROJECT_DIR$/src/user/login-form.html" />
+        <option value="$PROJECT_DIR$/src/component/entry.html" />
+        <option value="$PROJECT_DIR$/src/component/card-itinerary.html" />
+        <option value="$PROJECT_DIR$/src/component/card-itineraryList.html" />
+        <option value="$PROJECT_DIR$/src/comp/card.html" />
+        <option value="$PROJECT_DIR$/src/component/card-itinerary-bulleted.html" />
+        <option value="$PROJECT_DIR$/src/action/myItinerary.html" />
+        <option value="$PROJECT_DIR$/src/user/registration.html" />
         <option value="$PROJECT_DIR$/src/component/userProfile.html" />
-        <option value="$PROJECT_DIR$/src/action/bookPackage.html" />
-        <option value="$PROJECT_DIR$/src/action/paymentDetails.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/prototypes.js" />
+        <option value="$PROJECT_DIR$/src/component/edit-itinerary.html" />
+        <option value="$PROJECT_DIR$/dist/component/edit-package.js" />
+        <option value="$PROJECT_DIR$/dist/component/edit-itinerary.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/propertiesUpdater.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/src/action/searchPackage.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/alert.js" />
         <option value="$PROJECT_DIR$/src/component/panel.html" />
+        <option value="$PROJECT_DIR$/src/action/searchPackage.html" />
+        <option value="$PROJECT_DIR$/src/action/myTravelAgents.html" />
+        <option value="$PROJECT_DIR$/src/component/edit-package.html" />
+        <option value="$PROJECT_DIR$/src/action/myPackages.html" />
+        <option value="$PROJECT_DIR$/src/Itinerary/home.htm;.html" />
+        <option value="$PROJECT_DIR$/src/Itinerary/home.html" />
+        <option value="$PROJECT_DIR$/src/travel-agent/edit-travel-agent.html" />
+        <option value="$PROJECT_DIR$/src/travel-agent/card-travel-agent.html" />
+        <option value="$PROJECT_DIR$/src/component/header.html" />
+        <option value="$PROJECT_DIR$/src/package/searchPackage.html" />
+        <option value="$PROJECT_DIR$/src/package/showPackage.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" />
+        <option value="$PROJECT_DIR$/src/user/login-form.html" />
+        <option value="$PROJECT_DIR$/src/user/myApprovals.html" />
+        <option value="$PROJECT_DIR$/src/booking/myBooking.html" />
+        <option value="$PROJECT_DIR$/src/booking/bookPackage.html" />
+        <option value="$PROJECT_DIR$/src/booking/paymentDetails.html" />
+        <option value="$PROJECT_DIR$/src/travel-agent/home.html" />
+        <option value="$PROJECT_DIR$/src/travel-agent/list.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/list.html" />
+        <option value="$PROJECT_DIR$/src/app.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/utils.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/datePair.js" />
+        <option value="$PROJECT_DIR$/src/component/alert.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/home.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/edit-itinerary.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/card-itinerary.html" />
+        <option value="$PROJECT_DIR$/src/package/card-package.html" />
+        <option value="$PROJECT_DIR$/src/package/home.html" />
+        <option value="$PROJECT_DIR$/src/package/list.html" />
+        <option value="$PROJECT_DIR$/src/user/myProfile.html" />
+        <option value="$PROJECT_DIR$/src/booking/searchPackage.html" />
+        <option value="$PROJECT_DIR$/src/component/entry-naked.html" />
+        <option value="$PROJECT_DIR$/src/package/edit-package.html" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
     <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
   </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
@@ -181,9 +230,26 @@
             <id />
           </State>
           <State>
+            <id>CSS</id>
+          </State>
+          <State>
+            <id>Code quality toolsJavaScript</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
             <id>XPath</id>
           </State>
         </expanded-state>
+        <selected-state>
+          <State>
+            <id>JSHint</id>
+          </State>
+        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -202,7 +268,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -226,6 +292,78 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-agent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="package" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="itinerary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -275,25 +413,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
+              <option name="myItemId" value="booking" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -329,9 +453,31 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="own" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,11 +494,18 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\workspace\esnaadm\public\asset\js\own" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\booking" />
+      <recent name="C:\workspace\esnaadm\public\src\package" />
+      <recent name="C:\workspace\esnaadm\public\src\user" />
+      <recent name="C:\workspace\esnaadm\public\src\booking" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\user" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\workspace\esnaadm\public\asset\css" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\package" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\travel-agent" />
       <recent name="C:\workspace\esnaadm\public\src\component" />
+      <recent name="C:\workspace\esnaadm\public\asset\js\own" />
+      <recent name="C:\workspace\esnaadm\public\asset\css" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
@@ -463,34 +616,43 @@
       <workItem from="1496554669969" duration="10447000" />
       <workItem from="1496585025532" duration="7633000" />
       <workItem from="1496638598506" duration="16050000" />
-      <workItem from="1496665080191" duration="84000" />
+      <workItem from="1496665080191" duration="16366000" />
+      <workItem from="1496725179510" duration="14073000" />
+      <workItem from="1496767078883" duration="8729000" />
+      <workItem from="1496812393810" duration="15874000" />
+      <workItem from="1496853304468" duration="2534000" />
+      <workItem from="1496858591915" duration="4401000" />
+      <workItem from="1496898173041" duration="13685000" />
+      <workItem from="1496924083267" duration="55659000" />
+      <workItem from="1497157597359" duration="8782000" />
+      <workItem from="1497184303300" duration="28679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="388049000" />
+    <option name="totallyTimeSpent" value="556747000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22395833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17291667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08342481" sideWeight="0.50630915" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20636663" sideWeight="0.5105153" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.083809525" sideWeight="0.48948476" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.083809525" sideWeight="0.49369085" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,216 +668,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/asset/css/signin.css">
+    <entry file="file://$PROJECT_DIR$/dist/action/showPackage.js" />
+    <entry file="file://$PROJECT_DIR$/src/comp/card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/form-panel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/panelUser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="70" lean-forward="false" selection-start-line="3" selection-start-column="70" selection-end-line="3" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card.html" />
-    <entry file="file://$PROJECT_DIR$/src/component/card-passenger.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="9" lean-forward="false" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-travel-agent.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="30" lean-forward="false" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/action/paymentDetails.html" />
-    <entry file="file://$PROJECT_DIR$/asset/js/own/prototypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="99" column="34" lean-forward="false" selection-start-line="99" selection-start-column="17" selection-end-line="99" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-user-approvals.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myApprovals.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/component/card-booking.js" />
-    <entry file="file://$PROJECT_DIR$/public/src/action/bookPackage.html" />
-    <entry file="file://$PROJECT_DIR$/src/component/itinerary.html" />
-    <entry file="file://$PROJECT_DIR$/src/component/test.html" />
-    <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="75" column="9" lean-forward="false" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myProfile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myBooking.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="36" column="33" lean-forward="false" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-itinerary.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/showPackage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="48" lean-forward="false" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-itineraryList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="27" column="21" lean-forward="false" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-package.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myPackages.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/edit-package.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/paymentConfirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myItinerary.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="88" lean-forward="false" selection-start-line="15" selection-start-column="34" selection-end-line="17" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/alert.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="440">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/edit-itinerary.html">
+    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary-bulleted.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/myTravelAgents.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="114" column="19" lean-forward="false" selection-start-line="114" selection-start-column="19" selection-end-line="114" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view-source_https___www.google.ae_intl_en_policies_privacy_.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="2" column="21750" lean-forward="false" selection-start-line="2" selection-start-column="20953" selection-end-line="2" selection-end-column="21750" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/entry.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/comp/shell.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/comp/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1229">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -726,114 +690,310 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/comp/content.html">
+    <entry file="file://$PROJECT_DIR$/src/component/userProfile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="37" column="54" lean-forward="false" selection-start-line="37" selection-start-column="54" selection-end-line="37" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/registration.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="13" lean-forward="false" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/component/edit-package.js" />
+    <entry file="file://$PROJECT_DIR$/dist/component/edit-itinerary.js" />
+    <entry file="file://$PROJECT_DIR$/src/action/myTravelAgents.html" />
+    <entry file="file://$PROJECT_DIR$/src/component/card-package.html" />
+    <entry file="file://$PROJECT_DIR$/src/component/edit-package.html" />
+    <entry file="file://$PROJECT_DIR$/src/component/panel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="38" column="10" lean-forward="false" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/action/myPackages.html" />
+    <entry file="file://$PROJECT_DIR$/src/action/myItinerary.html" />
+    <entry file="file://$PROJECT_DIR$/src/action/panelUser.html" />
+    <entry file="file://$PROJECT_DIR$/src/action/approvals.html" />
+    <entry file="file://$PROJECT_DIR$/src/component/list-editor.html" />
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itineraryList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="40" lean-forward="true" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/login-form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="58" lean-forward="false" selection-start-line="39" selection-start-column="58" selection-end-line="39" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/myApprovals.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/booking/card-booking.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="19" lean-forward="false" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/booking/card-passenger.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/comp/card.html">
+    <entry file="file://$PROJECT_DIR$/src/booking/paymentConfirmation.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="23" lean-forward="true" selection-start-line="46" selection-start-column="23" selection-end-line="46" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/privacyPolicy.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="56" column="114" lean-forward="false" selection-start-line="56" selection-start-column="114" selection-end-line="56" selection-end-column="114" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/comp/itinerary/itinerary-page.html">
+    <entry file="file://$PROJECT_DIR$/src/booking/myBooking.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/ppLink.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/registration.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="39" lean-forward="true" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/login-form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="616">
+          <caret line="37" column="44" lean-forward="false" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/userProfile.html">
+    <entry file="file://$PROJECT_DIR$/src/booking/paymentDetails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        <state relative-caret-position="225">
+          <caret line="80" column="56" lean-forward="false" selection-start-line="80" selection-start-column="56" selection-end-line="80" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/paymentDetails.html">
+    <entry file="file://$PROJECT_DIR$/src/travel-agent/card-travel-agent.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="28" lean-forward="false" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+        <state relative-caret-position="204">
+          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/bookPackage.html">
+    <entry file="file://$PROJECT_DIR$/src/travel-agent/edit-travel-agent.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+        <state relative-caret-position="1056">
+          <caret line="48" column="25" lean-forward="false" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/prototypes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-818">
+          <caret line="113" column="26" lean-forward="false" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="6" lean-forward="false" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        <state relative-caret-position="426">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/action/searchPackage.html">
+    <entry file="file://$PROJECT_DIR$/asset/js/own/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="20" column="10" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc;n#Utils#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/datePair.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="23" column="149" lean-forward="false" selection-start-line="23" selection-start-column="149" selection-end-line="23" selection-end-column="149" />
+          <folding>
+            <marker date="1497250924309" expanded="true" signature="127:2163" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/alert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc;n#Alert#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/alert.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1144">
+          <caret line="52" column="85" lean-forward="false" selection-start-line="52" selection-start-column="85" selection-end-line="52" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/travel-agent/list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="7" column="70" lean-forward="false" selection-start-line="7" selection-start-column="70" selection-end-line="7" selection-end-column="70" />
+          <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/src/package/card-package.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+        <state relative-caret-position="440">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/card-booking.html">
+    <entry file="file://$PROJECT_DIR$/src/package/list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="27" column="44" lean-forward="false" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/panel.html">
+    <entry file="file://$PROJECT_DIR$/src/user/myProfile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="124" lean-forward="false" selection-start-line="3" selection-start-column="124" selection-end-line="3" selection-end-column="124" />
+        <state relative-caret-position="120">
+          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1034">
+          <caret line="47" column="8" lean-forward="false" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/booking/bookPackage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="78" column="52" lean-forward="false" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/booking/searchPackage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/booking/showPackage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-286">
+          <caret line="11" column="57" lean-forward="true" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2254">
+          <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/entry.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/entry-naked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package/edit-package.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="63" lean-forward="false" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
           <folding />
         </state>
       </provider>
