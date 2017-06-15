@@ -1,12 +1,12 @@
-errorIf(!me, "invalidCredential", "Invalid Credential");
-errorIf(!me.isTravelAgent, "notContactPerson", "You are not a travel agent contact person");
-errorIf(!this.packageId, "invalidPackage", "Invalid Package");
+errorIf(!me, "Credential", "Invalid Credential");
+errorIf(!me.isTravelAgent, "Contact Person", "You are not a travel agent contact person");
+errorIf(!this.packageId, "Package", "Invalid Package");
 
 dpd.packages.get(this.packageId, function (pkg) {
-    errorIf(!pkg, "invalidPackage", "Invalid Package");
+    errorIf(!pkg, "Package", "Invalid Package");
     dpd.travelagents.get(pkg.travelAgentId, function (trv) {
-        errorIf(!trv, "invalidTravelAgent", "Invalid Travel Agent");
-        errorIf(trv.contactPersonId != me.id, "notTravelAgentContactPerson", "You are not the contact person of this travel agent");
+        errorIf(!trv, "Travel Agent", "Invalid Travel Agent");
+        errorIf(trv.contactPersonId != me.id, "Contact Person", "You are not the contact person of this travel agent");
     });
 });
 

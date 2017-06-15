@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
-            <div for.each="error in @messages">{{error}}</div>
+            <div for.each="error in @messages">{{(error.name ? error.name +': ' : '') + error.message}}</div>
         </div>
     </div>
 </div>
@@ -10,12 +10,12 @@
 
     function initState(props) {
     	return {
-		    messages: toArrayofMessages(props.message, props.alertType, props.titleCase)
+		    messages: formatMessages(props.message, props.alertType, props.titleCase)
 	    };
     }
 
     function onPropertyChange(event){
-        this.state.messages = toArrayofMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
+        this.state.messages = formatMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
     }
 
     function className(alertType)
@@ -28,45 +28,19 @@
 	    return base;
     }
 
-    function toArrayofMessages(message, alertType, titleCase) {
-        var result = [];
-        if(!message) {
-        	result = [];
-        }
-        else if (typeof message === "string") {
-            result.push(message);
-        }
-        else if (message.hasOwnProperty("message")) {
-	        result.push(message.message);
-        }
-        else if (message.hasOwnProperty("error")) {
-	        result.push(message.error);
-        }
-        else if (message.hasOwnProperty("errors")) {
-            var errorList = [];
-            if (!message.errors.length) errorList.push(message.errors)
-            else errorList = message.errors;
-
-            for (var i in errorList) {
-                for (var name in errorList[i]) {
-                    if (errorList[i].hasOwnProperty(name)) {
-                        result.push((name == 'email' || name == 'username' || name == 'email' ? name + ": " : '') + errorList[i][name]);
-                    }
-                }
-            }
-        }
-        var finalResult = [];
-        for(i = 0 ; i < result.length; i++) {
-        	if (result[i] != "") {
-        		var msg = result[i];
-		        if(alertType != "error") {
-			        msg = (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
-		        } else {
-		        	msg = msg.toSentenceCase();
-		        }
-        		finalResult.push(msg);
-	        }
-        }
+    function formatMessages(message, alertType, titleCase) {
+    	var finalResult=[];
+	    for(var i in message) {
+		    if (message[i].message != "") {
+			    var msg = message[i];
+			    if(alertType != "error") {
+				    msg.message = (titleCase ? msg.message.toTitleCase() : msg.message.toSentenceCase());
+			    } else {
+				    msg.message = msg.message.toSentenceCase();
+			    }
+			    finalResult.push(msg);
+		    }
+	    }
         return finalResult;
     }
 </script>

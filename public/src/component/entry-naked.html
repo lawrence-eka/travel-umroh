@@ -22,10 +22,31 @@
             <option for.each="entry in $entries" value.bind="entry" selected.bind="entry==$value">{{entry}}</option>
         </select>
     </div>
-
+    <label if.bind="@error && whatType($type) != 'hidden'" class="custom-entry-prompt custom-error-text">{{@error}}</label>
 </span>
 
 <script>
+    function initState(props) {
+    	if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
+    	return {
+    		name: props.name,
+            error:null,
+        }
+    }
+
+    function errorSelector(errors) {
+    	this._state.error=null;
+    	if(errors) {
+		    for (var i in errors) {
+			    if (errors[i].name == this._state.name) {
+			    	this._state.error = errors[i].message;
+			    	errors.splice(i, 1);
+			    	return;
+			    }
+		    }
+	    }
+    }
+
     function setValue(value, min, max){
     	if(value && min && (value < min)) return min;
         else if(value && max && (value > max)) return max;

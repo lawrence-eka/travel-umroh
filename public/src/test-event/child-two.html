@@ -1,0 +1,11 @@
+
+<div>
+    Child two
+    <button click.trigger="informOther()">Click To Inform Ohter</button>
+</div>
+<script>
+    var event = $inject('/test-event/event');
+    function informOther(){
+    	event.publish(new Date());
+    }
+</script>

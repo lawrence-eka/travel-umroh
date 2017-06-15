@@ -1,0 +1,24 @@
+
+<div>
+    Child One
+    {{ @message }}
+</div>
+
+<script>
+	var event = $inject('/test-event/event');
+
+	function initState(){
+		event.subscribe(onEvent.bind(this));
+		return {
+            message : 'test'
+        }
+    }
+
+
+	function onEvent(data){
+		//alert('We have message '+data);
+		this._state.message = data;
+		$patchChanges();
+    }
+
+</script>

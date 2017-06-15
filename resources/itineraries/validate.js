@@ -1,13 +1,13 @@
-errorIf(!me, "invalidCredential", "Invalid Credential");
-errorIf(!me.isTravelAgent, "notContactPerson", "You are not a travel agent contact person");
-errorIf(!this.packageId, "invalidPackage", "Invalid Package");
+errorIf(!me, "Credential", "Invalid Credential");
+errorIf(!me.isTravelAgent, "Contact Person", "You are not a travel agent contact person");
+errorIf(!this.packageId, "Package", "Invalid Package");
 
 dpd.packages.get(this.packageId, function (pkg) {
-    errorIf(!pkg, "invalidPackage", "Invalid Package");
+    errorIf(!pkg, "Package", "Invalid Package");
 
     dpd.travelagents.get(pkg.travelAgentId, function (trv) {
-        errorIf(!trv, "invalidTravelAgent", "Invalid Travel Agent");
-        errorIf(trv.contactPersonId != me.id, "notTravelAgentContactPerson", "You are not the contact person of this travel agent");
+        errorIf(!trv, "Travel Agent", "Invalid Travel Agent");
+        errorIf(trv.contactPersonId != me.id, "Contact Person", "You are not the contact person of this travel agent");
     });
     
 });
@@ -17,13 +17,13 @@ var toDateType ="";
 var fromDateTime = null; 
 var toDateTime = null;
 
-errorIf(!this.entry || (!this.entry.transport && !this.entry.hotel), "invalidEntry", "Itinerary must contain information about either 'hotel' or 'transport'");
+errorIf(!this.entry || (!this.entry.transport && !this.entry.hotel), "Entry", "Itinerary must contain information about either 'hotel' or 'transport'");
 if(this.entry.transport)
 {
-    errorIf(!this.entry.departure, "invalidDepartureDate", "Transport is missing Departure Date Info ('departure')");
-    errorIf(!this.entry.arrival, "invalidArrivalDate", "Transport is missing Arrival Date Info ('arrival')");
-    errorIf(!this.entry.departFrom, "invalidDepartureAirport", "Transport is missing Departure Info ('departFrom')");
-    errorIf(!this.entry.arriveAt, "invalidArrivalAirport", "Transport is missing Arrival Info ('arriveAt')");
+    errorIf(!this.entry.departure, "departure", "Missing Departure Date Info");
+    errorIf(!this.entry.arrival, "arrival", "Missing Arrival Date Info");
+    errorIf(!this.entry.departFrom, "departFrom", "Missing Departure Info");
+    errorIf(!this.entry.arriveAt, "arriveAt", "Missing Arrival Info");
 
     fromDateTime = new Date(this.entry.departure);
     toDateTime = new Date(this.entry.arrival);
@@ -34,9 +34,9 @@ if(this.entry.transport)
 }
 else if(this.entry.hotel)
 {
-    errorIf(!this.entry.checkIn, "invalidCheckInDate", "Hotel is missing Check In Date Info ('checkIn')");
-    errorIf(!this.entry.checkOut, "invalidCheckOutDate", "Hotel is missing Check Out Date Info ('checkOut')");
-    errorIf(!this.entry.city, "invalidCity", "Hotel is missing City Info ('city')");
+    errorIf(!this.entry.checkIn, "checkIn", "Missing Check In Date Info");
+    errorIf(!this.entry.checkOut, "checkOut", "Missing Check Out Date Info");
+    errorIf(!this.entry.city, "city", "Missing City Info");
 
     fromDateTime = new Date(this.entry.checkIn);
     toDateTime = new Date(this.entry.checkOut);
@@ -46,8 +46,8 @@ else if(this.entry.hotel)
     toDateType = "Check Out";
 }
 
-errorIf(fromDateTime < (new Date()).getTime(), 'invalidPastDate', "'" + fromDateType + " Date' (" + fromDateTime + ") must be a future date");
-errorIf(fromDateTime > toDateTime, 'invalidDateRange', "'" + fromDateType + " Date' (" + fromDateTime + ") must be less or equal to '" + toDateType + " Date' (" + toDateTime + ")");
+errorIf(fromDateTime < (new Date()).getTime(), 'Date', "'" + fromDateType + " Date' (" + fromDateTime + ") must be a future date");
+errorIf(fromDateTime > toDateTime, 'Date Range', "'" + fromDateType + " Date' (" + fromDateTime + ") must be less or equal to '" + toDateType + " Date' (" + toDateTime + ")");
 
 var query = {  
     "id": {"$ne": this.id},
@@ -77,7 +77,7 @@ var query = {
     ]
 };
 dpd.itineraries.get(query, function (result) {
-    errorIf(result && result.length > 0, "overlappingDateRange", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
+    errorIf(result && result.length > 0, "Date", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
 });
 
 

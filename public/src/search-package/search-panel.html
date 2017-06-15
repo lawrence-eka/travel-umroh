@@ -1,0 +1,41 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <panel title="Search Packages" footer.bind="@recordsFound">
+        <div slot.name="body">
+            <form>
+                <entry type="date" prompt="Between" name="startDate" value.bind="@datePair.defaultStartDate()" min.bind="@datePair.minStartDate()" focusout.trigger="@datePair.onStartDateFocusOut('endDate')"></entry>
+                <span ref.name="endDate">
+                            <entry type="date" prompt="And" name="endDate" value.bind="@datePair.defaultEndDate()" min.bind="@datePair.minEndDate()"></entry>
+                        </span>
+                <entry type="button" value="Search" click.trigger="search()"></entry>
+            </form>
+        </div>
+    </panel>
+</div>
+<script>
+	function initState(props) {
+		//debugger;
+		var state = {
+			recordsFound: props.recordsFound,
+			alert:new Alert(),
+			datePair: new DatePair($patchChanges, null, '1y'),
+			date: {},
+		};
+		return state;
+	}
+
+	function onPropertyChange(props) {
+		if(props.recordsFound) this.state.recordsFound = props.recordsFound.newValue;
+    }
+
+	function search(){
+		var form = this.target.form;
+		var eventData = {
+			startDate: form.elements.startDate.value,
+			endDate: form.elements.endDate.value,
+		}
+		this.emitEvent('search', eventData);
+	}
+</script>

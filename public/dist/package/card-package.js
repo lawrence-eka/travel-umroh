@@ -34,8 +34,8 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
     var today = new Date();
     if (!pkg.isPublished) return "Draft";
     else if (pkg.validFrom > today) return "Published, Not Open Yet";
-    else if (pkg.validFrom <= today && pkg.validUntil >= today) return "Published, Registration Open";
-    else if (pkg.validUntil <= today && pkg.travelDateFrom >= today) return "Published, Closed";
+    else if (pkg.validFrom <= today && pkg.validUntil >= today) return "Registration Open";
+    else if (pkg.validUntil <= today && pkg.travelDateFrom >= today) return "Registration Closed";
     else if (pkg.travelDateFrom <= today && pkg.travelDateUntil >= today) return "On Going";
     else return "Done";
   }

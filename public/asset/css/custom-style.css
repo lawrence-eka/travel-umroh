@@ -115,6 +115,10 @@ body{
     padding-left:15px !important;
 }
 
+.custom-error-text {
+    color: red !important;
+}
+
 .frosted-glass {
     position: relative;
 }

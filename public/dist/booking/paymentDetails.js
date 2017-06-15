@@ -128,7 +128,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
   }
 
   function $render(_props, _slotView) {
-    _context["card-booking"] = $inject("/bookinf/card-booking");
+    _context["card-booking"] = $inject("/booking/card-booking");
     var cardBooking = _context["card-booking"];
     _context["card"] = $inject("/component/panel");
     var card = _context["card"];

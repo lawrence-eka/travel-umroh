@@ -6,7 +6,9 @@
 <div data.load="getOneTravelAgent(@travelAgentId)">
     <panel title.bind="(@travelAgentId ? 'Edit' : 'New') + ' Travel Agent'" nofooter>
         <div slot.name="body">
-            <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
             <form role="form">
                 <div class="row">
                     <entry type="hidden" name="id"  value.bind="data.id"></entry>
@@ -28,7 +30,7 @@
 <script>
 	function initState(props) {
 		return {
-			alert: new Alert(),
+			alert: new Alert(null, $patchChanges, "alert"),
 			travelAgentId:props.travelAgentId
 		}
 	}
@@ -49,7 +51,6 @@
 						}
 					}
 					resolve(ta);
-					$patchChanges();
 				});
 			}
 			else {
@@ -97,7 +98,6 @@
 			self.state.travelAgentId=null;
 			self.emitEvent('close');
 		}
-		$patchChanges();
 	}
 
 </script>

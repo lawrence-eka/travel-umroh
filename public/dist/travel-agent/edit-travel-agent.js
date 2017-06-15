@@ -32,7 +32,7 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
 
   function initState(props) {
     return {
-      alert: new Alert(),
+      alert: new Alert(null, $patchChanges, "alert"),
       travelAgentId: props.travelAgentId
     }
   }
@@ -53,7 +53,6 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
             }
           }
           resolve(ta);
-          $patchChanges();
         });
       } else {
         ta = {
@@ -104,7 +103,6 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
       self.state.travelAgentId = null;
       self.emitEvent('close');
     }
-    $patchChanges();
   }
 
 
@@ -161,11 +159,16 @@ yalla.framework.addComponent("/dist/travel-agent/edit-travel-agent", (function()
           if (slotName === "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
-            var _params = {
-              "alertType": _state.alert.type.bind(self)(),
-              "message": _state.alert.text.bind(self)()
-            };
-            _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "alertType": _state.alert.type.bind(self)(),
+                "message": _state.alert.text.bind(self)()
+              };
+              _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
             _elementOpenStart("form", "");
             _attr("role", "form");
             _elementOpenEnd("form");

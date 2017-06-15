@@ -39,7 +39,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
       },
       {
         label: 'Find Package',
-        ref: '#app/booking.searchPackage'
+        ref: '#app/search-package.home'
       },
       {
         label: 'My Booking',
