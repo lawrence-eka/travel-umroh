@@ -38,7 +38,7 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
   }
 
   function onPropertyChange(props) {
-    //debugger;
+    debugger;
   }
 
   function book() {

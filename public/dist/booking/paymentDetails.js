@@ -42,7 +42,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
   }
 
   function onPropertyChange(props) {
-    //debugger;
+    debugger;
   }
 
   function whatRemarks() {
@@ -68,7 +68,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     booking.actualPayment = 0;
     booking.paymentDate = null;
     dpd.bookings.put(booking.id, booking, function(bkg, err) {
-      //debugger;
+      debugger;
       self.state.alert.alert(err);
       if (!err) {
         self.state.inputActualPayment = false;
@@ -109,7 +109,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     booking.actualPayment = form.elements.actualPayment.value;
     booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
     dpd.bookings.put(booking.id, booking, function(bkg, err) {
-      //debugger;
+      debugger;
       self.state.alert.alert(err);
       if (!err) {
         self.state.inputActualPayment = false;
@@ -123,7 +123,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     var self = this;
     return new Promise(function(resolve) {
       dpd.bookings.get(bookingId, function(bkg, err) {
-        //debugger;
+        debugger;
         self.state.alert.alert(err);
         if (!err) {
           self.state.booking = bkg;
