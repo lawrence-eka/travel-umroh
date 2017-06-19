@@ -18,12 +18,12 @@
                     <entry type="password" name="password" placeholder="Password"></entry>
                     <entry type="checkbox" name="rememberMe" prompt="Remember me"></entry>
                     <entry type="button" value="Sign In" click.trigger="login()"></entry>
-                    <div class="form-group custom-entry-margin">
-                        <entry type="hyperlink" href="#user.registration" class="custom-entry-prompt" prompt="New to MarKiMroh? Register here"></entry>
-                    </div>
+                    <entry type="hyperlink" href="#user.registration" class="custom-entry-prompt" prompt="New to MarKiMroh? Register here"></entry>
                 </form>
             </div>
-            <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
         </div>
     </panel>
 </div> <!-- /container -->
@@ -35,8 +35,8 @@
 
     function initState(props) {
     	return {
-    		alert: new Alert(),
-        }
+    		alert: new Alert(null, $patchChanges, "alert"),
+        };
     }
 
     function login(){
@@ -51,15 +51,11 @@
 
         var self = this;
         dpd.users.login({"username": userName, "password": password}, function(user, err) {
-        	if(err){
-
-                self.state.alert.alert(err);
-	            $patchChanges();
-            } else {
+	        self.state.alert.alert(err);
+        	if(!err){
                 dpd.users.me(function(me){
 	                storage.me.save(me, rememberMe);
-	                window.location.hash="#app/booking.searchPackage"
-	                $patchChanges();
+	                window.location.hash="#app/search-package.home"
                 });
             }
         });

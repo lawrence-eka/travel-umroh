@@ -18,7 +18,8 @@
                 </div>
 
                 <div class="row">
-                    <entry type="email" prompt="Email" name="email" value.bind="data.email"></entry>
+                    <entry type="hidden" prompt="username" name="username" value.bind="data.username" alert.bind="@alert"></entry>
+                    <entry type="email" prompt="Email" name="email" value.bind="data.email" alert.bind="@alert"></entry>
                     <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
                 </div>
                 <div class="row">
@@ -32,10 +33,12 @@
                     <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
                 </div>
                 <div class="row">
-                    <entry type="password" prompt="Password" name="password" value.bind="data.password"></entry>
+                    <entry type="password" prompt="Password" name="password" value.bind="data.password" alert.bind="@alert"></entry>
                     <entry type="password" prompt="Repeat Password" name="repeatPassword" ></entry>
                 </div>
-                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+                <span ref.name="alert">
+                    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+                </span>
                 <div class=row">
                     <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
                     <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
@@ -48,13 +51,13 @@
 <script>
 
     function initState(props) {
-        var state = {alert: new Alert()};
-        state.alert.alert(props.errorMessage);
+        var state = {alert: new Alert(null, $patchChanges, "alert")};
+        state.alert.alert(props.error);
         return state;
     }
 
     function onPropertyChange(event) {
-        if(event.property=='errorMessage') this.state.alert.alert(event.newVal);
+        if(event.error) this.state.alert.alert(event.error.newValue);
     }
 
     function loadProfile(profile){
@@ -86,7 +89,6 @@
         profile.city = form.elements.city.value;
         profile.isAdmin = (form.elements.isAdmin.checked);
         profile.isTravelAgent = (form.elements.isTravelAgent.checked);
-        debugger;
         this.emitEvent('save', profile);
     }
 

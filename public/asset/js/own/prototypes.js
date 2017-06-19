@@ -130,6 +130,11 @@ Date.prototype.addDays = function(numOfDays) {
 	return new Date(newThis.setDate(newThis.getDate() + parseInt(numOfDays)));
 }
 
+Date.prototype.addHours = function(numOfHours) {
+	var newThis = new Date(this);
+	return new Date(newThis.setHours(newThis.getHours() + parseInt(numOfHours)));
+}
+
 Number.prototype.toDateComponents = function(asComponents, withHHMM) {
     return (new Date(this)).toDateComponents(asComponents, withHHMM);
 }
@@ -153,6 +158,10 @@ Number.prototype.addMonths = function(numOfMonths) {
 
 Number.prototype.addDays = function(numOfDays) {
 	return (new Date(this)).addDays(numOfDays).getTime();
+}
+
+Number.prototype.addHours = function(numOfHours) {
+	return (new Date(this)).addHours(numOfHours).getTime();
 }
 
 Number.prototype.toFormattedString = function( c, d, t){

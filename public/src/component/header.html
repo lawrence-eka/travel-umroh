@@ -26,15 +26,16 @@
         if(!me) return [];
         var menusBase = [
             {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
-            {label:'Find Package',ref:'#app/booking.searchPackage'},
-            {label:'My Booking',ref:'#app/booking.myBooking'}
+            {label:'Find Package',ref:'#app/search-package.home'},
+            {label:'My Booking',ref:'#app/booking.home'}
         ];
 
         var menuEnd = [
             {label:'Logout',ref:'#', clickTrigger: logout}];
 
         if(me.isTravelAgent){
-            menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
+	        menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
+	        menusBase.push({label:'Payment Confirmation',ref:'#app/booking.paymentConfirmation'});
         }
         if(me.isAdmin){
             menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});

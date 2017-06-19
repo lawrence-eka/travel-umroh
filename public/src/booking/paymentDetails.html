@@ -1,133 +1,157 @@
-<inject from="/bookinf/card-booking" name="card-booking"></inject>
+<inject from="/booking/card-booking" name="card-booking"></inject>
 <inject from="/component/panel" name="card"></inject>
+<inject from="/component/alert" name="alert"></inject>
 <link href="asset/css/custom-style.css" rel="stylesheet">
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
 
 <div>
-            <div data.load="getPaymentDetails($bookingId)" >
-                <card-booking bkg.bind="data"></card-booking>
-                <card title="Payment Info" footer="Please make the payment before booking expires to avoid automatic cancellation of your booking">
-                    <div slot.name="body">
-                        Total: {{(booking.totalPrice + booking.uniqueCode).toFormattedString()}}<br/>
-                        Bank: Bank Central Asia<br/>
-                        Branch: Sidoarjo<br/>
-                        Account No:1234567890<br/>
-                        Name: PT Pete Tbk.<br/>
+
+    <div data.load="getPaymentDetails($bookingId)" >
+        <card-booking booking.bind="@booking" showOnly></card-booking>
+        <span ref.name="payment">
+            <card title="Actual Payment" nofooter if.bind="!@inputActualPayment && (@bu.status(data).code > @bu.paymentConfirmationPending || @bu.status(data).code == @bu.paymentRejected)">
+                <div slot.name="body">
+                    From Bank: {{(@booking.fromBank)}}<br/>
+                    Branch: {{@booking.fromBankBranch}}<br/>
+                    Account No: {{@booking.fromAccountNumber}}<br/>
+                    Account Name: {{@booking.fromAccountHolder}}<br/>
+                    Amount: {{@booking.actualPayment ? @booking.actualPayment.toFormattedString() : ''}}<br/>
+                    Transfer Date: {{@booking.paymentDate ? @booking.paymentDate.toDateComponents(false, true) : ''}}
+                    <div class="row">
+                        <entry type="button" name="btnCancel" if.bind="@bu.status(data).code == @bu.paymentConfirmationPending || @bu.status(data).code == @bu.paymentRejected" value="Cancel/Delete Payment" click.trigger="deleteActualPayment()"></entry>
                     </div>
-                </card>
-            </div>
-            <card title="Payment Confirmation">
+                </div>
+            </card>
+
+            <card title="Payment Info" footer.bind="whatRemarks()" if.bind="!@inputActualPayment">
+                <div slot.name="body">
+                    Total: {{@booking.totalPrice ? @booking.totalPrice.toFormattedString() : ''}}<br/>
+                    Bank: Bank Central Asia<br/>
+                    Branch: Sidoarjo<br/>
+                    Account No:1234567890<br/>
+                    Name: PT Pete Tbk.<br/>
+                    <div class="row">
+                        <entry type="button" name="btnPaymentConfirmation" value="Input Actual Payment" if.bind="@bu.status(data).code == @bu.definingPassengers" click.trigger="showActualPayment()"></entry>
+                    </div>
+                </div>
+            </card>
+
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
+
+            <card title="Payment Confirmation" if.bind="@inputActualPayment">
                 <div slot.name="footer">
                     <ppLink></ppLink>
                 </div>
                 <div slot.name="body">
                     <form>
-                        <div class="row">
-                            <entry type="text" prompt="Bank Name" name="fromBank"></entry>
-                            <entry type="text" prompt="Bank Branch" name="fromBranch"></entry>
-                            <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
-                            <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
-                            <entry type="number" prompt="Amount Transfered" name="actualPayment"></entry>
-                            <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate"></entry>
-                            <entry type="button" name="btnPaymentConfirmation" value="Payment Confirmation" click.trigger="paymentConfirmation()"></entry>
-                        </div>
+                        <entry type="text" prompt="Bank Name" name="fromBank"></entry>
+                        <entry type="text" prompt="Bank Branch" name="fromBankBranch"></entry>
+                        <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
+                        <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
+                        <entry type="number" prompt="Amount Transfered" name="actualPayment" min.bind="@booking.totalPrice" alert.bind="@alert"></entry>
+                        <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate" value.bind="(new Date()).toYYYYMMDD(true)" max.bind="(new Date()).toYYYYMMDD(true)"></entry>
+                        <entry type="button" name="btnSave" if.bind="!@booking.actualPayment" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="saveActualPayment()"></entry>
+                        <entry type="button" name="btnCancel" value.bind="!@booking.actualPayment ? 'Cancel' : 'Close'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="cancelActualPayment()"></entry>
                     </form>
                 </div>
-        </card>
+            </card>
+        </span>
+    </div>
 </div>
 <script>
-	var errorMessage="";
-
-    var package = {};
-    var booking = {};
-
-    function setPackage(pkg) {
-    	package = pkg;
+    function initState(props){
+    	//debugger;
+    	return {
+    		alert : new Alert(null, $patchChanges, "payment"),
+            booking:null,
+            bu: (new Utils()).bookings,
+            inputActualPayment:false,
+//            bookingUtils: (new Utils()).bookings,
+        }
     }
 
-    function getPackage() {
-    	return package;
-    }
-
-    function setBooking(bkg) {
-    	booking = bkg; 
-    }
-
-    function getBooking() {
-    	return booking;
-    }
-
-    function paymentConfirmation() {
+    function onPropertyChange(props){
     	debugger;
+    }
+
+    function whatRemarks() {
+    	var status = this.state.bu.status(this.state.booking);
+    	//debugger;
+	    if(status.code == this.state.bu.paymentRejected) return "Payment is rejected by Travel Agent";
+	    if(status.code == this.state.bu.bookingExpired) return "Booking is cancelled because there was no payment received within the booking expiration date";
+    	else if(status.code == this.state.bu.bookingCancelled) return "Booking was cancelled by user";
+    	else if(status.code == this.state.bu.waitingForPayment) return "Please make the payment before booking expires to avoid automatic cancellation";
+    	else if(status.code == this.state.bu.paymentConfirmationPending) return "Payment received, waiting for verification";
+    	else return "Payment received and verified";
+    }
+
+    function deleteActualPayment() {
 	    var form = this.target.form;
+	    var self = this;
+	    var booking = self.state.booking;
+
+	    booking.fromBank = '';
+	    booking.fromBankBranch = '';
+	    booking.fromAccountNumber  = '';
+	    booking.fromAccountHolder = '';
+	    booking.actualPayment = 0;
+	    booking.paymentDate = null;
+	    dpd.bookings.put(booking.id, booking, function(bkg, err) {
+		    debugger;
+		    self.state.alert.alert(err);
+		    if(!err) {self.state.inputActualPayment = false;}
+		    $patchChanges();
+	    });
+
+    }
+
+    function showActualPayment(){
+    	this.state.inputActualPayment=true;
+    	$patchChanges("payment");
+    }
+
+    function cancelActualPayment() {
+	    this.state.inputActualPayment=false;
+	    $patchChanges("payment");
+    }
+
+    function saveActualPayment() {
+    	//debugger;
+	    var form = this.target.form;
+	    var self = this;
+	    var booking = self.state.booking;
+	    if (form.elements.actualPayment.value < booking.totalPrice) {
+	    	self.state.alert.alert({errors:[{actualPayment: "Cannot be less than Total Price"}]});
+	    	$patchChanges;
+	    	return;
+        }
     	booking.fromBank = form.elements.fromBank.value;
-    	booking.fromBranch = form.elements.fromBranch.value;
+    	booking.fromBankBranch = form.elements.fromBankBranch.value;
     	booking.fromAccountNumber  = form.elements.fromAccountNumber.value;
     	booking.fromAccountHolder = form.elements.fromAccountHolder.value;
     	booking.actualPayment = form.elements.actualPayment.value;
     	booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
-		doPaymentConfirmation();
-        return false;
-    }
-
-    function doPaymentConfirmation() {
-        return new Promise(function(resolve){
-	        dpd.bookings.put(booking, function(bkg, err) {
-	            if(err){
-	                errorMessage = JSON.stringify(err);
-	                $patchChanges();
-	            } else {
-			        window.location.hash = '#app/booking.paymentConfirmation:bookingId=' + booking.id;
-	            }
-	        });
-        });
-    }
-
-    function queryTravelAgent(id) {
-        return new Promise(function(resolve){
-            dpd.travelagents.get(id, function(agent, err) {
-                if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
-                }else {
-                    resolve(agent);
-                }
-            });
-        });
-    }
-
-    function queryPackage(id){
-    	
-        return new Promise(function(resolve){
-            dpd.packages.get(id, function(pkg, err) {
-                if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
-                }else {
-                    queryTravelAgent(pkg.travelAgentId).then(function(agent){
-                        pkg.agent = agent;
-                        resolve(pkg);
-                    });
-                }
-            });
-        });
+	    dpd.bookings.put(booking.id, booking, function(bkg, err) {
+	    	debugger;
+		    self.state.alert.alert(err);
+		    if(!err) {self.state.inputActualPayment = false;}
+		    $patchChanges();
+	    });
     }
 
 	function getPaymentDetails(bookingId) {
+    	//debugger;
+    	var self = this;
         return new Promise(function(resolve) {
             dpd.bookings.get(bookingId, function(bkg, err) {
-                if(err){
-                    errorMessage = JSON.stringify(err);
-                    $patchChanges();
-                } else {
-                	setBooking(bkg);
-    				queryPackage(bkg.packageId).then(function(pkg){
-    					setPackage(pkg);
-    					bkg.package = pkg;
-    					//debugger;
-                        resolve(bkg);
-    				});
+            	debugger;
+            	self.state.alert.alert(err);
+                if(!err){
+                	self.state.booking = bkg;
+                    resolve(bkg);
                 }
             });
 

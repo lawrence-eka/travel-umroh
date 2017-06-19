@@ -134,7 +134,7 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
         $patchChanges();
       });
     } else {
-      debugger;
+      //debugger;
       dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
         //debugger;
         self.state.alert.alert(err);

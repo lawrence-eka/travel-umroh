@@ -22,7 +22,7 @@ yalla.framework.addComponent("/dist/home", (function() {
       },
       {
         label: 'My Booking',
-        ref: '#app/home/action.myBooking'
+        ref: '#app/home/booking.home'
       }
     ];
 

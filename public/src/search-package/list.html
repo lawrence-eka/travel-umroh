@@ -1,0 +1,64 @@
+<inject from="/package/card-package" name="card-package"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<div>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+    <div data.load="queryPackages()">
+        <div for.each="pkg in data" >
+            <card-package click.trigger="onClick(event)" pkg.bind="pkg"></card-package>
+        </div>
+    </div>
+</div>
+
+<script>
+	function initState(props) {
+		//debugger;
+		var state = {
+			alert:new Alert(null, $patchChanges, "alert"),
+			startDate: new Date(props.startDate),
+    		endDate: new Date(props.endDate),
+            onRecordsFound: props.onRecordsFound,
+		};
+
+		return state;
+	}
+
+	function onPropertyChange(props) {
+		for(var key in this.state) {
+			if(props.hasOwnProperty(key)) {
+				this.state[key] = props[key]["newValue"];
+			}
+		}
+    }
+	function queryPackages(){
+		var self = this;
+		return new Promise(function(resolve){
+			if(self.state.startDate == "" || self.state.endDate == "") resolve([]);
+			var startDate = (new Date(self.state.startDate)).setHours(0,0,0,0);
+			var endDate = (new Date(self.state.endDate)).setHours(23,59,59,999);
+			var query = {};
+			query.isPublished = "true";
+			query.validUntil = {"$gte": startDate};
+			query.$and = [
+				{travelDateFrom: {"$gte": startDate}},
+				{travelDateFrom: {"$lte": endDate}}
+			];
+			query.$sort={"travelDateFrom":1};
+			dpd.packages.get(query, function(pkg, err) {
+				self.state.alert.alert(err);
+				if(!err){
+					var recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' +(pkg.length == 1 ? '' : 's') : 'No package') + ' found';
+					self.state.onRecordsFound.publish(recordsFound);
+				}
+				resolve(pkg);
+			});
+		});
+
+	}
+
+	function onClick(event){
+		//debugger;
+		this.emitEvent('click', event.data);
+    }
+</script>

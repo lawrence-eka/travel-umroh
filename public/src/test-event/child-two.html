@@ -1,0 +1,27 @@
+
+<div>
+    Child two
+    <button click.trigger="informOther()">Click To Inform Ohter</button>
+    <div data.load="loadData()"></div>
+</div>
+<script>
+    var event = $inject('/test-event/event');
+    function initState(props){return{prop1:props.prop1};}
+    function onPropertyChange(props) {
+    	this.state.prop1 = props.prop1.newValue;
+    }
+
+    function loadData(){
+    	return new Promise(function(resulve){
+		    alert('We have new prop '+this.state.prop1);
+        });
+
+
+    }
+
+    function informOther(){
+    	event.publish(this.state.prop1);
+    	this.state.prop1 += 1;
+    	$patchChanges();
+    }
+</script>KLRK

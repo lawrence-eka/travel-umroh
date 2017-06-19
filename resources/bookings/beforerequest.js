@@ -1,1 +1,2 @@
-query.userId = me.id;
+/*if(!query.travelAgentContactPersonId) query.userId = me.id;*/
+

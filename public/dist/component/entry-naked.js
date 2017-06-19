@@ -30,6 +30,31 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
 
   function onPropertyChange(event) {};
 
+  function initState(props) {
+    if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
+    return {
+      name: props.name,
+      error: null,
+    }
+  }
+
+  function onCreated() {
+    if (this.properties.alert) this.properties.alert.onError.subscribe(errorSelector.bind(this.target));
+  }
+
+  function errorSelector(errors) {
+    this._state.error = null;
+    if (errors) {
+      for (var i in errors) {
+        if (errors[i].name == this._state.name) {
+          this._state.error = errors[i].message;
+          errors.splice(i, 1);
+          return;
+        }
+      }
+    }
+  }
+
   function setValue(value, min, max) {
     if (value && min && (value < min)) return min;
     else if (value && max && (value > max)) return max;
@@ -355,6 +380,13 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       });
       _elementClose("select");
       _elementClose("div");
+    }
+    if (_state.error && whatType(_props.type) != 'hidden') {
+      _elementOpenStart("label", "");
+      _attr("class", "custom-entry-prompt custom-error-text");
+      _elementOpenEnd("label");
+      _text("" + (_state.error) + "");
+      _elementClose("label");
     }
     _elementClose("span");
   }

@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/booking/showPackage", (function() {
+yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/booking/showPackage");
+  var $inject = yalla.framework.createInjector("/dist/search-package/showPackage");
   var $export = {};
-  var $path = "/dist/booking/showPackage";
-  var _elementName = "dist.booking.showPackage";
+  var $path = "/dist/search-package/showPackage";
+  var _elementName = "dist.search-package.showPackage";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,38 +30,49 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
 
   function onPropertyChange(event) {};
 
-  var errorMessage = "";
+  function initState(props) {
+    return {
+      packageId: props.packageId,
+      alert: new Alert(null, $patchChanges, "alert"),
+    }
+  }
 
-  function book(packageId) {
+  function onPropertyChange(props) {
+    //debugger;
+  }
+
+  function book() {
     var me = storage.me.read();
-    queryPackage(packageId).then(function(pkg) {
-      var q = {
-        "userId": me.id,
-        "packageId": pkg.id,
-        "costTickets": pkg.costTickets,
-        "costLandArrangements": pkg.costLandArrangements
-      };
-      dpd.bookings.post(q, function(booking, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {
-          var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
-          window.location.hash = '#app/booking.bookPackage:bookingId=' + bookingId;
-        }
-      });
+    var self = this;
+    dpd.packages.get(self.state.packageId, function(pkg, err) {
+      self.state.alert.alert(err);
+      if (!err) {
+        var q = {
+          "userId": me.id,
+          "packageId": self.state.packageId,
+          "costTickets": pkg.costTickets,
+          "costLandArrangements": pkg.costLandArrangements
+        };
+        dpd.bookings.post(q, function(booking, err) {
+          self.state.alert.alert(err);
+          if (!err) {
+            var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
+            window.location.hash = '#app/booking.home:bookingId=' + bookingId;
+          }
+
+        });
+      }
     });
   }
 
 
-  function queryPackage(id) {
+  function queryPackage() {
+    var self = this;
     return new Promise(function(resolve) {
-      dpd.packages.get(id, function(pkg, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {
-          queryTravelAgent(pkg.travelAgentId).then(function(agent) {
+      dpd.packages.get(self.state.packageId, function(pkg, err) {
+        self.state.alert.alert(err);
+        if (!err) {
+          queryTravelAgent(pkg.travelAgentId, self).then(function(agent) {
             pkg.agent = agent;
             resolve(pkg);
           });
@@ -70,32 +81,29 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
     });
   }
 
-  function queryTravelAgent(id) {
+  function queryTravelAgent(id, self) {
     return new Promise(function(resolve) {
       dpd.travelagents.get(id, function(agent, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {
+        self.state.alert.alert(err);
+        if (!err) {
           resolve(agent);
         }
       });
     });
   }
 
-  function queryItineraries(packageId) {
+  function queryItineraries() {
+    var self = this;
     return new Promise(function(resolve) {
       var q = {
-        packageId: packageId,
+        packageId: self.state.packageId,
         $sort: {
           "fromDateTime": 1
         }
       }
       dpd.itineraries.get(q, function(itineraries, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          $patchChanges();
-        } else {
+        self.state.alert.alert(err);
+        if (!err) {
           resolve(itineraries);
         }
       });
@@ -104,6 +112,8 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
 
 
   function $render(_props, _slotView) {
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _context["card-package"] = $inject("/package/card-package");
     var cardPackage = _context["card-package"];
     _context["card-itinerary"] = $inject("/itinerary/card-itinerary");
@@ -113,13 +123,13 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
     _elementOpenStart("link", "");
-    _attr("element", "dist.booking.showPackage");
+    _attr("element", "dist.search-package.showPackage");
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
     _elementClose("link");
     _elementOpenStart("div", "");
-    _attr("element", "dist.booking.showPackage");
+    _attr("element", "dist.search-package.showPackage");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -135,6 +145,16 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "alertType": _state.alert.type.bind(self)(),
+        "message": _state.alert.text.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
     _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
@@ -157,7 +177,7 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
         };
         _context["card-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       }
-      var promise = queryPackage.bind(self)(_props.packageId);
+      var promise = queryPackage.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
@@ -212,12 +232,12 @@ yalla.framework.addComponent("/dist/booking/showPackage", (function() {
                 _props['on' + eventName](event);
               }
             };
-            book.bind(self)(_props.packageId);
+            book.bind(self)();
           }
         };
         _context["card-itineraryList"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       }
-      var promise = queryItineraries.bind(self)(_props.packageId);
+      var promise = queryItineraries.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {

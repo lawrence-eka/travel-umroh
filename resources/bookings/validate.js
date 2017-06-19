@@ -1,5 +1,13 @@
 errorIf(!me, "credential", "User is not logged in.");
-errorIf(this.userId != me.id, "credential", "User Info is not the same as logged in user");
+
+dpd.packages.get(this.packageId, function(pkg, err){
+    errorIf(err, 'package', err);
+    dpd.travelagents.get(pkg.travelAgentId, function(travelAgent, err) {
+        errorIf(err, 'travel agent', err);
+        errorIf(this.userId != me.id && travelAgent.contactPersonId != me.id, "credential", "Unauthorized access");
+    });
+});
+
 /* disabled for testing purposes
 var q = {};
 q.id = this.packageId;

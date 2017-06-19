@@ -1,0 +1,91 @@
+<inject from="/passenger/list-passenger" name="list-passenger"></inject>
+<inject from="/passenger/edit-passenger" name="edit-passenger"></inject>
+<inject from="/booking/card-booking" name="card-booking"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+
+<div data.load="getBookings()">
+    <panel title.bind="@booking.package.packageName" nofooter>
+        <div slot.name="body">
+            <entry type="button" value="Go to My Bookings" click.trigger="onBackToMyBookings()"></entry>
+            <entry type="button" value="Add Passenger..." if.bind="!@isEditMode && @bookingStatus.code == 0" click.trigger="onAddPassenger()"></entry>
+        </div>
+    </panel>
+    <span if.bind="@isEditMode">
+        <edit-passenger id.bind="@editPassengerId" bookingId.bind="@booking.id" cancelled.trigger="onCancelled()" saved.trigger="onSaved()"></edit-passenger>
+    </span>
+    <span if.bind="!@isEditMode">
+        <list-passenger booking.bind="@booking" bookingStatus.bind="@bookingStatus" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></list-passenger>
+    </span>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+</div>
+<script>
+    function initState(props) {
+    	return {
+    		bookingId: props.bookingId,
+            booking: null,
+            bookingStatus:null,
+            editPassengerId:null,
+            alert: new Alert(),
+            isEditMode: false,
+        }
+    }
+/*
+    function onPropertyChange(props) {
+    	debugger;
+	    if(props.bookingId) this.state.bookingId = props.bookingId.newValue;
+	    if(props.booking) this.state.booking = props.booking.newValue;
+        if(props.bookingStatus) this.state.bookingStatus = props.bookingStatus.newValue;
+        if(props.editPassengerId) this.state.editPassengerId = props.editPassengerId.newValue;
+    }
+*/
+    function onCancelled(){
+    	this.state.isEditMode=false;
+	    this.state.editPassengerId=null,
+    	$patchChanges();
+    }
+
+    function onSaved(){
+	    this.state.isEditMode=false;
+	    this.state.editPassengerId=null,
+    	$patchChanges();
+    }
+
+    function onDelete(event) {
+    	//debugger;
+	    $patchChanges();
+    }
+
+    function onAddPassenger() {
+    	this.state.isEditMode= true;
+    	this.state.editPassengerId=null,
+    	$patchChanges();
+    }
+    function getBookings(){
+	    var self = this;
+	    return new Promise(function(resolve) {
+		    dpd.bookings.get(self.state.bookingId, function (bkg, err) {
+			    //debugger;
+			    self.state.alert.alert(err);
+			    if (!err) {
+			    	self.state.booking = bkg;
+			    	self.state.bookingStatus=(new Utils()).bookings.status(bkg);
+				    resolve(bkg);
+			    }
+		    });
+	    });
+    }
+
+    function onEdit(event){
+    	this.state.isEditMode=true;
+	    this.state.editPassengerId=event.data;
+	    $patchChanges();
+    }
+
+    function onBackToMyBookings() {
+    	window.location.hash="#app/booking.home";
+    }
+
+</script>

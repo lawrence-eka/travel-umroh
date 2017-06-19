@@ -49,7 +49,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   }
 
   function onCancel() {
-    window.location.hash = "#app/booking.searchPackage";
+    window.location.hash = "#app/search-package.home";
   }
 
   function onSave(profile) {
@@ -60,13 +60,13 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
         self.state.error.message = err;
       } else {
         storage.me.save(me, storage.me.isRemembered());
-        window.location.hash = '#app/booking.searchPackage';
+        window.location.hash = '#app/search-package.home';
       }
     });
   }
 
   function $render(_props, _slotView) {
-    _context["profile"] = $inject("/component/userProfile");
+    _context["profile"] = $inject("/user/userProfile");
     var profile = _context["profile"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.myProfile");

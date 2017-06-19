@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/booking/card-passenger", (function() {
+yalla.framework.addComponent("/dist/test-event/child-one", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/booking/card-passenger");
+  var $inject = yalla.framework.createInjector("/dist/test-event/child-one");
   var $export = {};
-  var $path = "/dist/booking/card-passenger";
-  var _elementName = "dist.booking.card-passenger";
+  var $path = "/dist/test-event/child-one";
+  var _elementName = "dist.test-event.child-one";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,11 +30,26 @@ yalla.framework.addComponent("/dist/booking/card-passenger", (function() {
 
   function onPropertyChange(event) {};
 
+  var event = $inject('/test-event/event');
+
+  function initState(props) {
+    event.subscribe(onEvent.bind(this));
+    return {
+      message: 'test',
+    };
+  }
+
+
+  function onEvent(data) {
+    //alert('We have message '+data);
+    this._state.message = data;
+    $patchChanges();
+  }
+
+
   function $render(_props, _slotView) {
-    _context["card"] = $inject("/component/panel");
-    var card = _context["card"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.booking.card-passenger");
+    _attr("element", "dist.test-event.child-one");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -50,29 +65,7 @@ yalla.framework.addComponent("/dist/booking/card-passenger", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "title": (_props.passenger.firstName + ' ' + _props.passenger.lastName).toTitleCase(),
-      "nofooter": "nofooter"
-    };
-    _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "body") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _elementClose("div");
-      }
-    });
+    _text("Child One    " + (_state.message) + "");
     _elementClose("div");
   }
   if (typeof $render === "function") {

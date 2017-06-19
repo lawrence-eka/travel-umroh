@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/component/userProfile", (function() {
+yalla.framework.addComponent("/dist/user/userProfile", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/component/userProfile");
+  var $inject = yalla.framework.createInjector("/dist/user/userProfile");
   var $export = {};
-  var $path = "/dist/component/userProfile";
-  var _elementName = "dist.component.userProfile";
+  var $path = "/dist/user/userProfile";
+  var _elementName = "dist.user.userProfile";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -33,14 +33,14 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
 
   function initState(props) {
     var state = {
-      alert: new Alert()
+      alert: new Alert(null, $patchChanges, "alert")
     };
-    state.alert.alert(props.errorMessage);
+    state.alert.alert(props.error);
     return state;
   }
 
   function onPropertyChange(event) {
-    if (event.property == 'errorMessage') this.state.alert.alert(event.newVal);
+    if (event.error) this.state.alert.alert(event.error.newValue);
   }
 
   function loadProfile(profile) {
@@ -72,7 +72,6 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     profile.city = form.elements.city.value;
     profile.isAdmin = (form.elements.isAdmin.checked);
     profile.isTravelAgent = (form.elements.isTravelAgent.checked);
-    debugger;
     this.emitEvent('save', profile);
   }
 
@@ -83,7 +82,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
 
   function $render(_props, _slotView) {
     _elementOpenStart("link", "");
-    _attr("element", "dist.component.userProfile");
+    _attr("element", "dist.user.userProfile");
     _attr("href", "asset/css/custom-style.css");
     _attr("rel", "stylesheet");
     _elementOpenEnd("link");
@@ -97,7 +96,7 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
     _context["ppLink"] = $inject("/component/ppLink");
     var ppLink = _context["ppLink"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.component.userProfile");
+    _attr("element", "dist.user.userProfile");
     _attr("class", "container all-5px");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
@@ -173,10 +172,19 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
             _attr("class", "row");
             _elementOpenEnd("div");
             var _params = {
+              "type": "hidden",
+              "prompt": "username",
+              "name": "username",
+              "value": data.username,
+              "alert": _state.alert
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            var _params = {
               "type": "email",
               "prompt": "Email",
               "name": "email",
-              "value": data.email
+              "value": data.email,
+              "alert": _state.alert
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
@@ -234,7 +242,8 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
               "type": "password",
               "prompt": "Password",
               "name": "password",
-              "value": data.password
+              "value": data.password,
+              "alert": _state.alert
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
@@ -244,11 +253,16 @@ yalla.framework.addComponent("/dist/component/userProfile", (function() {
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
-            var _params = {
-              "alertType": _state.alert.type.bind(self)(),
-              "message": _state.alert.text.bind(self)()
-            };
-            _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "alertType": _state.alert.type.bind(self)(),
+                "message": _state.alert.text.bind(self)()
+              };
+              _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
             _elementOpenStart("div", "");
             _attr("class", "row");
             _elementOpenEnd("div");

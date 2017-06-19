@@ -2,7 +2,7 @@
 <inject from="/component/entry-naked" name="entry-naked"></inject>
 
 <span>
-    <entry-naked if.bind="$naked"
+    <entry-naked if.bind="$naked || $type=='hidden'"
         type.bind="$type"
         prompt.bind="$prompt"
         href.bind="$href"
@@ -15,11 +15,12 @@
         max.bind="$max"
         checked.bind="$checked"
         entries.bind="$entries"
+        alert.bind="$alert"
         change.trigger="onChange()"
         click.trigger="onButtonClicked()"
         focusout.trigger="onFocusOut()">
     </entry-naked>
-    <div if.bind="!$naked" class.bind="whatDivClass($divClass)">
+    <div if.bind="!$naked && $type!='hidden'" class.bind="whatDivClass($divClass)">
         <div class.bind="whatInnerDivClass($innerDivClass)">
             <entry-naked
                 type.bind="$type"
@@ -34,6 +35,7 @@
                 max.bind="$max"
                 checked.bind="$checked"
                 entries.bind="$entries"
+                alert.bind="$alert"
                 change.trigger="onChange()"
                 click.trigger="onButtonClicked()"
                 focusout.trigger="onFocusOut()">
@@ -44,8 +46,8 @@
 
 <script>
     function whatDivClass(divClass){
-        if(divClass) return divClass;
-        else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
+        if(divClass) return divClass + " custom-entry";
+        else return "col-xs-12 col-sm-6 col-md-6 col-lg-6 custom-entry";
     }
 
     function whatInnerDivClass(innerDivClass){

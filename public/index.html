@@ -10,7 +10,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../favicon.ico">
         <link href="asset/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+        <base href="/">
         <!--
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         -->
@@ -37,6 +37,7 @@
         <script src="asset/js/own/datePair.js"></script>
         <script src="asset/js/own/alert.js"></script>
         <script src="asset/js/own/utils.js"></script>
+        <script src="asset/js/own/event.js"></script>
 
     <style>
         body {
@@ -55,6 +56,7 @@
     <script>
 
         function authenticate(path){
+        	console.log("hello, world");
             return new Promise(function(resolve){
                 /*
                 var defaultPath = '#!/app';

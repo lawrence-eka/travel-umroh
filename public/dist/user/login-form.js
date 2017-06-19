@@ -33,8 +33,8 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
 
   function initState(props) {
     return {
-      alert: new Alert(),
-    }
+      alert: new Alert(null, $patchChanges, "alert"),
+    };
   }
 
   function login() {
@@ -52,15 +52,11 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
       "username": userName,
       "password": password
     }, function(user, err) {
-      if (err) {
-
-        self.state.alert.alert(err);
-        $patchChanges();
-      } else {
+      self.state.alert.alert(err);
+      if (!err) {
         dpd.users.me(function(me) {
           storage.me.save(me, rememberMe);
-          window.location.hash = "#app/booking.searchPackage"
-          $patchChanges();
+          window.location.hash = "#app/search-package.home"
         });
       }
     });
@@ -167,9 +163,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementOpenStart("div", "");
-        _attr("class", "form-group custom-entry-margin");
-        _elementOpenEnd("div");
         var _params = {
           "type": "hyperlink",
           "href": "#user.registration",
@@ -177,14 +170,18 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           "prompt": "New to MarKiMroh? Register here"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("div");
         _elementClose("form");
         _elementClose("div");
-        var _params = {
-          "alertType": _state.alert.type.bind(self)(),
-          "message": _state.alert.text.bind(self)()
-        };
-        _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "alertType": _state.alert.type.bind(self)(),
+            "message": _state.alert.text.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
         _elementClose("div");
       }
     });

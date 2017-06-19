@@ -33,12 +33,12 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
 
   function initState(props) {
     return {
-      messages: toArrayofMessages(props.message, props.alertType, props.titleCase)
+      messages: formatMessages(props.message, props.alertType, props.titleCase)
     };
   }
 
   function onPropertyChange(event) {
-    this.state.messages = toArrayofMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
+    this.state.messages = formatMessages(this.properties.message, this.properties.alertType, this.properties.titleCase);
   }
 
   function className(alertType) {
@@ -50,37 +50,19 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
     return base;
   }
 
-  function toArrayofMessages(message, alertType, titleCase) {
-    var result = [];
-    if (!message) {
-      result = [];
-    } else if (typeof message === "string") {
-      result.push(message);
-    } else if (message.hasOwnProperty("message")) {
-      result.push(message.message);
-    } else if (message.hasOwnProperty("error")) {
-      result.push(message.error);
-    } else if (message.hasOwnProperty("errors")) {
-      var errorList = [];
-      if (!message.errors.length) errorList.push(message.errors)
-      else errorList = message.errors;
-
-      for (var i in errorList) {
-        for (var name in errorList[i]) {
-          if (errorList[i].hasOwnProperty(name)) {
-            result.push((name == 'email' || name == 'username' || name == 'email' ? name + ": " : '') + errorList[i][name]);
-          }
-        }
-      }
-    }
+  function formatMessages(message, alertType, titleCase) {
     var finalResult = [];
-    for (i = 0; i < result.length; i++) {
-      if (result[i] != "") {
-        var msg = result[i];
+    //debugger;
+    if (message.constructor !== Array) message = [{
+      message: message
+    }];
+    for (var i in message) {
+      if (message[i].message != "") {
+        var msg = message[i];
         if (alertType != "error") {
-          msg = (titleCase ? msg.toTitleCase() : msg.toSentenceCase());
+          msg.message = (titleCase ? msg.message.toTitleCase() : msg.message.toSentenceCase());
         } else {
-          msg = msg.toSentenceCase();
+          msg.message = msg.message.toSentenceCase();
         }
         finalResult.push(msg);
       }
@@ -125,7 +107,7 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       _array.forEach(function(error) {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _text("" + (error) + "");
+        _text("" + ((error.name ? error.name + ': ' : '') + error.message) + "");
         _elementClose("div");
       });
       _elementClose("div");

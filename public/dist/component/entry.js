@@ -31,8 +31,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
   function onPropertyChange(event) {};
 
   function whatDivClass(divClass) {
-    if (divClass) return divClass;
-    else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
+    if (divClass) return divClass + " custom-entry";
+    else return "col-xs-12 col-sm-6 col-md-6 col-lg-6 custom-entry";
   }
 
   function whatInnerDivClass(innerDivClass) {
@@ -78,7 +78,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    if (_props.naked) {
+    if (_props.naked || _props.type == 'hidden') {
       var _params = {
         "type": _props.type,
         "prompt": _props.prompt,
@@ -92,6 +92,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "max": _props.max,
         "checked": _props.checked,
         "entries": _props.entries,
+        "alert": _props.alert,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -155,7 +156,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
       };
       _context["entry-naked"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
-    if (!_props.naked) {
+    if (!_props.naked && _props.type != 'hidden') {
       _elementOpenStart("div", "");
       _attr("class", whatDivClass.bind(self)(_props.divClass));
       _elementOpenEnd("div");
@@ -175,6 +176,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "max": _props.max,
         "checked": _props.checked,
         "entries": _props.entries,
+        "alert": _props.alert,
         "onchange": function(event) {
           var self = {
             target: event.target
