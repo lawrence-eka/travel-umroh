@@ -1,0 +1,59 @@
+<inject from="/passenger/card-passenger" name="card-passenger"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <span data.load="getPassengers()">
+        <span for.each="psg in data">
+            <card-passenger passenger.bind="psg" bookingStatus.bind="@bookingStatus" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></card-passenger>
+        </span>
+    </span>
+</div>
+<script>
+    function initState(props) {
+    	//debugger;
+    	return {
+    		booking: props.booking,
+            bookingStatus: props.bookingStatus,
+            alert: new Alert(),
+        }
+    }
+/*
+    function onPropertyChange(props){
+    	debugger;
+    	if(props.booking) this.state.booking = props.booking.newValue;
+    	if(props.bookingStatus) this.state.bookingStatus = props.bookingStatus.newValue;
+    }
+*/
+    function getPassengers() {
+    	var self = this;
+    	var booking = self.state.booking;
+	    return new Promise(function(resolve) {
+		    dpd.passengers.get({"bookingId":booking.id}, function(passengers, err) {
+		    	//debugger;
+		    	self.state.alert.alert(err);
+			    if(!err){
+			    	booking.numberOfPassengers = passengers.length;
+				    booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
+                    dpd.bookings.put(booking.id, booking, function(res, err){
+                    	//debugger;
+                        self.state.alert.alert(err);
+                        if(!err) resolve(passengers);
+                    });
+			    }
+		    });
+	    });
+    }
+
+    function onEdit(event){
+    	this.emitEvent('edit', event.data);
+    }
+
+    function onDelete(event){
+    	var self = this;
+        dpd.passengers.del(event.data, function(res){
+        	//debugger;
+	        self.state.alert.alert(null);
+            self.emitEvent('delete', event.data);
+        });
+    }
+</script>

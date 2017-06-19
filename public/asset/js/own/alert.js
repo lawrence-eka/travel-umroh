@@ -58,7 +58,7 @@ function Alert(alertType, patchFunction, refName) {
                 finalResult.push(result[idx]);
             }
         }
-
+//debugger;
         self.onError.publish(finalResult);
 	    
 		return finalResult;

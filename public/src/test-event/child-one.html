@@ -7,11 +7,11 @@
 <script>
 	var event = $inject('/test-event/event');
 
-	function initState(){
+	function initState(props){
 		event.subscribe(onEvent.bind(this));
 		return {
-            message : 'test'
-        }
+            message : 'test',
+		};
     }
 
 

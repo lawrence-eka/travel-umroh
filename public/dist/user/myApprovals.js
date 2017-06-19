@@ -30,10 +30,14 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
 
   function onPropertyChange(event) {};
 
-  var errorMessage = "";
-  var alertType = "";
+  function initState(props) {
+    return {
+      alert: new Alert(null, $patchChanges, "alert"),
+    }
+  }
 
   function loadUserApprovals() {
+    var self = this;
     return new Promise(function(resolve) {
       var q = {
         "needApproval": {
@@ -41,26 +45,23 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
         }
       };
       dpd.users.get(q, function(users, err) {
-        if (err) {
-          errorMessage = err.message;
-        } else {
+        self.state.alert.alert(err);
+        if (!err) {
           resolve(users);
+          $patchChanges();
         }
-        $patchChanges();
       });
     });
   }
 
   function onApprove(user, isApproved) {
+    var self = this;
     return new Promise(function(resolve) {
       user = user.data;
       user.needApproval.isApproved = isApproved;
       dpd.users.put(user.id, user, function(result, err) {
-        if (err) {
-          errorMessage = JSON.stringify(err);
-          alertType = "error";
-        }
-        window.location.hash = "#app/action.myApprovals";
+        self.state.alert.alert(err);
+        $patchChanges();
       });
     });
   }
@@ -108,15 +109,20 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        var _params = {
-          "message": errorMessage,
-          "alertType": alertType
-        };
-        _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "message": _state.alert.text.bind(self)(),
+            "alertType": _state.alert.type.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
         if (!data || data.length == 0) {
           var _params = {
-            "message": 'No user needs approval for now.',
-            "alertType": 'info'
+            "message": "No user needs approval for now.",
+            "alertType": "info"
           };
           _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }

@@ -38,6 +38,10 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     }
   }
 
+  function onCreated() {
+    if (this.properties.alert) this.properties.alert.onError.subscribe(errorSelector.bind(this.target));
+  }
+
   function errorSelector(errors) {
     this._state.error = null;
     if (errors) {

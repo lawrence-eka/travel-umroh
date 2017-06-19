@@ -27,11 +27,15 @@
 
 <script>
     function initState(props) {
-    	if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
+	    if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
     	return {
     		name: props.name,
             error:null,
         }
+    }
+
+    function onCreated(){
+        if(this.properties.alert) this.properties.alert.onError.subscribe(errorSelector.bind(this.target));
     }
 
     function errorSelector(errors) {

@@ -86,6 +86,9 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
         _elementOpenEnd("div");
         _elementOpenStart("form", "");
         _elementOpenEnd("form");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
         var _params = {
           "type": "date",
           "prompt": "Between",
@@ -152,6 +155,7 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
         _elementClose("form");
         _elementClose("div");
       }

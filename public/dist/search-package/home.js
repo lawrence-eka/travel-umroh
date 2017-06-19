@@ -44,13 +44,18 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
     return state;
   }
 
+  function onPropertyChange(props) {
+    if (props.dislayedPackageId) this.state.displayedPackageId = props.displayedPackageId.newValue;
+  }
+
   function onRecordsFoundEvent(data) {
     this._state.recordsFound = data;
     $patchChanges("searchPanel");
   }
 
-  function onClick(event) {
+  function onPackageClick(event) {
     this.state.displayedPackageId = event.data;
+    $patchChanges();
   }
 
   function onSearch(event) {
@@ -148,7 +153,7 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
               _props['on' + eventName](event);
             }
           };
-          onClick.bind(self)(event);
+          onPackageClick.bind(self)(event);
         },
         "onRecordsFound": _state.onRecordsFound
       };
@@ -158,10 +163,12 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
     if (_state.displayedPackageId) {
       _elementOpenStart("span", "");
       _elementOpenEnd("span");
-      var _params = {
-        "packageId": _state.displayedPackageId
-      };
-      _context["show-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+      yalla.framework.registerRef("displayPackage", IncrementalDOM.currentElement(), function() {
+        var _params = {
+          "packageId": _state.displayedPackageId
+        };
+        _context["show-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+      })()
       _elementClose("span");
     }
     _elementClose("div");

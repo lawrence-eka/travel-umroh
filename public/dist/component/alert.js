@@ -52,6 +52,10 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
 
   function formatMessages(message, alertType, titleCase) {
     var finalResult = [];
+    //debugger;
+    if (message.constructor !== Array) message = [{
+      message: message
+    }];
     for (var i in message) {
       if (message[i].message != "") {
         var msg = message[i];

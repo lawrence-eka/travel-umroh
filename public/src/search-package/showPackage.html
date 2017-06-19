@@ -1,3 +1,4 @@
+<inject from="/component/alert" name="alert"></inject>
 <inject from="/package/card-package" name="card-package"></inject>
 <inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
 <inject from="/itinerary/card-itineraryList" name="card-itineraryList"></inject>
@@ -22,6 +23,10 @@
 		    packageId: props.packageId,
             alert: new Alert(null, $patchChanges, "alert"),
 	    }
+    }
+
+    function onPropertyChange(props) {
+    	debugger;
     }
 
     function book(){

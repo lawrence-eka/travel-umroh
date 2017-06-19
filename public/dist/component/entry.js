@@ -31,8 +31,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
   function onPropertyChange(event) {};
 
   function whatDivClass(divClass) {
-    if (divClass) return divClass;
-    else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
+    if (divClass) return divClass + " custom-entry";
+    else return "col-xs-12 col-sm-6 col-md-6 col-lg-6 custom-entry";
   }
 
   function whatInnerDivClass(innerDivClass) {

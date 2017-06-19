@@ -1,15 +1,17 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
 
-<div>
+<div >
     <panel title="Search Packages" footer.bind="@recordsFound">
         <div slot.name="body">
             <form>
-                <entry type="date" prompt="Between" name="startDate" value.bind="@datePair.defaultStartDate()" min.bind="@datePair.minStartDate()" focusout.trigger="@datePair.onStartDateFocusOut('endDate')"></entry>
-                <span ref.name="endDate">
-                            <entry type="date" prompt="And" name="endDate" value.bind="@datePair.defaultEndDate()" min.bind="@datePair.minEndDate()"></entry>
-                        </span>
-                <entry type="button" value="Search" click.trigger="search()"></entry>
+                <div class="row">
+                    <entry type="date" prompt="Between" name="startDate" value.bind="@datePair.defaultStartDate()" min.bind="@datePair.minStartDate()" focusout.trigger="@datePair.onStartDateFocusOut('endDate')"></entry>
+                    <span ref.name="endDate">
+                        <entry type="date" prompt="And" name="endDate" value.bind="@datePair.defaultEndDate()" min.bind="@datePair.minEndDate()"></entry>
+                    </span>
+                    <entry type="button" value="Search" click.trigger="search()"></entry>
+                </div>
             </form>
         </div>
     </panel>

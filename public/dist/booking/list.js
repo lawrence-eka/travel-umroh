@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/booking/myBooking", (function() {
+yalla.framework.addComponent("/dist/booking/list", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/booking/myBooking");
+  var $inject = yalla.framework.createInjector("/dist/booking/list");
   var $export = {};
-  var $path = "/dist/booking/myBooking";
-  var _elementName = "dist.booking.myBooking";
+  var $path = "/dist/booking/list";
+  var _elementName = "dist.booking.list";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,43 +30,47 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
 
   function onPropertyChange(event) {};
 
-  var errorMessage = "";
 
-  function queryBookings(userId) {
-    return new Promise(function(resolve) {
-      var q = {
-        "userId": userId
-      };
-      dpd.bookings.get(q, function(bkg, err) {
-        if (err) {
-          errorMessage = err.message;
-          $patchChanges();
-        } else {
-          resolve(bkg);
-        };
-      });
-    });
+  function initState(props) {
+    //debugger;
+    return {
+      alert: new Alert(null, $patchChanges, "alert"),
+    }
+  }
+
+  function onEditBooking(event) {
+    this.emitEvent('editBooking', event.data);
   }
 
   function getBookings() {
+    var self = this;
     return new Promise(function(resolve) {
-      var me = storage.me.read();
-      queryBookings(me.id).then(function(bkg) {
-        resolve(bkg);
+      var q = {
+        "userId": storage.me.read().id
+      };
+      //debugger;
+      dpd.bookings.get(q, function(bkg, err) {
+        //debugger;
+        self.state.alert.alert(err);
+        if (!err) {
+          resolve(bkg);
+        }
       });
     });
   }
 
   function generateLink(event) {
-    debugger;
-    window.location.hash = '#app/booking.bookPackage:bookingId=' + event.data;
+    this.emitEvent('openBooking', event.data);
+    //	    window.location.hash = '#app/booking.bookPackage:bookingId='+event.data;
   }
 
   function $render(_props, _slotView) {
     _context["card-booking"] = $inject("/booking/card-booking");
     var cardBooking = _context["card-booking"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.booking.myBooking");
+    _attr("element", "dist.booking.list");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -82,6 +86,8 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -99,10 +105,10 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
       function asyncFunc_1(data) {
         var _array = data || [];
         _array.forEach(function(bkg) {
-          _elementOpenStart("p", "");
-          _elementOpenEnd("p");
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
           var _params = {
-            "bkg": bkg,
+            "booking": bkg,
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -121,11 +127,12 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
                   _props['on' + eventName](event);
                 }
               };
-              generateLink.bind(self)(event);
-            }
+              onEditBooking.bind(self)(event);
+            },
+            "showOnly": "showOnly"
           };
           _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          _elementClose("p");
+          _elementClose("span");
         });
       }
       var promise = getBookings.bind(self)();
@@ -145,6 +152,17 @@ yalla.framework.addComponent("/dist/booking/myBooking", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
+    _elementClose("div");
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "alertType": _state.alert.type.bind(self)(),
+        "message": _state.alert.text.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
     _elementClose("div");
   }
   if (typeof $render === "function") {

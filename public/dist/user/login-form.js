@@ -163,9 +163,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementOpenStart("div", "");
-        _attr("class", "form-group custom-entry-margin");
-        _elementOpenEnd("div");
         var _params = {
           "type": "hyperlink",
           "href": "#user.registration",
@@ -173,7 +170,6 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           "prompt": "New to MarKiMroh? Register here"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("div");
         _elementClose("form");
         _elementClose("div");
         _elementOpenStart("span", "");

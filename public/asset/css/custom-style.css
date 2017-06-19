@@ -81,6 +81,11 @@ body{
     margin-bottom:5px !important;
 }
 
+.custom-entry {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
 .custom-panel-body {
     padding:10px!important;
 }

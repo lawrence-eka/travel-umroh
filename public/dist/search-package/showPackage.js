@@ -37,6 +37,10 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
     }
   }
 
+  function onPropertyChange(props) {
+    //debugger;
+  }
+
   function book() {
     var me = storage.me.read();
     var self = this;
@@ -108,6 +112,8 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
 
 
   function $render(_props, _slotView) {
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _context["card-package"] = $inject("/package/card-package");
     var cardPackage = _context["card-package"];
     _context["card-itinerary"] = $inject("/itinerary/card-itinerary");
@@ -142,11 +148,11 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
     _elementOpenStart("span", "");
     _elementOpenEnd("span");
     yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
-      _elementOpenStart("alert", "");
-      _attr("alertType", _state.alert.type.bind(self)());
-      _attr("message", _state.alert.text.bind(self)());
-      _elementOpenEnd("alert");
-      _elementClose("alert");
+      var _params = {
+        "alertType": _state.alert.type.bind(self)(),
+        "message": _state.alert.text.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     })()
     _elementClose("span");
     _elementOpenStart("div", "");

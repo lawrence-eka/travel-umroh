@@ -32,11 +32,11 @@ yalla.framework.addComponent("/dist/test-event/child-one", (function() {
 
   var event = $inject('/test-event/event');
 
-  function initState() {
+  function initState(props) {
     event.subscribe(onEvent.bind(this));
     return {
-      message: 'test'
-    }
+      message: 'test',
+    };
   }
 
 

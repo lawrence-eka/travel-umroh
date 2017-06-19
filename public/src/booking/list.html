@@ -1,0 +1,46 @@
+<inject from="/booking/card-booking" name="card-booking"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <div data.load="getBookings()">
+        <span for.each="bkg in data">
+            <card-booking booking.bind="bkg" click.trigger="onEditBooking(event)" showOnly></card-booking>
+        </span>
+    </div>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+</div>
+<script>
+
+    function initState(props) {
+    	//debugger;
+    	return {
+    		alert: new Alert(null, $patchChanges, "alert"),
+        }
+    }
+
+    function onEditBooking(event) {
+    	this.emitEvent('editBooking', event.data);
+    }
+
+    function getBookings(){
+    	var self = this;
+        return new Promise(function(resolve) {
+	        var q = {"userId": storage.me.read().id};
+	        //debugger;
+	        dpd.bookings.get(q, function (bkg, err) {
+	        	//debugger;
+	        	self.state.alert.alert(err);
+		        if (!err) {
+			        resolve(bkg);
+		        }
+	        });
+        });
+    }
+
+    function generateLink(event){
+    	this.emitEvent('openBooking', event.data);
+//	    window.location.hash = '#app/booking.bookPackage:bookingId='+event.data;
+    }
+</script>

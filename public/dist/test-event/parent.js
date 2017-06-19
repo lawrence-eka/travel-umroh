@@ -55,7 +55,9 @@ yalla.framework.addComponent("/dist/test-event/parent", (function() {
     _text("Parent");
     var _params = {};
     _context["child-one"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-    var _params = {};
+    var _params = {
+      "prop1": _props.id
+    };
     _context["child-two"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");
   }

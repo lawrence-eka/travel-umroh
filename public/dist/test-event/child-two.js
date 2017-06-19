@@ -32,8 +32,28 @@ yalla.framework.addComponent("/dist/test-event/child-two", (function() {
 
   var event = $inject('/test-event/event');
 
+  function initState(props) {
+    return {
+      prop1: props.prop1
+    };
+  }
+
+  function onPropertyChange(props) {
+    this.state.prop1 = props.prop1.newValue;
+  }
+
+  function loadData() {
+    return new Promise(function(resulve) {
+      alert('We have new prop ' + this.state.prop1);
+    });
+
+
+  }
+
   function informOther() {
-    event.publish(new Date());
+    event.publish(this.state.prop1);
+    this.state.prop1 += 1;
+    $patchChanges();
   }
 
   function $render(_props, _slotView) {
@@ -79,7 +99,43 @@ yalla.framework.addComponent("/dist/test-event/child-two", (function() {
     _elementOpenEnd("button");
     _text("Click To Inform Ohter");
     _elementClose("button");
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
+    (function(domNode) {
+      var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
+
+      function asyncFunc_1(data) {}
+      var promise = loadData.bind(self)();
+      if (promise && typeof promise == "object" && "then" in promise) {
+        _skip();
+        promise.then(function(_result) {
+          $patchChanges(node, function() {
+            asyncFunc_1.call(self, _result)
+          });
+        }).catch(function(err) {
+          console.log(err);
+        });
+      } else {
+        asyncFunc_1.call(self, promise)
+      }
+    })({
+      element: IncrementalDOM.currentElement(),
+      pointer: IncrementalDOM.currentPointer()
+    });
     _elementClose("div");
+    _elementClose("div");
+    _text("KLRK");
   }
   if (typeof $render === "function") {
     $export.render = $render;

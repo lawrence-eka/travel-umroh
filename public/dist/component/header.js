@@ -43,7 +43,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
       },
       {
         label: 'My Booking',
-        ref: '#app/booking.myBooking'
+        ref: '#app/booking.home'
       }
     ];
 
@@ -57,6 +57,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
       menusBase.push({
         label: 'My Travel Agent',
         ref: '#app/travel-agent.home'
+      });
+      menusBase.push({
+        label: 'Payment Confirmation',
+        ref: '#app/booking.paymentConfirmation'
       });
     }
     if (me.isAdmin) {

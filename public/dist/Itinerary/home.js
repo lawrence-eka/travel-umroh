@@ -73,7 +73,7 @@ yalla.framework.addComponent("/dist/itinerary/home", (function() {
     //debugger;
     var self = this;
     dpd.itineraries.del(itineraryId.data, function(err) {
-      debugger;
+      //debugger;
       $patchChanges();
     });
   }

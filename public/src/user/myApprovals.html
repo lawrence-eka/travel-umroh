@@ -3,43 +3,45 @@
 <link href="asset/css/registration.css" rel="stylesheet">
 
 <div data.load="loadUserApprovals()">
-    <alert message.bind="errorMessage" alertType.bind="alertType"></alert>
-    <alert message.bind="'No user needs approval for now.'" alertType.bind="'info'" if.bind="!data || data.length==0"></alert>
+    <span ref.name="alert">
+        <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+    </span>
+    <alert message="No user needs approval for now." alertType="info" if.bind="!data || data.length==0"></alert>
     <p for.each="user in data">
         <card-user-approvals user.bind="user" approve.trigger="onApprove(event, true)" reject.trigger="onApprove(event, false)"></card-user-approvals>
     </p>
 </div>
 
 <script>
-	var errorMessage ="";
-	var alertType="";
+    function initState(props) {
+    	return {
+    		alert: new Alert(null, $patchChanges, "alert"),
+        }
+    }
 	function loadUserApprovals() {
+    	var self = this;
 		return new Promise(function(resolve) {
 			var q = {
 				"needApproval": {"$ne": null}
 			};
 			dpd.users.get(q, function (users, err) {
-				if (err) {
-					errorMessage = err.message;
-				} else {
+				self.state.alert.alert(err);
+				if (!err) {
 					resolve(users);
+					$patchChanges();
 				}
-				$patchChanges();
 			});
 		});
 	}
 
 	function onApprove(user, isApproved) {
+    	var self = this;
 		return new Promise(function(resolve){
 			user = user.data;
 			user.needApproval.isApproved = isApproved;
 			dpd.users.put(user.id, user, function(result,err){
-				if(err)
-                {
-                	errorMessage = JSON.stringify(err);
-                	alertType="error";
-                }
-				window.location.hash ="#app/action.myApprovals";
+				self.state.alert.alert(err);
+				$patchChanges();
             });
         });
 	}
