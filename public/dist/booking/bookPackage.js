@@ -72,7 +72,7 @@ yalla.framework.addComponent("/dist/booking/bookPackage", (function() {
   }
 
   function getPassengers(bookingId) {
-    //debugger;
+    debugger;
     return new Promise(function(resolve) {
       dpd.passengers.get({
         "bookingId": bookingId
