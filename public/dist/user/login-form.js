@@ -59,7 +59,8 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           window.location.hash = "#app/search-package.home"
         });
       }
-    });
+    })
+
   }
 
   function $render(_props, _slotView) {

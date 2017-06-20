@@ -8,6 +8,7 @@
   "contributors": [],
   "dependencies": {
     "deployd": ">= 0",
+    "dpd-email": "^0.3.0",
     "dpd-jobs": "^0.14.0"
   },
   "scripts": {
