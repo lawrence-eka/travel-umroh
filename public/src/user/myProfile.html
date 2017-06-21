@@ -18,6 +18,7 @@
     function getMyProfile(){
 		return new Promise(function(resolve) {
             dpd.users.me(function(me) {
+            	debugger;
                     resolve(me);
                 });
 		});

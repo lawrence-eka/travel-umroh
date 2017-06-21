@@ -32,7 +32,7 @@ yalla.framework.addComponent("/dist/travel-agent/list", (function() {
 
   function initState(props) {
     return {
-      alert: new Alert(),
+      alert: new Alert(null, $patchChanges, "alert"),
     }
   }
 
@@ -80,11 +80,16 @@ yalla.framework.addComponent("/dist/travel-agent/list", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "alertType": _state.alert.type.bind(self)(),
-      "message": _state.alert.text.bind(self)()
-    };
-    _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "alertType": _state.alert.type.bind(self)(),
+        "message": _state.alert.text.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
     _elementOpenStart("span", "");
     _elementOpenEnd("span");
     (function(domNode) {

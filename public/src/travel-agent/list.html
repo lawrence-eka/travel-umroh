@@ -2,7 +2,9 @@
 <inject from="/component/alert" name="alert"></inject>
 
 <div>
-    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
     <span data.load="getTravelAgents()">
         <span for.each="ta in data">
             <card-travel-agent travelAgent.bind="ta" editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></card-travel-agent>
@@ -12,7 +14,7 @@
 <script>
     function initState(props) {
     	return {
-    		alert: new Alert(),
+    		alert: new Alert(null, $patchChanges, "alert"),
         }
     }
 

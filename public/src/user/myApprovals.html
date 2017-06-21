@@ -2,16 +2,17 @@
 <inject from="/component/alert" name="alert"></inject>
 <link href="asset/css/registration.css" rel="stylesheet">
 
-<div data.load="loadUserApprovals()">
+<div>
     <span ref.name="alert">
         <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
     </span>
-    <alert message="No user needs approval for now." alertType="info" if.bind="!data || data.length==0"></alert>
-    <p for.each="user in data">
-        <card-user-approvals user.bind="user" approve.trigger="onApprove(event, true)" reject.trigger="onApprove(event, false)"></card-user-approvals>
-    </p>
+    <div data.load="loadUserApprovals()">
+        <alert message="No user needs approval for now." alertType="info" if.bind="!data || data.length==0"></alert>
+        <p for.each="user in data">
+            <card-user-approvals user.bind="user" approve.trigger="onApprove(event, true)" reject.trigger="onApprove(event, false)"></card-user-approvals>
+        </p>
+    </div>
 </div>
-
 <script>
     function initState(props) {
     	return {

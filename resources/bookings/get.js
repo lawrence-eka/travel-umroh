@@ -1,4 +1,3 @@
-
 cancelIf(!query.travelAgentContactPersonId && this.userId != me.id, 'not authorized', 403);
 
 dpd.packages.get(this.packageId, function(pkg, err){
@@ -10,3 +9,4 @@ dpd.packages.get(this.packageId, function(pkg, err){
         this.travelAgent = travelAgent;
     });
 });
+

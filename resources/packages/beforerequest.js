@@ -1,3 +1,5 @@
+cancelIf(!me, "needRelogin");
+
 if(query.showNext)
 {
     query.isPublished = "true";

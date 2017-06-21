@@ -94,6 +94,18 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "message": _state.alert.text.bind(self)(),
+        "alertType": _state.alert.type.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
+    _elementOpenStart("div", "");
+    _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
       var self = {
@@ -109,16 +121,6 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
-          var _params = {
-            "message": _state.alert.text.bind(self)(),
-            "alertType": _state.alert.type.bind(self)()
-          };
-          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        })()
-        _elementClose("span");
         if (!data || data.length == 0) {
           var _params = {
             "message": "No user needs approval for now.",
@@ -194,6 +196,7 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
+    _elementClose("div");
     _elementClose("div");
   }
   if (typeof $render === "function") {
