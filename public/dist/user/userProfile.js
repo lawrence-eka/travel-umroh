@@ -97,7 +97,6 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     var ppLink = _context["ppLink"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.userProfile");
-    _attr("class", "container all-5px");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)

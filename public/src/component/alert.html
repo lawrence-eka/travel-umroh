@@ -30,11 +30,15 @@
 
     function formatMessages(message, alertType, titleCase) {
     	var finalResult=[];
-    	//debugger;
     	if(message.constructor !== Array) message = [{message: message}];
 	    for(var i in message) {
 		    if (message[i].message != "") {
 			    var msg = message[i];
+			    if(msg.message.toLowerCase() == 'needrelogin') {
+			    	debugger;
+			    	storage.me.erase();
+			    	window.location.hash="#app";
+                }
 			    if(alertType != "error") {
 				    msg.message = (titleCase ? msg.message.toTitleCase() : msg.message.toSentenceCase());
 			    } else {

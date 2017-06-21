@@ -43,6 +43,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   function getMyProfile() {
     return new Promise(function(resolve) {
       dpd.users.me(function(me) {
+        debugger;
         resolve(me);
       });
     });

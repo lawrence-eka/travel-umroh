@@ -1,3 +1,5 @@
+cancelIf(!me, "needRelogin");
+
 var needApproval = {};
 if(this.hasOwnProperty("isTravelAgent"))
 {
