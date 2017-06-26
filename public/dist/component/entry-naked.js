@@ -35,6 +35,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     return {
       name: props.name,
       error: null,
+      alias: props.alias,
     }
   }
 
@@ -46,10 +47,10 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     this._state.error = null;
     if (errors) {
       for (var i in errors) {
-        if (errors[i].name == this._state.name) {
+        if (errors[i].name == this._state.name || errors[i].name == this._state.alias) {
           this._state.error = errors[i].message;
           errors.splice(i, 1);
-          return;
+          //return;
         }
       }
     }
@@ -222,7 +223,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     if (whatType(_props.type) == 'hyperlink') {
       _elementOpenStart("a", "");
       _attr("href", _props.href);
-      _attr("class", _props.class ? _props.class : 'custom-entry-prompt');
+      _attr("class", (_props.class ? _props.class : 'custom-entry-prompt'));
       _elementOpenEnd("a");
       _text("" + (_props.prompt) + "");
       _elementClose("a");

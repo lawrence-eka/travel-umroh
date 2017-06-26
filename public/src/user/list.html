@@ -1,0 +1,67 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+    <div data.load="searchUsers()">
+        <panel for.each="user in data" nofooter click.trigger="onManageUser(user.id)">
+            <div slot.name="title">
+                <strong>{{(user.firstName + ' ' + user.lastName).toTitleCase()}}</strong>
+            </div>
+            <div slot.name="body">
+                Email:{{nbsp}}{{user.email}}<br/>
+                Phone:{{nbsp}}{{user.phone}}<br/>
+                Address:{{nbsp}}{{user.address1}}<br/>
+                City:{{nbsp}}{{user.city}}<br/>
+                Admin:{{nbsp}}{{user.isAdmin? 'YES' : 'NO'}}<br/>
+                Travel Agent:{{nbsp}}{{user.isTravelAgent? 'YES' : 'NO'}}<br/>
+            </div>
+        </panel>
+    </div>
+</div>
+<script>
+    const nbsp = " ";
+    function initState(props) {
+    	return {
+    		query: props.query,
+            alert: new Alert(null, $patchChanges, "alert"),
+		    onRecordsFound: props.onRecordsFound,
+        }
+    }
+
+    function onPropertyChange(props) {
+	    for(var key in this.state) {
+		    if(props.hasOwnProperty(key)) {
+			    this.state[key] = props[key]["newValue"];
+		    }
+	    }
+    }
+
+    function searchUsers() {
+    	var self = this;
+    	return new Promise(function(resolve){
+    		//debugger;
+    		if(Object.keys(self.state.query).length > 0) {
+			    dpd.users.get(self.state.query, function (users, err) {
+				    self.state.alert.alert(err);
+				    var recordsFound = (users.length > 0 ? users.length.toString() + ' user' +(users.length == 1 ? '' : 's') : 'No user') + ' found';
+				    //debugger;
+				    self.state.onRecordsFound.publish(recordsFound);
+				    resolve(users);
+			    });
+		    } else {
+    			//debugger;
+			    self.state.onRecordsFound.publish('Please enter search parameter');
+    			resolve(null);
+            }
+        });
+    }
+
+    function onManageUser(event){
+    	//debugger;
+    	this.emitEvent('manageUser', event);
+    }
+</script>

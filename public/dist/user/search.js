@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/user/login-form", (function() {
+yalla.framework.addComponent("/dist/user/search", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/user/login-form");
+  var $inject = yalla.framework.createInjector("/dist/user/search");
   var $export = {};
-  var $path = "/dist/user/login-form";
-  var _elementName = "dist.user.login-form";
+  var $path = "/dist/user/search";
+  var _elementName = "dist.user.search";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -33,54 +33,43 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
 
   function initState(props) {
     return {
-      alert: new Alert(null, $patchChanges, "alert"),
-    };
+      recordsFound: props.recordsFound,
+    }
   }
 
-  function login() {
-    var form = this.target.form;
-    var userName = form.elements.username.value.toLowerCase();
-    var password = form.elements.password.value;
-    var rememberMe = form.elements.rememberMe.checked;
+  function onPropertyChange(props) {
+    if (props.recordsFound) this.state.recordsFound = props.recordsFound.newValue;
+  }
 
-    form.elements.username.value = '';
-    form.elements.password.value = '';
-    form.elements.rememberMe.checked = false;
-
+  function onSearch() {
     var self = this;
-    dpd.users.login({
-      "username": userName,
-      "password": password
-    }, function(user, err) {
-      self.state.alert.alert(err);
-      if (!err) {
-        dpd.users.me(function(me) {
-          storage.me.save(me, rememberMe);
-          window.location.hash = "#app/search-package.home"
-        });
-      }
-    })
+    var fe = this.target.form.elements;
+    var q = {};
 
+    for (var fieldName in fe) {
+      if (fe[fieldName].value && fe[fieldName].name == fieldName && typeof fe[fieldName] != 'function') {
+        if (fe[fieldName].type == "checkbox") {
+          if (fe[fieldName].checked) {
+            q[fieldName] = true;
+          }
+        } else if (fe[fieldName].type != 'button') {
+          q[fieldName] = {
+            "$regex": fe[fieldName].value,
+            "$options": 'i'
+          };
+        }
+      }
+    }
+    this.emitEvent("search", q);
   }
 
   function $render(_props, _slotView) {
-    _context["alert"] = $inject("/component/alert");
-    var alert = _context["alert"];
-    _context["panel"] = $inject("/component/panel");
-    var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
-    _context["ppLink"] = $inject("/component/ppLink");
-    var ppLink = _context["ppLink"];
-    _elementOpenStart("link", "");
-    _attr("element", "dist.user.login-form");
-    _attr("href", "asset/css/custom-style.css");
-    _attr("rel", "stylesheet");
-    _elementOpenEnd("link");
-    _elementClose("link");
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.user.login-form");
-    _attr("class", "margin-top-login-panel");
+    _attr("element", "dist.user.search");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -97,51 +86,70 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "notitle": "notitle"
+      "title": "Search User",
+      "footer": _state.recordsFound
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-      if (slotName === "footer") {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        var _params = {};
-        _context["ppLink"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("div");
-      }
       if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _elementOpenStart("h2", "");
-        _attr("class", "form-signin-heading");
-        _elementOpenEnd("h2");
-        _text("Please sign in");
-        _elementClose("h2");
+        _elementOpenStart("form", "");
+        _elementOpenEnd("form");
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        _elementOpenStart("form", "");
-        _elementOpenEnd("form");
         var _params = {
           "type": "text",
-          "name": "username",
-          "required": "required",
-          "placeholder": "Email"
+          "prompt": "First Name",
+          "name": "firstName"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
-          "type": "password",
-          "name": "password",
-          "placeholder": "Password"
+          "type": "text",
+          "prompt": "Last Name",
+          "name": "lastName"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "email",
+          "prompt": "Email",
+          "name": "email"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "text",
+          "prompt": "Phone",
+          "name": "phone"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "textarea",
+          "prompt": "Address",
+          "name": "address1"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "text",
+          "prompt": "City",
+          "name": "city"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
           "type": "checkbox",
-          "name": "rememberMe",
-          "prompt": "Remember me"
+          "prompt": "Travel Agent",
+          "name": "isTravelAgent"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "checkbox",
+          "prompt": "Administrator",
+          "name": "isAdmin"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
           "type": "button",
-          "value": "Sign In",
+          "name": "btnSearch",
+          "value": "Search",
           "onclick": function(event) {
             var self = {
               target: event.target
@@ -160,38 +168,12 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
                 _props['on' + eventName](event);
               }
             };
-            login.bind(self)();
+            onSearch.bind(self)();
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        var _params = {
-          "type": "hyperlink",
-          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-          "href": "#user.forgot-password",
-          "class": "custom-entry-prompt",
-          "prompt": "Forgot Password"
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        var _params = {
-          "type": "hyperlink",
-          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right",
-          "href": "#user.registration",
-          "class": "custom-entry-prompt",
-          "prompt": "New User"
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("form");
         _elementClose("div");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
-          var _params = {
-            "alertType": _state.alert.type.bind(self)(),
-            "message": _state.alert.text.bind(self)()
-          };
-          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        })()
-        _elementClose("span");
+        _elementClose("form");
         _elementClose("div");
       }
     });

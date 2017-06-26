@@ -1,0 +1,36 @@
+<inject from="/user/search" name="search"></inject>
+<inject from="/user/list" name="list"></inject>
+
+<div>
+    <span ref.name="searchPanel">
+        <search search.trigger="onSearch(event)" recordsFound.bind="@recordsFound"></search>
+    </span>
+    <list query.bind="@query" onRecordsFound.bind="@onRecordsFound" manageUser.trigger="onManageUser(event)"></list>
+</div>
+<script>
+    function initState(props) {
+    	var state = {
+    		query: {},
+		    onRecordsFound: new Event(),
+        };
+	    state.onRecordsFound.subscribe(onRecordsFoundEvent.bind(this));
+	    return state;
+    }
+
+    function onManageUser(event){
+    	//debugger;
+    	window.location.hash="#app/user.myProfile:editedUserId=" + event.data;
+    }
+
+    function onRecordsFoundEvent(data) {
+    	//debugger;
+	    this._state.recordsFound = data;
+	    $patchChanges("searchPanel");
+    }
+
+    function onSearch(event){
+    	//debugger;
+    	this.state.query = event.data;
+    	$patchChanges();
+    }
+</script>

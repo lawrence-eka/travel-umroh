@@ -1,0 +1,59 @@
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+
+<div>
+    <panel title="Search User" footer.bind="@recordsFound">
+        <div slot.name="body">
+            <form>
+                <div class="row">
+                    <entry type="text" prompt="First Name" name="firstName"></entry>
+                    <entry type="text" prompt="Last Name" name="lastName"></entry>
+
+                    <entry type="email" prompt="Email" name="email"></entry>
+                    <entry type="text" prompt="Phone" name="phone"></entry>
+
+                    <entry type="textarea" prompt="Address" name="address1"></entry>
+
+                    <entry type="text" prompt="City" name="city"></entry>
+
+                    <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent"></entry>
+                    <entry type="checkbox" prompt="Administrator" name="isAdmin"></entry>
+                    <entry type="button" name="btnSearch" value="Search" click.trigger="onSearch()"></entry>
+                </div>
+            </form>
+        </div>
+    </panel>
+</div>
+
+<script>
+
+    function initState(props) {
+    	return {
+		    recordsFound: props.recordsFound,
+	    }
+    }
+
+    function onPropertyChange(props) {
+	    if(props.recordsFound) this.state.recordsFound = props.recordsFound.newValue;
+    }
+
+    function onSearch(){
+    	var self = this;
+    	var fe = this.target.form.elements;
+    	var q = {};
+
+	    for (var fieldName in fe) {
+		    if(fe[fieldName].value && fe[fieldName].name == fieldName && typeof fe[fieldName] != 'function' ) {
+		    	if(fe[fieldName].type == "checkbox") {
+		    		if(fe[fieldName].checked) {
+					    q[fieldName] = true;
+				    }
+                }
+                else if (fe[fieldName].type != 'button') {
+				    q[fieldName] = {"$regex": fe[fieldName].value, "$options":'i'};
+			    }
+		    }
+	    }
+	    this.emitEvent("search", q);
+    }
+</script>

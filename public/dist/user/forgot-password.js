@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/user/myProfile", (function() {
+yalla.framework.addComponent("/dist/user/forgot-password", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/user/myProfile");
+  var $inject = yalla.framework.createInjector("/dist/user/forgot-password");
   var $export = {};
-  var $path = "/dist/user/myProfile";
-  var _elementName = "dist.user.myProfile";
+  var $path = "/dist/user/forgot-password";
+  var _elementName = "dist.user.forgot-password";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,69 +30,45 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
 
   function onPropertyChange(event) {};
 
-
-
-  function initState(props) {
-    //debugger;
+  function initState() {
     return {
-      editedUserId: props.editedUserId,
-      error: {
-        message: ''
-      }
-    };
+      alert: new Alert(null, $patchChanges, "alert")
+    }
   }
 
-  function onPropertyChange(props) {
-    if (props.editedUserId) this.state.editedUserId = props.editedUserId.newValue;
-  }
-
-  function getMyProfile() {
+  function onResetPassword() {
+    debugger;
+    var q = {
+      email: this.target.form.elements.email.value,
+      resetPassword: "-",
+    }
+    debugger;
     var self = this;
-    return new Promise(function(resolve) {
-      //debugger;
-      if (!self.state.editedUserId) {
-        dpd.users.me(function(me) {
-          debugger;
-          if (!me) {
-            storage.me.erase();
-            window.location.hash = "#app";
-          }
-          resolve(me);
-        });
-      } else {
-        dpd.users.get(self.state.editedUserId, function(user, err) {
-          debugger;
-          resolve(user);
-        });
+    dpd.resetpassword.post("", q, function(res, err) {
+      debugger;
+      self.state.alert.alert(err);
+      if (!err) {
+        window.location.has = "#app";
       }
     });
   }
 
   function onCancel() {
-    window.location.hash = "#app/search-package.home";
-  }
-
-  function onSave(profile) {
-    //debugger;
-    profile = profile.data;
-    var self = this;
-    dpd.users.put(profile.id, profile, function(user, err) {
-      debugger;
-      if (err) {
-        self.state.error.message = err;
-        $patchChanges();
-      } else {
-        storage.me.save(user, storage.me.isRemembered());
-        window.location.hash = '#app/search-package.home';
-      }
-    });
+    window.location.hash = "#app/user.login-form"
   }
 
   function $render(_props, _slotView) {
     _context["profile"] = $inject("/user/userProfile");
     var profile = _context["profile"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
+    _context["entry"] = $inject("/component/entry");
+    var entry = _context["entry"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.user.myProfile");
+    _attr("element", "dist.user.forgot-password");
+    _attr("class", "container small-margin-top");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -108,24 +84,36 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    (function(domNode) {
-      var node = domNode.element;
-      var self = {
-        target: node
-      };
-      self.properties = _props;
-      if ('elements' in self.target) {
-        self.elements = self.target.elements;
+    var _params = {};
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+      if (slotName === "title") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("strong", "");
+        _elementOpenEnd("strong");
+        _text("Forgot Your Password?");
+        _elementClose("strong");
+        _elementClose("div");
       }
-      self.currentTarget = self.target;
-      self.component = _component;
-      self.component._state = self.component._state || {};
-      self.state = self.component._state;
-
-      function asyncFunc_1(data) {
+      if (slotName === "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("form", "");
+        _elementOpenEnd("form");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
         var _params = {
-          "profile": data,
-          "onsave": function(event) {
+          "type": "email",
+          "name": "email",
+          "required": "required",
+          "prompt": "Your Email Address"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "button",
+          "value": "Reset Password",
+          "onclick": function(event) {
             var self = {
               target: event.target
             };
@@ -143,9 +131,14 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
                 _props['on' + eventName](event);
               }
             };
-            onSave.bind(self)(event);
-          },
-          "oncancel": function(event) {
+            onResetPassword.bind(self)();
+          }
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "button",
+          "value": "Cancel",
+          "onclick": function(event) {
             var self = {
               target: event.target
             };
@@ -164,28 +157,30 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
               }
             };
             onCancel.bind(self)();
-          },
-          "error": _state.error.message
+          }
         };
-        _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+        _elementClose("form");
+        _elementClose("div");
       }
-      var promise = getMyProfile.bind(self)();
-      if (promise && typeof promise == "object" && "then" in promise) {
-        _skip();
-        promise.then(function(_result) {
-          $patchChanges(node, function() {
-            asyncFunc_1.call(self, _result)
-          });
-        }).catch(function(err) {
-          console.log(err);
-        });
-      } else {
-        asyncFunc_1.call(self, promise)
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _text("Please Enter your email address");
+        _elementClose("div");
       }
-    })({
-      element: IncrementalDOM.currentElement(),
-      pointer: IncrementalDOM.currentPointer()
     });
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+      var _params = {
+        "alertType": _state.alert.type.bind(self)(),
+        "message": _state.alert.text.bind(self)()
+      };
+      _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
     _elementClose("div");
   }
   if (typeof $render === "function") {

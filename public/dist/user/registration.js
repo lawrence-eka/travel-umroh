@@ -36,14 +36,22 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     }
   }
 
+  function onPropertyChange(props) {
+    if (props.error) {
+      this.state.error = props.error.newValue;
+    }
+  }
+
   function cancelRegistration() {
     window.location.hash = "#app";
   }
 
   function register(profile) {
+    //debugger;
     profile = profile.data;
     var self = this;
     dpd.users.post(profile, function(user, err) {
+      //debugger;
       if (err) {
         self.state.error = err;
         $patchChanges();
@@ -52,11 +60,13 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
           "username": profile.username,
           "password": profile.password
         }, function(user, err) {
+          //ebugger;
           if (err) {
-            //self.state.error.message = err;
             self.state.alert.alert(err);
             $patchChanges();
           } else {
+            profile.password = undefined;
+            storage.me.save(profile);
             window.location.hash = '#app';
           }
         });

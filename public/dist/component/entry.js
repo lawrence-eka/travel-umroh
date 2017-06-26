@@ -93,6 +93,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "checked": _props.checked,
         "entries": _props.entries,
         "alert": _props.alert,
+        "alias": _props.alias,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -177,6 +178,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "checked": _props.checked,
         "entries": _props.entries,
         "alert": _props.alert,
+        "alias": _props.alias,
         "onchange": function(event) {
           var self = {
             target: event.target

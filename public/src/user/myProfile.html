@@ -1,26 +1,45 @@
 <inject from="/user/userProfile" name="profile"></inject>
 
-<div>
-    <profile profile.bind="getMyProfile()" save.trigger="onSave(event)" cancel.trigger="onCancel()" errorMessage.bind="@error.message"></profile>
+<div data.load="getMyProfile()">
+    <profile profile.bind="data" save.trigger="onSave(event)" cancel.trigger="onCancel()" error.bind="@error.message"></profile>
 </div>
 
 <script>
 
 
-    function initState() {
+    function initState(props) {
+    	//debugger;
         return {
+        	editedUserId: props.editedUserId,
             error : {
                 message : ''
             }
         };
     }
 
+    function onPropertyChange(props){
+    	if(props.editedUserId) this.state.editedUserId = props.editedUserId.newValue;
+    }
+
     function getMyProfile(){
+    	var self = this;
 		return new Promise(function(resolve) {
-            dpd.users.me(function(me) {
-            	debugger;
-                    resolve(me);
-                });
+			//debugger;
+			if(!self.state.editedUserId) {
+				dpd.users.me(function (me) {
+					debugger;
+					if (!me) {
+						storage.me.erase();
+						window.location.hash = "#app";
+					}
+					resolve(me);
+				});
+			} else {
+				dpd.users.get(self.state.editedUserId, function (user, err) {
+					debugger;
+					resolve(user);
+				});
+            }
 		});
 	}
 
@@ -28,13 +47,16 @@
 		window.location.hash = "#app/search-package.home";
 	}
 	function onSave(profile){
+    	//debugger;
 	    profile = profile.data;
         var self = this;
         dpd.users.put(profile.id, profile, function(user, err) {
-            if(err) {
-                self.state.error.message = err;
-            } else {
-            	storage.me.save(me, storage.me.isRemembered());
+        	debugger;
+        	if(err) {
+		        self.state.error.message = err;
+		        $patchChanges();
+	        } else {
+            	storage.me.save(user, storage.me.isRemembered());
                 window.location.hash = '#app/search-package.home';
             }
         });

@@ -52,6 +52,7 @@ yalla.framework.addComponent("/dist/component/ppLink", (function() {
     _component._properties = _props;
     var _params = {
       "type": "hyperlink",
+      "naked": "naked",
       "href": "#common.privacyPolicy",
       "prompt": "Privacy Policy",
       "divClass": " "

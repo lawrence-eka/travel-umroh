@@ -32,6 +32,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
 
 
   function generateMenu(me) {
+    //debugger;
     if (!me) return [];
     var menusBase = [{
         label: (me.firstName + " " + me.lastName).toTitleCase(),
@@ -67,6 +68,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
       menusBase.push({
         label: 'Approvals',
         ref: '#app/user.myApprovals'
+      });
+      menusBase.push({
+        label: 'Manage Users',
+        ref: '#app/user.home'
       });
     }
     return menusBase.concat(menuEnd);

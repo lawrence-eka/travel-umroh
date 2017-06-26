@@ -2,7 +2,35 @@ starting deployd v0.8.9...
 Http to Https Forwarder is listening on port 80
 listening on port 443
 type help for a list of commands
-dpd > GET
+dpd > POST
+{ username: 'aduh@aduh.aduh', password: 'aduh' }
+undefined
+{ id: 'login', '$fields': { password: 0 } }
+_______________________________________________
+Sent email:
+From:     do-not-reply@markimroh.tk
+To:       lawrence.eka@gmail.com
+Subject:  Login Notification
+Text:
+aduh@aduh.aduh has logged in to markimroh!
+```````````````````````````````````````````````
+GET
+undefined
+{ firstName: 'mana',
+  lastName: 'tahan',
+  email: 'aduh@aduh.aduh',
+  phone: '0505050505',
+  username: 'aduh@aduh.aduh',
+  isTravelAgent: true,
+  isAdmin: true,
+  address1: 'Jl Kupang GangI',
+  address2: 'NoioA',
+  city: 'Bojong Kolor Ijo',
+  language: '',
+  needApproval: null,
+  id: 'fd955df2e9163a1f' }
+{ id: 'fd955df2e9163a1f', '$fields': { password: 0 } }
+GET
 Context {
   url: '/',
   req: 
@@ -70,7 +98,7 @@ Context {
         writable: true,
         allowHalfOpen: false,
         destroyed: false,
-        _bytesDispatched: 1059,
+        _bytesDispatched: 0,
         _sockname: null,
         _pendingData: null,
         _pendingEncoding: '',
@@ -82,14 +110,13 @@ Context {
         _idleTimeout: 120000,
         _idleNext: [Object],
         _idlePrev: [Object],
-        _idleStart: 3051,
+        _idleStart: 10900,
         parser: [Object],
         on: [Function: socketOnWrap],
         _paused: false,
         read: [Function],
         _consuming: true,
-        _httpMessage: [Object],
-        _peername: [Object] },
+        _httpMessage: [Object] },
      connection: 
       TLSSocket {
         _tlsOptions: [Object],
@@ -119,7 +146,7 @@ Context {
         writable: true,
         allowHalfOpen: false,
         destroyed: false,
-        _bytesDispatched: 1059,
+        _bytesDispatched: 0,
         _sockname: null,
         _pendingData: null,
         _pendingEncoding: '',
@@ -131,14 +158,13 @@ Context {
         _idleTimeout: 120000,
         _idleNext: [Object],
         _idlePrev: [Object],
-        _idleStart: 3051,
+        _idleStart: 10900,
         parser: [Object],
         on: [Function: socketOnWrap],
         _paused: false,
         read: [Function],
         _consuming: true,
-        _httpMessage: [Object],
-        _peername: [Object] },
+        _httpMessage: [Object] },
      httpVersionMajor: 1,
      httpVersionMinor: 1,
      httpVersion: '1.1',
@@ -151,7 +177,7 @@ Context {
         referer: 'https://localhost/',
         'accept-encoding': 'gzip, deflate, sdch, br',
         'accept-language': 'en-US,en;q=0.8,id;q=0.6',
-        cookie: 'Webstorm-e6f9d906=74c9ff5a-19c1-4de7-887d-f67e4f7c31b3; sid=03180b21d5c58dec8e642dfee536729923a3b32ed6d118753ae5e14262b877c872bb80e17f143f8f22d05718d482112778e79adbb87535c603a8ee8d3721c814; io=gXB1xIjm8eIZEUfEAAAA' },
+        cookie: 'Webstorm-e6f9d906=74c9ff5a-19c1-4de7-887d-f67e4f7c31b3; io=poZjfVtoY01sxh7cAAAA; sid=eebb6676e093b354ecf39292e2b4d88b81d34c491e35d1cad2652832d7fcd0df5da989ef829de24a0405e8a7dfe8c03370a62051502119213601f2eb631627f1' },
      rawHeaders: 
       [ 'Host',
         'localhost',
@@ -168,7 +194,7 @@ Context {
         'Accept-Language',
         'en-US,en;q=0.8,id;q=0.6',
         'Cookie',
-        'Webstorm-e6f9d906=74c9ff5a-19c1-4de7-887d-f67e4f7c31b3; sid=03180b21d5c58dec8e642dfee536729923a3b32ed6d118753ae5e14262b877c872bb80e17f143f8f22d05718d482112778e79adbb87535c603a8ee8d3721c814; io=gXB1xIjm8eIZEUfEAAAA' ],
+        'Webstorm-e6f9d906=74c9ff5a-19c1-4de7-887d-f67e4f7c31b3; io=poZjfVtoY01sxh7cAAAA; sid=eebb6676e093b354ecf39292e2b4d88b81d34c491e35d1cad2652832d7fcd0df5da989ef829de24a0405e8a7dfe8c03370a62051502119213601f2eb631627f1' ],
      trailers: {},
      rawTrailers: [],
      upgrade: false,
@@ -205,7 +231,7 @@ Context {
         writable: true,
         allowHalfOpen: false,
         destroyed: false,
-        _bytesDispatched: 1059,
+        _bytesDispatched: 0,
         _sockname: null,
         _pendingData: null,
         _pendingEncoding: '',
@@ -217,14 +243,13 @@ Context {
         _idleTimeout: 120000,
         _idleNext: [Object],
         _idlePrev: [Object],
-        _idleStart: 3051,
+        _idleStart: 10900,
         parser: [Object],
         on: [Function: socketOnWrap],
         _paused: false,
         read: [Function],
         _consuming: true,
-        _httpMessage: [Object],
-        _peername: [Object] },
+        _httpMessage: [Object] },
      _consuming: false,
      _dumped: false,
      cookies: Cookies { secure: undefined, request: [Circular], response: [Object] },
@@ -237,7 +262,6 @@ Context {
      session: 
       Session {
         data: [Object],
-        sid: '03180b21d5c58dec8e642dfee536729923a3b32ed6d118753ae5e14262b877c872bb80e17f143f8f22d05718d482112778e79adbb87535c603a8ee8d3721c814',
         store: [Object],
         socket: [Object],
         emitToUsers: [Function],
@@ -249,8 +273,9 @@ Context {
         leaveRoom: [Function],
         _leaveAllRooms: [Function],
         leaveAllRooms: [Function],
-        user: [Object],
-        isRoot: false },
+        isRoot: false,
+        sid: 'eebb6676e093b354ecf39292e2b4d88b81d34c491e35d1cad2652832d7fcd0df5da989ef829de24a0405e8a7dfe8c03370a62051502119213601f2eb631627f1',
+        user: [Object] },
      _routed: true },
   res: 
    ServerResponse {
@@ -310,7 +335,7 @@ Context {
         writable: true,
         allowHalfOpen: false,
         destroyed: false,
-        _bytesDispatched: 1059,
+        _bytesDispatched: 0,
         _sockname: null,
         _pendingData: null,
         _pendingEncoding: '',
@@ -322,14 +347,13 @@ Context {
         _idleTimeout: 120000,
         _idleNext: [Object],
         _idlePrev: [Object],
-        _idleStart: 3051,
+        _idleStart: 10900,
         parser: [Object],
         on: [Function: socketOnWrap],
         _paused: false,
         read: [Function],
         _consuming: true,
-        _httpMessage: [Circular],
-        _peername: [Object] },
+        _httpMessage: [Circular] },
      connection: 
       TLSSocket {
         _tlsOptions: [Object],
@@ -359,7 +383,7 @@ Context {
         writable: true,
         allowHalfOpen: false,
         destroyed: false,
-        _bytesDispatched: 1059,
+        _bytesDispatched: 0,
         _sockname: null,
         _pendingData: null,
         _pendingEncoding: '',
@@ -371,14 +395,13 @@ Context {
         _idleTimeout: 120000,
         _idleNext: [Object],
         _idlePrev: [Object],
-        _idleStart: 3051,
+        _idleStart: 10900,
         parser: [Object],
         on: [Function: socketOnWrap],
         _paused: false,
         read: [Function],
         _consuming: true,
-        _httpMessage: [Circular],
-        _peername: [Object] },
+        _httpMessage: [Circular] },
      _header: null,
      _headers: { 'set-cookie': [Object] },
      _headerNames: { 'set-cookie': 'Set-Cookie' },
@@ -421,7 +444,7 @@ Context {
         error: [Function: onError] },
      _eventsCount: 9,
      _maxListeners: undefined,
-     _connections: 2,
+     _connections: 3,
      _handle: 
       TCP {
         bytesRead: 0,
@@ -452,7 +475,7 @@ Context {
      db: 
       Db {
         options: [Object],
-        connectionString: 'mongodb://127.0.0.1:8681/-deployd',
+        connectionString: 'mongodb://127.0.0.1:4575/-deployd',
         connectionOptions: null,
         Db: [Object] },
      sockets: 
@@ -468,7 +491,7 @@ Context {
         _eventsCount: 1 },
      sessions: 
       SessionStore {
-        id: 'c48f80ffe603076278a59b79bb1ad9d46dba87c14f00ba19c920c4f9422553579057578117d04c5dd93a022476fc406c280bbbba24cb1f1fca270cf35f51ce8d',
+        id: 'b6fb84330647ae456047051b6e24088687648e36fdb21529897df6fcf1f7c122155309a1741f28ad52b7e96585fc7605f38497b2d221e2dae2c3c005c131fde1',
         sockets: [Object],
         options: [Object],
         socketQueue: [Object],
@@ -502,16 +525,15 @@ Context {
   session: 
    Session {
      data: 
-      { createdOn: 1498180168102,
-        lastActive: 1498180488886,
+      { createdOn: 1498180617011,
+        lastActive: 1498180617011,
         path: '/users',
         uid: 'fd955df2e9163a1f',
         userhash: '46ad36ec2fe3f0e49d745fe6fef7ae2f',
-        id: '03180b21d5c58dec8e642dfee536729923a3b32ed6d118753ae5e14262b877c872bb80e17f143f8f22d05718d482112778e79adbb87535c603a8ee8d3721c814' },
-     sid: '03180b21d5c58dec8e642dfee536729923a3b32ed6d118753ae5e14262b877c872bb80e17f143f8f22d05718d482112778e79adbb87535c603a8ee8d3721c814',
+        id: 'eebb6676e093b354ecf39292e2b4d88b81d34c491e35d1cad2652832d7fcd0df5da989ef829de24a0405e8a7dfe8c03370a62051502119213601f2eb631627f1' },
      store: 
       SessionStore {
-        id: 'c48f80ffe603076278a59b79bb1ad9d46dba87c14f00ba19c920c4f9422553579057578117d04c5dd93a022476fc406c280bbbba24cb1f1fca270cf35f51ce8d',
+        id: 'b6fb84330647ae456047051b6e24088687648e36fdb21529897df6fcf1f7c122155309a1741f28ad52b7e96585fc7605f38497b2d221e2dae2c3c005c131fde1',
         sockets: [Object],
         options: [Object],
         socketQueue: [Object],
@@ -533,6 +555,8 @@ Context {
      leaveRoom: [Function],
      _leaveAllRooms: [Function],
      leaveAllRooms: [Function],
+     isRoot: false,
+     sid: 'eebb6676e093b354ecf39292e2b4d88b81d34c491e35d1cad2652832d7fcd0df5da989ef829de24a0405e8a7dfe8c03370a62051502119213601f2eb631627f1',
      user: 
       { firstName: 'mana',
         lastName: 'tahan',
@@ -546,8 +570,7 @@ Context {
         city: 'Bojong Kolor Ijo',
         language: '',
         needApproval: null,
-        id: 'fd955df2e9163a1f' },
-     isRoot: false },
+        id: 'fd955df2e9163a1f' } },
   method: 'GET',
   done: [Function],
   dpd: 
@@ -689,7 +712,7 @@ Context {
         _events: [Object],
         _eventsCount: 9,
         _maxListeners: undefined,
-        _connections: 2,
+        _connections: 3,
         _handle: [Object],
         _usingSlaves: false,
         _slaves: [],
