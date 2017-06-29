@@ -1,0 +1,92 @@
+<inject from="/component/attachments/list" name="list"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div data.load="loadFiles()">
+    <div class="container">
+        <entry naked type="label" prompt.bind="$prompt"></entry>
+    </div>
+    <div ref.name="existingFiles">
+        <list list.bind="data" folder="upload/" delete.trigger="onDelete(event)"  readonly.bind="$readonly"></list>
+    </div>
+    <div ref.name="newFiles">
+        <list list.bind="@newFiles"></list>
+    </div>
+    <div if.bind="!$readonly">
+        <form>
+            <entry type="file" name="addFile" change.trigger="onAddFile()"></entry>
+        </form>
+    </div>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+</div>
+<script>
+    function initState(props){
+	    if(props.onSave) props.onSave.subscribe(onSaveEvent.bind(this));
+    	return {
+    		alert: new Alert(null, $patchChanges, "alert"),
+            newFiles:[],
+            delFiles:[],
+            collection: props.collection,
+            userId: props.userId,
+        }
+    }
+
+    function loadFiles() {
+    	var self = this;
+    	return new Promise(function(resolve){
+    		//debugger;
+            var q = {};
+            if(self.state.userId) {
+            	q.uploaderId = self.state.userId;
+            }
+		    dpd[self.state.collection].get(q, function(data, statusCode, headers, config) {
+		    	//debugger;
+		    	resolve(data);
+		    });
+        });
+    }
+
+    function onFileDeleted(event) {
+	    $patchChanges("existingFiles");
+    }
+
+    function onDelete(event) {
+    	this.state.delFiles = this.state.delFiles.concat(event.data);
+    }
+
+    function onAddFile(){
+	    var form = this.target.form;
+	    var self = this;
+        this.state.newFiles = this.state.newFiles.concat(form.elements.addFile.files[0])
+	    form.reset();
+	    $patchChanges("newFiles");
+	    return;
+    }
+
+    function onSaveEvent() {
+	    var self = this;
+	    //debugger;
+        var fd = new FormData()
+        for (var i in self._state.newFiles) {
+            fd.append("uploadedFile", self._state.newFiles[i])
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/' + self._state.collection);
+        xhr.onload = function () {
+            var response = JSON.parse(this.responseText);
+            self._state.alert.alert(null);
+        };
+        xhr.onerror = function (err) {
+            self._state.alert.alert(err);
+        }
+        xhr.send(fd);
+
+	    for (var i in self._state.delFiles) {
+		    dpd[self._state.collection].del(self._state.delFiles[i], function (res, err) {
+		    });
+	    }
+    }
+
+</script>

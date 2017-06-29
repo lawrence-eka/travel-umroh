@@ -166,9 +166,18 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
           "type": "hyperlink",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+          "href": "#user.forgot-password",
+          "class": "custom-entry-prompt",
+          "prompt": "Forgot Password"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "hyperlink",
+          "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right",
           "href": "#user.registration",
           "class": "custom-entry-prompt",
-          "prompt": "New to MarKiMroh? Register here"
+          "prompt": "New User"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("form");

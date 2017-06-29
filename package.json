@@ -9,6 +9,8 @@
   "dependencies": {
     "deployd": ">= 0",
     "dpd-email": "^0.3.0",
+    "dpd-event-callback": "0.0.2",
+    "dpd-fileupload": "0.0.17",
     "dpd-jobs": "^0.14.0"
   },
   "scripts": {

@@ -88,6 +88,14 @@
 			"required": false,
 			"id": "city",
 			"order": 10
+		},
+		"resetPassword": {
+			"name": "resetPassword",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "resetPassword",
+			"order": 11
 		}
 	}
 }

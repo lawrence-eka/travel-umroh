@@ -1,0 +1,11 @@
+<inject from="/component/attachments/entry" name="entry"></inject>
+<div>
+    <div for.each="file in $list">
+        <entry file.bind="file" folder.bind="$folder" delete.trigger="onDelete(event)" readonly.bind="$readonly"></entry>
+    </div>
+</div>
+<script>
+    function onDelete(event){
+    	this.emitEvent("delete", event.data);
+    }
+</script>

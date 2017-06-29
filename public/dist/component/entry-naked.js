@@ -35,7 +35,15 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     return {
       name: props.name,
       error: null,
+      alias: props.alias,
     }
+  }
+
+  function calculateRootStyle(margin) {
+    if (margin) {
+      return 'margin-right : ' + margin;
+    }
+    return '';
   }
 
   function onCreated() {
@@ -46,10 +54,10 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     this._state.error = null;
     if (errors) {
       for (var i in errors) {
-        if (errors[i].name == this._state.name) {
+        if (errors[i].name == this._state.name || errors[i].name == this._state.alias) {
           this._state.error = errors[i].message;
           errors.splice(i, 1);
-          return;
+          //return;
         }
       }
     }
@@ -73,16 +81,19 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
   }
 
   function whatType(type) {
-    if (type == 'textarea') return 'textarea';
-    else if (type == 'hidden') return 'hidden';
-    else if (type == 'button') return 'button';
-    else if (type == 'checkbox') return 'checkbox';
-    else if (type == 'hyperlink') return 'hyperlink';
-    else if (type == 'select') return 'select';
-    else return 'other'
+    if ('|textarea|label|hidden|button|checkbox|hyperlink|select|'.indexOf('|' + type + '|') >= 0) return type;
+    else return 'other';
   }
 
-  function buttonClicked() {
+  function onHyperlinkClick() {
+    this.emitEvent('click');
+  }
+
+  function onPromptClick() {
+    this.emitEvent('click');
+  }
+
+  function onButtonClicked() {
     this.emitEvent('click');
   }
 
@@ -94,10 +105,16 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     this.emitEvent("change");
   }
 
+  function onCheckboxClick(event) {
+    //debugger;
+    this.emitEvent("click", this.target.checked);
+  }
+
 
   function $render(_props, _slotView) {
     _elementOpenStart("span", "");
     _attr("element", "dist.component.entry-naked");
+    _attr("style", calculateRootStyle.bind(self)(_props.margin));
     _elementOpenEnd("span");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -113,11 +130,37 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    if (_props.prompt && whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink' && whatType(_props.type) != 'hidden') {
+    if ((_props.glyph || _props.prompt) && (whatType(_props.type) == 'label' || (whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink' && whatType(_props.type) != 'hidden'))) {
       _elementOpenStart("label", "");
-      _attr("class", "custom-entry-prompt");
+      _attr("class", ('custom-entry-prompt' + (_props.deleted ? ' custom-deleted-text' : '')));
+      _attr("onclick", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onPromptClick.bind(self)();
+      });
       _elementOpenEnd("label");
-      _text("" + (_props.prompt) + "");
+      _text("" + (_props.prompt ? _props.prompt : '') + "");
+      if (_props.glyph) {
+        _elementOpenStart("span", "");
+        _attr("class", 'glyphicon glyphicon-' + _props.glyph);
+        _elementOpenEnd("span");
+        _elementClose("span");
+      }
       _elementClose("label");
     }
     if (whatType(_props.type) == 'other') {
@@ -149,6 +192,26 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
           }
         };
         onFocusOut.bind(self)();
+      });
+      _attr("onchange", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onChange.bind(self)();
       });
       _elementOpenEnd("input");
       _elementClose("input");
@@ -185,7 +248,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
             _props['on' + eventName](event);
           }
         };
-        buttonClicked.bind(self)();
+        onButtonClicked.bind(self)();
       });
       _elementOpenEnd("input");
       _elementClose("input");
@@ -222,7 +285,27 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     if (whatType(_props.type) == 'hyperlink') {
       _elementOpenStart("a", "");
       _attr("href", _props.href);
-      _attr("class", _props.class ? _props.class : 'custom-entry-prompt');
+      _attr("class", (_props.class ? _props.class : 'custom-entry-prompt'));
+      _attr("onclick", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onHyperlinkClick.bind(self)();
+      });
       _elementOpenEnd("a");
       _text("" + (_props.prompt) + "");
       _elementClose("a");
@@ -255,6 +338,26 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
           }
         };
         onFocusOut.bind(self)();
+      });
+      _attr("onclick", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onCheckboxClick.bind(self)(event);
       });
       _elementOpenEnd("input");
       _elementClose("input");

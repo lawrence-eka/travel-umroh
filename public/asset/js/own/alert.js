@@ -33,7 +33,7 @@ function Alert(alertType, patchFunction, refName) {
 			result.push({"message": message});
 		}
 		else if (message.hasOwnProperty("message")) {
-			result.push({"message":message.message});
+			result.push({"name":message.name, "message":message.message});
 		}
 		else if (message.hasOwnProperty("error")) {
 			result.push({"message":message.error});

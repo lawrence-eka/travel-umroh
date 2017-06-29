@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav">
                 <li for.each="menu in generateMenu(data)">
                     <a href.bind="menu.ref" if.bind="menu.ref!='#'" click.trigger="hideMenu()">{{menu.label}}</a>
-                    <a href="#" click.trigger="logout()" if.bind="menu.ref=='#'">{{menu.label}}</a>
+                    <a click.trigger="logout()" if.bind="menu.ref=='#'" class="custom-mouse-pointer">{{menu.label}}</a>
                 </li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -23,6 +23,7 @@
 <script>
 
     function generateMenu(me){
+    	//debugger;
         if(!me) return [];
         var menusBase = [
             {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
@@ -38,7 +39,8 @@
 	        menusBase.push({label:'Payment Confirmation',ref:'#app/booking.paymentConfirmation'});
         }
         if(me.isAdmin){
-            menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
+	        menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
+	        menusBase.push({label:'Manage Users',ref:'#app/user.home'});
         }
         return menusBase.concat(menuEnd);
     }
@@ -49,7 +51,9 @@
     }
 
     function logout(){
+    	//debugger;
         dpd.users.logout(function(err) {
+        	//debugger;
         	storage.me.erase();
             window.location.hash = '#app';
         });

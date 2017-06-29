@@ -32,20 +32,39 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
 
 
 
-  function initState() {
+  function initState(props) {
+    //debugger;
     return {
+      editedUserId: props.editedUserId,
       error: {
         message: ''
       }
     };
   }
 
+  function onPropertyChange(props) {
+    if (props.editedUserId) this.state.editedUserId = props.editedUserId.newValue;
+  }
+
   function getMyProfile() {
+    var self = this;
     return new Promise(function(resolve) {
-      dpd.users.me(function(me) {
-        debugger;
-        resolve(me);
-      });
+      //debugger;
+      if (!self.state.editedUserId) {
+        dpd.users.me(function(me) {
+          //debugger;
+          if (!me) {
+            storage.me.erase();
+            window.location.hash = "#app";
+          }
+          resolve(me);
+        });
+      } else {
+        dpd.users.get(self.state.editedUserId, function(user, err) {
+          debugger;
+          resolve(user);
+        });
+      }
     });
   }
 
@@ -54,13 +73,16 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   }
 
   function onSave(profile) {
+    //debugger;
     profile = profile.data;
     var self = this;
     dpd.users.put(profile.id, profile, function(user, err) {
+      //debugger;
       if (err) {
         self.state.error.message = err;
+        $patchChanges();
       } else {
-        storage.me.save(me, storage.me.isRemembered());
+        storage.me.save(user, storage.me.isRemembered());
         window.location.hash = '#app/search-package.home';
       }
     });
@@ -86,51 +108,84 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    var _params = {
-      "profile": getMyProfile.bind(self)(),
-      "onsave": function(event) {
-        var self = {
-          target: event.target
+    (function(domNode) {
+      var node = domNode.element;
+      var self = {
+        target: node
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = self.target;
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
+
+      function asyncFunc_1(data) {
+        var _params = {
+          "profile": data,
+          "onsave": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onSave.bind(self)(event);
+          },
+          "oncancel": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onCancel.bind(self)();
+          },
+          "error": _state.error.message
         };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
-          }
-        };
-        onSave.bind(self)(event);
-      },
-      "oncancel": function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
-          }
-        };
-        onCancel.bind(self)();
-      },
-      "errorMessage": _state.error.message
-    };
-    _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+      }
+      var promise = getMyProfile.bind(self)();
+      if (promise && typeof promise == "object" && "then" in promise) {
+        _skip();
+        promise.then(function(_result) {
+          $patchChanges(node, function() {
+            asyncFunc_1.call(self, _result)
+          });
+        }).catch(function(err) {
+          console.log(err);
+        });
+      } else {
+        asyncFunc_1.call(self, promise)
+      }
+    })({
+      element: IncrementalDOM.currentElement(),
+      pointer: IncrementalDOM.currentPointer()
+    });
     _elementClose("div");
   }
   if (typeof $render === "function") {

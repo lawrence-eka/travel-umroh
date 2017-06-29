@@ -32,6 +32,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
 
 
   function generateMenu(me) {
+    //debugger;
     if (!me) return [];
     var menusBase = [{
         label: (me.firstName + " " + me.lastName).toTitleCase(),
@@ -68,6 +69,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
         label: 'Approvals',
         ref: '#app/user.myApprovals'
       });
+      menusBase.push({
+        label: 'Manage Users',
+        ref: '#app/user.home'
+      });
     }
     return menusBase.concat(menuEnd);
   }
@@ -78,7 +83,9 @@ yalla.framework.addComponent("/dist/component/header", (function() {
   }
 
   function logout() {
+    //debugger;
     dpd.users.logout(function(err) {
+      //debugger;
       storage.me.erase();
       window.location.hash = '#app';
     });
@@ -201,7 +208,6 @@ yalla.framework.addComponent("/dist/component/header", (function() {
           }
           if (menu.ref == '#') {
             _elementOpenStart("a", "");
-            _attr("href", "#");
             _attr("onclick", function(event) {
               var self = {
                 target: event.target
@@ -222,6 +228,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
               };
               logout.bind(self)();
             });
+            _attr("class", "custom-mouse-pointer");
             _elementOpenEnd("a");
             _text("" + (menu.label) + "");
             _elementClose("a");

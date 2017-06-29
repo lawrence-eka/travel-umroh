@@ -47,6 +47,8 @@ yalla.framework.addComponent("/dist/user/card-user-approvals", (function() {
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["attachment"] = $inject("/component/attachments/home");
+    var attachment = _context["attachment"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.card-user-approvals");
     _elementOpenEnd("div");
@@ -71,18 +73,35 @@ yalla.framework.addComponent("/dist/user/card-user-approvals", (function() {
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _text("Admin: " + (_props.user.needApproval.isAdmin ? 'Yes' : 'No') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Travel Agent: " + (_props.user.needApproval.isTravelAgent ? 'Yes' : 'No') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
+        if (_props.user.needApproval.hasOwnProperty('isAdmin')) {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          var _params = {
+            "type": "label",
+            "prompt": _props.user.needApproval.isAdmin ? 'Request for Admin Rights' : 'Revokal of Admin Rights'
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementClose("span");
+        }
+        if (_props.user.needApproval.hasOwnProperty('isTravelAgent')) {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          var _params = {
+            "type": "label",
+            "prompt": _props.user.needApproval.isTravelAgent ? 'Request for Travel Agent Rights' : 'Revokal of Travel Agent Rights'
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          var _params = {
+            "readonly": "readonly",
+            "collection": "docstravelagent",
+            "userId": _props.user.id,
+            "prompt": "Proof of Travel Agency"
+          };
+          _context["attachment"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementClose("span");
+        }
         var _params = {
           "type": "button",
           "value": "Approve",
@@ -135,7 +154,6 @@ yalla.framework.addComponent("/dist/user/card-user-approvals", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        _elementClose("div");
         _elementClose("div");
       }
     });

@@ -40,8 +40,8 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     else return "form-group custom-entry-margin";
   }
 
-  function onButtonClicked() {
-    this.emitEvent('click');
+  function onClick(event) {
+    this.emitEvent('click', event && event.data ? event.data : null);
   }
 
   function onFocusOut() {
@@ -93,6 +93,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "checked": _props.checked,
         "entries": _props.entries,
         "alert": _props.alert,
+        "alias": _props.alias,
+        "glyph": _props.glyph,
+        "margin": _props.margin,
+        "deleted": _props.deleted,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -131,7 +135,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
               _props['on' + eventName](event);
             }
           };
-          onButtonClicked.bind(self)();
+          onClick.bind(self)();
         },
         "onfocusout": function(event) {
           var self = {
@@ -177,6 +181,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "checked": _props.checked,
         "entries": _props.entries,
         "alert": _props.alert,
+        "alias": _props.alias,
+        "glyph": _props.glyph,
+        "margin": _props.margin,
+        "deleted": _props.deleted,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -215,7 +223,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
               _props['on' + eventName](event);
             }
           };
-          onButtonClicked.bind(self)();
+          onClick.bind(self)(event);
         },
         "onfocusout": function(event) {
           var self = {

@@ -1,15 +1,19 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/attachments/home" name="attachment"></inject>
 
 <div>
     <panel title.bind="fullName($user.firstName, $user.lastName)" nofooter>
-        <div slot.name="body">
-            Admin: {{$user.needApproval.isAdmin ? 'Yes' : 'No'}}<br/>
-            Travel Agent: {{$user.needApproval.isTravelAgent ? 'Yes' : 'No'}}<br/>
-            <div class=row">
-                <entry type="button" value="Approve" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger=onApprove($user)"></entry>
-                <entry type="button" value="Reject" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger=onReject($user)"></entry>
-            </div>
+        <div class="row" slot.name="body">
+            <span if.bind="$user.needApproval.hasOwnProperty('isAdmin')">
+                <entry type="label" prompt.bind="$user.needApproval.isAdmin ? 'Request for Admin Rights' : 'Revokal of Admin Rights'"></entry>
+            </span>
+            <span if.bind="$user.needApproval.hasOwnProperty('isTravelAgent')">
+                <entry type="label" prompt.bind="$user.needApproval.isTravelAgent ? 'Request for Travel Agent Rights' : 'Revokal of Travel Agent Rights'"></entry>
+                <attachment readonly collection="docstravelagent" userId.bind="$user.id" prompt="Proof of Travel Agency"></attachment>
+            </span>
+            <entry type="button" value="Approve" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger=onApprove($user)"></entry>
+            <entry type="button" value="Reject" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger=onReject($user)"></entry>
         </div>
     </panel>
 </div>

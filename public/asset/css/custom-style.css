@@ -94,10 +94,13 @@ body{
     margin-bottom:0 !important;
 }
 .custom-alert {
-    margin-bottom:0 !important;
+    margin-bottom:5px !important;
     padding: 10px !important;
 }
 
+.custom-mouse-pointer {
+    cursor: pointer;
+}
 .custom-panel-booked-package {
     padding-left:0 !important;
     padding-right:0 !important;
@@ -122,6 +125,10 @@ body{
 
 .custom-error-text {
     color: red !important;
+}
+
+.custom-deleted-text {
+    text-decoration: line-through;
 }
 
 .frosted-glass {
