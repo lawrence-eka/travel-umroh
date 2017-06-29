@@ -32,23 +32,22 @@ yalla.framework.addComponent("/dist/user/forgot-password", (function() {
 
   function initState() {
     return {
-      alert: new Alert(null, $patchChanges, "alert")
+      alert: new Alert(null, $patchChanges, "alert"),
+      success: false,
     }
   }
 
   function onResetPassword() {
-    debugger;
+    var self = this;
     var q = {
       email: this.target.form.elements.email.value,
-      resetPassword: "-",
     }
-    debugger;
     var self = this;
-    dpd.resetpassword.post("", q, function(res, err) {
-      debugger;
+    dpd.resetpassword.post(q, q, function(result, err) {
       self.state.alert.alert(err);
       if (!err) {
-        window.location.has = "#app";
+        self.state.success = true;
+        $patchChanges();
       }
     });
   }
@@ -167,7 +166,18 @@ yalla.framework.addComponent("/dist/user/forgot-password", (function() {
       if (slotName === "footer") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _text("Please Enter your email address");
+        if (!_state.success) {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          _text("Please Enter your email address");
+          _elementClose("span");
+        }
+        if (_state.success) {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          _text("Link to reset your password has been sent to your email.");
+          _elementClose("span");
+        }
         _elementClose("div");
       }
     });

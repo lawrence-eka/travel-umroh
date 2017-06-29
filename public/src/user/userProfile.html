@@ -3,6 +3,7 @@
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
+<inject from="/component/attachments/home" name="attachments"></inject>
 
 <div >
     <panel title.bind="whatTitle($profile)">
@@ -10,9 +11,8 @@
             <ppLink></ppLink>
         </div>
         <div slot.name="body" data.load="loadProfile($profile)">
-            <span ref.name="alert">
                 <form>
-                    <div class="row">
+                    <div class="row" ref.name="alert">
                         <input type="hidden" name="id" value.bind="data.id">
                         <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
                         <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
@@ -25,12 +25,34 @@
 
                         <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
 
-                        <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent"></entry>
+<!--
                         <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
+                        <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
+-->
 
+                        <div if.bind="!gotNeedApproval(data, 'isAdmin')">
+                            <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
+                        </div>
+                        <div if.bind="gotNeedApproval(data, 'isAdmin')">
+                            <entry type="checkbox" prompt="Administrator*" name="isAdmin" checked.bind="data.needApproval.isAdmin"></entry>
+                            <entry type="label" prompt.bind="('*' + (data.needApproval.isAdmin ? 'Request for' : 'Revokal of') + ' Admin Access under review')"></entry>
+                        </div>
+                        <div if.bind="!gotNeedApproval(data, 'isTravelAgent')">
+                            <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
+                        </div>
+                        <div if.bind="gotNeedApproval(data, 'isTravelAgent')">
+                            <entry type="checkbox" prompt="Travel Agent*" name="isTravelAgent" checked.bind="data.needApproval.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
+                            <entry type="label" prompt.bind="('*' + (data.needApproval.isTravelAgent ? 'Request for' : 'Revokal of') + ' Travel Agent Access under review')"></entry>
+                        </div>
+                    </div>
+                    <div ref.name="docsTravelAgent">
+                        <div class="row" if.bind="@showDocsTravelAgent">
+                            <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" onSave.bind="@onSave"></attachments>
+                        </div>
+                    </div>
+                    <div class="row" ref.name="alert">
                         <entry type="password" prompt="Password" name="password" value.bind="data.password" alert.bind="@alert"></entry>
                         <entry type="password" prompt="Repeat Password" name="repeatPassword" alert.bind="@alert"></entry>
-
                         <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
                         <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
                     </div>
@@ -44,21 +66,32 @@
 <script>
 
     function initState(props) {
+    	//debugger;
+        if(props.onSaved) props.onSaved.subscribe(onSaved.bind(this));
         var state = {
         	alert: new Alert(null, $patchChanges, "alert"),
             originalProfile: null,
+            onSave: new Event(),
+	        showDocsTravelAgent: false,
+
         };
         state.alert.alert(props.error);
         return state;
     }
 
     function onPropertyChange(event) {
-    	debugger;
+    	//debugger;
         if(event.error) this.state.alert.alert(event.error.newValue);
     }
 
+    function gotNeedApproval(profile, which) {
+    	return (profile.needApproval && profile.needApproval.hasOwnProperty(which));
+    }
+
     function loadProfile(profile){
-    	this.state.originalProfile = (profile? profile : {});
+	    profile = (profile? profile : {});
+    	this.state.originalProfile = profile;
+    	this.state.showDocsTravelAgent = (profile.isTravelAgent || (profile.needApproval && profile.needApproval.isTravelAgent));
         return this.state.originalProfile;
     }
 
@@ -66,6 +99,11 @@
     	if(!profile) return "Please Sign Up";
     	else if(profile.id == storage.me.read().id) return "Your Profile";
     	else return "User Profile";
+    }
+    function onTravelAgentClick(event) {
+    	debugger;
+	    this.state.showDocsTravelAgent = event.data;
+    	$patchChanges("docsTravelAgent");
     }
     function onRegister(){
         this.state.alert.alert('');
@@ -76,10 +114,9 @@
             return;
         }
 
-        var profile = {};
+	    var profile = this.state.originalProfile;
         profile.id = form.elements.id.value;
         profile.firstName = form.elements.firstName.value;
-
         profile.lastName = form.elements.lastName.value;
         profile.email = form.elements.email.value;
         profile.phone = form.elements.phone.value;
@@ -88,18 +125,39 @@
         if(profile.username) profile.username = profile.username.toLowerCase();
         if(form.elements.password.value != '') profile.password = form.elements.password.value;
 
+        debugger;
         profile.address1 = form.elements.address1.value;
         profile.city = form.elements.city.value;
+        if((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
+        	profile.isAdmin = (form.elements.isAdmin.checked);
+        } else {
+        	delete profile.isAdmin;
+	        if(profile.needApproval) delete profile.needApproval.isAdmin;
+        }
 
-        if(this.state.originalProfile.isAdmin != form.elements.isAdmin.checked) profile.isAdmin = (form.elements.isAdmin.checked);
-	    if(this.state.originalProfile.isTravelAgent != form.elements.isTravelAgent.checked) profile.isTravelAgent = (form.elements.isTravelAgent.checked);
+	    if((profile.isTravelAgent ? true : false) != form.elements.isTravelAgent.checked) {
+        	profile.isTravelAgent = (form.elements.isTravelAgent.checked);
+	    } else {
+        	delete profile.isTravelAgent;
+		    if(profile.needApproval) delete profile.needApproval.isTravelAgent;
+	    }
 
+	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
+	    	profile.needApproval = null;
+        }
         //debugger;
-        this.emitEvent('save', profile);
+        if(profile.id) onSaved();
+
+	    this.emitEvent('save', profile);
     }
 
     function onCancel() {
         this.emitEvent('cancel');
+    }
+
+    function onSaved() {
+    	//debugger;
+	    this._state.onSave.publish();
     }
 
 </script>

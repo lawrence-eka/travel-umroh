@@ -2223,7 +2223,8 @@ window.onload = function () {
 
 if ("onhashchange" in window) {
     window.onhashchange = function () {
-        yalla.framework.renderToScreen();
+        //yalla.framework.renderToScreen();
+        window.location.reload();
     }
 } else {
     alert('Browser not supported');

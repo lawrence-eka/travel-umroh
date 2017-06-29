@@ -33,6 +33,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   function initState() {
     return {
       error: null,
+      onSaved: new Event(),
     }
   }
 
@@ -65,6 +66,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
             self.state.alert.alert(err);
             $patchChanges();
           } else {
+            self.state.onSaved.publish();
             profile.password = undefined;
             storage.me.save(profile);
             window.location.hash = '#app';
@@ -137,7 +139,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
         };
         cancelRegistration.bind(self)();
       },
-      "error": _state.error
+      "error": _state.error,
+      "onSaved": _state.onSaved
     };
     _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");

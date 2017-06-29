@@ -48,7 +48,6 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
         self.state.alert.alert(err);
         if (!err) {
           resolve(users);
-          $patchChanges();
         }
       });
     });

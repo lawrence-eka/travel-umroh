@@ -1,21 +1,13 @@
-console.log("onvalidate");
-console.log(ctx.method);
-console.log(query);
-console.log(me);
-console.log(this);
-console.log(internal);
-console.log(Object.keys(this));
-
 var isOwnProfile = me && me.id == this.id;
 var isAdmin = me && me.isAdmin;
 var isNewUser = !this.id;
 
-var authorized = isOwnProfile || isAdmin || isNewUser || isResetPassword || internal;
+var authorized = isOwnProfile || isAdmin || isNewUser || internal;
 
 errorIf(!authorized, "credential", "Access validate Unauthorized");
 if(!internal && !query.checkAvailability && !query.checkIsLastAdmin)
 {
-    console.log('sini juga');
+ 
     var q = 
     {
         "checkAvailability":true,
@@ -37,9 +29,9 @@ if(!internal && !query.checkAvailability && !query.checkIsLastAdmin)
 
 if(!internal && !query.checkIsLastAdmin && this.needApproval && this.needApproval.hasOwnProperty("isApproved"))
 {
-    console.log('dan sini');
+
     errorIf(!me.isAdmin, "credential", "Access unauthorized");
-    //console.log(this);
+    console.log("on validate", this);
     if(this.needApproval.isApproved)
     {
         this.isTravelAgent = (this.needApproval.hasOwnProperty("isTravelAgent") ? this.needApproval.isTravelAgent : this.isTravelAgent);

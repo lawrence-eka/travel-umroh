@@ -43,6 +43,8 @@ yalla.framework.addComponent("/dist/app", (function() {
   function $render(_props, _slotView) {
     _context["login-panel"] = $inject("/user/login-form");
     var loginPanel = _context["login-panel"];
+    _context["reset-password"] = $inject("/user/reset-password");
+    var resetPassword = _context["reset-password"];
     _context["app-header"] = $inject("/component/header");
     var appHeader = _context["app-header"];
     _elementOpenStart("link", "");
@@ -86,7 +88,7 @@ yalla.framework.addComponent("/dist/app", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        if (data || isRegistrationPage()) {
+        if (data) {
           _elementOpenStart("div", "");
           _elementOpenEnd("div");
           var _params = {};

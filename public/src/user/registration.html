@@ -1,13 +1,14 @@
 <inject from="/user/userProfile" name="profile"></inject>
 
 <div class="container small-margin-top">
-    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()" error.bind="@error"></profile>
+    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()" error.bind="@error" onSaved.bind="@onSaved"></profile>
 </div>
 
 <script>
     function initState() {
         return {
         	error: null,
+            onSaved: new Event(),
         }
     }
 
@@ -34,6 +35,7 @@
 		                self.state.alert.alert(err);
 		                $patchChanges();
 	                } else {
+                		self.state.onSaved.publish();
                 		profile.password=undefined;
                 		storage.me.save(profile);
                         window.location.hash = '#app';

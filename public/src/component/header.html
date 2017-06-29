@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav">
                 <li for.each="menu in generateMenu(data)">
                     <a href.bind="menu.ref" if.bind="menu.ref!='#'" click.trigger="hideMenu()">{{menu.label}}</a>
-                    <a href="#" click.trigger="logout()" if.bind="menu.ref=='#'">{{menu.label}}</a>
+                    <a click.trigger="logout()" if.bind="menu.ref=='#'" class="custom-mouse-pointer">{{menu.label}}</a>
                 </li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -51,7 +51,9 @@
     }
 
     function logout(){
+    	//debugger;
         dpd.users.logout(function(err) {
+        	//debugger;
         	storage.me.erase();
             window.location.hash = '#app';
         });

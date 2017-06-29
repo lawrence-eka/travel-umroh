@@ -17,8 +17,11 @@
         entries.bind="$entries"
         alert.bind="$alert"
         alias.bind="$alias"
+        glyph.bind="$glyph"
+        margin.bind="$margin"
+        deleted.bind="$deleted"
         change.trigger="onChange()"
-        click.trigger="onButtonClicked()"
+        click.trigger="onClick()"
         focusout.trigger="onFocusOut()">
     </entry-naked>
     <div if.bind="!$naked && $type!='hidden'" class.bind="whatDivClass($divClass)">
@@ -38,8 +41,11 @@
                 entries.bind="$entries"
                 alert.bind="$alert"
                 alias.bind="$alias"
+                glyph.bind="$glyph"
+                margin.bind="$margin"
+                deleted.bind="$deleted"
                 change.trigger="onChange()"
-                click.trigger="onButtonClicked()"
+                click.trigger="onClick(event)"
                 focusout.trigger="onFocusOut()">
             </entry-naked>
         </div>
@@ -57,8 +63,8 @@
         else return "form-group custom-entry-margin";
     }
 
-    function onButtonClicked() {
-    	this.emitEvent('click');
+    function onClick(event) {
+    	this.emitEvent('click', event && event.data ? event.data : null);
     }
 
     function onFocusOut() {

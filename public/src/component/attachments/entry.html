@@ -1,0 +1,43 @@
+<inject from="/component/entry-naked" name="entry"></inject>
+
+<div class="container">
+    <span ref.name="local">
+        <div if.bind="@deleted">
+            <entry naked type="label" glyph="minus" margin="5px" deleted></entry>
+            <entry naked type="label" prompt.bind="@file.originalFilename" deleted></entry>
+        </div>
+        <div if.bind="!@deleted && @file.originalFilename">
+            <entry naked type="label" glyph.bind="$readonly ? 'paperclip' : 'trash'" click.trigger="$readonly ? null : onDelete()" margin="5px"></entry>
+            <entry naked type="hyperlink" href.bind="@folder + @file.filename" prompt.bind="@file.originalFilename"></entry>
+        </div>
+        <div if.bind="!@deleted && !@file.originalFilename">
+            <entry naked type="label" glyph="plus" margin="5px"></entry>
+            <entry naked type="label" prompt.bind="@file.name"></entry>
+        </div>
+    </span>
+</div>
+<script>
+    function initState(props) {
+    	if(!props.file) {props.file = {filename:'test.test', originalFilename:'original.test'};}
+    	if(!props.folder) {props.folder = 'upload/';}
+	    //debugger;
+    	return {
+    		file: props.file,
+            folder: props.folder,
+            deleted: false,
+        }
+    }
+
+    function onPropertyChange(props){
+    	if(props.file) this.state.file = props.file.newValue;
+    	if(props.folder) this.state.folder = props.folder.newValue
+    }
+    function onDelete() {
+    	//debugger;
+    	if(!this.state.file.originalFilename) return;
+    	var self = this;
+    	self.state.deleted=true;
+    	self.emitEvent("delete", self.state.file.id);
+    	$patchChanges("local");
+    }
+</script>

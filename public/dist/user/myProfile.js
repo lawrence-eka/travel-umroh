@@ -52,7 +52,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
       //debugger;
       if (!self.state.editedUserId) {
         dpd.users.me(function(me) {
-          debugger;
+          //debugger;
           if (!me) {
             storage.me.erase();
             window.location.hash = "#app";
@@ -77,7 +77,7 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
     profile = profile.data;
     var self = this;
     dpd.users.put(profile.id, profile, function(user, err) {
-      debugger;
+      //debugger;
       if (err) {
         self.state.error.message = err;
         $patchChanges();

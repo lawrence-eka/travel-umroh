@@ -1,14 +1,8 @@
-console.log("onbeforerequest");
-console.log(ctx.method);
-console.log(this);
-console.log(query);
-console.log(internal);
-
-var isLogin = !me && ctx.method == 'POST' && query.id != 'login';
-//var isResetPassword = !me && ctx.method == 'PUT' && this.email && this.resetPassword;
+var isLogin = !me && ctx.method == 'POST' && query.id == 'login';
+var isRegistering = !me && ctx.method == 'POST';
 var isLoggedIn = me;
 
-var authorized = isLogin || isLoggedIn || internal;
+var authorized = isLogin || isLoggedIn || isRegistering || internal;
 
 cancelIf(!authorized, "needRelogin");
 
