@@ -1,5 +1,5 @@
-dpd.mailgun.post({
-  to      : 'lawrence.eka@gmaill.com',
+/*dpd.mailgun.post({
+  to      : 'lawrence.eka@gmail.com',
   subject : 'Login Notification',
   text    : this.email + ' has logged in to markimroh! '
 }, function ( err, results ) {
@@ -7,3 +7,4 @@ dpd.mailgun.post({
     console.log(err);
     console.log(this);
 }); 
+*/
