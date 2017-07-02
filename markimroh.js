@@ -49,8 +49,10 @@ var server = deployd({
 	  } 
 	  else 
 	  {
-		  console.log("No keys/certificates for domain requested:" + hostname);
-		  throw new Error("No keys/certificates for domain requested");
+			console.log('No keys/certificates for domain requested:' + hostname + '; supplying with localhost instead.');
+			return certs['localhost']; 
+		  //console.log('No keys/certificates for domain requested:' + hostname);
+		  //throw new Error('No keys/certificates for domain requested');
 	  }
   },
 // eka ends
@@ -73,7 +75,9 @@ var server = deployd({
 server.listen();
 
 server.on("listening", function() {
-  console.log("Server is listening on port " + server.options.port.toString());
+	console.log("Server is listening on port " + server.options.port.toString());
+	console.log(process.env.NODE_ENV ? 'NODE_ENV=' + process.env.NODE_ENV : 'Node is in Development Environment') //eka
+	console.log(server.options.env ? 'DPD_ENV=' + server.options.env : 'Deployd is in Development Environment') //eka
 });
 
 server.on("error", function(err) {
