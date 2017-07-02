@@ -30,6 +30,8 @@ curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localho
 
 curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/packages > result.txt
 
+curl -k -X GET -H "Content-Type: application/json" -b cookie.txt https://localhost/packages -d @searchPackage.txt > result.txt
+
 curl -k -X GET -H "Content-Type: application/json" -b cookie.txt "https://localhost/packages?showNext=4" > result.txt
 
 curl -k -X POST -H "Content-Type: application/json" -b cookie.txt https://localhost/itineraries -d @newItinerary.txt > result.txt

@@ -39,8 +39,8 @@ yalla.framework.addComponent("/dist/test", (function() {
 
   function isVisible(obj, num) {
 
-    if (x == num)
-    else return "hideThis"
+    if (x == num) return '';
+    else return "hideThis";
   }
 
   function $render(_props, _slotView) {

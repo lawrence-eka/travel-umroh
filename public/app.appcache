@@ -1,9 +1,7 @@
 CACHE MANIFEST
 #v1 - 2017-06-29
 
-dist/action
 dist/action/profile.js
-dist/booking
 dist/booking/bookPackage.js
 dist/booking/card-booking.js
 dist/booking/home.js
@@ -11,14 +9,12 @@ dist/booking/list.js
 dist/booking/paymentConfirmation.js
 dist/booking/paymentDetails.js
 dist/common/privacyPolicy.js
-dist/comp/itinerary
 dist/comp/itinerary/itinerary-page.js
 dist/comp/card.js
 dist/comp/content.js
 dist/comp/drawer.js
 dist/comp/header.js
 dist/comp/shell.js
-dist/component/attachments
 dist/component/attachments/entry.js
 dist/component/attachments/home.js
 dist/component/attachments/list.js
@@ -40,22 +36,18 @@ dist/package/card-package.js
 dist/package/edit-package.js
 dist/package/home.js
 dist/package/list.js
-dist/passenger
 dist/passenger/card-passenger.js
 dist/passenger/edit-passenger.js
 dist/passenger/home.js
 dist/passenger/list-passenger.js
-dist/search-package
 dist/search-package/home.js
 dist/search-package/list.js
 dist/search-package/search-panel.js
 dist/search-package/showPackage.js
-dist/test-event
 dist/test-event/child-one.js
 dist/test-event/child-two.js
 dist/test-event/event.js
 dist/test-event/parent.js
-dist/travel-agent
 dist/travel-agent/card-travel-agent.js
 dist/travel-agent/edit-travel-agent.js
 dist/travel-agent/home.js
