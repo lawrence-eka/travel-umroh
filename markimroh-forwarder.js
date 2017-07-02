@@ -1,14 +1,25 @@
-// Require express and create an instance of it
-var fwdExpress = require('express');
-var fwdApp = fwdExpress();
-
-// on the request to root (localhost:3000/)
-fwdApp.get('/', function (req, res) {
-    console.log(req);
-    res.send('<b>My</b> first express http server');
-});
-
-// start the server in the port 3000 !
-fwdApp.listen(8080, function () {
-    console.log('Example app listening on port 8080.');
-});
+      // eka start of experimental http forwarder to https
+      // in dpd, this should be put below dpd.listen();
+      try {
+        var fwdExpress = require('express');
+        var fwdApp = fwdExpress();
+        var fwdPort = 80;
+        fwdApp.enable('trust proxy');
+        fwdApp.use(function(req, res, next) {
+          console.log((req.secure ? 'Https' : 'Http') + ' request received: ' + req.headers.host + req.url);
+          if(req.secure) {
+            next();
+          }
+          else {
+            res.redirect('https://' + req.headers.host.split(':')[0] + req.url);
+          }
+        });
+        fwdApp.use(fwdExpress.static(__dirname + '/public'));
+        var fwdServer = fwdApp.listen(fwdPort, function(){
+          console.log('Http to Https Forwarder is listening on port %d', fwdServer.address().port);
+        });
+      }
+      catch(e) {
+        console.log(e);
+      }
+      // eka end  of experimental http forwarder to https

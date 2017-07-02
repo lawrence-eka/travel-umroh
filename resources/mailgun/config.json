@@ -1,8 +1,8 @@
 {
 	"type": "Email",
 	"host": "smtp.mailgun.org",
-	"port": "",
-	"ssl": false,
+	"port": "465",
+	"ssl": true,
 	"username": "postmaster@markimroh.tk",
 	"password": "5bce3653c1e4c7bfb0e4daffe67b084d",
 	"defaultFromAddress": "do-not-reply@markimroh.tk",
