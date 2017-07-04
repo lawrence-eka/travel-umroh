@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <link href="asset/css/form-panel.css" rel="stylesheet">
-<html manifext="app.appcache">
+<html manifest="app.appcache">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,21 +9,35 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" href="../../favicon.ico">
-        <link href="asset/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="asset/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
         <base href="/">
         <!--
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         -->
+
+        <script src="asset/js/own/storages.js"></script>
+        <script src="asset/js/own/prototypes.js"></script>
+
+        <!--
         <script src="asset/js/jquery.min.js"></script>
+        <script src="asset/js/bootstrap.min.js"></script>
+
+        <script src="asset/js/own/datePair.js"></script>
+        <script src="asset/js/own/alert.js"></script>
+        <script src="asset/js/own/utils.js"></script>
+        <script src="asset/js/own/event.js"></script>
+        <script src="dpd.js" ></script>
+        -->
+
         <script src="dist/yalla.js"
                 yalla-component="app"
                 yalla-base="dist"
                 yalla-domtarget="body" yalla-routing="authenticate">
         </script>
-        <script src="dpd.js" ></script>
-        <script src="asset/js/bootstrap.min.js"></script>
+        <script src="asset/js/own/yalla-patch.js"></script>
+
         <!-- Bootstrap core CSS -->
-        <link href="asset/css/bootstrap.css" rel="stylesheet">
+        <link href="asset/css/bootstrap.min.css" rel="stylesheet">
 
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -32,12 +46,6 @@
         <link href="asset/css/sticky-footer-navbar.css" rel="stylesheet">
 
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="asset/js/own/prototypes.js"></script>
-        <script src="asset/js/own/storages.js"></script>
-        <script src="asset/js/own/datePair.js"></script>
-        <script src="asset/js/own/alert.js"></script>
-        <script src="asset/js/own/utils.js"></script>
-        <script src="asset/js/own/event.js"></script>
 
     <style>
         body {
@@ -54,7 +62,6 @@
     <body >
     </body>
     <script>
-
         function authenticate(path){
             return new Promise(function(resolve){
                 /*
@@ -65,6 +72,58 @@
                 */
                 resolve(path);
             });
+        }
+
+        var scriptCache = {
+        	scripts: storage.session.read("scripts") ? JSON.parse(storage.session.read("scripts")) : {},
+            promises: {},
+            addPromise: function (url, resolve, reject) {
+        		if(!this.promises[url]) this.promises[url] = [];
+        	    this.promises[url].push({resolve:resolve, reject: reject});
+        	    //debugger;
+        		return this.promises[url].length == 1;
+            },
+
+            fulfillPromises: function(url, isResolve){
+        		if(this.promises[url] && this.scripts[url]) {
+			        //debugger;
+        			for(;this.promises[url].length;) {
+        				//debugger;
+        				this.promises[url][0][isResolve?"resolve":"reject"](this.scripts[url].req);
+        				this.promises[url].splice(0, 10);
+                    }
+                }
+            },
+
+            setScript: function(url, req) {
+            	if(req){
+            		this.scripts[url] = {req:{response: req.response, responseText: req.responseText,}};
+            		this.fulfillPromises(url, true);
+                } else {
+            		this.fulfillPromises(url, false);
+            		delete this.promises[url];
+                }
+                storage.session.save("scripts", JSON.stringify(this.scripts));
+            }
+        }
+//debugger;
+        var assets=[
+	        {file: "asset/js/jquery.min.js", seq: 0},
+	        {file: "asset/js/bootstrap.min.js", seq: 1},
+	        {file: "dpd.js"},
+	        {file: "asset/js/own/datePair.js"},
+	        {file: "asset/js/own/alert.js"},
+	        {file: "asset/js/own/utils.js"},
+	        {file: "asset/js/own/event.js"},
+        ];
+
+        for(var i in assets) {
+        	var asset = assets[i];
+	        var resolveCallback= function(req) {
+		        yalla.framework.attachScriptToDocument("/" +  this.file);
+	        };
+
+        	yalla.utils.fetch("./" + asset.file).then(resolveCallback.bind(asset));
         }
     </script>
 </html>

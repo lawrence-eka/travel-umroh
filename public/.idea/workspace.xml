@@ -21,21 +21,29 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
+            <state relative-caret-position="-1366">
+              <caret line="36" column="45" lean-forward="false" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yalla.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="yalla-patch.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/asset/js.max/own/yalla-patch.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="416">
+              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yalla.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist.max/yalla.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="1832" column="0" lean-forward="false" selection-start-line="1832" selection-start-column="0" selection-end-line="1832" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="8" column="2" lean-forward="false" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -46,15 +54,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>airline</find>
-      <find>box</find>
       <find>queryTravelAgent</find>
       <find>getOneTravelAgent</find>
       <find>ta</find>
@@ -83,6 +89,8 @@
       <find>docTravelAgent</find>
       <find>debugger</find>
       <find>.js</find>
+      <find>IncrementalDOM</find>
+      <find>eka</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -101,7 +109,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/dist/home.js" />
         <option value="$PROJECT_DIR$/src/booking/edit-passenger.html" />
         <option value="$PROJECT_DIR$/src/passenger.html" />
         <option value="$PROJECT_DIR$/src/booking/list-passenger.html" />
@@ -134,7 +141,6 @@
         <option value="$PROJECT_DIR$/src/user/reset-password.html" />
         <option value="$PROJECT_DIR$/src/user/login-form.html" />
         <option value="$PROJECT_DIR$/src/user/myProfile.html" />
-        <option value="$PROJECT_DIR$/dist/yalla.js" />
         <option value="$PROJECT_DIR$/node_modules/yallajs/yalla-core.js" />
         <option value="$PROJECT_DIR$/src/component/entry.html" />
         <option value="$PROJECT_DIR$/src/component/entry-naked.html" />
@@ -148,10 +154,12 @@
         <option value="$PROJECT_DIR$/src/app.html" />
         <option value="$PROJECT_DIR$/src/user/registration.html" />
         <option value="$PROJECT_DIR$/src/user/userProfile.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/test.html" />
         <option value="$PROJECT_DIR$/app.appcache" />
         <option value="$PROJECT_DIR$/dist.max/yalla.js" />
+        <option value="$PROJECT_DIR$/dist/yalla.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
       </list>
     </option>
   </component>
@@ -248,21 +256,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist.max" />
+              <option name="myItemId" value="dist" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -297,19 +291,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Workspace\deployd\travel-umroh\public\asset\js.max\own" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\package" />
+      <recent name="C:\Workspace\deployd\travel-umroh\public\src\travel-agent" />
+      <recent name="C:\workspace\esnaadm\public\src\component" />
+      <recent name="C:\workspace\esnaadm\public\asset\js\own" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Workspace\deployd\travel-umroh\public\src\passenger" />
       <recent name="C:\workspace\esnaadm\public\src\user" />
       <recent name="C:\workspace\esnaadm\public\src\search-package" />
       <recent name="C:\Workspace\deployd\travel-umroh\public\src\booking" />
       <recent name="C:\workspace\esnaadm\public\src\package" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Workspace\deployd\travel-umroh\public\src\package" />
-      <recent name="C:\Workspace\deployd\travel-umroh\public\src\travel-agent" />
-      <recent name="C:\workspace\esnaadm\public\src\component" />
-      <recent name="C:\workspace\esnaadm\public\asset\js\own" />
-      <recent name="C:\workspace\esnaadm\public\asset\css" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
@@ -454,12 +448,12 @@
       <workItem from="1498705849433" duration="23018000" />
       <workItem from="1498764264290" duration="2041000" />
       <workItem from="1498826207829" duration="59000" />
-      <workItem from="1499004422835" duration="4827000" />
+      <workItem from="1499004422835" duration="9263000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="834207000" />
+    <option name="totallyTimeSpent" value="838643000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -497,20 +491,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/travel-agent/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-24">
-          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/booking/paymentConfirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -606,13 +586,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="920">
           <caret line="654" column="8" lean-forward="true" selection-start-line="654" selection-start-column="8" selection-end-line="654" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="2188" column="0" lean-forward="true" selection-start-line="2188" selection-start-column="0" selection-end-line="2188" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -857,21 +830,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/dist.max/yalla.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
+        <state relative-caret-position="0">
+          <caret line="8" column="2" lean-forward="false" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist.max/yalla.js">
+    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="1832" column="0" lean-forward="false" selection-start-line="1832" selection-start-column="0" selection-end-line="1832" selection-end-column="0" />
+        <state relative-caret-position="702">
+          <caret line="85" column="20" lean-forward="false" selection-start-line="85" selection-start-column="20" selection-end-line="85" selection-end-column="20" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#0#50#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1366">
+          <caret line="36" column="45" lean-forward="false" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="40" lean-forward="false" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js.max/own/yalla-patch.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,7 @@
 /*
 version : 0.0.55
 */
-var __globalJSFileCache__=[];
+
 (function (global) {
 
 //
@@ -1777,62 +1777,26 @@ var yalla = (function () {
             }
             return xmlhttp;
         }
-        
-        function fulfillPromises(url, isResolve){
-            for(var i in __globalJSFileCache__) {
-	            if(__globalJSFileCache__[i].url == url) {
-	                for(;__globalJSFileCache__[i].promises.length;) {
-		                __globalJSFileCache__[i].promises[0][isResolve? "resolve" : "reject"](__globalJSFileCache__[i].req);
-		                __globalJSFileCache__[i].promises.splice(0, 1);
-                    }
-	            }
-            }
-        }
-        
+
         return new Promise(function (resolve, reject) {
-            
-            if(!postData && url.length >= 3 && url.substr(url.length - 3).toLowerCase() == ".js") {
-                for(var i in __globalJSFileCache__) {
-                    if(__globalJSFileCache__[i].url == url) {
-                        if(__globalJSFileCache__[i].req) {
-                            resolve(__globalJSFileCache__[i].req);
-                        }
-                        else {
-                            __globalJSFileCache__[i].promises.push({resolve: resolve, reject: reject})
-                        }
-                        return;
-                    }
-                }
-	            __globalJSFileCache__.push({url: url, promises:[{resolve: resolve, reject: reject}]});
-            }
             var req = createXMLHTTPObject();
             req.timeout = 2000;
-            if (!req) {return;}
+            if (!req) return;
             var method = (postData) ? "POST" : "GET";
             req.open(method, url, true);
             if (postData) {
                 req.setRequestHeader('Content-type', 'application/json');
             }
             req.ontimeout = function (e) {
-                fulfillPromises(url, false);
-                //reject(req);
+                reject(req);
             };
             req.onreadystatechange = function () {
                 if (req.readyState != 4) return;
                 if (req.status != 200 && req.status != 304) {
-	                fulfillPromises(url, false);
-                    //reject(req);
+                    reject(req);
                     return;
                 }
-	            if(!postData && url.length >= 3 && url.substr(url.length - 3).toLowerCase() == ".js") {
-		            for(var i in __globalJSFileCache__) {
-			            if(__globalJSFileCache__[i].url == url) {
-				            __globalJSFileCache__[i].req = req;
-			            }
-		            }
-	            }
-                fulfillPromises(url, true);
-                //resolve(req);
+                resolve(req);
             };
             if (req.readyState == 4) {
                 return;
