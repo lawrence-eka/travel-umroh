@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<link href="asset/css/form-panel.css" rel="stylesheet">
-<html manifest="app.appcache">
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,45 +7,15 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
-        <link href="asset/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
-        <base href="/">
-        <!--
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        -->
-
-        <script src="asset/js/own/storages.js"></script>
-        <script src="asset/js/own/prototypes.js"></script>
-
-        <!--
-        <script src="asset/js/jquery.min.js"></script>
-        <script src="asset/js/bootstrap.min.js"></script>
-
-        <script src="asset/js/own/datePair.js"></script>
-        <script src="asset/js/own/alert.js"></script>
-        <script src="asset/js/own/utils.js"></script>
-        <script src="asset/js/own/event.js"></script>
-        <script src="dpd.js" ></script>
-        -->
+        <link rel="icon" href="asset/favicon.ico">
 
         <script src="dist/yalla.js"
                 yalla-component="app"
                 yalla-base="dist"
                 yalla-domtarget="body" yalla-routing="authenticate">
         </script>
-        <script src="asset/js/own/yalla-patch.js"></script>
-
+        <script src="asset/js/own/storages.js"></script>
         <!-- Bootstrap core CSS -->
-        <link href="asset/css/bootstrap.min.css" rel="stylesheet">
-
-
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <link href="asset/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-        <link href="asset/css/sticky-footer-navbar.css" rel="stylesheet">
-
-        <!-- Placed at the end of the document so the pages load faster -->
-
     <style>
         body {
             background: url('/asset/img/image5.jpg') no-repeat center center fixed;
@@ -74,56 +43,43 @@
             });
         }
 
-        var scriptCache = {
-        	scripts: storage.session.read("scripts") ? JSON.parse(storage.session.read("scripts")) : {},
-            promises: {},
-            addPromise: function (url, resolve, reject) {
-        		if(!this.promises[url]) this.promises[url] = [];
-        	    this.promises[url].push({resolve:resolve, reject: reject});
-        	    //debugger;
-        		return this.promises[url].length == 1;
-            },
+        var assets=[
+	        {seq: 0, file: "asset/js/own/yalla-patch.js"},
+	        {seq: 0, file: "asset/css/form-panel.css"},
+	        {seq: 0, file: "asset/css/font-awesome.min.css"},
+	        {seq: 0, file: "asset/css/bootstrap.min.css"},
+	        {seq: 1, file: "asset/css/css-patch.css"},
+	        {seq: 1, file: "asset/css/custom-style.css"},
+	        {seq: 0, file: "asset/css/ie10-viewport-bug-workaround.css"},
+	        {seq: 0, file: "asset/css/sticky-footer-navbar.css"},
+	        {seq: 0, file: "asset/js/jquery.min.js"},
+	        {seq: 2, file: "asset/js/bootstrap.min.js"},
+	        {seq: 0, file: "dpd.js"},
+	        {seq: 0, file: "asset/js/own/prototypes.js"},
+	        {seq: 1, file: "asset/js/own/datePair.js"},
+	        {seq: 1, file: "asset/js/own/alert.js"},
+	        {seq: 1, file: "asset/js/own/utils.js"},
+	        {seq: 1, file: "asset/js/own/event.js"},
+	        //{seq: -2, file: "dist/yalla.js", attribute:{"yalla-component": "app", "yalla-base": "dist", "yalla-domtarget": "body", "yalla-routing":"authenticate"}},
+        ];
 
-            fulfillPromises: function(url, isResolve){
-        		if(this.promises[url] && this.scripts[url]) {
-			        //debugger;
-        			for(;this.promises[url].length;) {
-        				//debugger;
-        				this.promises[url][0][isResolve?"resolve":"reject"](this.scripts[url].req);
-        				this.promises[url].splice(0, 10);
-                    }
+        function loadAssets(seq) {
+        	seq = seq == null ? 0:seq;
+        	for(var i in assets) {
+        		if(assets[i].seq == seq && !assets[i].called) {
+        			console.log("loading asset seq:", seq, "=", assets[i].file)
+			        assets[i].called=true;
+			        var asset = assets[i];
+			        var resolveCallback= function(req) {
+				        loader.attachScriptToDocument("/" +  this.file);
+				        console.log("asset seq:", this.seq, '=', this.file, "loaded.")
+				        loadAssets(this.seq + 1);
+			        };
+			        loader.fetch("./" + asset.file, null, asset.attribute).then(resolveCallback.bind(asset));
                 }
-            },
-
-            setScript: function(url, req) {
-            	if(req){
-            		this.scripts[url] = {req:{response: req.response, responseText: req.responseText,}};
-            		this.fulfillPromises(url, true);
-                } else {
-            		this.fulfillPromises(url, false);
-            		delete this.promises[url];
-                }
-                storage.session.save("scripts", JSON.stringify(this.scripts));
             }
         }
 //debugger;
-        var assets=[
-	        {file: "asset/js/jquery.min.js", seq: 0},
-	        {file: "asset/js/bootstrap.min.js", seq: 1},
-	        {file: "dpd.js"},
-	        {file: "asset/js/own/datePair.js"},
-	        {file: "asset/js/own/alert.js"},
-	        {file: "asset/js/own/utils.js"},
-	        {file: "asset/js/own/event.js"},
-        ];
-
-        for(var i in assets) {
-        	var asset = assets[i];
-	        var resolveCallback= function(req) {
-		        yalla.framework.attachScriptToDocument("/" +  this.file);
-	        };
-
-        	yalla.utils.fetch("./" + asset.file).then(resolveCallback.bind(asset));
-        }
+        loadAssets(0);
     </script>
 </html>

@@ -1,0 +1,50 @@
+<inject from="/travel-agent/list" name="list"></inject>
+<inject from="/travel-agent/edit-travel-agent" name="edit-travel-agent"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/panel" name="panel"></inject>
+
+<div>
+    <edit-travel-agent if.bind="@isEditMode" travelAgentId.bind="@editTravelAgentId" close.trigger="onCloseEditor()"></edit-travel-agent>
+    <span if.bind="!@isEditMode" >
+        <panel nofooter title="My Travel Agencies">
+            <span slot.name="body">
+                <entry type="button" naked value="Add New Travel Agency" click.trigger="onAddTA()"></entry>
+            </span>
+        </panel>
+        <list editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></list>
+    </span>
+</div>
+
+
+<script>
+
+    function initState(props) {
+    	return {
+    		alert: new Alert(),
+		    editTravelAgentId:null,
+            isEditMode:false,
+        }
+    }
+
+    function onAddTA() {
+	    this.state.editTravelAgentId=null;
+	    this.state.isEditMode=true;
+	    $patchChanges();
+    }
+
+    function onCloseEditor() {
+	    this.state.editTravelAgentId=null;
+	    this.state.isEditMode=false;
+	    $patchChanges();
+    }
+
+    function onEditTA(event) {
+	    this.state.editTravelAgentId=event.data;
+	    this.state.isEditMode=true;
+	    $patchChanges();
+    }
+
+    function onShowPackages(event) {
+    	window.location.hash ="#app/package.home:travelAgentId=" + event.data;
+    }
+</script>

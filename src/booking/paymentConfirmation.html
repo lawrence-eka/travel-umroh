@@ -1,0 +1,73 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/alert" name="alert"></inject>
+
+<div>
+    <div data.load="loadPayments()">
+        <alert message="No payment needs confirmation for now." alertType="info" if.bind="!data || data.length==0"></alert>
+        <span for.each="payment in data">
+            <panel title.bind="payment.package.packageName" nofooter>
+                <span slot.name="body">
+                    Travel Agency: {{(payment.travelAgent.travelAgentName)}}<br/>
+                    Travel Date: {{(payment.package.travelDateFrom).toStringDateRange(payment.package.travelDateUntil)}}<br/>
+                    Total passenger: {{payment.numberOfPassengers ? payment.numberOfPassengers : ''}}<br/>
+                    Total Price: {{(payment.totalPrice ? payment.totalPrice.toFormattedString() : '')}}<br/>
+                    From Bank: {{(payment.fromBank)}}<br/>
+                    Branch: {{payment.fromBankBranch}}<br/>
+                    Account No: {{payment.fromAccountNumber}}<br/>
+                    Account Name: {{payment.fromAccountHolder}}<br/>
+                    Amount: {{payment.actualPayment.toFormattedString()}}<br/>
+                    Transfer Date: {{payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : ''}}
+                    <div class="row">
+                        <entry type="button" name="btnConfirm" value="Confirm" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, true)"></entry>
+                        <entry type="button" name="btnReject" value="Reject" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, false)"></entry>
+                    </div>
+                </span>
+            </panel>
+        </span>
+    </div>
+    <span ref.name="alert">
+        <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+    </span>
+</div>
+
+<script>
+	function initState(props) {
+		return {
+			alert: new Alert(null, $patchChanges, "alert"),
+		}
+	}
+	function loadPayments() {
+		var self = this;
+		return new Promise(function(resolve) {
+			var q = {
+				travelAgentContactPersonId: storage.me.read().id,
+				isCancelled: false,
+			    actualPayment: {$ne: null},
+                $or:[
+	                {isPaymentConfirmed: null},
+	                {isPaymentConfirmed: 0},
+                ],
+			};
+			dpd.bookings.get(q, function (bookings, err) {
+				self.state.alert.alert(err);
+				if (!err) {
+					resolve(bookings);
+				}
+			});
+		});
+	}
+
+	function onRespond(paymentId, isApprove) {
+		var q = {
+			isPaymentConfirmed: (isApprove? 1 : -1),
+        }
+        var self = this;
+		//debugger;
+        dpd.bookings.put(paymentId, q, function(res, err){
+        	//debugger;
+	        self.state.alert.alert(err);
+	        if(!err) $patchChanges();
+        });
+	}
+</script>

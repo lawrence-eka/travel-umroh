@@ -1,0 +1,78 @@
+<inject from="/component/entry-naked" name="entry-naked"></inject>
+
+<span>
+    <entry-naked if.bind="$naked || $type=='hidden'"
+        type.bind="$type"
+        prompt.bind="$prompt"
+        href.bind="$href"
+        value.bind="$value"
+        name.bind="$name"
+        class.bind="$class"
+        required.bind="$required"
+        placeholder.bind="$placeholder"
+        min.bind="$min"
+        max.bind="$max"
+        checked.bind="$checked"
+        entries.bind="$entries"
+        alert.bind="$alert"
+        alias.bind="$alias"
+        glyph.bind="$glyph"
+        margin.bind="$margin"
+        deleted.bind="$deleted"
+        change.trigger="onChange()"
+        click.trigger="onClick()"
+        focusout.trigger="onFocusOut()">
+    </entry-naked>
+    <div if.bind="!$naked && $type!='hidden'" class.bind="whatDivClass($divClass)">
+        <div class.bind="whatInnerDivClass($innerDivClass)">
+            <entry-naked
+                type.bind="$type"
+                prompt.bind="$prompt"
+                href.bind="$href"
+                value.bind="$value"
+                name.bind="$name"
+                class.bind="$class"
+                required.bind="$required"
+                placeholder.bind="$placeholder"
+                min.bind="$min"
+                max.bind="$max"
+                checked.bind="$checked"
+                entries.bind="$entries"
+                alert.bind="$alert"
+                alias.bind="$alias"
+                glyph.bind="$glyph"
+                margin.bind="$margin"
+                deleted.bind="$deleted"
+                change.trigger="onChange()"
+                click.trigger="onClick(event)"
+                focusout.trigger="onFocusOut()">
+            </entry-naked>
+        </div>
+    </div>
+</span>
+
+<script>
+    function whatDivClass(divClass){
+        if(divClass) return divClass + " custom-entry";
+        else return "col-xs-12 col-sm-6 col-md-6 col-lg-6 custom-entry";
+    }
+
+    function whatInnerDivClass(innerDivClass){
+        if(innerDivClass) return innerDivClass;
+        else return "form-group custom-entry-margin";
+    }
+
+    function onClick(event) {
+    	this.emitEvent('click', event && event.data ? event.data : null);
+    }
+
+    function onFocusOut() {
+    	this.emitEvent("focusout");
+    }
+
+    function onChange() {
+    	this.emitEvent('change');
+    }
+</script>
+
+

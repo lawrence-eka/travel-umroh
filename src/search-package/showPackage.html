@@ -1,0 +1,98 @@
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/package/card-package" name="card-package"></inject>
+<inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
+<inject from="/itinerary/card-itineraryList" name="card-itineraryList"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <span ref.name="alert">
+        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+    </span>
+    <div data.load="queryPackage()">
+        <card-package pkg.bind="data"></card-package>
+    </div>
+    <div data.load="queryItineraries()">
+        <card-itineraryList itinerary.bind="data" book.trigger="book()"></card-itineraryList>
+    </div>
+</div>
+
+<script>
+    function initState(props) {
+    	return {
+		    packageId: props.packageId,
+            alert: new Alert(null, $patchChanges, "alert"),
+	    }
+    }
+
+    function onPropertyChange(props) {
+    	debugger;
+    }
+
+    function book(){
+        var me = storage.me.read();
+        var self = this;
+        dpd.packages.get(self.state.packageId, function(pkg, err) {
+	        self.state.alert.alert(err);
+	        if(!err) {
+		        var q = {
+			        "userId": me.id,
+			        "packageId": self.state.packageId,
+			        "costTickets": pkg.costTickets,
+			        "costLandArrangements": pkg.costLandArrangements
+		        };
+		        dpd.bookings.post(q, function (booking, err) {
+			        self.state.alert.alert(err);
+			        if(!err) {
+				        var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);
+				        window.location.hash = '#app/booking.home:bookingId=' + bookingId;
+                    }
+
+		        });
+            }
+        });
+    }
+
+
+    function queryPackage(){
+    	var self = this;
+        return new Promise(function(resolve){
+            dpd.packages.get(self.state.packageId, function(pkg, err) {
+	            self.state.alert.alert(err);
+                if(!err){
+                    queryTravelAgent(pkg.travelAgentId, self).then(function(agent){
+                        pkg.agent = agent;
+                        resolve(pkg);
+                    });
+                }
+            });
+        });
+    }
+
+    function queryTravelAgent(id, self) {
+        return new Promise(function(resolve){
+            dpd.travelagents.get(id, function(agent, err) {
+            	self.state.alert.alert(err);
+	            if(!err){
+                    resolve(agent);
+	            }
+            });
+        });
+    }
+
+    function queryItineraries(){
+    	var self = this;
+        return new Promise(function(resolve){
+            var q = {
+                packageId: self.state.packageId,
+                $sort:{"fromDateTime":1}
+            }
+            dpd.itineraries.get(q, function(itineraries, err) {
+	            self.state.alert.alert(err);
+	            if(!err){
+                    resolve(itineraries);
+	            }
+            });
+        });
+    }
+
+</script>
