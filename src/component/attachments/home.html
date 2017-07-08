@@ -71,7 +71,7 @@
         for (var i in self._state.newFiles) {
             fd.append("uploadedFile", self._state.newFiles[i])
         }
-        alert('fd= '+ fd.get('uploadedFile').name);
+        //alert('fd= '+ fd.get('uploadedFile').name);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/' + self._state.collection);
 	    //var boundary=Math.random().toString().substr(2);

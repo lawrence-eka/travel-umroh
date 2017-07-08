@@ -79,11 +79,12 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     for (var i in self._state.newFiles) {
       fd.append("uploadedFile", self._state.newFiles[i])
     }
-    alert('fd= ' + fd.get('uploadedFile').name);
+    //alert('fd= '+ fd.get('uploadedFile').name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/' + self._state.collection);
     //var boundary=Math.random().toString().substr(2);
     //xhr.setRequestHeader("Content-type", "multipart/form-data; charset=utf-8; boundary=" + boundary);
+    debugger;
     xhr.onload = function() {
       alert("onload");
 
@@ -91,8 +92,10 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       self._state.alert.alert(null);
 
       if (this.status < 300) {
+        console.log("Upload successful!");
         alert("Upload successful!");
       } else {
+        console.log(response.message);
         alert(response.message);
       }
     };
