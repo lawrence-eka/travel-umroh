@@ -9,11 +9,6 @@
         <meta name="author" content="">
         <link rel="icon" href="asset/favicon.ico">
 
-        <script src="dist/yalla.js"
-                yalla-component="app"
-                yalla-base="dist"
-                yalla-domtarget="body" yalla-routing="authenticate">
-        </script>
         <script src="asset/js/own/storages.js"></script>
         <!-- Bootstrap core CSS -->
     <style>
@@ -33,53 +28,19 @@
     <script>
         function authenticate(path){
             return new Promise(function(resolve){
+            	//debugger;
                 /*
                 var defaultPath = '#!/app';
                 var login = '#!/app/user.login-form';
                 if(path=="") resolve(defaultPath);
                 else resolve(path);
                 */
+                console.log("path=", path);
+                resolve(path ? path : "#app/search-package.home");
                 resolve(path);
             });
         }
-
-        var assets=[
-	        {seq: 0, file: "asset/js/own/yalla-patch.js"},
-	        {seq: 0, file: "asset/css/form-panel.css"},
-	        {seq: 0, file: "asset/css/font-awesome.min.css"},
-	        {seq: 0, file: "asset/css/bootstrap.min.css"},
-	        {seq: 1, file: "asset/css/css-patch.css"},
-	        {seq: 1, file: "asset/css/custom-style.css"},
-	        {seq: 0, file: "asset/css/ie10-viewport-bug-workaround.css"},
-	        {seq: 0, file: "asset/css/sticky-footer-navbar.css"},
-	        {seq: 0, file: "asset/js/jquery.min.js"},
-	        {seq: 2, file: "asset/js/bootstrap.min.js"},
-	        {seq: 0, file: "dpd.js"},
-	        {seq: 0, file: "asset/js/own/prototypes.js"},
-	        {seq: 1, file: "asset/js/own/datePair.js"},
-	        {seq: 1, file: "asset/js/own/alert.js"},
-	        {seq: 1, file: "asset/js/own/utils.js"},
-	        {seq: 1, file: "asset/js/own/event.js"},
-	        //{seq: -2, file: "dist/yalla.js", attribute:{"yalla-component": "app", "yalla-base": "dist", "yalla-domtarget": "body", "yalla-routing":"authenticate"}},
-        ];
-
-        function loadAssets(seq) {
-        	seq = seq == null ? 0:seq;
-        	for(var i in assets) {
-        		if(assets[i].seq == seq && !assets[i].called) {
-        			console.log("loading asset seq:", seq, "=", assets[i].file)
-			        assets[i].called=true;
-			        var asset = assets[i];
-			        var resolveCallback= function(req) {
-				        loader.attachScriptToDocument("/" +  this.file);
-				        console.log("asset seq:", this.seq, '=', this.file, "loaded.")
-				        loadAssets(this.seq + 1);
-			        };
-			        loader.fetch("./" + asset.file, null, asset.attribute).then(resolveCallback.bind(asset));
-                }
-            }
-        }
-//debugger;
-        loadAssets(0);
+        scriptCache.setVersion("2017.08");
+        loader.loadAssets(0);
     </script>
 </html>

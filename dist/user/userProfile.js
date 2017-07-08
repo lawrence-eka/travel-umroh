@@ -116,8 +116,8 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     if (profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
       profile.needApproval = null;
     }
-    //debugger;
-    if (profile.id) onSaved();
+    debugger;
+    if (profile.id) this.state.onSave.publish();;
 
     this.emitEvent('save', profile);
   }
@@ -127,7 +127,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function onSaved() {
-    //debugger;
+    debugger;
     this._state.onSave.publish();
   }
 

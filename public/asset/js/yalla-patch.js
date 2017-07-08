@@ -4,10 +4,8 @@
 
 //var patchedYalla = document.querySelector("script[id='yallaScript']");
 
-//yalla.scriptCache = scriptCache;
-//debugger;
 yalla.utils.fetch = function (url, postData) {
-	//debugger;
+	
 	var XMLHttpFactories = [
 		function () {
 			return new XMLHttpRequest()
@@ -40,14 +38,10 @@ yalla.utils.fetch = function (url, postData) {
 	return new Promise(function (resolve, reject) {
 		
 		// eka patch starts
-		var script = scriptCache.getScript(url);
-		console.log("URL: ", url, "Cache: ", script);
-		if (script) {
-			console.log("Udah Ada");
-			resolve(script);
+		if(scriptCache.scripts[url] && scriptCache.scripts[url].req) {
+			resolve(scriptCache.scripts[url].req);
 			return;
 		}
-		console.log("Belum Ada");
 		if(!scriptCache.addPromise(url, null, resolve, reject)) return; // if there is already an on going request for this script, return;
 		//eka patch ends
 		
@@ -134,6 +128,11 @@ yalla.framework.start = function () {
 		});
 	};
 	yalla.framework.renderToScreen();
+};
+
+window.onload = function () {
+	console.log("Patched window.onload triggered");
+	yalla.framework.start();
 };
 
 //if(loader.needLoading) yalla.framework.start();

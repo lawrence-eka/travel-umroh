@@ -1870,6 +1870,7 @@ var yalla = (function () {
         var relativePath = component.substring(0, component.lastIndexOf("/") + 1);
         return new Promise(function (resolve) {
             utils.fetch('.' + url).then(function (req) {
+                //debugger;
                 var injects = (req.responseText.match(/\$inject\(.*?\)/g) || []).map(function (inject) {
                     return inject.substring('$inject("'.length, inject.length - 2);
                 });

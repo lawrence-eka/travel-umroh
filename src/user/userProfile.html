@@ -144,8 +144,8 @@
 	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
 	    	profile.needApproval = null;
         }
-        //debugger;
-        if(profile.id) onSaved();
+        debugger;
+        if(profile.id) this.state.onSave.publish();;
 
 	    this.emitEvent('save', profile);
     }
@@ -155,7 +155,7 @@
     }
 
     function onSaved() {
-    	//debugger;
+    	debugger;
 	    this._state.onSave.publish();
     }
 

@@ -2,8 +2,111 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/css/css-patch.css" afterPath="$PROJECT_DIR$/asset/css/css-patch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/css-patch.css" afterPath="$PROJECT_DIR$/public/asset/css/css-patch.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.dpd/pids/mongod" afterPath="$PROJECT_DIR$/.dpd/pids/mongod" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/asset/js/own/storages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/app.js" afterPath="$PROJECT_DIR$/dist/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/login-form.js" afterPath="$PROJECT_DIR$/dist/user/login-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/dist/user/userProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/yalla.js" afterPath="$PROJECT_DIR$/dist/yalla.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/customize.min.js" afterPath="$PROJECT_DIR$/public/asset/js/customize.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/docs.min.js" afterPath="$PROJECT_DIR$/public/asset/js/docs.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" afterPath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/npm.js" afterPath="$PROJECT_DIR$/public/asset/js/npm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/alert.js" afterPath="$PROJECT_DIR$/public/asset/js/own/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/datePair.js" afterPath="$PROJECT_DIR$/public/asset/js/own/datePair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/event.js" afterPath="$PROJECT_DIR$/public/asset/js/own/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" afterPath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/public/asset/js/own/storages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/public/asset/js/own/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" afterPath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/application.js" afterPath="$PROJECT_DIR$/public/asset/js/src/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/customizer.js" afterPath="$PROJECT_DIR$/public/asset/js/src/customizer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/app.js" afterPath="$PROJECT_DIR$/public/dist/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" afterPath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/card-booking.js" afterPath="$PROJECT_DIR$/public/dist/booking/card-booking.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/home.js" afterPath="$PROJECT_DIR$/public/dist/booking/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/list.js" afterPath="$PROJECT_DIR$/public/dist/booking/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" afterPath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/card.js" afterPath="$PROJECT_DIR$/public/dist/comp/card.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/content.js" afterPath="$PROJECT_DIR$/public/dist/comp/content.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/drawer.js" afterPath="$PROJECT_DIR$/public/dist/comp/drawer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/header.js" afterPath="$PROJECT_DIR$/public/dist/comp/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" afterPath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/shell.js" afterPath="$PROJECT_DIR$/public/dist/comp/shell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/alert.js" afterPath="$PROJECT_DIR$/public/dist/component/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/list.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry-naked.js" afterPath="$PROJECT_DIR$/public/dist/component/entry-naked.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/footer.js" afterPath="$PROJECT_DIR$/public/dist/component/footer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/header.js" afterPath="$PROJECT_DIR$/public/dist/component/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/panel.js" afterPath="$PROJECT_DIR$/public/dist/component/panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/ppLink.js" afterPath="$PROJECT_DIR$/public/dist/component/ppLink.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/index.js" afterPath="$PROJECT_DIR$/public/dist/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/list.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/card-package.js" afterPath="$PROJECT_DIR$/public/dist/package/card-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/public/dist/package/edit-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/home.js" afterPath="$PROJECT_DIR$/public/dist/package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/list.js" afterPath="$PROJECT_DIR$/public/dist/package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/home.js" afterPath="$PROJECT_DIR$/public/dist/passenger/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/home.js" afterPath="$PROJECT_DIR$/public/dist/search-package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/list.js" afterPath="$PROJECT_DIR$/public/dist/search-package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" afterPath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" afterPath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-one.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-one.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-two.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-two.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/event.js" afterPath="$PROJECT_DIR$/public/dist/test-event/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/parent.js" afterPath="$PROJECT_DIR$/public/dist/test-event/parent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test.js" afterPath="$PROJECT_DIR$/public/dist/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/home.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/list.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" afterPath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/forgot-password.js" afterPath="$PROJECT_DIR$/public/dist/user/forgot-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/home.js" afterPath="$PROJECT_DIR$/public/dist/user/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/list.js" afterPath="$PROJECT_DIR$/public/dist/user/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/login-form.js" afterPath="$PROJECT_DIR$/public/dist/user/login-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myApprovals.js" afterPath="$PROJECT_DIR$/public/dist/user/myApprovals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/myProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/registration.js" afterPath="$PROJECT_DIR$/public/dist/user/registration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/reset-password.js" afterPath="$PROJECT_DIR$/public/dist/user/reset-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/search.js" afterPath="$PROJECT_DIR$/public/dist/user/search.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/userProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.html" afterPath="$PROJECT_DIR$/src/app.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/login-form.html" afterPath="$PROJECT_DIR$/src/user/login-form.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/userProfile.html" afterPath="$PROJECT_DIR$/src/user/userProfile.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,61 +124,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="50" column="36" lean-forward="false" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
+            <state relative-caret-position="626">
+              <caret line="42" column="39" lean-forward="false" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="css-patch.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/asset/css/css-patch.css">
+      <file leaf-file-name="userProfile.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="css-patch.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/css/css-patch.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="font-awesome.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/asset/css/font-awesome.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="yalla-patch.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="yalla.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/dist/yalla.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-204">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="462">
+              <caret line="147" column="28" lean-forward="false" selection-start-line="147" selection-start-column="28" selection-end-line="147" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -84,11 +147,19 @@
       <file leaf-file-name="storages.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="222" column="1" lean-forward="false" selection-start-line="222" selection-start-column="1" selection-end-line="222" selection-end-column="1" />
-              <folding>
-                <element signature="e#1827#1877#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="492">
+              <caret line="314" column="14" lean-forward="false" selection-start-line="314" selection-start-column="14" selection-end-line="314" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yalla-patch.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="44" column="18" lean-forward="false" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,11 +167,9 @@
       <file leaf-file-name="yalla.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/yalla.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10296">
-              <caret line="2028" column="32" lean-forward="false" selection-start-line="2028" selection-start-column="19" selection-end-line="2028" selection-end-column="32" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="5324">
+              <caret line="1891" column="17" lean-forward="true" selection-start-line="1891" selection-start-column="17" selection-end-line="1891" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -121,8 +190,16 @@
       <find>onready</find>
       <find>.defaultComponent</find>
       <find>debu</find>
-      <find>assertNotNull</find>
       <find>.start</find>
+      <find>assertNotNull</find>
+      <find>setScript</find>
+      <find>scriptSarc</find>
+      <find>fulfillPromises</find>
+      <find>finished</find>
+      <find>scriptCache</find>
+      <find>inv</find>
+      <find>isReset</find>
+      <find>onSaved</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -146,13 +223,15 @@
         <option value="$PROJECT_DIR$/public/dist/index.js" />
         <option value="$PROJECT_DIR$/src/app.html" />
         <option value="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
         <option value="$PROJECT_DIR$/public/dist/yalla.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/asset/css/css-patch.css" />
         <option value="$PROJECT_DIR$/public/asset/css/css-patch.css" />
+        <option value="$PROJECT_DIR$/dist/yalla.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
+        <option value="$PROJECT_DIR$/src/user/userProfile.html" />
+        <option value="$PROJECT_DIR$/public/index.html" />
       </list>
     </option>
   </component>
@@ -186,8 +265,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -224,164 +301,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="own" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -543,21 +474,21 @@
       <workItem from="1494392713605" duration="12487000" />
       <workItem from="1499238077173" duration="1982000" />
       <workItem from="1499240114210" duration="8677000" />
-      <workItem from="1499261890091" duration="6401000" />
+      <workItem from="1499261890091" duration="10748000" />
+      <workItem from="1499411803861" duration="23469000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31508000" />
+    <option name="totallyTimeSpent" value="59324000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21979167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -569,6 +500,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -580,12 +512,19 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/user/userProfile.html</url>
+          <line>153</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/src/user/login-form.html" />
     <entry file="file://$PROJECT_DIR$/node_modules/deployd/bin/dpd">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -767,63 +706,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10296">
-          <caret line="2028" column="32" lean-forward="false" selection-start-line="2028" selection-start-column="19" selection-end-line="2028" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/dist/yalla.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="139" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="222" column="1" lean-forward="false" selection-start-line="222" selection-start-column="1" selection-end-line="222" selection-end-column="1" />
-          <folding>
-            <element signature="e#1827#1877#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="50" column="36" lean-forward="false" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js" />
     <entry file="file://$PROJECT_DIR$/public/asset/css/font-awesome.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,7 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -839,6 +732,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5324">
+          <caret line="1891" column="17" lean-forward="true" selection-start-line="1891" selection-start-column="17" selection-end-line="1891" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="44" column="18" lean-forward="false" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="314" column="14" lean-forward="false" selection-start-line="314" selection-start-column="14" selection-end-line="314" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="147" column="28" lean-forward="false" selection-start-line="147" selection-start-column="28" selection-end-line="147" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="42" column="39" lean-forward="false" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
           <folding />
         </state>
       </provider>

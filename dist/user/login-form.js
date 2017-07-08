@@ -174,6 +174,12 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           "prompt": "New User"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": 'Ver.' + scriptCache.version,
+          "innerDivClass": "custom-entry-prompt"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("form");
         _elementClose("div");
         _elementOpenStart("span", "");

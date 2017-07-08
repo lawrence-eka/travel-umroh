@@ -30,12 +30,6 @@ yalla.framework.addComponent("/dist/app", (function() {
 
   function onPropertyChange(event) {};
 
-  console.log('hi there');
-
-  function isRegistrationPage() {
-    return location.hash == '#user.registration';
-  }
-
   function checkCurrentUser() {
     return storage.me.read();
   }
