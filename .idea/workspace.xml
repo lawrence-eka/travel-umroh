@@ -2,102 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/dist/component/attachments/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/customize.min.js" afterPath="$PROJECT_DIR$/public/asset/js/customize.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/docs.min.js" afterPath="$PROJECT_DIR$/public/asset/js/docs.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" afterPath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/jquery.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/npm.js" afterPath="$PROJECT_DIR$/public/asset/js/npm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/alert.js" afterPath="$PROJECT_DIR$/public/asset/js/own/alert.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/datePair.js" afterPath="$PROJECT_DIR$/public/asset/js/own/datePair.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/event.js" afterPath="$PROJECT_DIR$/public/asset/js/own/event.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" afterPath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/public/asset/js/own/storages.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/public/asset/js/own/utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" afterPath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/application.js" afterPath="$PROJECT_DIR$/public/asset/js/src/application.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/customizer.js" afterPath="$PROJECT_DIR$/public/asset/js/src/customizer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/app.js" afterPath="$PROJECT_DIR$/public/dist/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" afterPath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/card-booking.js" afterPath="$PROJECT_DIR$/public/dist/booking/card-booking.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/home.js" afterPath="$PROJECT_DIR$/public/dist/booking/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/list.js" afterPath="$PROJECT_DIR$/public/dist/booking/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" afterPath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/card.js" afterPath="$PROJECT_DIR$/public/dist/comp/card.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/content.js" afterPath="$PROJECT_DIR$/public/dist/comp/content.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/drawer.js" afterPath="$PROJECT_DIR$/public/dist/comp/drawer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/header.js" afterPath="$PROJECT_DIR$/public/dist/comp/header.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" afterPath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/shell.js" afterPath="$PROJECT_DIR$/public/dist/comp/shell.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/alert.js" afterPath="$PROJECT_DIR$/public/dist/component/alert.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/list.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry-naked.js" afterPath="$PROJECT_DIR$/public/dist/component/entry-naked.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/entry.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/footer.js" afterPath="$PROJECT_DIR$/public/dist/component/footer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/header.js" afterPath="$PROJECT_DIR$/public/dist/component/header.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/panel.js" afterPath="$PROJECT_DIR$/public/dist/component/panel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/ppLink.js" afterPath="$PROJECT_DIR$/public/dist/component/ppLink.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/index.js" afterPath="$PROJECT_DIR$/public/dist/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/list.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/card-package.js" afterPath="$PROJECT_DIR$/public/dist/package/card-package.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/public/dist/package/edit-package.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/home.js" afterPath="$PROJECT_DIR$/public/dist/package/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/list.js" afterPath="$PROJECT_DIR$/public/dist/package/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/home.js" afterPath="$PROJECT_DIR$/public/dist/passenger/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/home.js" afterPath="$PROJECT_DIR$/public/dist/search-package/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/list.js" afterPath="$PROJECT_DIR$/public/dist/search-package/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" afterPath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" afterPath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-one.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-one.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-two.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-two.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/event.js" afterPath="$PROJECT_DIR$/public/dist/test-event/event.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/parent.js" afterPath="$PROJECT_DIR$/public/dist/test-event/parent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test.js" afterPath="$PROJECT_DIR$/public/dist/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/home.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/list.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" afterPath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/forgot-password.js" afterPath="$PROJECT_DIR$/public/dist/user/forgot-password.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/home.js" afterPath="$PROJECT_DIR$/public/dist/user/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/list.js" afterPath="$PROJECT_DIR$/public/dist/user/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/login-form.js" afterPath="$PROJECT_DIR$/public/dist/user/login-form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myApprovals.js" afterPath="$PROJECT_DIR$/public/dist/user/myApprovals.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/myProfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/registration.js" afterPath="$PROJECT_DIR$/public/dist/user/registration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/reset-password.js" afterPath="$PROJECT_DIR$/public/dist/user/reset-password.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/search.js" afterPath="$PROJECT_DIR$/public/dist/user/search.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/userProfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/attachments/home.html" afterPath="$PROJECT_DIR$/src/component/attachments/home.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -116,21 +21,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
+            <state relative-caret-position="770">
               <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="73" column="20" lean-forward="true" selection-start-line="73" selection-start-column="20" selection-end-line="73" selection-end-column="20" />
+            <state relative-caret-position="462">
+              <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -139,7 +44,7 @@
       <file leaf-file-name="userProfile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
+            <state relative-caret-position="2706">
               <caret line="147" column="28" lean-forward="false" selection-start-line="147" selection-start-column="28" selection-end-line="147" selection-end-column="28" />
               <folding />
             </state>
@@ -253,8 +158,8 @@
         <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
         <option value="$PROJECT_DIR$/src/user/userProfile.html" />
-        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
         <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
       </list>
     </option>
   </component>
@@ -537,12 +442,12 @@
       <workItem from="1499238077173" duration="1982000" />
       <workItem from="1499240114210" duration="8677000" />
       <workItem from="1499261890091" duration="10748000" />
-      <workItem from="1499411803861" duration="26193000" />
+      <workItem from="1499411803861" duration="27655000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62048000" />
+    <option name="totallyTimeSpent" value="63510000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="642" y="0" width="1286" height="1038" extended-state="0" />
@@ -816,9 +721,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
+        <state relative-caret-position="2706">
           <caret line="147" column="28" lean-forward="false" selection-start-line="147" selection-start-column="28" selection-end-line="147" selection-end-column="28" />
           <folding />
         </state>
@@ -826,16 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="73" column="20" lean-forward="true" selection-start-line="73" selection-start-column="20" selection-end-line="73" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+        <state relative-caret-position="462">
+          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding />
         </state>
       </provider>

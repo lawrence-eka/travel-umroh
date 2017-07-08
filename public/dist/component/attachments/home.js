@@ -82,6 +82,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     alert('fd= ' + fd.get('uploadedFile').name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/' + self._state.collection);
+    xmlhttp.setRequestHeader("Content-type", "multipart/form-data");
     xhr.onload = function() {
       alert("onload");
       var response = JSON.parse(this.responseText);
