@@ -82,8 +82,8 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     alert('fd= ' + fd.get('uploadedFile').name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/' + self._state.collection);
-    var boundary = Math.random().toString().substr(2);
-    xhr.setRequestHeader("Content-type", "multipart/form-data; charset=utf-8; boundary=" + boundary);
+    //var boundary=Math.random().toString().substr(2);
+    //xhr.setRequestHeader("Content-type", "multipart/form-data; charset=utf-8; boundary=" + boundary);
     xhr.onload = function() {
       alert("onload");
 

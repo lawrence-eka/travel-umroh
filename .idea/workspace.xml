@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.dpd/pids/mongod" afterPath="$PROJECT_DIR$/.dpd/pids/mongod" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/dist/component/attachments/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/yalla.js" afterPath="$PROJECT_DIR$/dist/yalla.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/attachments/home.html" afterPath="$PROJECT_DIR$/src/component/attachments/home.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -27,21 +20,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="792">
-              <caret line="36" column="18" lean-forward="true" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
+              <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="422">
-              <caret line="78" column="6" lean-forward="false" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
+              <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -274,8 +267,8 @@
         <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
         <option value="$PROJECT_DIR$/src/user/userProfile.html" />
-        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
         <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
       </list>
     </option>
   </component>
@@ -558,12 +551,12 @@
       <workItem from="1499238077173" duration="1982000" />
       <workItem from="1499240114210" duration="8677000" />
       <workItem from="1499261890091" duration="10748000" />
-      <workItem from="1499411803861" duration="31223000" />
+      <workItem from="1499411803861" duration="31618000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67078000" />
+    <option name="totallyTimeSpent" value="67473000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="642" y="0" width="1286" height="1038" extended-state="0" />
@@ -955,18 +948,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="78" column="6" lean-forward="false" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
+        <state relative-caret-position="792">
+          <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
+    <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="36" column="18" lean-forward="true" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
+        <state relative-caret-position="422">
+          <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding />
         </state>
       </provider>
