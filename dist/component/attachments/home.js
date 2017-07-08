@@ -82,11 +82,19 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     alert('fd= ' + fd.get('uploadedFile').name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/' + self._state.collection);
-    xmlhttp.setRequestHeader("Content-type", "multipart/form-data");
+    //var boundary=Math.random().toString().substr(2);
+    //xhr.setRequestHeader("Content-type", "multipart/form-data; charset=utf-8; boundary=" + boundary);
     xhr.onload = function() {
       alert("onload");
+
       var response = JSON.parse(this.responseText);
       self._state.alert.alert(null);
+
+      if (this.status < 300) {
+        alert("Upload successful!");
+      } else {
+        alert(response.message);
+      }
     };
     xhr.onerror = function(err) {
       alert("onerror");
