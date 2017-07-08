@@ -75,18 +75,20 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
 
   function onSaveEvent() {
     var self = this;
-    //debugger;
     var fd = new FormData()
     for (var i in self._state.newFiles) {
       fd.append("uploadedFile", self._state.newFiles[i])
     }
+    alert('fd= ' + fd.get('uploadedFile').name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/' + self._state.collection);
     xhr.onload = function() {
+      alert("onload");
       var response = JSON.parse(this.responseText);
       self._state.alert.alert(null);
     };
     xhr.onerror = function(err) {
+      alert("onerror");
       self._state.alert.alert(err);
     }
     xhr.send(fd);
