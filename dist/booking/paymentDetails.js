@@ -145,6 +145,8 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     var entry = _context["entry"];
     _context["ppLink"] = $inject("/component/ppLink");
     var ppLink = _context["ppLink"];
+    _context["attachments"] = $inject("/component/attachments/home");
+    var attachments = _context["attachments"];
     _elementOpenStart("div", "");
     _attr("element", "dist.booking.paymentDetails");
     _elementOpenEnd("div");
@@ -385,6 +387,44 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                   "max": (new Date()).toYYYYMMDD(true)
                 };
                 _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                _elementOpenStart("div", "");
+                _elementOpenEnd("div");
+                yalla.framework.registerRef("docsPaymentSlip", IncrementalDOM.currentElement(), function() {
+                  _elementOpenStart("div", "");
+                  _attr("class", "row");
+                  _elementOpenEnd("div");
+                  var _params = {
+                    "userId": data.id,
+                    "prompt": "Payment Slip",
+                    "collection": "docspaymentslip",
+                    "onSave": _state.onSave,
+                    "onsaved": function(event) {
+                      var self = {
+                        target: event.target
+                      };
+                      self.properties = _props;
+                      if ('elements' in self.target) {
+                        self.elements = self.target.elements;
+                      }
+                      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                      self.component = _component;
+                      self.component._state = self.component._state || {};
+                      self.state = self.component._state;
+                      self.emitEvent = function(eventName, data) {
+                        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                        if ('on' + eventName in _props) {
+                          _props['on' + eventName](event);
+                        }
+                      };
+                      afterSaveAttachments.bind(self)();
+                    },
+                    "name": "docsPaymentSlip",
+                    "alert": _state.alert
+                  };
+                  _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                  _elementClose("div");
+                })()
+                _elementClose("div");
                 if (!_state.booking.actualPayment) {
                   var _params = {
                     "type": "button",

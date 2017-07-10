@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class.bind="className($alertType)" role="alert" if.bind="@messages.length != 0">
-            <div for.each="error in @messages">{{(error.name ? error.name +': ' : '') + error.message}}</div>
+            <label for.each="error in @messages" class="custom-entry-prompt custom-error-text">{{(error.name ? error.name +': ' : '') + error.message}}</label>
         </div>
     </div>
 </div>

@@ -34,6 +34,15 @@ yalla.framework.addComponent("/dist/component/attachments/list", (function() {
     this.emitEvent("delete", event.data);
   }
 
+  function onUndelete(event) {
+    this.emitEvent("undelete", event.data);
+  }
+
+  function onCancelAdd(event) {
+    debugger;
+    this.emitEvent("cancelAdd", event.data);
+  }
+
   function $render(_props, _slotView) {
     _context["entry"] = $inject("/component/attachments/entry");
     var entry = _context["entry"];
@@ -80,6 +89,46 @@ yalla.framework.addComponent("/dist/component/attachments/list", (function() {
             }
           };
           onDelete.bind(self)(event);
+        },
+        "onundelete": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onUndelete.bind(self)(event);
+        },
+        "oncancelAdd": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onCancelAdd.bind(self)(event);
         },
         "readonly": _props.readonly
       };

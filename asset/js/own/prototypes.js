@@ -1,4 +1,4 @@
-/**
+/*
  * Created by Lawrence Eka on 24-May-2017.
  */
 
@@ -172,6 +172,26 @@ Number.prototype.toFormattedString = function( c, d, t){
 		i = String(parseInt(Math.abs(Number(this) || 0).toFixed(c))),
 		j = (j = i.length) > 3 ? j % 3 : 0;
 	return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(this - i).toFixed(c).slice(2) : "");
+}
+
+Number.prototype.toGMKByte = function() {
+	var absThis = Math.abs(this);
+	var denom = 1;
+	var dec = 1;
+	var predicate='B';
+	if(absThis >= 1000000000) {
+		denom = 1000000000;
+		predicate = 'GB';
+	} else if(absThis >= 1000000) {
+		denom = 1000000;
+		predicate = 'MB';
+	} else if(absThis >= 1000) {
+		denom = 1000;
+		predicate = 'KB';
+	} else {
+		dec = 0;
+	}
+	return (this / denom).toFixed(dec) + predicate;
 }
 
 Number.prototype.toYYYYMMDD = function(withHHMM) {

@@ -1,48 +1,59 @@
 <inject from="/component/attachments/list" name="list"></inject>
 <inject from="/component/entry" name="entry"></inject>
-<inject from="/component/alert" name="alert"></inject>
 
 <div data.load="loadFiles()">
     <div class="container">
         <entry naked type="label" prompt.bind="$prompt"></entry>
     </div>
     <div ref.name="existingFiles">
-        <list list.bind="data" folder="upload/" delete.trigger="onDelete(event)"  readonly.bind="$readonly"></list>
+        <list list.bind="data" folder="upload/" delete.trigger="onDelete(event)" undelete.trigger="onUndelete(event)" readonly.bind="$readonly"></list>
     </div>
     <div ref.name="newFiles">
-        <list list.bind="@newFiles"></list>
+        <list list.bind="@newFiles" cancelAdd.trigger="onCancelAdd(event)"></list>
     </div>
     <div if.bind="!$readonly">
         <form>
             <entry type="file" name="addFile" change.trigger="onAddFile()"></entry>
         </form>
     </div>
-    <span ref.name="alert">
-        <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
-    </span>
+    <div class="container">
+        <div class="row">
+            <entry type="label" if.bind="@error" class="custom-entry-prompt custom-error-text" prompt.bind="@error"></entry>
+        </div>
+    </div>
 </div>
 <script>
     function initState(props){
     	var self = this;
 	    if(props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
+	    if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
 	    //debugger;
     	return {
-    		alert: new Alert(null, $patchChanges, "alert"),
             newFiles:[],
             delFiles:[],
             collection: props.collection,
             userId: props.userId,
-            emitEvent: self.emitEvent,
+            maxSize:props.maxSize ? props.maxSize : 1000000,
+            name: props.name,
+		    error:null,
         }
     }
 
-    function onCreated(){
-    	debugger;
+    function errorSelector(errors) {
+	    this._state.error=null;
+	    if(errors) {
+		    for (var i in errors) {
+			    if ((this._state.name && errors[i].name == this._state.name) || (this._state.alias && errors[i].name == this._state.alias)) {
+				    this._state.error = errors[i].message;
+				    errors.splice(i, 1);
+			    }
+		    }
+	    }
     }
 
     function loadFiles() {
     	var self = this;
-    	debugger;
+    	//debugger;
     	return new Promise(function(resolve){
     		//debugger;
             var q = {};
@@ -61,12 +72,17 @@
     }
 
     function onDelete(event) {
-    	debugger;
-    	this.state.delFiles = this.state.delFiles.concat(event.data);
+	    //debugger;
+	    this.state.delFiles = this.state.delFiles.concat(event.data);
+    }
+
+    function onUndelete(event) {
+	    debugger;
+        var i = this.state.delFiles.indexOf(event.data);
+        if(i >= 0) this.state.delFiles.splice(i, 1);
     }
 
     function onAddFile(){
-    	debugger;
 	    var form = this.target.form;
 	    var self = this;
         this.state.newFiles = this.state.newFiles.concat(form.elements.addFile.files[0])
@@ -75,65 +91,85 @@
 	    return;
     }
 
-    function onSaveEvent(fnc) {
+    function onCancelAdd(event){
     	debugger;
-	    var self = this;
-	    saveFiles.bind(self)(fnc);
+	    var i = this.state.newFiles.indexOf(event.data);
+	    if(i >= 0) this.state.newFiles.splice(i, 1);
+	    $patchChanges("newFiles");
+	    return;
     }
 
-    function saveFiles(fnc) {
+    function onSaveEvent(fnc) {
+        console.log('preparing all promises');
+	    var self = this;
+	    debugger;
+	    Promise.all(deleteFiles.bind(this)().concat(saveFiles.bind(this)())).then(function() {
+	        debugger;
+	    	fnc();
+	    }).catch(function(err){
+	    	fnc(err);
+        });
+    }
+
+    function deleteFiles(){
+	    console.log('promise to delete');
     	var self = this;
-//    	return new Promise(function(resolve){
-    		var fd = new FormData()
+    	var promises=[];
+    	for(var i in self._state.delFiles) {
+    		promises.push(
+                new Promise(function(resolve, reject){
+                    dpd[self._state.collection].del(self._state.delFiles[i], function (res, err) {
+                    	if(err) {
+                    		debugger;
+                    		reject({name: self._state.name, message: err});
+	                    } else {
+		                    console.log(res);
+		                    resolve();
+	                    }
+                    });
+                })
+            );
+        }
+        return promises;
+    }
+
+    function saveFiles() {
+	    var self = this;
+	    console.log('promise to upload');
+	    return [new Promise(function(resolve, reject){
+		    var fd = new FormData()
+            //debugger;
 		    if(self._state.newFiles.length > 0) {
 			    for(var i in self._state.newFiles) {
-				    fd.append("uploadedFile", self._state.newFiles[i])
+			    	if(self._state.newFiles[i].size > self._state.maxSize) {
+			    		reject({name: self._state.name, message: self._state.newFiles[i].name + " (" + self._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + self._state.maxSize.toGMKByte() + ""});
+                    } else {
+					    fd.append("uploadedFile", self._state.newFiles[i])
+				    }
 			    }
 			    var xhr = new XMLHttpRequest();
 			    xhr.open('PUT', '/' + self._state.collection);
-			    //var boundary=Math.random().toString().substr(2);
-			    //debugger;
 			    xhr.onload = function () {
-				    alert("onload");
-
 				    var response = JSON.parse(this.responseText);
-				    self._state.alert.alert(null);
 
 				    if(this.status < 300) {
-					    console.log("Upload successful!");
-					    deleteFiles.bind(self)(fnc);
-//					    resolve(fnc);
+				    	console.log("Upload success.");
+					    resolve();
 				    } else {
 					    console.log(response.message);
-					    alert(response.message);
+					    reject({name: self._state.name, message: response.message});
 				    }
 			    };
 			    xhr.onerror = function (err) {
-				    alert("onerror");
-				    self._state.alert.alert(err);
+                    reject({name: self._state.name, message: err});
 			    }
 			    xhr.send(fd);
 		    } else {
-			    console.log("Nothing to upload!");
-//			    resolve(fnc);
-			    deleteFiles.bind(self)(fnc);
+			    console.log("Nothing to upload.");
+			    resolve();
 		    }
-//        });
+	    })];
     }
-    function deleteFiles(fnc){
-    	debugger;
-    	var self = this;
-    	if(this._state.delFiles.length > 0) {
-		    dpd[this._state.collection].del(this._state.delFiles[0], function (res, err) {
-		    	debugger;
-		    	self._state.delFiles.splice(0, 1);
-		    	deleteFiles.bind(self)(fnc);
-		    });
-    	} else {
-		    console.log("Deletion successful!");
-		    //this.emitEvent('saved');
-            fnc();
-        }
-    }
+
 
 </script>

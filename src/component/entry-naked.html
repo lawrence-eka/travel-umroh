@@ -1,5 +1,5 @@
 <span style.bind="calculateRootStyle($margin)">
-    <label if.bind="($glyph || $prompt) && (whatType($type) == 'label' || (whatType($type) != 'checkbox' && whatType($type) != 'hyperlink' && whatType($type) != 'hidden'))" class.bind="('custom-entry-prompt' + ($deleted ? ' custom-deleted-text' : ''))" click.trigger="onPromptClick()">{{$prompt ? $prompt:''}}<span if.bind="$glyph" class.bind="'glyphicon glyphicon-' + $glyph" ></span></label>
+    <label if.bind="($glyph || $prompt) && (whatType($type) == 'label' || (whatType($type) != 'checkbox' && whatType($type) != 'hyperlink' && whatType($type) != 'hidden'))" class.bind="(($class ? $class : 'custom-entry-prompt' + ($deleted ? ' custom-deleted-text' : '')))" click.trigger="onPromptClick()">{{$prompt ? $prompt:''}}<span if.bind="$glyph" class.bind="'glyphicon glyphicon-' + $glyph" ></span></label>
     <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" focusout.trigger="onFocusOut()" change.trigger="onChange()">
     <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value">
     <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="$value" click.trigger="onButtonClicked()">
@@ -50,7 +50,7 @@
     	this._state.error=null;
     	if(errors) {
 		    for (var i in errors) {
-			    if (errors[i].name == this._state.name || errors[i].name == this._state.alias) {
+			    if ((this._state.name && errors[i].name == this._state.name) || (this._state.alias && errors[i].name == this._state.alias)) {
 			    	this._state.error = errors[i].message;
 			    	errors.splice(i, 1);
 			    	//return;

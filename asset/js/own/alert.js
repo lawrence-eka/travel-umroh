@@ -21,7 +21,11 @@ function Alert(alertType, patchFunction, refName) {
     self.alert = function(text, type) {
         self._text = self.toArrayofMessages(text);
         self._type = type ? type : self._type;
-        if(self.patchChanges) self.patchChanges(self.refName);
+        //debugger;
+        if(self.patchChanges) {
+	        var refs = [].concat(self.refName);
+	        for(var i in refs) self.patchChanges(refs[i]);
+        }
     }
 
     self.toArrayofMessages = function(message) {

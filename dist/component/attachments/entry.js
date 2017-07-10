@@ -62,6 +62,21 @@ yalla.framework.addComponent("/dist/component/attachments/entry", (function() {
     $patchChanges("local");
   }
 
+  function onCancelAdd() {
+    debugger;
+    var self = this;
+    self.emitEvent("cancelAdd", self.state.file);
+  }
+
+  function onUndelete() {
+    if (!this.state.file.originalFilename) return;
+    var self = this;
+    self.state.deleted = false;
+    self.emitEvent("undelete", self.state.file.id);
+    $patchChanges("local");
+  }
+
+
   function $render(_props, _slotView) {
     _context["entry"] = $inject("/component/entry-naked");
     var entry = _context["entry"];
@@ -92,9 +107,29 @@ yalla.framework.addComponent("/dist/component/attachments/entry", (function() {
         var _params = {
           "naked": "naked",
           "type": "label",
-          "glyph": "minus",
+          "glyph": "repeat",
           "margin": "5px",
-          "deleted": "deleted"
+          "deleted": "deleted",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onUndelete.bind(self)();
+          }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
@@ -151,8 +186,28 @@ yalla.framework.addComponent("/dist/component/attachments/entry", (function() {
         var _params = {
           "naked": "naked",
           "type": "label",
-          "glyph": "plus",
-          "margin": "5px"
+          "glyph": "trash",
+          "margin": "5px",
+          "onclick": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onCancelAdd.bind(self)();
+          }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {

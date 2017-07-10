@@ -35,7 +35,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     //debugger;
     if (props.onSaved) props.onSaved.subscribe(onSaved.bind(this));
     var state = {
-      alert: new Alert(null, $patchChanges, "alert"),
+      alert: new Alert(null, $patchChanges, ["alert", "docsTravelAgent"]),
       originalProfile: null,
       onSave: new Event(),
       showDocsTravelAgent: false,
@@ -130,12 +130,11 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function register(profile) {
-    debugger;
+    //debugger;
     //profile = profile.data;
     var self = this;
     if (!profile.id) {
       dpd.users.post(profile, function(user, err) {
-        //debugger;
         if (err) {
           this.state.infoText = "";
           $patchChanges("info");
@@ -146,7 +145,6 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
             "username": profile.username,
             "password": profile.password
           }, function(user, err) {
-            //ebugger;
             profile.sid = user.id;
             afterSaveProfile.bind(self)(user, err, profile);
           });
@@ -154,7 +152,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
       });
     } else {
       dpd.users.put(profile.id, profile, function(user, err) {
-        debugger;
+        //debugger;
         profile.sid = storage.me.read().sid;
         afterSaveProfile.bind(self)(user, err, profile);
       });
@@ -162,24 +160,28 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function afterSaveProfile(user, err, profile) {
-    debugger;
     if (err) {
       this.state.infoText = "";
       $patchChanges("info");
       this.state.alert.alert(err);
       $patchChanges();
     } else {
-      //self.state.onSaved.publish();
       profile.password = undefined;
       storage.me.save(profile, storage.me.isRemembered());
       this.state.onSave.publish(afterSaveAttachments.bind(this));
-      //		    window.location.hash = '#app/search-package.home';
     }
   }
 
-  function afterSaveAttachments() {
+  function afterSaveAttachments(result) {
     debugger;
-    this.emitEvent('save', profile);
+    if (result) {
+      this.state.infoText = "";
+      $patchChanges("info");
+      this.state.alert.alert(result);
+      //$patchChanges("docsTravelAgent");
+    } else {
+      this.emitEvent('save');
+    }
   }
 
   function $render(_props, _slotView) {
@@ -433,7 +435,9 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                       }
                     };
                     afterSaveAttachments.bind(self)();
-                  }
+                  },
+                  "name": "docsTravelAgent",
+                  "alert": _state.alert
                 };
                 _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 _elementClose("div");

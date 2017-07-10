@@ -3,7 +3,7 @@
 <div class="container">
     <span ref.name="local">
         <div if.bind="@deleted">
-            <entry naked type="label" glyph="minus" margin="5px" deleted></entry>
+            <entry naked type="label" glyph="repeat" margin="5px" deleted click.trigger="onUndelete()"></entry>
             <entry naked type="label" prompt.bind="@file.originalFilename" deleted></entry>
         </div>
         <div if.bind="!@deleted && @file.originalFilename">
@@ -11,7 +11,7 @@
             <entry naked type="hyperlink" href.bind="@folder + @file.filename" prompt.bind="@file.originalFilename"></entry>
         </div>
         <div if.bind="!@deleted && !@file.originalFilename">
-            <entry naked type="label" glyph="plus" margin="5px"></entry>
+            <entry naked type="label" glyph="trash" margin="5px" click.trigger="onCancelAdd()"></entry>
             <entry naked type="label" prompt.bind="@file.name"></entry>
         </div>
     </span>
@@ -40,4 +40,19 @@
     	self.emitEvent("delete", self.state.file.id);
     	$patchChanges("local");
     }
+
+    function onCancelAdd() {
+    	debugger;
+	    var self = this;
+	    self.emitEvent("cancelAdd", self.state.file);
+    }
+
+    function onUndelete(){
+	    if(!this.state.file.originalFilename) return;
+	    var self = this;
+	    self.state.deleted=false;
+	    self.emitEvent("undelete", self.state.file.id);
+	    $patchChanges("local");
+    }
+
 </script>

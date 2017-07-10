@@ -73,7 +73,6 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   }
 
   function onSave() {
-    debugger;
     window.location.hash = '#app/search-package.home';
   }
 

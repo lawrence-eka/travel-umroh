@@ -33,24 +33,34 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   function initState(props) {
     var self = this;
     if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
+    if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
     //debugger;
     return {
-      alert: new Alert(null, $patchChanges, "alert"),
       newFiles: [],
       delFiles: [],
       collection: props.collection,
       userId: props.userId,
-      emitEvent: self.emitEvent,
+      maxSize: props.maxSize ? props.maxSize : 1000000,
+      name: props.name,
+      error: null,
     }
   }
 
-  function onCreated() {
-    debugger;
+  function errorSelector(errors) {
+    this._state.error = null;
+    if (errors) {
+      for (var i in errors) {
+        if ((this._state.name && errors[i].name == this._state.name) || (this._state.alias && errors[i].name == this._state.alias)) {
+          this._state.error = errors[i].message;
+          errors.splice(i, 1);
+        }
+      }
+    }
   }
 
   function loadFiles() {
     var self = this;
-    debugger;
+    //debugger;
     return new Promise(function(resolve) {
       //debugger;
       var q = {};
@@ -69,12 +79,17 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   }
 
   function onDelete(event) {
-    debugger;
+    //debugger;
     this.state.delFiles = this.state.delFiles.concat(event.data);
   }
 
-  function onAddFile() {
+  function onUndelete(event) {
     debugger;
+    var i = this.state.delFiles.indexOf(event.data);
+    if (i >= 0) this.state.delFiles.splice(i, 1);
+  }
+
+  function onAddFile() {
     var form = this.target.form;
     var self = this;
     this.state.newFiles = this.state.newFiles.concat(form.elements.addFile.files[0])
@@ -83,67 +98,98 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     return;
   }
 
+  function onCancelAdd(event) {
+    debugger;
+    var i = this.state.newFiles.indexOf(event.data);
+    if (i >= 0) this.state.newFiles.splice(i, 1);
+    $patchChanges("newFiles");
+    return;
+  }
+
   function onSaveEvent(fnc) {
+    console.log('preparing all promises');
+    var self = this;
     debugger;
-    var self = this;
-    saveFiles.bind(self)(fnc);
-  }
-
-  function saveFiles(fnc) {
-    var self = this;
-    //    	return new Promise(function(resolve){
-    var fd = new FormData()
-    if (self._state.newFiles.length > 0) {
-      for (var i in self._state.newFiles) {
-        fd.append("uploadedFile", self._state.newFiles[i])
-      }
-      var xhr = new XMLHttpRequest();
-      xhr.open('PUT', '/' + self._state.collection);
-      //var boundary=Math.random().toString().substr(2);
-      //debugger;
-      xhr.onload = function() {
-        alert("onload");
-
-        var response = JSON.parse(this.responseText);
-        self._state.alert.alert(null);
-
-        if (this.status < 300) {
-          console.log("Upload successful!");
-          deleteFiles.bind(self)(fnc);
-          //					    resolve(fnc);
-        } else {
-          console.log(response.message);
-          alert(response.message);
-        }
-      };
-      xhr.onerror = function(err) {
-        alert("onerror");
-        self._state.alert.alert(err);
-      }
-      xhr.send(fd);
-    } else {
-      console.log("Nothing to upload!");
-      //			    resolve(fnc);
-      deleteFiles.bind(self)(fnc);
-    }
-    //        });
-  }
-
-  function deleteFiles(fnc) {
-    debugger;
-    var self = this;
-    if (this._state.delFiles.length > 0) {
-      dpd[this._state.collection].del(this._state.delFiles[0], function(res, err) {
-        debugger;
-        self._state.delFiles.splice(0, 1);
-        deleteFiles.bind(self)(fnc);
-      });
-    } else {
-      console.log("Deletion successful!");
-      //this.emitEvent('saved');
+    Promise.all(deleteFiles.bind(this)().concat(saveFiles.bind(this)())).then(function() {
+      debugger;
       fnc();
-    }
+    }).catch(function(err) {
+      fnc(err);
+    });
   }
+
+  function deleteFiles() {
+    console.log('promise to delete');
+    var self = this;
+    var promises = [];
+    for (var i in self._state.delFiles) {
+      promises.push(
+        new Promise(function(resolve, reject) {
+          dpd[self._state.collection].del(self._state.delFiles[i], function(res, err) {
+            if (err) {
+              debugger;
+              reject({
+                name: self._state.name,
+                message: err
+              });
+            } else {
+              console.log(res);
+              resolve();
+            }
+          });
+        })
+      );
+    }
+    return promises;
+  }
+
+  function saveFiles() {
+    var self = this;
+    console.log('promise to upload');
+    return [new Promise(function(resolve, reject) {
+      var fd = new FormData()
+      //debugger;
+      if (self._state.newFiles.length > 0) {
+        for (var i in self._state.newFiles) {
+          if (self._state.newFiles[i].size > self._state.maxSize) {
+            reject({
+              name: self._state.name,
+              message: self._state.newFiles[i].name + " (" + self._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + self._state.maxSize.toGMKByte() + ""
+            });
+          } else {
+            fd.append("uploadedFile", self._state.newFiles[i])
+          }
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('PUT', '/' + self._state.collection);
+        xhr.onload = function() {
+          var response = JSON.parse(this.responseText);
+
+          if (this.status < 300) {
+            console.log("Upload success.");
+            resolve();
+          } else {
+            console.log(response.message);
+            reject({
+              name: self._state.name,
+              message: response.message
+            });
+          }
+        };
+        xhr.onerror = function(err) {
+          reject({
+            name: self._state.name,
+            message: err
+          });
+        }
+        xhr.send(fd);
+      } else {
+        console.log("Nothing to upload.");
+        resolve();
+      }
+    })];
+  }
+
 
 
   function $render(_props, _slotView) {
@@ -151,8 +197,6 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     var list = _context["list"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
-    _context["alert"] = $inject("/component/alert");
-    var alert = _context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.component.attachments.home");
     _elementOpenEnd("div");
@@ -221,6 +265,26 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
               };
               onDelete.bind(self)(event);
             },
+            "onundelete": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onUndelete.bind(self)(event);
+            },
             "readonly": _props.readonly
           };
           _context["list"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -230,7 +294,27 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
         _elementOpenEnd("div");
         yalla.framework.registerRef("newFiles", IncrementalDOM.currentElement(), function() {
           var _params = {
-            "list": _state.newFiles
+            "list": _state.newFiles,
+            "oncancelAdd": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onCancelAdd.bind(self)(event);
+            }
           };
           _context["list"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         })()
@@ -268,16 +352,22 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
           _elementClose("form");
           _elementClose("div");
         }
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+        _elementOpenStart("div", "");
+        _attr("class", "container");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        if (_state.error) {
           var _params = {
-            "alertType": _state.alert.type.bind(self)(),
-            "message": _state.alert.text.bind(self)()
+            "type": "label",
+            "class": "custom-entry-prompt custom-error-text",
+            "prompt": _state.error
           };
-          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        })()
-        _elementClose("span");
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        }
+        _elementClose("div");
+        _elementClose("div");
       }
       var promise = loadFiles.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {

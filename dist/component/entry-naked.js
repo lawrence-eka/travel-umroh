@@ -54,7 +54,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     this._state.error = null;
     if (errors) {
       for (var i in errors) {
-        if (errors[i].name == this._state.name || errors[i].name == this._state.alias) {
+        if ((this._state.name && errors[i].name == this._state.name) || (this._state.alias && errors[i].name == this._state.alias)) {
           this._state.error = errors[i].message;
           errors.splice(i, 1);
           //return;
@@ -132,7 +132,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     _component._properties = _props;
     if ((_props.glyph || _props.prompt) && (whatType(_props.type) == 'label' || (whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink' && whatType(_props.type) != 'hidden'))) {
       _elementOpenStart("label", "");
-      _attr("class", ('custom-entry-prompt' + (_props.deleted ? ' custom-deleted-text' : '')));
+      _attr("class", ((_props.class ? _props.class : 'custom-entry-prompt' + (_props.deleted ? ' custom-deleted-text' : ''))));
       _attr("onclick", function(event) {
         var self = {
           target: event.target

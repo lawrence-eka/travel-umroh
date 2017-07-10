@@ -103,10 +103,11 @@ yalla.framework.addComponent("/dist/component/alert", (function() {
       _elementOpenEnd("div");
       var _array = _state.messages || [];
       _array.forEach(function(error) {
-        _elementOpenStart("div", "");
-        _elementOpenEnd("div");
+        _elementOpenStart("label", "");
+        _attr("class", "custom-entry-prompt custom-error-text");
+        _elementOpenEnd("label");
         _text("" + ((error.name ? error.name + ': ' : '') + error.message) + "");
-        _elementClose("div");
+        _elementClose("label");
       });
       _elementClose("div");
     }

@@ -1,11 +1,18 @@
 <inject from="/component/attachments/entry" name="entry"></inject>
 <div>
     <div for.each="file in $list">
-        <entry file.bind="file" folder.bind="$folder" delete.trigger="onDelete(event)" readonly.bind="$readonly"></entry>
+        <entry file.bind="file" folder.bind="$folder" delete.trigger="onDelete(event)" undelete.trigger="onUndelete(event)" cancelAdd.trigger="onCancelAdd(event)" readonly.bind="$readonly"></entry>
     </div>
 </div>
 <script>
-    function onDelete(event){
-    	this.emitEvent("delete", event.data);
+	function onDelete(event){
+		this.emitEvent("delete", event.data);
+	}
+	function onUndelete(event){
+		this.emitEvent("undelete", event.data);
+	}
+	function onCancelAdd(event){
+		debugger;
+		this.emitEvent("cancelAdd", event.data);
     }
 </script>

@@ -3,6 +3,7 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
+<inject from="/component/attachments/home" name="attachments"></inject>
 
 <div>
 
@@ -52,6 +53,11 @@
                         <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
                         <entry type="number" prompt="Amount Transfered" name="actualPayment" min.bind="@booking.totalPrice" alert.bind="@alert"></entry>
                         <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate" value.bind="(new Date()).toYYYYMMDD(true)" max.bind="(new Date()).toYYYYMMDD(true)"></entry>
+                        <div ref.name="docsPaymentSlip">
+                            <div class="row">
+                                <attachments userId.bind="data.id" prompt="Payment Slip" collection="docspaymentslip" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsPaymentSlip" alert.bind="@alert"></attachments>
+                            </div>
+                        </div>
                         <entry type="button" name="btnSave" if.bind="!@booking.actualPayment" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="saveActualPayment()"></entry>
                         <entry type="button" name="btnCancel" value.bind="!@booking.actualPayment ? 'Cancel' : 'Close'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="cancelActualPayment()"></entry>
                     </form>
