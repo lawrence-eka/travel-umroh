@@ -10,54 +10,54 @@
             <ppLink></ppLink>
         </div>
         <div slot.name="body" data.load="loadProfile($profile)">
-                <form>
-                    <div class="row" ref.name="alert">
-                        <input type="hidden" name="id" value.bind="data.id">
-                        <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
-                        <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
+            <form>
+                <div class="row" ref.name="alert">
+                    <input type="hidden" name="id" value.bind="data.id">
+                    <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
+                    <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
 
-                        <entry type="hidden" prompt="username" name="username" value.bind="data.username"></entry>
-                        <entry type="email" prompt="Email" name="email" value.bind="data.email" alias="username" alert.bind="@alert"></entry>
-                        <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
+                    <entry type="hidden" prompt="username" name="username" value.bind="data.username"></entry>
+                    <entry type="email" prompt="Email" name="email" value.bind="data.email" alias="username" alert.bind="@alert"></entry>
+                    <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
 
-                        <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
+                    <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
 
-                        <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
+                    <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
 
-<!--
+                    <div if.bind="!gotNeedApproval(data, 'isAdmin')">
                         <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
+                    </div>
+                    <div if.bind="gotNeedApproval(data, 'isAdmin')">
+                        <entry type="checkbox" prompt="Administrator*" name="isAdmin" checked.bind="data.needApproval.isAdmin"></entry>
+                        <entry type="label" prompt.bind="('*' + (data.needApproval.isAdmin ? 'Request for' : 'Revokal of') + ' Admin Access under review')"></entry>
+                    </div>
+                    <div if.bind="!gotNeedApproval(data, 'isTravelAgent')">
                         <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
--->
-
-                        <div if.bind="!gotNeedApproval(data, 'isAdmin')">
-                            <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
-                        </div>
-                        <div if.bind="gotNeedApproval(data, 'isAdmin')">
-                            <entry type="checkbox" prompt="Administrator*" name="isAdmin" checked.bind="data.needApproval.isAdmin"></entry>
-                            <entry type="label" prompt.bind="('*' + (data.needApproval.isAdmin ? 'Request for' : 'Revokal of') + ' Admin Access under review')"></entry>
-                        </div>
-                        <div if.bind="!gotNeedApproval(data, 'isTravelAgent')">
-                            <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
-                        </div>
-                        <div if.bind="gotNeedApproval(data, 'isTravelAgent')">
-                            <entry type="checkbox" prompt="Travel Agent*" name="isTravelAgent" checked.bind="data.needApproval.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
-                            <entry type="label" prompt.bind="('*' + (data.needApproval.isTravelAgent ? 'Request for' : 'Revokal of') + ' Travel Agent Access under review')"></entry>
-                        </div>
                     </div>
-                    <div ref.name="docsTravelAgent">
-                        <div class="row" if.bind="@showDocsTravelAgent">
-                            <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" onSave.bind="@onSave"></attachments>
-                        </div>
+                    <div if.bind="gotNeedApproval(data, 'isTravelAgent')">
+                        <entry type="checkbox" prompt="Travel Agent*" name="isTravelAgent" checked.bind="data.needApproval.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
+                        <entry type="label" prompt.bind="('*' + (data.needApproval.isTravelAgent ? 'Request for' : 'Revokal of') + ' Travel Agent Access under review')"></entry>
                     </div>
-                    <div class="row" ref.name="alert">
-                        <entry type="password" prompt="Password" name="password" value.bind="data.password" alert.bind="@alert"></entry>
-                        <entry type="password" prompt="Repeat Password" name="repeatPassword" alert.bind="@alert"></entry>
-                        <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
-                        <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                </div>
+                <div ref.name="docsTravelAgent">
+                    <div class="row" if.bind="@showDocsTravelAgent">
+                        <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()"></attachments>
                     </div>
-                </form>
+                </div>
+                <div class="row" ref.name="alert">
+                    <entry type="password" prompt="Password" name="password" value.bind="data.password" alert.bind="@alert"></entry>
+                    <entry type="password" prompt="Repeat Password" name="repeatPassword" alert.bind="@alert"></entry>
+                    <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
+                    <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                </div>
+            </form>
+            <span ref.name="alert">
                 <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
             </span>
+            <span ref.name="info">
+                <alert if.bind="@infoText" alertType="info" message.bind="@infoText"></alert>
+            </span>
+
         </div>
     </panel>
 </div>
@@ -75,6 +75,7 @@
 
         };
         state.alert.alert(props.error);
+        infoText = '';
         return state;
     }
 
@@ -105,10 +106,15 @@
     	$patchChanges("docsTravelAgent");
     }
     function onRegister(){
+    	this.state.infoText = "Saving your profile...";
+    	$patchChanges("info");
+    	//debugger;
         this.state.alert.alert('');
         var form = this.target.form;
 
         if(form.elements.password.value != form.elements.repeatPassword.value ) {
+	        this.state.infoText = "";
+	        $patchChanges("info");
             this.state.alert.alert({name: "repeatPassword", message: "Please repeat your password correctly"});
             return;
         }
@@ -124,7 +130,7 @@
         if(profile.username) profile.username = profile.username.toLowerCase();
         if(form.elements.password.value != '') profile.password = form.elements.password.value;
 
-        debugger;
+        //debugger;
         profile.address1 = form.elements.address1.value;
         profile.city = form.elements.city.value;
         if((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
@@ -144,20 +150,61 @@
 	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
 	    	profile.needApproval = null;
         }
-        debugger;
-        if(profile.id) this.state.onSave.publish();;
-
-	    this.emitEvent('save', profile);
+        register.bind(this)(profile);
     }
 
     function onCancel() {
         this.emitEvent('cancel');
     }
 
-    function onSaved() {
-    	debugger;
-	    this._state.onSave.publish();
+    function register(profile) {
+	    debugger;
+	    //profile = profile.data;
+	    var self = this;
+	    if(!profile.id) {
+		    dpd.users.post(profile, function (user, err) {
+			    //debugger;
+			    if (err) {
+				    this.state.infoText = "";
+				    $patchChanges("info");
+				    self.state.error = err;
+				    $patchChanges();
+			    } else {
+				    dpd.users.login({"username": profile.username, "password": profile.password}, function (user, err) {
+					    //ebugger;
+                        profile.sid = user.id;
+                        afterSaveProfile.bind(self)(user, err, profile);
+				    });
+			    }
+		    });
+	    } else {
+		    dpd.users.put(profile.id, profile, function(user, err) {
+			    debugger;
+                profile.sid = storage.me.read().sid;
+			    afterSaveProfile.bind(self)(user, err, profile);
+		    });
+        }
     }
 
+    function afterSaveProfile(user, err, profile){
+	    debugger;
+	    if (err) {
+		    this.state.infoText = "";
+		    $patchChanges("info");
+		    this.state.alert.alert(err);
+		    $patchChanges();
+	    } else {
+		    //self.state.onSaved.publish();
+		    profile.password = undefined;
+		    storage.me.save(profile, storage.me.isRemembered());
+		    this.state.onSave.publish(afterSaveAttachments.bind(this));
+//		    window.location.hash = '#app/search-package.home';
+	    }
+    }
+
+    function afterSaveAttachments(){
+    	debugger;
+	    this.emitEvent('save', profile);
+    }
 </script>
 

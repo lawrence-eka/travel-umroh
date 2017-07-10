@@ -43,6 +43,8 @@ storage.local.read = function(key) {
 }
 
 storage.local.erase = function(key) {
+	console.log("local", key, "erased");
+	//debugger;
 	localStorage.removeItem(key);
 }
 
@@ -60,15 +62,23 @@ storage.session.erase = function(key) {
 
 storage.me.save = function(me, remember) {
 	storage.me.erase();
+	console.log("remember?", remember);
 	if(remember) storage.local.save("me", JSON.stringify(me));
 	else storage.session.save("me", JSON.stringify(me));
 }
 
 storage.me.read = function() {
 	var me = storage.session.read("me");
+	//debugger;
 	if (!me) me = storage.local.read("me");
+	//debugger;
 	if(!me) return null;
-	else return JSON.parse(me);
+	else {
+		me = JSON.parse(me);
+		if(!me) return null;
+		if (!storage.cookie.read("sid")) storage.cookie.save("sid", me.sid);
+		return me;
+	}
 }
 
 storage.me.isRemembered = function() {
@@ -77,6 +87,8 @@ storage.me.isRemembered = function() {
 }
 
 storage.me.erase = function() {
+//	console.log("me erased");
+//	storage.cookie,erase("sid");
 	storage.local.erase("me");
 	storage.session.erase("me");
 }
@@ -184,7 +196,7 @@ function Loader() {
 		//debugger;
 		for (var i in this.assets) {
 			if (this.assets[i].seq == seq && !this.assets[i].called) {
-				console.log("loading asset seq:", seq, "=", this.assets[i].file)
+				//console.log("loading asset seq:", seq, "=", this.assets[i].file)
 				this.assets[i].called = true;
 				this.fetch("./" + this.assets[i].file, null, this.assets[i].attribute).then(this.attachScriptToDocument.bind(this, seq));
 			}
@@ -295,33 +307,33 @@ function Loader() {
 		//start of moved to here
 		self.unloadedAssets--;
 		//debugger;
-		console.log
+		//console.log
 		if(url.indexOf("dist/yalla.js") >= 0){//} && scriptCache.isReset) {
 			var ego = self;
 			window.onload = function () {
 				//debugger;
 				ego.needLoading=true;
-				console.log("temporary onload");
+				//console.log("temporary onload");
 			};
 			//scriptCache.isReset = false;
 		} else if(self.unloadedAssets==0) {
 			var ego = self;
 			//debugger;
 			window.onload = function () {
-				console.log("Patched window.onload triggered");
+				//console.log("Patched window.onload triggered");
 				ego.needLoading = false;
 				yalla.framework.start();
 			};
 			//debugger;
 			if(self.needLoading || scriptCache.isReset) {
-				console.log("Need loading.")
+				//console.log("Need loading.")
 				yalla.framework.start();
 				scriptCache.isReset = false;
 			} else if(self.unloadedAssets==0) {
-				console.log("No need to reload");
+				//console.log("No need to reload");
 			}
 		}
-		console.log("asset seq:", seq, '=', url, "loaded.")
+		//console.log("asset seq:", seq, '=', url, "loaded.")
 		self.loadAssets(seq + 1);
 		//end of moved to here
 	};

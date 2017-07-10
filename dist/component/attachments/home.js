@@ -31,18 +31,26 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(this));
+    var self = this;
+    if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
+    //debugger;
     return {
       alert: new Alert(null, $patchChanges, "alert"),
       newFiles: [],
       delFiles: [],
       collection: props.collection,
       userId: props.userId,
+      emitEvent: self.emitEvent,
     }
+  }
+
+  function onCreated() {
+    debugger;
   }
 
   function loadFiles() {
     var self = this;
+    debugger;
     return new Promise(function(resolve) {
       //debugger;
       var q = {};
@@ -61,10 +69,12 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   }
 
   function onDelete(event) {
+    debugger;
     this.state.delFiles = this.state.delFiles.concat(event.data);
   }
 
   function onAddFile() {
+    debugger;
     var form = this.target.form;
     var self = this;
     this.state.newFiles = this.state.newFiles.concat(form.elements.addFile.files[0])
@@ -73,40 +83,65 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     return;
   }
 
-  function onSaveEvent() {
-    var self = this;
-    var fd = new FormData()
-    for (var i in self._state.newFiles) {
-      fd.append("uploadedFile", self._state.newFiles[i])
-    }
-    //alert('fd= '+ fd.get('uploadedFile').name);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/' + self._state.collection);
-    //var boundary=Math.random().toString().substr(2);
-    //xhr.setRequestHeader("Content-type", "multipart/form-data; charset=utf-8; boundary=" + boundary);
+  function onSaveEvent(fnc) {
     debugger;
-    xhr.onload = function() {
-      alert("onload");
+    var self = this;
+    saveFiles.bind(self)(fnc);
+  }
 
-      var response = JSON.parse(this.responseText);
-      self._state.alert.alert(null);
-
-      if (this.status < 300) {
-        console.log("Upload successful!");
-        alert("Upload successful!");
-      } else {
-        console.log(response.message);
-        alert(response.message);
+  function saveFiles(fnc) {
+    var self = this;
+    //    	return new Promise(function(resolve){
+    var fd = new FormData()
+    if (self._state.newFiles.length > 0) {
+      for (var i in self._state.newFiles) {
+        fd.append("uploadedFile", self._state.newFiles[i])
       }
-    };
-    xhr.onerror = function(err) {
-      alert("onerror");
-      self._state.alert.alert(err);
-    }
-    xhr.send(fd);
+      var xhr = new XMLHttpRequest();
+      xhr.open('PUT', '/' + self._state.collection);
+      //var boundary=Math.random().toString().substr(2);
+      //debugger;
+      xhr.onload = function() {
+        alert("onload");
 
-    for (var i in self._state.delFiles) {
-      dpd[self._state.collection].del(self._state.delFiles[i], function(res, err) {});
+        var response = JSON.parse(this.responseText);
+        self._state.alert.alert(null);
+
+        if (this.status < 300) {
+          console.log("Upload successful!");
+          deleteFiles.bind(self)(fnc);
+          //					    resolve(fnc);
+        } else {
+          console.log(response.message);
+          alert(response.message);
+        }
+      };
+      xhr.onerror = function(err) {
+        alert("onerror");
+        self._state.alert.alert(err);
+      }
+      xhr.send(fd);
+    } else {
+      console.log("Nothing to upload!");
+      //			    resolve(fnc);
+      deleteFiles.bind(self)(fnc);
+    }
+    //        });
+  }
+
+  function deleteFiles(fnc) {
+    debugger;
+    var self = this;
+    if (this._state.delFiles.length > 0) {
+      dpd[this._state.collection].del(this._state.delFiles[0], function(res, err) {
+        debugger;
+        self._state.delFiles.splice(0, 1);
+        deleteFiles.bind(self)(fnc);
+      });
+    } else {
+      console.log("Deletion successful!");
+      //this.emitEvent('saved');
+      fnc();
     }
   }
 

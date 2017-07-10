@@ -28,19 +28,10 @@
     <script>
         function authenticate(path){
             return new Promise(function(resolve){
-            	//debugger;
-                /*
-                var defaultPath = '#!/app';
-                var login = '#!/app/user.login-form';
-                if(path=="") resolve(defaultPath);
-                else resolve(path);
-                */
-                console.log("path=", path);
-                resolve(path ? path : "#app/search-package.home");
-                resolve(path);
+                resolve(!storage.me.read()? "#app" : path ? path : "#app/search-package.home");
             });
         }
-        scriptCache.setVersion("2017.07.08.16");
+        scriptCache.setVersion("2017.07.09.24");
         loader.loadAssets(0);
     </script>
 </html>

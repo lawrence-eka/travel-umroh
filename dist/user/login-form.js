@@ -55,6 +55,8 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
       self.state.alert.alert(err);
       if (!err) {
         dpd.users.me(function(me) {
+          debugger;
+          me.sid = user.id;
           storage.me.save(me, rememberMe);
           window.location.hash = "#app/search-package.home"
         });

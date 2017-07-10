@@ -76,6 +76,7 @@ yalla.framework.addComponent("/dist/search-package/list", (function() {
         "travelDateFrom": 1
       };
       dpd.packages.get(query, function(pkg, err) {
+        //debugger;
         self.state.alert.alert(err);
         if (!err) {
           var recordsFound = (pkg.length > 0 ? pkg.length.toString() + ' package' + (pkg.length == 1 ? '' : 's') : 'No package') + ' found';

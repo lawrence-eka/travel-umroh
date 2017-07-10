@@ -47,34 +47,8 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     window.location.hash = "#app";
   }
 
-  function register(profile) {
-    //debugger;
-    profile = profile.data;
-    var self = this;
-    dpd.users.post(profile, function(user, err) {
-      //debugger;
-      if (err) {
-        self.state.error = err;
-        $patchChanges();
-      } else {
-        dpd.users.login({
-          "username": profile.username,
-          "password": profile.password
-        }, function(user, err) {
-          //ebugger;
-          if (err) {
-            self.state.alert.alert(err);
-            $patchChanges();
-          } else {
-            self.state.onSaved.publish();
-            profile.password = undefined;
-            storage.me.save(profile);
-            window.location.hash = '#app';
-          }
-        });
-      }
-
-    });
+  function register() {
+    window.location.hash = '#app/search-package.home';
   }
 
   function $render(_props, _slotView) {

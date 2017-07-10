@@ -42,6 +42,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
 
     };
     state.alert.alert(props.error);
+    infoText = '';
     return state;
   }
 
@@ -74,10 +75,15 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function onRegister() {
+    this.state.infoText = "Saving your profile...";
+    $patchChanges("info");
+    //debugger;
     this.state.alert.alert('');
     var form = this.target.form;
 
     if (form.elements.password.value != form.elements.repeatPassword.value) {
+      this.state.infoText = "";
+      $patchChanges("info");
       this.state.alert.alert({
         name: "repeatPassword",
         message: "Please repeat your password correctly"
@@ -96,7 +102,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     if (profile.username) profile.username = profile.username.toLowerCase();
     if (form.elements.password.value != '') profile.password = form.elements.password.value;
 
-    debugger;
+    //debugger;
     profile.address1 = form.elements.address1.value;
     profile.city = form.elements.city.value;
     if ((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
@@ -116,21 +122,65 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     if (profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
       profile.needApproval = null;
     }
-    debugger;
-    if (profile.id) this.state.onSave.publish();;
-
-    this.emitEvent('save', profile);
+    register.bind(this)(profile);
   }
 
   function onCancel() {
     this.emitEvent('cancel');
   }
 
-  function onSaved() {
+  function register(profile) {
     debugger;
-    this._state.onSave.publish();
+    //profile = profile.data;
+    var self = this;
+    if (!profile.id) {
+      dpd.users.post(profile, function(user, err) {
+        //debugger;
+        if (err) {
+          this.state.infoText = "";
+          $patchChanges("info");
+          self.state.error = err;
+          $patchChanges();
+        } else {
+          dpd.users.login({
+            "username": profile.username,
+            "password": profile.password
+          }, function(user, err) {
+            //ebugger;
+            profile.sid = user.id;
+            afterSaveProfile.bind(self)(user, err, profile);
+          });
+        }
+      });
+    } else {
+      dpd.users.put(profile.id, profile, function(user, err) {
+        debugger;
+        profile.sid = storage.me.read().sid;
+        afterSaveProfile.bind(self)(user, err, profile);
+      });
+    }
   }
 
+  function afterSaveProfile(user, err, profile) {
+    debugger;
+    if (err) {
+      this.state.infoText = "";
+      $patchChanges("info");
+      this.state.alert.alert(err);
+      $patchChanges();
+    } else {
+      //self.state.onSaved.publish();
+      profile.password = undefined;
+      storage.me.save(profile, storage.me.isRemembered());
+      this.state.onSave.publish(afterSaveAttachments.bind(this));
+      //		    window.location.hash = '#app/search-package.home';
+    }
+  }
+
+  function afterSaveAttachments() {
+    debugger;
+    this.emitEvent('save', profile);
+  }
 
   function $render(_props, _slotView) {
     _context["alert"] = $inject("/component/alert");
@@ -363,7 +413,27 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                   "userId": data.id,
                   "prompt": "Proof of Travel Agency",
                   "collection": "docstravelagent",
-                  "onSave": _state.onSave
+                  "onSave": _state.onSave,
+                  "onsaved": function(event) {
+                    var self = {
+                      target: event.target
+                    };
+                    self.properties = _props;
+                    if ('elements' in self.target) {
+                      self.elements = self.target.elements;
+                    }
+                    self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                    self.component = _component;
+                    self.component._state = self.component._state || {};
+                    self.state = self.component._state;
+                    self.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                      if ('on' + eventName in _props) {
+                        _props['on' + eventName](event);
+                      }
+                    };
+                    afterSaveAttachments.bind(self)();
+                  }
                 };
                 _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 _elementClose("div");
@@ -446,11 +516,28 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
             })()
             _elementClose("div");
             _elementClose("form");
-            var _params = {
-              "alertType": _state.alert.type.bind(self)(),
-              "message": _state.alert.text.bind(self)()
-            };
-            _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "alertType": _state.alert.type.bind(self)(),
+                "message": _state.alert.text.bind(self)()
+              };
+              _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("info", IncrementalDOM.currentElement(), function() {
+              if (_state.infoText) {
+                var _params = {
+                  "alertType": "info",
+                  "message": _state.infoText
+                };
+                _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              }
+            })()
+            _elementClose("span");
           }
           var promise = loadProfile.bind(self)(_props.profile);
           if (promise && typeof promise == "object" && "then" in promise) {

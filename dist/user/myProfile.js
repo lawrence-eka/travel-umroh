@@ -72,20 +72,9 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
     window.location.hash = "#app/search-package.home";
   }
 
-  function onSave(profile) {
-    //debugger;
-    profile = profile.data;
-    var self = this;
-    dpd.users.put(profile.id, profile, function(user, err) {
-      //debugger;
-      if (err) {
-        self.state.error.message = err;
-        $patchChanges();
-      } else {
-        storage.me.save(user, storage.me.isRemembered());
-        window.location.hash = '#app/search-package.home';
-      }
-    });
+  function onSave() {
+    debugger;
+    window.location.hash = '#app/search-package.home';
   }
 
   function $render(_props, _slotView) {
