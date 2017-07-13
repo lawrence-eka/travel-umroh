@@ -173,7 +173,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function afterSaveAttachments(result) {
-    debugger;
+    //debugger;
     if (result) {
       this.state.infoText = "";
       $patchChanges("info");
@@ -415,6 +415,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                   "userId": data.id,
                   "prompt": "Proof of Travel Agency",
                   "collection": "docstravelagent",
+                  "folder": "upload/docstravelagent",
                   "onSave": _state.onSave,
                   "onsaved": function(event) {
                     var self = {
@@ -437,7 +438,9 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                     afterSaveAttachments.bind(self)();
                   },
                   "name": "docsTravelAgent",
-                  "alert": _state.alert
+                  "alert": _state.alert,
+                  "maxFile": "3",
+                  "maxSize": "100k"
                 };
                 _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 _elementClose("div");

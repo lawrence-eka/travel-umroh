@@ -48,10 +48,11 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
       self.state.alert.alert(err);
       if (!err) {
         var q = {
-          "userId": me.id,
-          "packageId": self.state.packageId,
-          "costTickets": pkg.costTickets,
-          "costLandArrangements": pkg.costLandArrangements
+          userId: me.id,
+          packageId: self.state.packageId,
+          costTickets: pkg.costTickets,
+          costLandArrangements: pkg.costLandArrangements,
+          bookingStatus: 'DPS',
         };
         dpd.bookings.post(q, function(booking, err) {
           self.state.alert.alert(err);
@@ -116,8 +117,6 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
     var alert = _context["alert"];
     _context["card-package"] = $inject("/package/card-package");
     var cardPackage = _context["card-package"];
-    _context["card-itinerary"] = $inject("/itinerary/card-itinerary");
-    var cardItinerary = _context["card-itinerary"];
     _context["card-itineraryList"] = $inject("/itinerary/card-itineraryList");
     var cardItineraryList = _context["card-itineraryList"];
     _context["entry"] = $inject("/component/entry");

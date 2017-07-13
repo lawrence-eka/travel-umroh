@@ -58,6 +58,55 @@ function Utils() {
 		finished: 5,
 	};
 
+	self.flow = {
+		booking: {
+			statusCodes: [
+				{code: 'DPS', status: 'Defining Passengers'},
+				{code: 'WFP', status: 'Waiting for Payment'},
+				{code: 'WPV', status: 'Waiting for Payment Verification'},
+				{code: 'RTG', status: 'Ready to Go'},
+				{code: 'OGO', status: 'On Going'},
+				{code: 'FIN', status: 'Finished'},
+				{code: 'CCL', status: 'Cancelled'},
+				{code: 'CNP', status: 'Cancelled due to No Payment'},
+				{code: 'CPR', status: 'Payment Rejected'},
+			],
+			transitions: [
+				{from: 'DPS', to: 'WFP',},
+				{from: 'DPS', to: 'CCL',},
+				{from: 'WFP', to: 'WPV',},
+				{from: 'WFP', to: 'DPS',},
+				{from: 'WFP', to: 'CNP',},
+				{from: 'WFP', to: 'CCL',},
+				{from: 'WPV', to: 'RTG',},
+				{from: 'WPV', to: 'DPS',},
+				{from: 'WPV', to: 'CCL',},
+				{from: 'RTG', to: 'OGO',},
+				{from: 'RTG', to: 'CCL',},
+				{from: 'OGO', to: 'FIN',},
+			],
+
+			canGoTo: function(toStatus) {
+				var result =[];
+				self.flow.booking.transitions.filter(function(t) {return t.to == toStatus;}).forEach(function(item) {result.push(item.from);});
+				return result;
+			},
+			canGoFrom: function(fromStatus) {
+				var result = [];
+				self.flow.booking.transitions.filter(function(t){return t.from == fromStatus;}).forEach(function(item) {result.push(item.to);});
+				return result;
+			},
+			isTransitionAllowed: function(fromStatus, toStatus) {
+				return typeof ((new Utils()).flow.booking.transitions.find(function(item) {return (item.from == fromStatus && item.to == toStatus);})) != 'undefined';
+			},
+			status: function(code) {
+				var statusCode = self.flow.booking.statusCodes.find(function(item){return item.code == code;});
+				if(statusCode) return statusCode.status;
+				else return '';
+			}
+		},
+	};
+
 	self.bookings.status = function(booking) {
 		if(booking.isPaymentConfirmed == -1) return {
 			code: self.bookings.paymentRejected,

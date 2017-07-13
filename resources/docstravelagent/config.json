@@ -1,6 +1,6 @@
 {
 	"type": "Fileupload",
-	"directory": "",
+	"directory": "upload/docstravelagent",
 	"authorization": true,
 	"uniqueFilename": true
 }

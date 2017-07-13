@@ -153,6 +153,9 @@ yalla.framework.addComponent("/dist/passenger/edit-passenger", (function() {
             _elementOpenStart("form", "");
             _attr("role", "form");
             _elementOpenEnd("form");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
             _elementOpenStart("span", "");
             _elementOpenEnd("span");
             yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
@@ -326,6 +329,7 @@ yalla.framework.addComponent("/dist/passenger/edit-passenger", (function() {
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             })()
             _elementClose("span");
+            _elementClose("div");
             _elementClose("form");
           }
           var promise = getPassenger.bind(self)();

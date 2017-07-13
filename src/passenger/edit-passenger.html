@@ -7,23 +7,25 @@
     <panel title="Passenger Detail">
         <div slot.name="body" data.load="getPassenger()">
             <form role="form">
-                <span ref.name="alert">
-                    <entry type="hidden" name="bookingId" value.bind="@bookingId"></entry>
-                    <entry type="hidden" name="id" value.bind="data.id"></entry>
-                    <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName" alert.bind="@alert"></entry>
-                    <entry type="text" prompt="Middle Name" name="middleName" value.bind="data.middleName" alert.bind="@alert"></entry>
-                    <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName" alert.bind="@alert"></entry>
-                    <entry type="text" prompt="Birth Place" name="birthPlace" value.bind="data.birthPlace" alert.bind="@alert"></entry>
-                    <entry type="date" prompt="Birthday" name="birthday" value.bind = "(data.birthday ? data.birthday : (new Date())).toYYYYMMDD()" max.bind="(new Date()).toYYYYMMDD()" alert.bind="@alert"></entry>
-                    <entry type="text" prompt="Passport Number" name="passportNumber" value.bind="data.passportNumber" alert.bind="@alert"></entry>
-                    <entry type="date" prompt="Passport Issue Date" name="passportIssueDate" value.bind = "@passport.defaultStartDate(data.passportIssueDate)" min.bind="@passport.minStartDate()" max.bind="@passport.maxStartDate()" focusout.trigger="@passport.onStartDateFocusOut('passportExpiryDate')" alert.bind="@alert"></entry>
-                    <span ref.name="passportExpiryDate">
-                        <entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate" value.bind = "@passport.defaultEndDate(data.passportExpiryDate)" min.bind="@passport.minEndDate()" max.bind="@passport.maxEndDate()" alert.bind="@alert"></entry>
+                <div class="row">
+                    <span ref.name="alert">
+                        <entry type="hidden" name="bookingId" value.bind="@bookingId"></entry>
+                        <entry type="hidden" name="id" value.bind="data.id"></entry>
+                        <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Middle Name" name="middleName" value.bind="data.middleName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Birth Place" name="birthPlace" value.bind="data.birthPlace" alert.bind="@alert"></entry>
+                        <entry type="date" prompt="Birthday" name="birthday" value.bind = "(data.birthday ? data.birthday : (new Date())).toYYYYMMDD()" max.bind="(new Date()).toYYYYMMDD()" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Passport Number" name="passportNumber" value.bind="data.passportNumber" alert.bind="@alert"></entry>
+                        <entry type="date" prompt="Passport Issue Date" name="passportIssueDate" value.bind = "@passport.defaultStartDate(data.passportIssueDate)" min.bind="@passport.minStartDate()" max.bind="@passport.maxStartDate()" focusout.trigger="@passport.onStartDateFocusOut('passportExpiryDate')" alert.bind="@alert"></entry>
+                        <span ref.name="passportExpiryDate">
+                            <entry type="date" prompt="Passport Expiry Date" name="passportExpiryDate" value.bind = "@passport.defaultEndDate(data.passportExpiryDate)" min.bind="@passport.minEndDate()" max.bind="@passport.maxEndDate()" alert.bind="@alert"></entry>
+                        </span>
+                        <entry type="text" prompt="Passport Issuer" name="passportIssuer" value.bind="data.passportIssuer" alert.bind="@alert"></entry>
+                        <entry type="button" name="btnRegister" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" value.bind="@id ? 'Save' : 'Register'" click.trigger="registerPassenger()"></entry>
+                        <entry type="button" name="btnRegister" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" value="Cancel" click.trigger="onCancel()"></entry>
                     </span>
-                    <entry type="text" prompt="Passport Issuer" name="passportIssuer" value.bind="data.passportIssuer" alert.bind="@alert"></entry>
-                    <entry type="button" name="btnRegister" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" value.bind="@id ? 'Save' : 'Register'" click.trigger="registerPassenger()"></entry>
-                    <entry type="button" name="btnRegister" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" value="Cancel" click.trigger="onCancel()"></entry>
-                </span>
+                </div>
             </form>
         </div>
         <div slot.name="footer">

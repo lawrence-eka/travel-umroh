@@ -1,6 +1,6 @@
 /*jshint loopfunc:true */
 var qr = {
-    "bookingId":1
+    "bookingId":this.id
 };
 
 dpd.passengers.get(qr, function(res, err){

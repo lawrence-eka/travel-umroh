@@ -40,7 +40,7 @@ Date.prototype.toYYYYMMDD = function(withHHMM) {
 	return y + "-" + m + "-" + d + (withHHMM ? 'T' + h + ':' + mi : '');
 },
 
-Date.prototype.toTimeComponents = function(asComponents) {
+Date.prototype.toTimeComponents = function(asComponents, withSSms) {
     if(!this|| ((typeof this.getMonth) !== 'function') || (isNaN(this.getTime())))
     {
         if(asComponents) return undefined;
@@ -50,23 +50,34 @@ Date.prototype.toTimeComponents = function(asComponents) {
     var h = this.getHours();
     var m = this.getMinutes();
 
+    var s = this.getSeconds();
+    var ms = this.getMilliseconds();
+
     if(asComponents)
     {
         var result = {};
 		result["hour"] = h;
 		result["minutes"] = m;
 
+		if(withSSms) {
+			result["seconds"] = s;
+			result["milliseconds"] = ms;
+		}
+
         return result;
     }
     else {
         h = (h < 10 ? '0' : '') + h.toString();
         m = (m < 10 ? '0' : '') + m.toString();
-        return h + ":" + m;
+		s = (s < 10 ? '0' : '') + s.toString();
+		ms = (ms < 10 ? '00' : ms < 100 ? '0' : '') + ms.toString();
+
+        return h + ":" + m + (withSSms ? ':' + s + '.' + ms : '');
     }
 
 }
 
-Date.prototype.toDateComponents = function(asComponents, withHHMM)
+Date.prototype.toDateComponents = function(asComponents, withHHMM, withSSms)
 {
 	if(!this|| ((typeof this.getMonth) !== 'function') || (isNaN(this.getTime())))
 	{
@@ -78,7 +89,7 @@ Date.prototype.toDateComponents = function(asComponents, withHHMM)
 	var mo = "JanFebMarAprMayJunJulAugSepOctNovDec".substr(this.getMonth() * 3, 3);
 	var yr = this.getFullYear();
 
-    if(withHHMM) var time = this.toTimeComponents(asComponents);
+    if(withHHMM || withSSms) var time = this.toTimeComponents(asComponents, withSSms);
 
 	if(asComponents)
 	{
@@ -91,6 +102,10 @@ Date.prototype.toDateComponents = function(asComponents, withHHMM)
 		{
 			result["hour"] = time["hour"];
 			result["minutes"] = time["minutes"];
+			if(withSSms) {
+				result["seconds"] = time["seconds"];
+				result["milliseconds"] = time["milliseconds"];
+			}
 		}
 		return result;
 	}
@@ -135,12 +150,12 @@ Date.prototype.addHours = function(numOfHours) {
 	return new Date(newThis.setHours(newThis.getHours() + parseInt(numOfHours)));
 }
 
-Number.prototype.toDateComponents = function(asComponents, withHHMM) {
-    return (new Date(this)).toDateComponents(asComponents, withHHMM);
+Number.prototype.toDateComponents = function(asComponents, withHHMM, withSSms) {
+    return (new Date(this)).toDateComponents(asComponents, withHHMM, withSSms);
 }
 
-Number.prototype.toTimeComponents = function(asComponents) {
-    return (new Date(this)).toTimeComponents(asComponents);
+Number.prototype.toTimeComponents = function(asComponents, withSSms) {
+    return (new Date(this)).toTimeComponents(asComponents, withSSms);
 }
 
 Number.prototype.toStringDateRange = function(endDate)

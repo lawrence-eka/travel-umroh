@@ -69,7 +69,6 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
     $patchChanges('panelParam');
   }
 
-
   function $render(_props, _slotView) {
     _context["search"] = $inject("/search-package/search-panel");
     var search = _context["search"];

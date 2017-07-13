@@ -41,7 +41,7 @@
                 </div>
                 <div ref.name="docsTravelAgent">
                     <div class="row" if.bind="@showDocsTravelAgent">
-                        <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsTravelAgent" alert.bind="@alert"></attachments>
+                        <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" folder="upload/docstravelagent" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsTravelAgent" alert.bind="@alert" maxFile="3" maxSize="100k"></attachments>
                     </div>
                 </div>
                 <div class="row" ref.name="alert">
@@ -198,7 +198,7 @@
     }
 
     function afterSaveAttachments(result){
-    	debugger;
+    	//debugger;
     	if(result) {
 		    this.state.infoText = "";
 		    $patchChanges("info");

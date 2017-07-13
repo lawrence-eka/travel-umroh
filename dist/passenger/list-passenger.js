@@ -34,7 +34,6 @@ yalla.framework.addComponent("/dist/passenger/list-passenger", (function() {
     //debugger;
     return {
       booking: props.booking,
-      bookingStatus: props.bookingStatus,
       alert: new Alert(),
     }
   }
@@ -52,13 +51,13 @@ yalla.framework.addComponent("/dist/passenger/list-passenger", (function() {
       dpd.passengers.get({
         "bookingId": booking.id
       }, function(passengers, err) {
-        //debugger;
+        debugger;
         self.state.alert.alert(err);
         if (!err) {
           booking.numberOfPassengers = passengers.length;
           booking.totalPrice = booking.numberOfPassengers * (booking.costTickets + booking.costLandArrangements);
           dpd.bookings.put(booking.id, booking, function(res, err) {
-            //debugger;
+            debugger;
             self.state.alert.alert(err);
             if (!err) resolve(passengers);
           });
@@ -125,7 +124,7 @@ yalla.framework.addComponent("/dist/passenger/list-passenger", (function() {
           _elementOpenEnd("span");
           var _params = {
             "passenger": psg,
-            "bookingStatus": _state.bookingStatus,
+            "booking": _state.booking,
             "onedit": function(event) {
               var self = {
                 target: event.target

@@ -1,13 +1,21 @@
 {
 	"type": "Collection",
 	"properties": {
+		"bookingNo": {
+			"name": "bookingNo",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "bookingNo",
+			"order": 0
+		},
 		"userId": {
 			"name": "userId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
 			"id": "userId",
-			"order": 0
+			"order": 1
 		},
 		"packageId": {
 			"name": "packageId",
@@ -15,7 +23,7 @@
 			"typeLabel": "string",
 			"required": true,
 			"id": "packageId",
-			"order": 1
+			"order": 2
 		},
 		"numberOfPassengers": {
 			"name": "numberOfPassengers",
@@ -23,7 +31,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "numberOfPassengers",
-			"order": 2
+			"order": 3
 		},
 		"costLandArrangements": {
 			"name": "costLandArrangements",
@@ -31,7 +39,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "costLandArrangements",
-			"order": 3
+			"order": 4
 		},
 		"costTickets": {
 			"name": "costTickets",
@@ -39,7 +47,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "costTickets",
-			"order": 4
+			"order": 5
 		},
 		"bookingStatus": {
 			"name": "bookingStatus",
@@ -47,7 +55,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "bookingStatus",
-			"order": 5
+			"order": 6
 		},
 		"createdOn": {
 			"name": "createdOn",
@@ -55,7 +63,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "createdOn",
-			"order": 6
+			"order": 7
 		},
 		"lastUpdatedOn": {
 			"name": "lastUpdatedOn",
@@ -63,7 +71,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "lastUpdatedOn",
-			"order": 7
+			"order": 8
 		},
 		"uniqueCode": {
 			"name": "uniqueCode",
@@ -71,7 +79,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "uniqueCode",
-			"order": 8
+			"order": 9
 		},
 		"totalPrice": {
 			"name": "totalPrice",
@@ -79,7 +87,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "totalPrice",
-			"order": 9
+			"order": 10
 		},
 		"totalPayment": {
 			"name": "totalPayment",
@@ -87,7 +95,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "totalPayment",
-			"order": 10
+			"order": 11
 		},
 		"waitingForPaymentUntil": {
 			"name": "waitingForPaymentUntil",
@@ -95,7 +103,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "waitingForPaymentUntil",
-			"order": 11
+			"order": 12
 		},
 		"fromBank": {
 			"name": "fromBank",
@@ -103,7 +111,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "fromBank",
-			"order": 12
+			"order": 13
 		},
 		"fromBankBranch": {
 			"name": "fromBankBranch",
@@ -111,7 +119,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "fromBankBranch",
-			"order": 13
+			"order": 14
 		},
 		"fromAccountNumber": {
 			"name": "fromAccountNumber",
@@ -119,7 +127,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "fromAccountNumber",
-			"order": 14
+			"order": 15
 		},
 		"fromAccountHolder": {
 			"name": "fromAccountHolder",
@@ -127,7 +135,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "fromAccountHolder",
-			"order": 15
+			"order": 16
 		},
 		"actualPayment": {
 			"name": "actualPayment",
@@ -135,7 +143,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "actualPayment",
-			"order": 16
+			"order": 17
 		},
 		"paymentDate": {
 			"name": "paymentDate",
@@ -143,7 +151,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "paymentDate",
-			"order": 17
+			"order": 18
 		},
 		"isCancelled": {
 			"name": "isCancelled",
@@ -151,7 +159,7 @@
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isCancelled",
-			"order": 18
+			"order": 19
 		},
 		"isPaymentConfirmed": {
 			"name": "isPaymentConfirmed",
@@ -159,7 +167,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "isPaymentConfirmed",
-			"order": 19
+			"order": 20
 		}
 	}
 }

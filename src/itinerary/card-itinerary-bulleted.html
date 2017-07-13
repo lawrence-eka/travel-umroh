@@ -6,7 +6,7 @@
         position: relative;
     }
     .leftLine{
-        width: 50px;
+        width: 30px;
         float: left;
         position: absolute;
         top:0;
@@ -14,7 +14,7 @@
     }
 
     .content{
-        margin-left:50px;
+        margin-left:30px;
         display: block;
         padding-top:5px;
         /*
@@ -37,7 +37,7 @@
         position: absolute;
         top:30px;
         bottom: 0px;
-        left: 25px;
+        left: 14px;
     }
 
     .leftLineContainer{
@@ -68,14 +68,14 @@
     </div>
     <div class="content">
         <div if.bind="$itr.entry.transport">
-            <h3>{{$itr.entry.departure.toDateComponents(false)}}</h3>
+            <strong>{{$itr.entry.departure.toDateComponents(false)}}</strong>
             <h5>Dep:{{nbsp}}<label>{{$itr.entry.departure.toTimeComponents()}}</label>{{nbsp}}/ Arr:{{nbsp}}<label>{{$itr.entry.arrival.toTimeComponents() + ($itr.entry.departure.toDayOffset($itr.entry.arrival) ? ' ' + $itr.entry.departure.toDayOffset($itr.entry.arrival) : '')}}</label></h5>
             {{$itr.entry.transportType}}:{{nbsp}}{{$itr.entry.transport}} <br/>
             From:{{nbsp}}{{$itr.entry.departFrom}} <br/>
             To:{{nbsp}}{{$itr.entry.arriveAt}} <br/>
         </div>
         <div if.bind="$itr.entry.hotel">
-            <h3>{{$itr.entry.checkIn.toDateComponents(false)}}</h3>
+            <strong>{{$itr.entry.checkIn.toDateComponents(false)}}</strong>
             <h5>Check out:{{nbsp}}<label>{{$itr.entry.checkOut.toDateComponents()}}</label></h5>
             Hotel:{{nbsp}}{{$itr.entry.hotel}} <br/>
             City:{{nbsp}}{{$itr.entry.city}} <br/>

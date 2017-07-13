@@ -31,9 +31,11 @@ yalla.framework.addComponent("/dist/passenger/card-passenger", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
+    debugger;
     return {
       passenger: props.passenger,
-      bookingUtils: new Utils().booking,
+      //flow: new Utils().flow.booking,
+      booking: props.booking,
     }
   }
   /*
@@ -41,6 +43,10 @@ yalla.framework.addComponent("/dist/passenger/card-passenger", (function() {
       	if(props.passenger) this.state.passenger = props.passenger.newValue;
       }
   */
+  function formatDate(data) {
+    return data.toDateComponents();
+  }
+
   function onEdit() {
     this.emitEvent('edit', this.state.passenger.id);
   }
@@ -78,22 +84,29 @@ yalla.framework.addComponent("/dist/passenger/card-passenger", (function() {
     _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
+        _attr("class", "row");
         _elementOpenEnd("div");
-        _text("First Name: " + (_props.passenger.firstName) + "; Middle Name: " + (_props.passenger.middleName) + "; Last Name: " + (_props.passenger.lastName) + ";");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Birth Place: " + (_props.passenger.birthPlace) + "; Birth Date: " + ((_props.passenger.birthday).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Passport No: " + (_props.passenger.passportNumber) + "; Expiry Date: " + ((_props.passenger.passportExpiryDate).toDateComponents()) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        if (_props.bookingStatus.code == _state.bookingUtils.definingPassengers) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
+        var _params = {
+          "type": "label",
+          "prompt": 'Name: ' + _props.passenger.firstName + ' ' + _props.passenger.middleName + ' ' + _props.passenger.lastName,
+          "innerDivClass": "custom-entry-prompt"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": 'Birth: ' + _props.passenger.birthPlace + ', ' + formatDate.bind(self)(_props.passenger.birthday),
+          "innerDivClass": "custom-entry-prompt"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": 'Passport No: ' + _props.passenger.passportNumber + ', valid until: ' + formatDate.bind(self)(_props.passenger.passportExpiryDate),
+          "innerDivClass": "custom-entry-prompt"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        if (_state.booking.bookingStatus == 'DPS') {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
           var _params = {
             "type": "button",
             "value": "Edit",
@@ -146,7 +159,7 @@ yalla.framework.addComponent("/dist/passenger/card-passenger", (function() {
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          _elementClose("div");
+          _elementClose("span");
         }
         _elementClose("div");
       }

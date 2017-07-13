@@ -39,6 +39,7 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
   function loadPayments() {
     var self = this;
     return new Promise(function(resolve) {
+      debugger;
       var q = {
         travelAgentContactPersonId: storage.me.read().id,
         isCancelled: false,
@@ -54,6 +55,7 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
         ],
       };
       dpd.bookings.get(q, function(bookings, err) {
+        debugger;
         self.state.alert.alert(err);
         if (!err) {
           resolve(bookings);
@@ -82,6 +84,8 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
     var entry = _context["entry"];
     _context["alert"] = $inject("/component/alert");
     var alert = _context["alert"];
+    _context["attachments"] = $inject("/component/attachments/home");
+    var attachments = _context["attachments"];
     _elementOpenStart("div", "");
     _attr("element", "dist.booking.paymentConfirmation");
     _elementOpenEnd("div");
@@ -175,6 +179,14 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
               _elementOpenStart("div", "");
               _attr("class", "row");
               _elementOpenEnd("div");
+              var _params = {
+                "readonly": "readonly",
+                "userId": data.userId,
+                "prompt": "Payment Slip",
+                "collection": "docspaymentslip",
+                "folder": "upload/docspaymentslip/"
+              };
+              _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               var _params = {
                 "type": "button",
                 "name": "btnConfirm",

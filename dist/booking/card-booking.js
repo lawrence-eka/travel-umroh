@@ -32,11 +32,10 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
 
 
   function initState(props) {
-    //debugger;
+    debugger;
     return {
       booking: props.booking,
-      bookingUtils: (new Utils()).bookings,
-      status: (new Utils()).bookings.status(props.booking),
+      flow: (new Utils()).flow.booking,
       showOnly: props.showOnly,
       alert: new Alert(null, $patchChanges, "alert"),
     }
@@ -59,13 +58,14 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
   }
 
   function calculatePaymentDetail() {
-    //debugger;
+    debugger;
     var booking = this.state.booking;
     var self = this;
     if (!booking.uniqueCode) {
       booking.uniqueCode = Math.floor(Math.random() * 1000);
       booking.totalPrice = booking.costLandArrangements + booking.costTickets + booking.uniqueCode;
       booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
+      booking.bookingStatus = 'WFP';
       dpd.bookings.put(booking, function(bkg, err) {
         //debugger;
         self.state.alert.alert(err);
@@ -91,16 +91,18 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
     var self = this;
     return new Promise(function(resolve) {
       //debugger;
-      if (self.state.status.code == 0) {
+      if (self.state.booking.bookingStatus == 'DPS') {
         dpd.bookings.del(self.state.booking.id, function(err) {
-          //debugger;
+          debugger;
           self.state.alert.alert(null);
           self.emitEvent("cancelled");
           resolve(null);
         });
       } else {
         self.state.booking.isCancelled = true;
+        self.state.booking.bookingStatus = 'CCL';
         dpd.bookings.put(self.state.booking.id, self.state.booking, function(res, err) {
+          debugger;
           self.state.alert.alert(err);
           if (!err) {
             self.emitEvent("cancelled");
@@ -157,12 +159,19 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
         };
         onClick.bind(self)();
       },
-      "title": 'Package: ' + _state.booking.package.packageName
+      "title": _state.booking.package.packageName
     };
     _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
+        _elementOpenStart("strong", "");
+        _elementOpenEnd("strong");
+        _text("Booking No: " + (_state.booking.bookingNo) + "");
+        _elementClose("strong");
+        _elementOpenStart("br", "");
+        _elementOpenEnd("br");
+        _elementClose("br");
         _text("Travel Date: " + ((_state.booking.package.travelDateFrom).toStringDateRange(_state.booking.package.travelDateUntil)) + "");
         _elementOpenStart("br", "");
         _elementOpenEnd("br");
@@ -208,8 +217,7 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
           var _params = {
             "type": "button",
             "name": "btnSave",
-            "value": _state.status.code == _state.bookingUtils.definingPassengers ? 'Save for Later' : 'Close',
-            "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+            "value": "Save & Close",
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -232,12 +240,11 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          if (_state.status.code == _state.bookingUtils.definingPassengers || _state.status.code == _state.bookingUtils.waitingForPayment) {
+          if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'CCL')) {
             var _params = {
               "type": "button",
               "name": "btnCancel",
               "value": "Cancel Booking",
-              "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
               "onclick": function(event) {
                 var self = {
                   target: event.target
@@ -287,32 +294,34 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          var _params = {
-            "type": "button",
-            "name": "btnPaymentDetail",
-            "value": (_state.status.code == _state.bookingUtils.definingPassengers ? 'Next Step: ' : '') + 'Payment Detail',
-            "onclick": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = _component;
-              self.component._state = self.component._state || {};
-              self.state = self.component._state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
+          if (_state.booking.numberOfPassengers > 0) {
+            var _params = {
+              "type": "button",
+              "name": "btnPaymentDetail",
+              "value": (_state.booking.bookingStatus == 'DPS' ? 'Next Step: ' : '') + 'Payment Detail',
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
                 }
-              };
-              calculatePaymentDetail.bind(self)();
-            }
-          };
-          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                calculatePaymentDetail.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          }
           _elementClose("div");
           _elementClose("div");
         }
@@ -323,7 +332,7 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
         _elementOpenEnd("div");
         _elementOpenStart("strong", "");
         _elementOpenEnd("strong");
-        _text("Status: " + (_state.status.text) + "");
+        _text("Status: " + (_state.flow.status(_state.booking.bookingStatus)) + "");
         _elementClose("strong");
         _elementClose("div");
       }

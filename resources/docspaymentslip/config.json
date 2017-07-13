@@ -1,6 +1,6 @@
 {
 	"type": "Fileupload",
-	"directory": "",
+	"directory": "upload/docspaymentslip",
 	"authorization": true,
 	"uniqueFilename": true
 }

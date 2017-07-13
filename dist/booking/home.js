@@ -31,25 +31,29 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    //debugger;
     return {
       alert: new Alert(null, $patchChanges, "alert"),
-      editedBooking: props.booking,
+      editedBooking: null,
       passengerId: null,
+      bookingId: props.bookingId,
+      flow: (new Utils).flow.booking,
     }
   }
-  /*
-  	function onPropertyChange(props){
-  		debugger;
-  		if(props.editedBooking) this.state.editedBooking = props.editedBooking.newValue;
-  	}
-  */
+
+  function onPropertyChange(props) {
+    debugger;
+    if (props.editedBooking) this.state.editedBooking = props.editedBooking.newValue;
+    if (props.bookingId) this.state.editedBooking = props.bookingId.newValue;
+  }
+
   function loadBooking(id) {
     var self = this;
     return new Promise(function(resolve) {
-      //debugger;
-      if (!id) resolve(null);
-      else {
+      debugger;
+      if (!id) {
+        //self.state.editedBooking = null;
+        resolve(self.state.editedBooking);
+      } else {
         dpd.bookings.get(id, function(bkg, err) {
           //debugger;
           self.state.alert.alert(err);
@@ -61,16 +65,20 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   }
 
   function onEditBooking(event) {
+    debugger;
     this.state.editedBooking = event.data;
     $patchChanges();
   }
 
   function onBookingSaved() {
+    this.state.bookingId = null;
     this.state.editedBooking = null;
     $patchChanges();
   }
 
   function onBookingCancelled() {
+    debugger;
+    this.state.bookingId = null;
     this.state.editedBooking = null;
     $patchChanges();
   }
@@ -209,7 +217,7 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
           _elementClose("div");
         }
       }
-      var promise = loadBooking.bind(self)(_props.bookingId);
+      var promise = loadBooking.bind(self)(_state.bookingId);
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {

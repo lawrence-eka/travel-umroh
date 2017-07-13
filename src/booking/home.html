@@ -5,7 +5,7 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
 
-<div data.load="loadBooking($bookingId)">
+<div data.load="loadBooking(@bookingId)">
 	<span ref.name="alert">
 		<alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
 	</span>
@@ -28,24 +28,29 @@
 
 <script>
 	function initState(props) {
-		//debugger;
 		return {
 			alert: new Alert(null, $patchChanges, "alert"),
-			editedBooking: props.booking,
+			editedBooking: null,
 			passengerId: null,
+			bookingId:props.bookingId,
+			flow: (new Utils).flow.booking,
 		}
 	}
-/*
+
 	function onPropertyChange(props){
 		debugger;
 		if(props.editedBooking) this.state.editedBooking = props.editedBooking.newValue;
+		if(props.bookingId) this.state.editedBooking = props.bookingId.newValue;
 	}
-*/
+
 	function loadBooking(id) {
 		var self = this;
 		return new Promise(function(resolve){
-			//debugger;
-			if(!id) resolve(null);
+			debugger;
+			if(!id) {
+				//self.state.editedBooking = null;
+				resolve(self.state.editedBooking);
+			}
 			else {
 				dpd.bookings.get(id, function(bkg, err){
 					//debugger;
@@ -58,15 +63,19 @@
 	}
 
 	function onEditBooking(event){
+		debugger;
 		this.state.editedBooking = event.data;
 		$patchChanges();
 	}
 	function onBookingSaved() {
+		this.state.bookingId = null;
 		this.state.editedBooking = null;
 		$patchChanges();
 	}
 
 	function onBookingCancelled() {
+		debugger;
+		this.state.bookingId = null;
 		this.state.editedBooking = null;
 		$patchChanges();
 	}

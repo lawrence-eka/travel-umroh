@@ -10,7 +10,7 @@
     <div data.load="getPaymentDetails($bookingId)" >
         <card-booking booking.bind="@booking" showOnly></card-booking>
         <span ref.name="payment">
-            <card title="Actual Payment" nofooter if.bind="!@inputActualPayment && (@bu.status(data).code > @bu.paymentConfirmationPending || @bu.status(data).code == @bu.paymentRejected)">
+            <card title="Actual Payment" nofooter if.bind="@gotActualPayment">
                 <div slot.name="body">
                     From Bank: {{(@booking.fromBank)}}<br/>
                     Branch: {{@booking.fromBankBranch}}<br/>
@@ -19,21 +19,23 @@
                     Amount: {{@booking.actualPayment ? @booking.actualPayment.toFormattedString() : ''}}<br/>
                     Transfer Date: {{@booking.paymentDate ? @booking.paymentDate.toDateComponents(false, true) : ''}}
                     <div class="row">
-                        <entry type="button" name="btnCancel" if.bind="@bu.status(data).code == @bu.paymentConfirmationPending || @bu.status(data).code == @bu.paymentRejected" value="Cancel/Delete Payment" click.trigger="deleteActualPayment()"></entry>
+                        <entry type="button" name="btnCancel" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'DPS')" value="Cancel/Delete Payment" click.trigger="deleteActualPayment()"></entry>
                     </div>
                 </div>
             </card>
 
-            <card title="Payment Info" footer.bind="whatRemarks()" if.bind="!@inputActualPayment">
+            <card title="Payment Info" footer.bind="whatRemarks()" >
                 <div slot.name="body">
                     Total: {{@booking.totalPrice ? @booking.totalPrice.toFormattedString() : ''}}<br/>
                     Bank: Bank Central Asia<br/>
                     Branch: Sidoarjo<br/>
                     Account No:1234567890<br/>
                     Name: PT Pete Tbk.<br/>
+<!--
                     <div class="row">
-                        <entry type="button" name="btnPaymentConfirmation" value="Input Actual Payment" if.bind="@bu.status(data).code == @bu.definingPassengers" click.trigger="showActualPayment()"></entry>
+                        <entry type="button" if.bind="@booking.bookingStatus=='WFP'" name="btnPaymentConfirmation" value="Input Actual Payment" click.trigger="showActualPayment()"></entry>
                     </div>
+-->
                 </div>
             </card>
 
@@ -41,25 +43,23 @@
                 <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
             </span>
 
-            <card title="Payment Confirmation" if.bind="@inputActualPayment">
+            <card title="Actual Payment" if.bind="!@gotActualPayment">
                 <div slot.name="footer">
                     <ppLink></ppLink>
                 </div>
                 <div slot.name="body">
                     <form>
-                        <entry type="text" prompt="Bank Name" name="fromBank"></entry>
-                        <entry type="text" prompt="Bank Branch" name="fromBankBranch"></entry>
-                        <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
-                        <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
-                        <entry type="number" prompt="Amount Transfered" name="actualPayment" min.bind="@booking.totalPrice" alert.bind="@alert"></entry>
-                        <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate" value.bind="(new Date()).toYYYYMMDD(true)" max.bind="(new Date()).toYYYYMMDD(true)"></entry>
-                        <div ref.name="docsPaymentSlip">
-                            <div class="row">
-                                <attachments userId.bind="data.id" prompt="Payment Slip" collection="docspaymentslip" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsPaymentSlip" alert.bind="@alert"></attachments>
-                            </div>
+                        <div class="row">
+                            <entry type="text" prompt="Bank Name" name="fromBank"></entry>
+                            <entry type="text" prompt="Bank Branch" name="fromBankBranch"></entry>
+                            <entry type="text" prompt="Account Number" name="fromAccountNumber"></entry>
+                            <entry type="text" prompt="Account Holder" name="fromAccountHolder"></entry>
+                            <entry type="number" prompt="Amount Transfered" name="actualPayment" min.bind="@booking.totalPrice" alert.bind="@alert"></entry>
+                            <entry type="datetime-local" prompt="Transfer Date & Time" name="paymentDate" value.bind="(new Date()).toYYYYMMDD(true)" max.bind="(new Date()).toYYYYMMDD(true)"></entry>
+                            <div ref.name="docsPaymentSlip">
+                            <attachments userId.bind="data.userId" prompt="Payment Slip" collection="docspaymentslip" folder="upload/docspaymentslip/" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsPaymentSlip" alert.bind="@alert" readonly.bind="@booking.bookingStatus != 'WFP'"></attachments>
+                            <entry type="button" name="btnSave" if.bind="@booking.bookingStatus == 'WFP'" value="Save" click.trigger="saveActualPayment()"></entry>
                         </div>
-                        <entry type="button" name="btnSave" if.bind="!@booking.actualPayment" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="saveActualPayment()"></entry>
-                        <entry type="button" name="btnCancel" value.bind="!@booking.actualPayment ? 'Cancel' : 'Close'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="cancelActualPayment()"></entry>
                     </form>
                 </div>
             </card>
@@ -68,12 +68,13 @@
 </div>
 <script>
     function initState(props){
-    	//debugger;
+    	debugger;
     	return {
     		alert : new Alert(null, $patchChanges, "payment"),
             booking:null,
-            bu: (new Utils()).bookings,
-            inputActualPayment:false,
+            flow: (new Utils()).flow.booking,
+            gotActualPayment:false,
+		    onSave: new Event(),
 //            bookingUtils: (new Utils()).bookings,
         }
     }
@@ -107,20 +108,10 @@
 	    dpd.bookings.put(booking.id, booking, function(bkg, err) {
 		    debugger;
 		    self.state.alert.alert(err);
-		    if(!err) {self.state.inputActualPayment = false;}
+		    if(!err) {self.state.gotActualPayment = false;}
 		    $patchChanges();
 	    });
 
-    }
-
-    function showActualPayment(){
-    	this.state.inputActualPayment=true;
-    	$patchChanges("payment");
-    }
-
-    function cancelActualPayment() {
-	    this.state.inputActualPayment=false;
-	    $patchChanges("payment");
     }
 
     function saveActualPayment() {
@@ -140,15 +131,28 @@
     	booking.actualPayment = form.elements.actualPayment.value;
     	booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
 	    dpd.bookings.put(booking.id, booking, function(bkg, err) {
-	    	debugger;
+	    	//debugger;
 		    self.state.alert.alert(err);
-		    if(!err) {self.state.inputActualPayment = false;}
-		    $patchChanges();
+		    if(!err) {
+			    self.state.onSave.publish(afterSaveAttachments.bind(self));
+		    }
 	    });
     }
 
+    function afterSaveAttachments(result) {
+	    debugger;
+	    if (result) {
+		    this.state.infoText = "";
+		    //$patchChanges("info");
+		    this.state.alert.alert(result);
+	    } else {
+		    //this.state.gotActualPayment = true;
+		    $patchChanges();
+	    }
+    }
+
 	function getPaymentDetails(bookingId) {
-    	//debugger;
+    	debugger;
     	var self = this;
         return new Promise(function(resolve) {
             dpd.bookings.get(bookingId, function(bkg, err) {

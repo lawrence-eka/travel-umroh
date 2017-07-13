@@ -58,7 +58,7 @@ yalla.framework.addComponent("/dist/component/attachments/entry", (function() {
     if (!this.state.file.originalFilename) return;
     var self = this;
     self.state.deleted = true;
-    self.emitEvent("delete", self.state.file.id);
+    self.emitEvent("delete", self.state.file);
     $patchChanges("local");
   }
 
@@ -72,7 +72,7 @@ yalla.framework.addComponent("/dist/component/attachments/entry", (function() {
     if (!this.state.file.originalFilename) return;
     var self = this;
     self.state.deleted = false;
-    self.emitEvent("undelete", self.state.file.id);
+    self.emitEvent("undelete", self.state.file);
     $patchChanges("local");
   }
 

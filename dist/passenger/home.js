@@ -34,10 +34,10 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
     return {
       bookingId: props.bookingId,
       booking: null,
-      bookingStatus: null,
       editPassengerId: null,
       alert: new Alert(),
       isEditMode: false,
+      //flow: (new Utils).flow.booking,
     }
   }
   /*
@@ -74,13 +74,13 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
 
   function getBookings() {
     var self = this;
+    //debugger;
     return new Promise(function(resolve) {
       dpd.bookings.get(self.state.bookingId, function(bkg, err) {
-        //debugger;
+        debugger;
         self.state.alert.alert(err);
         if (!err) {
           self.state.booking = bkg;
-          self.state.bookingStatus = (new Utils()).bookings.status(bkg);
           resolve(bkg);
         }
       });
@@ -94,7 +94,7 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
   }
 
   function onBackToMyBookings() {
-    window.location.hash = "#app/booking.home";
+    window.location.hash = "#app/booking.home:bookingId=" + this.state.bookingId;
   }
 
 
@@ -142,16 +142,17 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
 
       function asyncFunc_1(data) {
         var _params = {
-          "title": _state.booking.package.packageName,
+          "title": 'Passengers of ' + _state.booking.package.packageName,
           "nofooter": "nofooter"
         };
         _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
           if (slotName === "body") {
             _elementOpenStart("div", "");
+            _attr("class", "row");
             _elementOpenEnd("div");
             var _params = {
               "type": "button",
-              "value": "Go to My Bookings",
+              "value": "Back to My Booking",
               "onclick": function(event) {
                 var self = {
                   target: event.target
@@ -174,7 +175,7 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
               }
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            if (!_state.isEditMode && _state.bookingStatus.code == 0) {
+            if (_state.booking.bookingStatus == 'DPS') {
               var _params = {
                 "type": "button",
                 "value": "Add Passenger...",
@@ -259,7 +260,6 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
           _elementOpenEnd("span");
           var _params = {
             "booking": _state.booking,
-            "bookingStatus": _state.bookingStatus,
             "onedit": function(event) {
               var self = {
                 target: event.target

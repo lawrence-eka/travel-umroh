@@ -48,9 +48,9 @@ yalla.framework.addComponent("/dist/booking/list", (function() {
       var q = {
         "userId": storage.me.read().id
       };
-      //debugger;
+      debugger;
       dpd.bookings.get(q, function(bkg, err) {
-        //debugger;
+        debugger;
         self.state.alert.alert(err);
         if (!err) {
           resolve(bkg);
@@ -134,6 +134,13 @@ yalla.framework.addComponent("/dist/booking/list", (function() {
           _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _elementClose("span");
         });
+        if (!data || !data.length) {
+          var _params = {
+            "alertType": "info",
+            "message": "You don't have any booking"
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        }
       }
       var promise = getBookings.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {

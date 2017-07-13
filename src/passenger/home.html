@@ -5,17 +5,17 @@
 <inject from="/component/panel" name="panel"></inject>
 
 <div data.load="getBookings()">
-    <panel title.bind="@booking.package.packageName" nofooter>
-        <div slot.name="body">
-            <entry type="button" value="Go to My Bookings" click.trigger="onBackToMyBookings()"></entry>
-            <entry type="button" value="Add Passenger..." if.bind="!@isEditMode && @bookingStatus.code == 0" click.trigger="onAddPassenger()"></entry>
+    <panel title.bind="'Passengers of ' + @booking.package.packageName" nofooter>
+        <div class="row" slot.name="body">
+            <entry type="button" value="Back to My Booking" click.trigger="onBackToMyBookings()"></entry>
+            <entry type="button" value="Add Passenger..." if.bind="@booking.bookingStatus == 'DPS'" click.trigger="onAddPassenger()"></entry>
         </div>
     </panel>
     <span if.bind="@isEditMode">
         <edit-passenger id.bind="@editPassengerId" bookingId.bind="@booking.id" cancelled.trigger="onCancelled()" saved.trigger="onSaved()"></edit-passenger>
     </span>
     <span if.bind="!@isEditMode">
-        <list-passenger booking.bind="@booking" bookingStatus.bind="@bookingStatus" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></list-passenger>
+        <list-passenger booking.bind="@booking" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></list-passenger>
     </span>
     <span ref.name="alert">
         <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
@@ -26,10 +26,10 @@
     	return {
     		bookingId: props.bookingId,
             booking: null,
-            bookingStatus:null,
             editPassengerId:null,
             alert: new Alert(),
             isEditMode: false,
+            //flow: (new Utils).flow.booking,
         }
     }
 /*
@@ -65,13 +65,13 @@
     }
     function getBookings(){
 	    var self = this;
+	    //debugger;
 	    return new Promise(function(resolve) {
 		    dpd.bookings.get(self.state.bookingId, function (bkg, err) {
-			    //debugger;
+			    debugger;
 			    self.state.alert.alert(err);
 			    if (!err) {
 			    	self.state.booking = bkg;
-			    	self.state.bookingStatus=(new Utils()).bookings.status(bkg);
 				    resolve(bkg);
 			    }
 		    });
@@ -85,7 +85,7 @@
     }
 
     function onBackToMyBookings() {
-    	window.location.hash="#app/booking.home";
+    	window.location.hash="#app/booking.home:bookingId=" + this.state.bookingId;
     }
 
 </script>

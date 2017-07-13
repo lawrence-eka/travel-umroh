@@ -31,12 +31,13 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    //debugger;
+    debugger;
     return {
       alert: new Alert(null, $patchChanges, "payment"),
       booking: null,
-      bu: (new Utils()).bookings,
-      inputActualPayment: false,
+      flow: (new Utils()).flow.booking,
+      gotActualPayment: false,
+      onSave: new Event(),
       //            bookingUtils: (new Utils()).bookings,
     }
   }
@@ -71,21 +72,11 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
       debugger;
       self.state.alert.alert(err);
       if (!err) {
-        self.state.inputActualPayment = false;
+        self.state.gotActualPayment = false;
       }
       $patchChanges();
     });
 
-  }
-
-  function showActualPayment() {
-    this.state.inputActualPayment = true;
-    $patchChanges("payment");
-  }
-
-  function cancelActualPayment() {
-    this.state.inputActualPayment = false;
-    $patchChanges("payment");
   }
 
   function saveActualPayment() {
@@ -109,17 +100,28 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     booking.actualPayment = form.elements.actualPayment.value;
     booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
     dpd.bookings.put(booking.id, booking, function(bkg, err) {
-      debugger;
+      //debugger;
       self.state.alert.alert(err);
       if (!err) {
-        self.state.inputActualPayment = false;
+        self.state.onSave.publish(afterSaveAttachments.bind(self));
       }
-      $patchChanges();
     });
   }
 
+  function afterSaveAttachments(result) {
+    debugger;
+    if (result) {
+      this.state.infoText = "";
+      //$patchChanges("info");
+      this.state.alert.alert(result);
+    } else {
+      //this.state.gotActualPayment = true;
+      $patchChanges();
+    }
+  }
+
   function getPaymentDetails(bookingId) {
-    //debugger;
+    debugger;
     var self = this;
     return new Promise(function(resolve) {
       dpd.bookings.get(bookingId, function(bkg, err) {
@@ -189,7 +191,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
         _elementOpenStart("span", "");
         _elementOpenEnd("span");
         yalla.framework.registerRef("payment", IncrementalDOM.currentElement(), function() {
-          if (!_state.inputActualPayment && (_state.bu.status(data).code > _state.bu.paymentConfirmationPending || _state.bu.status(data).code == _state.bu.paymentRejected)) {
+          if (_state.gotActualPayment) {
             var _params = {
               "title": "Actual Payment",
               "nofooter": "nofooter"
@@ -222,7 +224,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                 _elementOpenStart("div", "");
                 _attr("class", "row");
                 _elementOpenEnd("div");
-                if (_state.bu.status(data).code == _state.bu.paymentConfirmationPending || _state.bu.status(data).code == _state.bu.paymentRejected) {
+                if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'DPS')) {
                   var _params = {
                     "type": "button",
                     "name": "btnCancel",
@@ -255,71 +257,37 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
               }
             });
           }
-          if (!_state.inputActualPayment) {
-            var _params = {
-              "title": "Payment Info",
-              "footer": whatRemarks.bind(self)()
-            };
-            _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-              if (slotName === "body") {
-                _elementOpenStart("div", "");
-                _elementOpenEnd("div");
-                _text("Total: " + (_state.booking.totalPrice ? _state.booking.totalPrice.toFormattedString() : '') + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Bank: Bank Central Asia");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Branch: Sidoarjo");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Account No:1234567890");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Name: PT Pete Tbk.");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _elementOpenStart("div", "");
-                _attr("class", "row");
-                _elementOpenEnd("div");
-                if (_state.bu.status(data).code == _state.bu.definingPassengers) {
-                  var _params = {
-                    "type": "button",
-                    "name": "btnPaymentConfirmation",
-                    "value": "Input Actual Payment",
-                    "onclick": function(event) {
-                      var self = {
-                        target: event.target
-                      };
-                      self.properties = _props;
-                      if ('elements' in self.target) {
-                        self.elements = self.target.elements;
-                      }
-                      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                      self.component = _component;
-                      self.component._state = self.component._state || {};
-                      self.state = self.component._state;
-                      self.emitEvent = function(eventName, data) {
-                        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                        if ('on' + eventName in _props) {
-                          _props['on' + eventName](event);
-                        }
-                      };
-                      showActualPayment.bind(self)();
-                    }
-                  };
-                  _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                }
-                _elementClose("div");
-                _elementClose("div");
-              }
-            });
-          }
+          var _params = {
+            "title": "Payment Info",
+            "footer": whatRemarks.bind(self)()
+          };
+          _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+            if (slotName === "body") {
+              _elementOpenStart("div", "");
+              _elementOpenEnd("div");
+              _text("Total: " + (_state.booking.totalPrice ? _state.booking.totalPrice.toFormattedString() : '') + "");
+              _elementOpenStart("br", "");
+              _elementOpenEnd("br");
+              _elementClose("br");
+              _text("Bank: Bank Central Asia");
+              _elementOpenStart("br", "");
+              _elementOpenEnd("br");
+              _elementClose("br");
+              _text("Branch: Sidoarjo");
+              _elementOpenStart("br", "");
+              _elementOpenEnd("br");
+              _elementClose("br");
+              _text("Account No:1234567890");
+              _elementOpenStart("br", "");
+              _elementOpenEnd("br");
+              _elementClose("br");
+              _text("Name: PT Pete Tbk.");
+              _elementOpenStart("br", "");
+              _elementOpenEnd("br");
+              _elementClose("br");
+              _elementClose("div");
+            }
+          });
           _elementOpenStart("span", "");
           _elementOpenEnd("span");
           yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
@@ -330,9 +298,9 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
             _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           })()
           _elementClose("span");
-          if (_state.inputActualPayment) {
+          if (!_state.gotActualPayment) {
             var _params = {
-              "title": "Payment Confirmation"
+              "title": "Actual Payment"
             };
             _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
               if (slotName === "footer") {
@@ -347,6 +315,9 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                 _elementOpenEnd("div");
                 _elementOpenStart("form", "");
                 _elementOpenEnd("form");
+                _elementOpenStart("div", "");
+                _attr("class", "row");
+                _elementOpenEnd("div");
                 var _params = {
                   "type": "text",
                   "prompt": "Bank Name",
@@ -390,13 +361,11 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                 _elementOpenStart("div", "");
                 _elementOpenEnd("div");
                 yalla.framework.registerRef("docsPaymentSlip", IncrementalDOM.currentElement(), function() {
-                  _elementOpenStart("div", "");
-                  _attr("class", "row");
-                  _elementOpenEnd("div");
                   var _params = {
-                    "userId": data.id,
+                    "userId": data.userId,
                     "prompt": "Payment Slip",
                     "collection": "docspaymentslip",
+                    "folder": "upload/docspaymentslip/",
                     "onSave": _state.onSave,
                     "onsaved": function(event) {
                       var self = {
@@ -419,68 +388,41 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                       afterSaveAttachments.bind(self)();
                     },
                     "name": "docsPaymentSlip",
-                    "alert": _state.alert
+                    "alert": _state.alert,
+                    "readonly": _state.booking.bookingStatus != 'WFP'
                   };
                   _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                  _elementClose("div");
+                  if (_state.booking.bookingStatus == 'WFP') {
+                    var _params = {
+                      "type": "button",
+                      "name": "btnSave",
+                      "value": "Save",
+                      "onclick": function(event) {
+                        var self = {
+                          target: event.target
+                        };
+                        self.properties = _props;
+                        if ('elements' in self.target) {
+                          self.elements = self.target.elements;
+                        }
+                        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                        self.component = _component;
+                        self.component._state = self.component._state || {};
+                        self.state = self.component._state;
+                        self.emitEvent = function(eventName, data) {
+                          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                          if ('on' + eventName in _props) {
+                            _props['on' + eventName](event);
+                          }
+                        };
+                        saveActualPayment.bind(self)();
+                      }
+                    };
+                    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                  }
                 })()
                 _elementClose("div");
-                if (!_state.booking.actualPayment) {
-                  var _params = {
-                    "type": "button",
-                    "name": "btnSave",
-                    "value": "Save",
-                    "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-                    "onclick": function(event) {
-                      var self = {
-                        target: event.target
-                      };
-                      self.properties = _props;
-                      if ('elements' in self.target) {
-                        self.elements = self.target.elements;
-                      }
-                      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                      self.component = _component;
-                      self.component._state = self.component._state || {};
-                      self.state = self.component._state;
-                      self.emitEvent = function(eventName, data) {
-                        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                        if ('on' + eventName in _props) {
-                          _props['on' + eventName](event);
-                        }
-                      };
-                      saveActualPayment.bind(self)();
-                    }
-                  };
-                  _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                }
-                var _params = {
-                  "type": "button",
-                  "name": "btnCancel",
-                  "value": !_state.booking.actualPayment ? 'Cancel' : 'Close',
-                  "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-                  "onclick": function(event) {
-                    var self = {
-                      target: event.target
-                    };
-                    self.properties = _props;
-                    if ('elements' in self.target) {
-                      self.elements = self.target.elements;
-                    }
-                    self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                    self.component = _component;
-                    self.component._state = self.component._state || {};
-                    self.state = self.component._state;
-                    self.emitEvent = function(eventName, data) {
-                      var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                      if ('on' + eventName in _props) {
-                        _props['on' + eventName](event);
-                      }
-                    };
-                    cancelActualPayment.bind(self)();
-                  }
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                _elementClose("div");
                 _elementClose("form");
                 _elementClose("div");
               }

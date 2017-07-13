@@ -9,6 +9,7 @@
         <meta name="author" content="">
         <link rel="icon" href="asset/favicon.ico">
 
+        <script src="version.js"></script>
         <script src="asset/js/own/storages.js"></script>
         <!-- Bootstrap core CSS -->
     <style>
@@ -28,10 +29,16 @@
     <script>
         function authenticate(path){
             return new Promise(function(resolve){
-                resolve(!storage.me.read()? "#app" : path ? path : "#app/search-package.home");
+	            var specialAddress = [
+		            "#user.login-form",
+		            "#user.forgot-password",
+		            "#user.reset-password",
+	            ];
+            	console.log('Path = ', path);
+                resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
             });
         }
-        scriptCache.setVersion("2017.07.10.59");
+        scriptCache.setVersion(ver ? ver.version : "2017.07.13.21");
         loader.loadAssets(0);
     </script>
 </html>

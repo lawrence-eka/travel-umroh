@@ -3,8 +3,9 @@
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <card click.trigger="onClick()" title.bind="'Package: ' + @booking.package.packageName">
+    <card click.trigger="onClick()" title.bind="@booking.package.packageName">
         <div slot.name="body">
+            <strong>Booking No: {{@booking.bookingNo}}</strong><br/>
             Travel Date: {{(@booking.package.travelDateFrom).toStringDateRange(@booking.package.travelDateUntil)}}<br/>
             Operator: {{@booking.travelAgent.travelAgentName}}<br/>
             Land Arrangements: {{@booking.costLandArrangements ? @booking.costLandArrangements.toFormattedString() : ''}}<br/>
@@ -16,15 +17,15 @@
             Expiry Date: {{(@booking.waitingForPaymentUntil ? @booking.waitingForPaymentUntil.toDateComponents(false, true) : '')}}<br/>
             <div if.bind="!@showOnly">
                 <div class="row">
-                    <entry type="button" name="btnSave" value.bind="@status.code == @bookingUtils.definingPassengers ? 'Save for Later' : 'Close'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSaveBooking()"></entry>
-                    <entry type="button" if.bind="@status.code == @bookingUtils.definingPassengers || @status.code == @bookingUtils.waitingForPayment" name="btnCancel" value="Cancel Booking" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancelBooking()"></entry>
+                    <entry type="button" name="btnSave" value="Save & Close" click.trigger="onSaveBooking()"></entry>
+                    <entry type="button" name="btnCancel" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'CCL')" value="Cancel Booking" click.trigger="onCancelBooking()"></entry>
                     <entry type="button" name="btnPassengers" value="Passengers..." click.trigger="onEditPassenger()"></entry>
-                    <entry type="button" name="btnPaymentDetail" value.bind="(@status.code==@bookingUtils.definingPassengers ? 'Next Step: ' : '') + 'Payment Detail'" click.trigger="calculatePaymentDetail()"></entry>
+                    <entry type="button" name="btnPaymentDetail" if.bind="@booking.numberOfPassengers > 0" value.bind="(@booking.bookingStatus =='DPS' ? 'Next Step: ' : '') + 'Payment Detail'" click.trigger="calculatePaymentDetail()"></entry>
                 </div>
             </div>
         </div>
         <div slot.name="footer">
-            <strong>Status: {{@status.text}}</strong>
+            <strong>Status: {{@flow.status(@booking.bookingStatus)}}</strong>
         </div>
     </card>
     <span ref.name="alert">
@@ -40,11 +41,10 @@
 <script>
 
     function initState(props) {
-    	//debugger;
+    	debugger;
     	return {
     		booking: props.booking,
-            bookingUtils: (new Utils()).bookings,
-            status: (new Utils()).bookings.status(props.booking),
+            flow: (new Utils()).flow.booking,
             showOnly: props.showOnly,
             alert: new Alert(null, $patchChanges, "alert"),
         }
@@ -67,13 +67,14 @@
     }
 
     function calculatePaymentDetail() {
-    	//debugger;
+    	debugger;
     	var booking = this.state.booking;
     	var self = this;
     	if(!booking.uniqueCode) {
 		    booking.uniqueCode = Math.floor(Math.random() * 1000);
 		    booking.totalPrice = booking.costLandArrangements + booking.costTickets + booking.uniqueCode;
             booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
+            booking.bookingStatus = 'WFP';
 		    dpd.bookings.put(booking, function (bkg, err) {
 		    	//debugger;
 			    self.state.alert.alert(err);
@@ -99,17 +100,19 @@
     	var self = this;
 	    return new Promise(function (resolve) {
 	    	//debugger;
-        	if(self.state.status.code == 0) {
+        	if(self.state.booking.bookingStatus == 'DPS') {
 			    dpd.bookings.del(self.state.booking.id, function (err) {
-			    	//debugger;
+			    	debugger;
 				    self.state.alert.alert(null);
                     self.emitEvent("cancelled");
 				    resolve(null);
 			    });
 		    } else {
-        		self.state.booking.isCancelled = true;
+		        self.state.booking.isCancelled = true;
+		        self.state.booking.bookingStatus = 'CCL';
 		        dpd.bookings.put(self.state.booking.id, self.state.booking, function (res, err) {
-			        self.state.alert.alert(err);
+			        debugger;
+		        	self.state.alert.alert(err);
 			        if(!err) {
 				        self.emitEvent("cancelled");
 			        }

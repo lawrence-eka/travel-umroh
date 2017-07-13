@@ -1,6 +1,6 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/package/card-package" name="card-package"></inject>
-<inject from="/itinerary/card-itinerary" name="card-itinerary"></inject>
+
 <inject from="/itinerary/card-itineraryList" name="card-itineraryList"></inject>
 <inject from="/component/entry" name="entry"></inject>
 
@@ -35,10 +35,11 @@
 	        self.state.alert.alert(err);
 	        if(!err) {
 		        var q = {
-			        "userId": me.id,
-			        "packageId": self.state.packageId,
-			        "costTickets": pkg.costTickets,
-			        "costLandArrangements": pkg.costLandArrangements
+			        userId: me.id,
+			        packageId: self.state.packageId,
+			        costTickets: pkg.costTickets,
+			        costLandArrangements: pkg.costLandArrangements,
+                    bookingStatus: 'DPS',
 		        };
 		        dpd.bookings.post(q, function (booking, err) {
 			        self.state.alert.alert(err);

@@ -1,6 +1,7 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/attachments/home" name="attachments"></inject>
 
 <div>
     <div data.load="loadPayments()">
@@ -19,6 +20,7 @@
                     Amount: {{payment.actualPayment.toFormattedString()}}<br/>
                     Transfer Date: {{payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : ''}}
                     <div class="row">
+                        <attachments readonly userId.bind="data.userId" prompt="Payment Slip" collection="docspaymentslip" folder="upload/docspaymentslip/"></attachments>
                         <entry type="button" name="btnConfirm" value="Confirm" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, true)"></entry>
                         <entry type="button" name="btnReject" value="Reject" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, false)"></entry>
                     </div>
@@ -40,6 +42,7 @@
 	function loadPayments() {
 		var self = this;
 		return new Promise(function(resolve) {
+			debugger;
 			var q = {
 				travelAgentContactPersonId: storage.me.read().id,
 				isCancelled: false,
@@ -50,6 +53,7 @@
                 ],
 			};
 			dpd.bookings.get(q, function (bookings, err) {
+				debugger;
 				self.state.alert.alert(err);
 				if (!err) {
 					resolve(bookings);

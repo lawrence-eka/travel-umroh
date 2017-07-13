@@ -35,12 +35,16 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
     if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
     //debugger;
+    var ms = (isNaN(parseInt(props.maxSize)) ? 1000000 : props.maxSize).toString().toLowerCase();
+    ms = parseInt(ms) * (ms.indexOf('g') >= 0 ? 1000000000 : ms.indexOf('m') >= 0 ? 1000000 : ms.indexOf('k') >= 0 ? 1000 : 1);
     return {
       newFiles: [],
       delFiles: [],
+      curFiles: null,
       collection: props.collection,
       userId: props.userId,
-      maxSize: props.maxSize ? props.maxSize : 1000000,
+      maxSize: ms,
+      maxFile: isNaN(parseInt(props.maxFile)) ? 5 : parseInt(props.maxFile),
       name: props.name,
       error: null,
     }
@@ -69,6 +73,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       }
       dpd[self.state.collection].get(q, function(data, statusCode, headers, config) {
         //debugger;
+        self.state.curFiles = data;
         resolve(data);
       });
     });
@@ -84,7 +89,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   }
 
   function onUndelete(event) {
-    debugger;
+    //debugger;
     var i = this.state.delFiles.indexOf(event.data);
     if (i >= 0) this.state.delFiles.splice(i, 1);
   }
@@ -99,7 +104,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
   }
 
   function onCancelAdd(event) {
-    debugger;
+    //debugger;
     var i = this.state.newFiles.indexOf(event.data);
     if (i >= 0) this.state.newFiles.splice(i, 1);
     $patchChanges("newFiles");
@@ -108,10 +113,28 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
 
   function onSaveEvent(fnc) {
     console.log('preparing all promises');
+    //debugger;
     var self = this;
-    debugger;
+    //debugger;
+    if (this._state.curFiles.length + this._state.newFiles.length - this._state.delFiles.length > this._state.maxFile) {
+      fnc({
+        name: self._state.name,
+        message: 'You can upload only ' + this._state.maxFile + ' file' + (this._state.maxFile > 1 ? 's' : '')
+      });
+      return;
+    }
+    for (var i in this._state.newFiles) {
+      //debugger;
+      if (this._state.newFiles[i].size > this._state.maxSize) {
+        fnc({
+          name: this._state.name,
+          message: this._state.newFiles[i].name + " (" + this._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + this._state.maxSize.toGMKByte() + ""
+        });
+        return;
+      }
+    }
     Promise.all(deleteFiles.bind(this)().concat(saveFiles.bind(this)())).then(function() {
-      debugger;
+      //debugger;
       fnc();
     }).catch(function(err) {
       fnc(err);
@@ -125,9 +148,10 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     for (var i in self._state.delFiles) {
       promises.push(
         new Promise(function(resolve, reject) {
-          dpd[self._state.collection].del(self._state.delFiles[i], function(res, err) {
+          //debugger;
+          dpd[self._state.collection].del(self._state.delFiles[i].id, function(res, err) {
             if (err) {
-              debugger;
+              //debugger;
               reject({
                 name: self._state.name,
                 message: err
@@ -151,14 +175,8 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       //debugger;
       if (self._state.newFiles.length > 0) {
         for (var i in self._state.newFiles) {
-          if (self._state.newFiles[i].size > self._state.maxSize) {
-            reject({
-              name: self._state.name,
-              message: self._state.newFiles[i].name + " (" + self._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + self._state.maxSize.toGMKByte() + ""
-            });
-          } else {
-            fd.append("uploadedFile", self._state.newFiles[i])
-          }
+          //debugger;
+          fd.append("uploadedFile", self._state.newFiles[i])
         }
         var xhr = new XMLHttpRequest();
         xhr.open('PUT', '/' + self._state.collection);
@@ -244,7 +262,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
         yalla.framework.registerRef("existingFiles", IncrementalDOM.currentElement(), function() {
           var _params = {
             "list": data,
-            "folder": "upload/",
+            "folder": _props.folder,
             "ondelete": function(event) {
               var self = {
                 target: event.target

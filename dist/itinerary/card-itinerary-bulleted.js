@@ -41,7 +41,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itinerary-bulleted", (functio
   function $render(_props, _slotView) {
     _elementOpenStart("style", "");
     _elementOpenEnd("style");
-    _text("\n[element='dist.itinerary.card-itinerary-bulleted']{/*background-color: #ffffff;*/position: relative;}\n[element='dist.itinerary.card-itinerary-bulleted'] .leftLine{width: 50px;float: left;position: absolute;top:0;bottom: 0;}\n[element='dist.itinerary.card-itinerary-bulleted'] .content{margin-left:50px;display: block;padding-top:5px;/*background: url('/asset/img/image5.jpg') no-repeat center center fixed;*/}\n[element='dist.itinerary.card-itinerary-bulleted'] .circle{border:2px solid #cccccc;border-radius: 100%;width: 30px;height: 30px;margin: auto;text-align: center;}\n[element='dist.itinerary.card-itinerary-bulleted'] .lineVertical{border-left : 2px solid #cccccc;width: 2px;margin: auto;position: absolute;top:30px;bottom: 0px;left: 25px;}\n[element='dist.itinerary.card-itinerary-bulleted'] .leftLineContainer{}\n[element='dist.itinerary.card-itinerary-bulleted'] .icon-center {font-size:1.5rem;color : #666666;margin-top:0.5rem;}\n[element='dist.itinerary.card-itinerary-bulleted'] h3{margin-top:0px;}\n[element='dist.itinerary.card-itinerary-bulleted'] h5{margin-top:0px;margin-bottom:0px;}");
+    _text("\n[element='dist.itinerary.card-itinerary-bulleted']{/*background-color: #ffffff;*/position: relative;}\n[element='dist.itinerary.card-itinerary-bulleted'] .leftLine{width: 30px;float: left;position: absolute;top:0;bottom: 0;}\n[element='dist.itinerary.card-itinerary-bulleted'] .content{margin-left:30px;display: block;padding-top:5px;/*background: url('/asset/img/image5.jpg') no-repeat center center fixed;*/}\n[element='dist.itinerary.card-itinerary-bulleted'] .circle{border:2px solid #cccccc;border-radius: 100%;width: 30px;height: 30px;margin: auto;text-align: center;}\n[element='dist.itinerary.card-itinerary-bulleted'] .lineVertical{border-left : 2px solid #cccccc;width: 2px;margin: auto;position: absolute;top:30px;bottom: 0px;left: 14px;}\n[element='dist.itinerary.card-itinerary-bulleted'] .leftLineContainer{}\n[element='dist.itinerary.card-itinerary-bulleted'] .icon-center {font-size:1.5rem;color : #666666;margin-top:0.5rem;}\n[element='dist.itinerary.card-itinerary-bulleted'] h3{margin-top:0px;}\n[element='dist.itinerary.card-itinerary-bulleted'] h5{margin-top:0px;margin-bottom:0px;}");
     _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.itinerary.card-itinerary-bulleted");
@@ -87,10 +87,10 @@ yalla.framework.addComponent("/dist/itinerary/card-itinerary-bulleted", (functio
     if (_props.itr.entry.transport) {
       _elementOpenStart("div", "");
       _elementOpenEnd("div");
-      _elementOpenStart("h3", "");
-      _elementOpenEnd("h3");
+      _elementOpenStart("strong", "");
+      _elementOpenEnd("strong");
       _text("" + (_props.itr.entry.departure.toDateComponents(false)) + "");
-      _elementClose("h3");
+      _elementClose("strong");
       _elementOpenStart("h5", "");
       _elementOpenEnd("h5");
       _text("Dep:" + (nbsp) + "");
@@ -121,10 +121,10 @@ yalla.framework.addComponent("/dist/itinerary/card-itinerary-bulleted", (functio
     if (_props.itr.entry.hotel) {
       _elementOpenStart("div", "");
       _elementOpenEnd("div");
-      _elementOpenStart("h3", "");
-      _elementOpenEnd("h3");
+      _elementOpenStart("strong", "");
+      _elementOpenEnd("strong");
       _text("" + (_props.itr.entry.checkIn.toDateComponents(false)) + "");
-      _elementClose("h3");
+      _elementClose("strong");
       _elementOpenStart("h5", "");
       _elementOpenEnd("h5");
       _text("Check out:" + (nbsp) + "");

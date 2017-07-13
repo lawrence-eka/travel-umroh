@@ -3,22 +3,29 @@
 
 <div>
     <card title.bind="($passenger.firstName + ' ' + $passenger.lastName).toTitleCase()" nofooter>
-        <div slot.name="body">
-            First Name: {{$passenger.firstName}}; Middle Name: {{$passenger.middleName}}; Last Name: {{$passenger.lastName}};<br/>
-            Birth Place: {{$passenger.birthPlace}}; Birth Date: {{($passenger.birthday).toDateComponents()}}<br/>
+        <div class="row" slot.name="body">
+            <entry type="label" prompt.bind="'Name: ' + $passenger.firstName + ' ' + $passenger.middleName + ' ' + $passenger.lastName" innerDivClass="custom-entry-prompt"></entry>
+            <entry type="label" prompt.bind="'Birth: ' + $passenger.birthPlace + ', ' + formatDate($passenger.birthday)" innerDivClass="custom-entry-prompt"></entry>
+            <entry type="label" prompt.bind="'Passport No: ' + $passenger.passportNumber + ', valid until: ' + formatDate($passenger.passportExpiryDate)" innerDivClass="custom-entry-prompt"></entry>
+<!--
+            Name: {{$passenger.firstName}} {{$passenger.middleName}} {{$passenger.lastName}}<br/>
+            Birth: {{$passenger.birthPlace}}, {{($passenger.birthday).toDateComponents()}}<br/>
             Passport No: {{$passenger.passportNumber}}; Expiry Date: {{($passenger.passportExpiryDate).toDateComponents()}}<br/>
-            <div if.bind="$bookingStatus.code==@bookingUtils.definingPassengers">
+-->
+            <span if.bind="@booking.bookingStatus=='DPS'"  >
                 <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit()"></entry>
                 <entry type="button" value="Delete" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onDelete()"></entry>
-            </div>
+            </span>
         </div>
     </card>
 </div>
 <script>
     function initState(props){
+    	debugger;
     	return {
     		passenger: props.passenger,
-            bookingUtils: new Utils().booking,
+            //flow: new Utils().flow.booking,
+            booking: props.booking,
         }
     }
 /*
@@ -26,6 +33,10 @@
     	if(props.passenger) this.state.passenger = props.passenger.newValue;
     }
 */
+    function formatDate(data) {
+    	return data.toDateComponents();
+    }
+
     function onEdit(){
     	this.emitEvent('edit', this.state.passenger.id);
     }
