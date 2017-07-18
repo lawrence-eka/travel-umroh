@@ -187,18 +187,18 @@ function watch() {
 	var watcher = chokidar.watch(m, chokidarOptions);
 	watcher
 		.on("add", function (path, stats) {
-			actionSet(path, "add", (stats ? stats.mtime : null));
+			actionSet(path, "add", (stats ? stats.mtime : Date.now()));
 		})
 		.on("unlink", function (path, stats) {
-			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now().getTime());
-			actionSet(path, "delete", (stats ? stats.mtime : null));
+			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now());
+			actionSet(path, "delete", (stats ? stats.mtime : Date.now()));
 		})
 		.on("unlinkDir", function (path, stats) {
-			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now().getTime());
-			actionSet(path, "delete", (stats ? stats.mtime : null));
+			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now());
+			actionSet(path, "delete", (stats ? stats.mtime : Date.now()));
 		})
 		.on("change", function (path, stats) {
-			actionSet(path, "change", (stats ? stats.mtime : null));
+			actionSet(path, "change", (stats ? stats.mtime : Date.now()));
 		});
 }
 
