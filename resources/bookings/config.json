@@ -1,141 +1,13 @@
 {
 	"type": "Collection",
 	"properties": {
-		"bookingNo": {
-			"name": "bookingNo",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "bookingNo",
-			"order": 0
-		},
-		"userId": {
-			"name": "userId",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "userId",
-			"order": 1
-		},
-		"packageId": {
-			"name": "packageId",
-			"type": "string",
-			"typeLabel": "string",
-			"required": true,
-			"id": "packageId",
-			"order": 2
-		},
-		"numberOfPassengers": {
-			"name": "numberOfPassengers",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "numberOfPassengers",
-			"order": 3
-		},
-		"costLandArrangements": {
-			"name": "costLandArrangements",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "costLandArrangements",
-			"order": 4
-		},
-		"costTickets": {
-			"name": "costTickets",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "costTickets",
-			"order": 5
-		},
 		"bookingStatus": {
 			"name": "bookingStatus",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
 			"id": "bookingStatus",
-			"order": 6
-		},
-		"createdOn": {
-			"name": "createdOn",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "createdOn",
-			"order": 7
-		},
-		"lastUpdatedOn": {
-			"name": "lastUpdatedOn",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "lastUpdatedOn",
-			"order": 8
-		},
-		"uniqueCode": {
-			"name": "uniqueCode",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "uniqueCode",
-			"order": 9
-		},
-		"totalPrice": {
-			"name": "totalPrice",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "totalPrice",
-			"order": 10
-		},
-		"totalPayment": {
-			"name": "totalPayment",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "totalPayment",
-			"order": 11
-		},
-		"waitingForPaymentUntil": {
-			"name": "waitingForPaymentUntil",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "waitingForPaymentUntil",
-			"order": 12
-		},
-		"fromBank": {
-			"name": "fromBank",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "fromBank",
-			"order": 13
-		},
-		"fromBankBranch": {
-			"name": "fromBankBranch",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "fromBankBranch",
-			"order": 14
-		},
-		"fromAccountNumber": {
-			"name": "fromAccountNumber",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "fromAccountNumber",
-			"order": 15
-		},
-		"fromAccountHolder": {
-			"name": "fromAccountHolder",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "fromAccountHolder",
-			"order": 16
+			"order": 0
 		},
 		"actualPayment": {
 			"name": "actualPayment",
@@ -143,7 +15,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "actualPayment",
-			"order": 17
+			"order": 1
 		},
 		"paymentDate": {
 			"name": "paymentDate",
@@ -151,7 +23,143 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "paymentDate",
+			"order": 2
+		},
+		"bookingNo": {
+			"name": "bookingNo",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "bookingNo",
+			"order": 3
+		},
+		"userId": {
+			"name": "userId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "userId",
+			"order": 4
+		},
+		"packageId": {
+			"name": "packageId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "packageId",
+			"order": 5
+		},
+		"numberOfPassengers": {
+			"name": "numberOfPassengers",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "numberOfPassengers",
+			"order": 6
+		},
+		"costLandArrangements": {
+			"name": "costLandArrangements",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "costLandArrangements",
+			"order": 7
+		},
+		"costTickets": {
+			"name": "costTickets",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "costTickets",
+			"order": 8
+		},
+		"createdOn": {
+			"name": "createdOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "createdOn",
+			"order": 9
+		},
+		"lastUpdatedOn": {
+			"name": "lastUpdatedOn",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "lastUpdatedOn",
+			"order": 10
+		},
+		"uniqueCode": {
+			"name": "uniqueCode",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "uniqueCode",
+			"order": 11
+		},
+		"totalPrice": {
+			"name": "totalPrice",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "totalPrice",
+			"order": 12
+		},
+		"totalPayment": {
+			"name": "totalPayment",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "totalPayment",
+			"order": 13
+		},
+		"waitingForPaymentUntil": {
+			"name": "waitingForPaymentUntil",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "waitingForPaymentUntil",
+			"order": 14
+		},
+		"fromBank": {
+			"name": "fromBank",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromBank",
+			"order": 15
+		},
+		"fromBankBranch": {
+			"name": "fromBankBranch",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromBankBranch",
+			"order": 16
+		},
+		"fromAccountNumber": {
+			"name": "fromAccountNumber",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromAccountNumber",
+			"order": 17
+		},
+		"fromAccountHolder": {
+			"name": "fromAccountHolder",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "fromAccountHolder",
 			"order": 18
+		},
+		"paymentSlips": {
+			"name": "paymentSlips",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "paymentSlips",
+			"order": 19
 		},
 		"isCancelled": {
 			"name": "isCancelled",
@@ -159,7 +167,7 @@
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isCancelled",
-			"order": 19
+			"order": 20
 		},
 		"isPaymentConfirmed": {
 			"name": "isPaymentConfirmed",
@@ -167,7 +175,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "isPaymentConfirmed",
-			"order": 20
+			"order": 21
 		}
 	}
 }

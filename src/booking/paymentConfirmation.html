@@ -9,18 +9,18 @@
         <span for.each="payment in data">
             <panel title.bind="payment.package.packageName" nofooter>
                 <span slot.name="body">
-                    Travel Agency: {{(payment.travelAgent.travelAgentName)}}<br/>
-                    Travel Date: {{(payment.package.travelDateFrom).toStringDateRange(payment.package.travelDateUntil)}}<br/>
-                    Total passenger: {{payment.numberOfPassengers ? payment.numberOfPassengers : ''}}<br/>
-                    Total Price: {{(payment.totalPrice ? payment.totalPrice.toFormattedString() : '')}}<br/>
-                    From Bank: {{(payment.fromBank)}}<br/>
-                    Branch: {{payment.fromBankBranch}}<br/>
-                    Account No: {{payment.fromAccountNumber}}<br/>
-                    Account Name: {{payment.fromAccountHolder}}<br/>
-                    Amount: {{payment.actualPayment.toFormattedString()}}<br/>
-                    Transfer Date: {{payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : ''}}
                     <div class="row">
-                        <attachments readonly userId.bind="data.userId" prompt="Payment Slip" collection="docspaymentslip" folder="upload/docspaymentslip/"></attachments>
+                        <entry type="label" prompt.bind="('Travel Agency: ' + (payment.travelAgent.travelAgentName))" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Travel Date: ' + (payment.package.travelDateFrom).toStringDateRange(payment.package.travelDateUntil))" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Total passenger: ' + (payment.numberOfPassengers ? payment.numberOfPassengers : ''))" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Total Price: ' + (payment.totalPrice ? payment.totalPrice.toFormattedString() : ''))" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('From Bank: ' + payment.fromBank)" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Branch: ' + payment.fromBankBranch)" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Account No: ' + payment.fromAccountNumber)" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Account Name: ' + payment.fromAccountHolder)" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Amount Transferred: ' + payment.actualPayment.toFormattedString())" innerDivClass="custom-label-margin"></entry>
+                        <entry type="label" prompt.bind="('Transfer Date: ' + (payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : ''))" innerDivClass="custom-label-margin"></entry>
+                        <attachments readonly userId.bind="payment.userId" prompt="Payment Slip" attachmentList.bind="payment.paymentSlips" collection="docspaymentslip" folder="upload/docspaymentslip/" onSave.bind="@onSave" name="docsPaymentSlip" alert.bind="@alert" ></attachments>
                         <entry type="button" name="btnConfirm" value="Confirm" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, true)"></entry>
                         <entry type="button" name="btnReject" value="Reject" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRespond(payment.id, false)"></entry>
                     </div>
@@ -37,6 +37,7 @@
 	function initState(props) {
 		return {
 			alert: new Alert(null, $patchChanges, "alert"),
+            flow: (new Utils()).flow.booking,
 		}
 	}
 	function loadPayments() {
@@ -45,12 +46,7 @@
 			debugger;
 			var q = {
 				travelAgentContactPersonId: storage.me.read().id,
-				isCancelled: false,
-			    actualPayment: {$ne: null},
-                $or:[
-	                {isPaymentConfirmed: null},
-	                {isPaymentConfirmed: 0},
-                ],
+                bookingStatus: 'WPV',
 			};
 			dpd.bookings.get(q, function (bookings, err) {
 				debugger;
@@ -63,10 +59,11 @@
 	}
 
 	function onRespond(paymentId, isApprove) {
+		var self = this;
 		var q = {
 			isPaymentConfirmed: (isApprove? 1 : -1),
+            bookingStatus: self.state.flow.move('WPV', (isApprove ? 'paymentVerified' : 'paymentRejected'))
         }
-        var self = this;
 		//debugger;
         dpd.bookings.put(paymentId, q, function(res, err){
         	//debugger;

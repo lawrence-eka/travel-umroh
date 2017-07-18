@@ -30,9 +30,7 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
 
   function onPropertyChange(event) {};
 
-
   function initState(props) {
-    debugger;
     return {
       booking: props.booking,
       flow: (new Utils()).flow.booking,
@@ -40,7 +38,6 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
       alert: new Alert(null, $patchChanges, "alert"),
     }
   }
-
 
   function onPropertyChange(props) {
     //debugger;
@@ -51,31 +48,13 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
     if (props.showOnly) this.state.showOnly = props.showOnly.newValue;
   }
 
-
   function onClick() {
     //debugger;
     this.emitEvent('click', this.state.booking);
   }
 
-  function calculatePaymentDetail() {
-    debugger;
-    var booking = this.state.booking;
-    var self = this;
-    if (!booking.uniqueCode) {
-      booking.uniqueCode = Math.floor(Math.random() * 1000);
-      booking.totalPrice = booking.costLandArrangements + booking.costTickets + booking.uniqueCode;
-      booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
-      booking.bookingStatus = 'WFP';
-      dpd.bookings.put(booking, function(bkg, err) {
-        //debugger;
-        self.state.alert.alert(err);
-        if (!err) {
-          window.location.hash = '#app/booking.paymentDetails:bookingId=' + booking.id;
-        }
-      });
-    } else {
-      window.location.hash = '#app/booking.paymentDetails:bookingId=' + booking.id;
-    }
+  function onShowPaymentDetail() {
+    window.location.hash = '#app/booking.paymentDetails:bookingId=' + this.state.booking.id;
   }
 
   function onEditPassenger() {
@@ -100,7 +79,7 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
         });
       } else {
         self.state.booking.isCancelled = true;
-        self.state.booking.bookingStatus = 'CCL';
+        self.state.booking.bookingStatus = self.state.flow.move(self.state.booking.bookingStatus, 'cancellation');
         dpd.bookings.put(self.state.booking.id, self.state.booking, function(res, err) {
           debugger;
           self.state.alert.alert(err);
@@ -165,52 +144,70 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
       if (slotName === "body") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        _elementOpenStart("strong", "");
-        _elementOpenEnd("strong");
-        _text("Booking No: " + (_state.booking.bookingNo) + "");
-        _elementClose("strong");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Travel Date: " + ((_state.booking.package.travelDateFrom).toStringDateRange(_state.booking.package.travelDateUntil)) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Operator: " + (_state.booking.travelAgent.travelAgentName) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Land Arrangements: " + (_state.booking.costLandArrangements ? _state.booking.costLandArrangements.toFormattedString() : '') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Tickets: " + (_state.booking.costTickets ? _state.booking.costTickets.toFormattedString() : '') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Total passenger: " + (_state.booking.numberOfPassengers ? _state.booking.numberOfPassengers : '') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Total Price: " + ((_state.booking.totalPrice ? _state.booking.totalPrice.toFormattedString() : '')) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Unique Code: " + (_state.booking.uniqueCode ? _state.booking.uniqueCode : '') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Grand Total: " + ((_state.booking.totalPrice + _state.booking.uniqueCode) ? (_state.booking.totalPrice + _state.booking.uniqueCode).toFormattedString() : '') + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
-        _text("Expiry Date: " + ((_state.booking.waitingForPaymentUntil ? _state.booking.waitingForPaymentUntil.toDateComponents(false, true) : '')) + "");
-        _elementOpenStart("br", "");
-        _elementOpenEnd("br");
-        _elementClose("br");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        var _params = {
+          "type": "label",
+          "prompt": ('Booking No: ' + _state.booking.bookingNo),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Travel Date: ' + ((_state.booking.package.travelDateFrom).toStringDateRange(_state.booking.package.travelDateUntil))),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Operator: ' + _state.booking.travelAgent.travelAgentName),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Land Arrangements: ' + (_state.booking.costLandArrangements ? _state.booking.costLandArrangements.toFormattedString() : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Tickets: ' + (_state.booking.costTickets ? _state.booking.costTickets.toFormattedString() : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Total passenger: ' + (_state.booking.numberOfPassengers ? _state.booking.numberOfPassengers : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Total Price: ' + ((_state.booking.totalPrice - _state.booking.uniqueCode) ? (_state.booking.totalPrice - _state.booking.uniqueCode).toFormattedString() : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Unique Code: ' + (_state.booking.uniqueCode ? _state.booking.uniqueCode : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Grand Total: ' + ((_state.booking.totalPrice) ? (_state.booking.totalPrice).toFormattedString() : '')),
+          "innerDivClass": "custom-label-margin"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {
+          "type": "label",
+          "prompt": ('Expiry Date: ' + (_state.booking.waitingForPaymentUntil ? _state.booking.waitingForPaymentUntil.toDateComponents(false, true) : ''))
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
         if (!_state.showOnly) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
           _elementOpenStart("div", "");
           _attr("class", "row");
           _elementOpenEnd("div");
@@ -240,6 +237,116 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          var _params = {
+            "type": "button",
+            "name": "btnPassengers",
+            "value": "Passengers...",
+            "onclick": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onEditPassenger.bind(self)();
+            }
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          if (_state.booking.uniqueCode) {
+            var _params = {
+              "type": "button",
+              "name": "btnPaymentDetail",
+              "value": "Payment Detail",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onShowPaymentDetail.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          }
+          if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'DPS')) {
+            var _params = {
+              "type": "button",
+              "name": "btnRedefinePassengers",
+              "value": "Redefine Passengers",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onRedefinePassengers.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          }
+          if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'WFP', 'paymentCancellation')) {
+            var _params = {
+              "type": "button",
+              "name": "btnCancelPayment",
+              "value": "Cancel Payment",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onRedefinePassengers.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          }
           if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'CCL')) {
             var _params = {
               "type": "button",
@@ -268,61 +375,6 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           }
-          var _params = {
-            "type": "button",
-            "name": "btnPassengers",
-            "value": "Passengers...",
-            "onclick": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = _component;
-              self.component._state = self.component._state || {};
-              self.state = self.component._state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
-                }
-              };
-              onEditPassenger.bind(self)();
-            }
-          };
-          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          if (_state.booking.numberOfPassengers > 0) {
-            var _params = {
-              "type": "button",
-              "name": "btnPaymentDetail",
-              "value": (_state.booking.bookingStatus == 'DPS' ? 'Next Step: ' : '') + 'Payment Detail',
-              "onclick": function(event) {
-                var self = {
-                  target: event.target
-                };
-                self.properties = _props;
-                if ('elements' in self.target) {
-                  self.elements = self.target.elements;
-                }
-                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                self.component = _component;
-                self.component._state = self.component._state || {};
-                self.state = self.component._state;
-                self.emitEvent = function(eventName, data) {
-                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                  if ('on' + eventName in _props) {
-                    _props['on' + eventName](event);
-                  }
-                };
-                calculatePaymentDetail.bind(self)();
-              }
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          }
-          _elementClose("div");
           _elementClose("div");
         }
         _elementClose("div");

@@ -34,6 +34,7 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
     return {
       packageId: props.packageId,
       alert: new Alert(null, $patchChanges, "alert"),
+      flow: (new Utils).flow.booking,
     }
   }
 
@@ -44,7 +45,9 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
   function book() {
     var me = storage.me.read();
     var self = this;
+    debugger;
     dpd.packages.get(self.state.packageId, function(pkg, err) {
+      debugger;
       self.state.alert.alert(err);
       if (!err) {
         var q = {
@@ -52,9 +55,10 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
           packageId: self.state.packageId,
           costTickets: pkg.costTickets,
           costLandArrangements: pkg.costLandArrangements,
-          bookingStatus: 'DPS',
+          bookingStatus: self.state.flow.move('', 'bookingStarted'),
         };
         dpd.bookings.post(q, function(booking, err) {
+          debugger;
           self.state.alert.alert(err);
           if (!err) {
             var bookingId = (booking.message ? JSON.parse(booking.message).booking.id : booking.id);

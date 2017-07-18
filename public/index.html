@@ -9,7 +9,7 @@
         <meta name="author" content="">
         <link rel="icon" href="asset/favicon.ico">
 
-        <script src="version.js"></script>
+        <script src="version.ver"></script>
         <script src="asset/js/own/storages.js"></script>
         <!-- Bootstrap core CSS -->
     <style>
@@ -38,7 +38,7 @@
                 resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
             });
         }
-        scriptCache.setVersion(ver ? ver.version : "2017.07.13.21");
+        scriptCache.setVersion(ver.version ? ver.version : "2017.07.13.21");
         loader.loadAssets(0);
     </script>
 </html>

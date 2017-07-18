@@ -71,39 +71,53 @@ function Utils() {
 				{code: 'CNP', status: 'Cancelled due to No Payment'},
 				{code: 'CPR', status: 'Payment Rejected'},
 			],
+			
 			transitions: [
-				{from: 'DPS', to: 'WFP',},
-				{from: 'DPS', to: 'CCL',},
-				{from: 'WFP', to: 'WPV',},
-				{from: 'WFP', to: 'DPS',},
-				{from: 'WFP', to: 'CNP',},
-				{from: 'WFP', to: 'CCL',},
-				{from: 'WPV', to: 'RTG',},
-				{from: 'WPV', to: 'DPS',},
-				{from: 'WPV', to: 'CCL',},
-				{from: 'RTG', to: 'OGO',},
-				{from: 'RTG', to: 'CCL',},
-				{from: 'OGO', to: 'FIN',},
+				{from: '',    to: 'DPS', via: 'bookingStarted', },
+				{from: 'DPS', to: 'WFP', via: 'passengersCompleted', },
+				{from: 'DPS', to: 'CCL', via: 'cancellation', },
+				{from: 'WFP', to: 'WPV', via: 'payment', },
+				{from: 'WFP', to: 'DPS', via: 'redefinePassengers',},
+				{from: 'WFP', to: 'CNP', via: 'noPayment', },
+				{from: 'WFP', to: 'CCL', via: 'cancellation', },
+				{from: 'WPV', to: 'RTG', via: 'paymentVerified', },
+				{from: 'WPV', to: 'CPR', via: 'paymentRejected', },
+				{from: 'WPV', to: 'WFP', via: 'paymentCancellation', },
+				{from: 'WPV', to: 'CCL', via: 'cancellation', },
+				{from: 'CPR', to: 'WFP', via: 'paymentCancellation', },
+				{from: 'CPR', to: 'CCL', via: 'cancellation', },
+				{from: 'RTG', to: 'OGO', via: 'execution', },
+				{from: 'RTG', to: 'CCL', via: 'cancellation', },
+				{from: 'OGO', to: 'FIN', via: 'executionCompleted'},
 			],
 
+			move: function(fromStatus, via) {
+				var t = self.flow.booking.transitions.find(function(item) {return (item.from == fromStatus && item.via == via);});
+				return t? t.to : fromStatus;
+			},
+			
 			canGoTo: function(toStatus) {
 				var result =[];
 				self.flow.booking.transitions.filter(function(t) {return t.to == toStatus;}).forEach(function(item) {result.push(item.from);});
 				return result;
 			},
+			
 			canGoFrom: function(fromStatus) {
 				var result = [];
 				self.flow.booking.transitions.filter(function(t){return t.from == fromStatus;}).forEach(function(item) {result.push(item.to);});
 				return result;
 			},
-			isTransitionAllowed: function(fromStatus, toStatus) {
-				return typeof ((new Utils()).flow.booking.transitions.find(function(item) {return (item.from == fromStatus && item.to == toStatus);})) != 'undefined';
+			
+			isTransitionAllowed: function(fromStatus, toStatus, via) {
+				debugger;
+				return typeof self.flow.booking.transitions.find(function(item) {return (item.from == fromStatus && item.to == toStatus && (via? item.via == via : true));}) != 'undefined';
 			},
+			
 			status: function(code) {
 				var statusCode = self.flow.booking.statusCodes.find(function(item){return item.code == code;});
 				if(statusCode) return statusCode.status;
 				else return '';
-			}
+			},
 		},
 	};
 

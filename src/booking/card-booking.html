@@ -5,23 +5,25 @@
 <div>
     <card click.trigger="onClick()" title.bind="@booking.package.packageName">
         <div slot.name="body">
-            <strong>Booking No: {{@booking.bookingNo}}</strong><br/>
-            Travel Date: {{(@booking.package.travelDateFrom).toStringDateRange(@booking.package.travelDateUntil)}}<br/>
-            Operator: {{@booking.travelAgent.travelAgentName}}<br/>
-            Land Arrangements: {{@booking.costLandArrangements ? @booking.costLandArrangements.toFormattedString() : ''}}<br/>
-            Tickets: {{@booking.costTickets ? @booking.costTickets.toFormattedString() : ''}}<br/>
-            Total passenger: {{@booking.numberOfPassengers ? @booking.numberOfPassengers : ''}}<br/>
-            Total Price: {{(@booking.totalPrice ? @booking.totalPrice.toFormattedString() : '')}}<br/>
-            Unique Code: {{@booking.uniqueCode ? @booking.uniqueCode : ''}}<br/>
-            Grand Total: {{(@booking.totalPrice + @booking.uniqueCode) ? (@booking.totalPrice + @booking.uniqueCode).toFormattedString() : ''}}<br/>
-            Expiry Date: {{(@booking.waitingForPaymentUntil ? @booking.waitingForPaymentUntil.toDateComponents(false, true) : '')}}<br/>
-            <div if.bind="!@showOnly">
-                <div class="row">
-                    <entry type="button" name="btnSave" value="Save & Close" click.trigger="onSaveBooking()"></entry>
-                    <entry type="button" name="btnCancel" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'CCL')" value="Cancel Booking" click.trigger="onCancelBooking()"></entry>
-                    <entry type="button" name="btnPassengers" value="Passengers..." click.trigger="onEditPassenger()"></entry>
-                    <entry type="button" name="btnPaymentDetail" if.bind="@booking.numberOfPassengers > 0" value.bind="(@booking.bookingStatus =='DPS' ? 'Next Step: ' : '') + 'Payment Detail'" click.trigger="calculatePaymentDetail()"></entry>
-                </div>
+            <div class="row">
+                <entry type="label" prompt.bind="('Booking No: ' + @booking.bookingNo)" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Travel Date: ' + ((@booking.package.travelDateFrom).toStringDateRange(@booking.package.travelDateUntil)))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Operator: ' + @booking.travelAgent.travelAgentName)" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Land Arrangements: ' + (@booking.costLandArrangements ? @booking.costLandArrangements.toFormattedString() : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Tickets: ' + (@booking.costTickets ? @booking.costTickets.toFormattedString() : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Total passenger: ' + (@booking.numberOfPassengers ? @booking.numberOfPassengers : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Total Price: ' + ((@booking.totalPrice - @booking.uniqueCode) ? (@booking.totalPrice - @booking.uniqueCode).toFormattedString() : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Unique Code: ' + (@booking.uniqueCode ? @booking.uniqueCode : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Grand Total: ' + ((@booking.totalPrice) ? (@booking.totalPrice).toFormattedString() : ''))" innerDivClass="custom-label-margin"></entry>
+                <entry type="label" prompt.bind="('Expiry Date: ' + (@booking.waitingForPaymentUntil ? @booking.waitingForPaymentUntil.toDateComponents(false, true) : ''))"></entry>
+            </div>
+            <div if.bind="!@showOnly" class="row">
+                <entry type="button" name="btnSave" value="Save & Close" click.trigger="onSaveBooking()"></entry>
+                <entry type="button" name="btnPassengers" value="Passengers..." click.trigger="onEditPassenger()"></entry>
+                <entry type="button" name="btnPaymentDetail" if.bind="@booking.uniqueCode" value="Payment Detail" click.trigger="onShowPaymentDetail()"></entry>
+                <entry type="button" name="btnRedefinePassengers" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'DPS')" value="Redefine Passengers" click.trigger="onRedefinePassengers()"></entry>
+                <entry type="button" name="btnCancelPayment" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'WFP', 'paymentCancellation')" value="Cancel Payment" click.trigger="onRedefinePassengers()"></entry>
+                <entry type="button" name="btnCancel" if.bind="@flow.isTransitionAllowed(@booking.bookingStatus, 'CCL')" value="Cancel Booking" click.trigger="onCancelBooking()"></entry>
             </div>
         </div>
         <div slot.name="footer">
@@ -39,9 +41,7 @@
 </div>
 
 <script>
-
     function initState(props) {
-    	debugger;
     	return {
     		booking: props.booking,
             flow: (new Utils()).flow.booking,
@@ -49,7 +49,6 @@
             alert: new Alert(null, $patchChanges, "alert"),
         }
     }
-
 
     function onPropertyChange(props){
     	//debugger;
@@ -60,31 +59,13 @@
     	if(props.showOnly) this.state.showOnly = props.showOnly.newValue;
     }
 
-
     function onClick(){
     	//debugger;
     	this.emitEvent('click', this.state.booking);
     }
 
-    function calculatePaymentDetail() {
-    	debugger;
-    	var booking = this.state.booking;
-    	var self = this;
-    	if(!booking.uniqueCode) {
-		    booking.uniqueCode = Math.floor(Math.random() * 1000);
-		    booking.totalPrice = booking.costLandArrangements + booking.costTickets + booking.uniqueCode;
-            booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
-            booking.bookingStatus = 'WFP';
-		    dpd.bookings.put(booking, function (bkg, err) {
-		    	//debugger;
-			    self.state.alert.alert(err);
-			    if(!err) {
-				    window.location.hash = '#app/booking.paymentDetails:bookingId=' + booking.id;
-			    }
-		    });
-	    } else {
-		    window.location.hash = '#app/booking.paymentDetails:bookingId=' + booking.id;
-        }
+    function onShowPaymentDetail() {
+	    window.location.hash = '#app/booking.paymentDetails:bookingId=' + this.state.booking.id;
     }
 
     function onEditPassenger() {
@@ -109,7 +90,7 @@
 			    });
 		    } else {
 		        self.state.booking.isCancelled = true;
-		        self.state.booking.bookingStatus = 'CCL';
+		        self.state.booking.bookingStatus = self.state.flow.move(self.state.booking.bookingStatus, 'cancellation');
 		        dpd.bookings.put(self.state.booking.id, self.state.booking, function (res, err) {
 			        debugger;
 		        	self.state.alert.alert(err);

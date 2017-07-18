@@ -1,0 +1,1 @@
+yalla.framework.addComponent("/dist/buangaja/buangaja",function(){yalla.framework.renderToScreen,yalla.framework.createInjector("/dist/buangaja/buangaja");var $export={};return yalla.framework.getParentComponent,yalla.utils.merge,"function"==typeof $render&&($export.render=$render),$export}());

@@ -1,0 +1,1 @@
+yalla.framework.addComponent("/dist/buangaja/buanglagi/buangbuangaja",function(){yalla.framework.renderToScreen,yalla.framework.createInjector("/dist/buangaja/buanglagi/buangbuangaja");var $export={};return yalla.framework.getParentComponent,yalla.utils.merge,"function"==typeof $render&&($export.render=$render),$export}());

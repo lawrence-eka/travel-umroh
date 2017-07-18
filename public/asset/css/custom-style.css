@@ -81,6 +81,10 @@ body{
     margin-bottom:5px !important;
 }
 
+.custom-label-margin {
+    margin-bottom:0px !important;
+}
+
 .custom-entry {
     padding-left: 15px !important;
     padding-right: 15px !important;

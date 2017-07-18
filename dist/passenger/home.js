@@ -34,21 +34,14 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
     return {
       bookingId: props.bookingId,
       booking: null,
+      passengers: null,
       editPassengerId: null,
-      alert: new Alert(),
+      alert: new Alert(null, $patchChanges, "alert"),
       isEditMode: false,
-      //flow: (new Utils).flow.booking,
+      flow: (new Utils).flow.booking,
     }
   }
-  /*
-      function onPropertyChange(props) {
-      	debugger;
-  	    if(props.bookingId) this.state.bookingId = props.bookingId.newValue;
-  	    if(props.booking) this.state.booking = props.booking.newValue;
-          if(props.bookingStatus) this.state.bookingStatus = props.bookingStatus.newValue;
-          if(props.editPassengerId) this.state.editPassengerId = props.editPassengerId.newValue;
-      }
-  */
+
   function onCancelled() {
     this.state.isEditMode = false;
     this.state.editPassengerId = null,
@@ -57,8 +50,8 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
 
   function onSaved() {
     this.state.isEditMode = false;
-    this.state.editPassengerId = null,
-      $patchChanges();
+    this.state.editPassengerId = null;
+    $patchChanges();
   }
 
   function onDelete(event) {
@@ -72,16 +65,50 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
       $patchChanges();
   }
 
+  function onFinalizePassengerCount() {
+    var self = this;
+    var booking = this.state.booking;
+
+    booking.uniqueCode = Math.floor(Math.random() * 1000);
+    booking.totalPrice = booking.totalPrice + booking.uniqueCode;
+    booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
+    booking.bookingStatus = self.state.flow.move(booking.bookingStatus, 'passengersCompleted');
+    debugger;
+    dpd.bookings.put(booking.id, booking, function(bkg, err) {
+      debugger;
+      self.state.alert.alert(err);
+      if (!err) {
+        window.location.hash = "#app/booking.home:bookingId=" + self.state.bookingId;
+      }
+    });
+  }
+
   function getBookings() {
     var self = this;
     //debugger;
     return new Promise(function(resolve) {
       dpd.bookings.get(self.state.bookingId, function(bkg, err) {
-        debugger;
+        //debugger;
         self.state.alert.alert(err);
         if (!err) {
           self.state.booking = bkg;
-          resolve(bkg);
+          dpd.passengers.get({
+            "bookingId": self.state.booking.id
+          }, function(passengers, err) {
+            //debugger;
+            self.state.alert.alert(err);
+            if (!err) {
+              self.state.booking.numberOfPassengers = passengers.length;
+              self.state.booking.totalPrice = (self.state.booking.numberOfPassengers * (self.state.booking.costTickets + self.state.booking.costLandArrangements)) + (self.state.booking.uniqueCode ? self.state.booking.uniqueCode : 0);
+              dpd.bookings.put(self.state.booking.id, self.state.booking, function(res, err) {
+                debugger;
+                self.state.alert.alert(err);
+                self.state.passengers = passengers;
+                //if(!err) resolve(passengers);
+                resolve(bkg);
+              });
+            }
+          });
         }
       });
     });
@@ -178,7 +205,7 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
             if (_state.booking.bookingStatus == 'DPS') {
               var _params = {
                 "type": "button",
-                "value": "Add Passenger...",
+                "value": "Add Passenger",
                 "onclick": function(event) {
                   var self = {
                     target: event.target
@@ -198,6 +225,33 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
                     }
                   };
                   onAddPassenger.bind(self)();
+                }
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            }
+            if ((_state.booking.bookingStatus == 'DPS') && (_state.booking.numberOfPassengers > 0)) {
+              var _params = {
+                "type": "button",
+                "value": "Next: Payment...",
+                "onclick": function(event) {
+                  var self = {
+                    target: event.target
+                  };
+                  self.properties = _props;
+                  if ('elements' in self.target) {
+                    self.elements = self.target.elements;
+                  }
+                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                  self.component = _component;
+                  self.component._state = self.component._state || {};
+                  self.state = self.component._state;
+                  self.emitEvent = function(eventName, data) {
+                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                    if ('on' + eventName in _props) {
+                      _props['on' + eventName](event);
+                    }
+                  };
+                  onFinalizePassengerCount.bind(self)();
                 }
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -260,6 +314,7 @@ yalla.framework.addComponent("/dist/passenger/home", (function() {
           _elementOpenEnd("span");
           var _params = {
             "booking": _state.booking,
+            "passengers": _state.passengers,
             "onedit": function(event) {
               var self = {
                 target: event.target

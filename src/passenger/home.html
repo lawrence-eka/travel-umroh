@@ -8,14 +8,15 @@
     <panel title.bind="'Passengers of ' + @booking.package.packageName" nofooter>
         <div class="row" slot.name="body">
             <entry type="button" value="Back to My Booking" click.trigger="onBackToMyBookings()"></entry>
-            <entry type="button" value="Add Passenger..." if.bind="@booking.bookingStatus == 'DPS'" click.trigger="onAddPassenger()"></entry>
+            <entry type="button" value="Add Passenger" if.bind="@booking.bookingStatus == 'DPS'" click.trigger="onAddPassenger()"></entry>
+            <entry type="button" value="Next: Payment..." if.bind="(@booking.bookingStatus == 'DPS') && (@booking.numberOfPassengers > 0)" click.trigger="onFinalizePassengerCount()"></entry>
         </div>
     </panel>
     <span if.bind="@isEditMode">
         <edit-passenger id.bind="@editPassengerId" bookingId.bind="@booking.id" cancelled.trigger="onCancelled()" saved.trigger="onSaved()"></edit-passenger>
     </span>
     <span if.bind="!@isEditMode">
-        <list-passenger booking.bind="@booking" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></list-passenger>
+        <list-passenger booking.bind="@booking" passengers.bind="@passengers" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></list-passenger>
     </span>
     <span ref.name="alert">
         <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
@@ -26,21 +27,14 @@
     	return {
     		bookingId: props.bookingId,
             booking: null,
+            passengers: null,
             editPassengerId:null,
-            alert: new Alert(),
+		    alert: new Alert(null, $patchChanges, "alert"),
             isEditMode: false,
-            //flow: (new Utils).flow.booking,
+            flow: (new Utils).flow.booking,
         }
     }
-/*
-    function onPropertyChange(props) {
-    	debugger;
-	    if(props.bookingId) this.state.bookingId = props.bookingId.newValue;
-	    if(props.booking) this.state.booking = props.booking.newValue;
-        if(props.bookingStatus) this.state.bookingStatus = props.bookingStatus.newValue;
-        if(props.editPassengerId) this.state.editPassengerId = props.editPassengerId.newValue;
-    }
-*/
+
     function onCancelled(){
     	this.state.isEditMode=false;
 	    this.state.editPassengerId=null,
@@ -49,7 +43,7 @@
 
     function onSaved(){
 	    this.state.isEditMode=false;
-	    this.state.editPassengerId=null,
+	    this.state.editPassengerId=null;
     	$patchChanges();
     }
 
@@ -63,16 +57,49 @@
     	this.state.editPassengerId=null,
     	$patchChanges();
     }
+
+    function onFinalizePassengerCount() {
+    	var self = this;
+	    var booking = this.state.booking;
+
+	    booking.uniqueCode = Math.floor(Math.random() * 1000);
+	    booking.totalPrice = booking.totalPrice + booking.uniqueCode;
+	    booking.waitingForPaymentUntil = (new Date().addHours(3)).getTime();
+	    booking.bookingStatus = self.state.flow.move(booking.bookingStatus, 'passengersCompleted');
+	    debugger;
+	    dpd.bookings.put(booking.id, booking, function (bkg, err) {
+		    debugger;
+	    	self.state.alert.alert(err);
+		    if(!err) {
+			    window.location.hash="#app/booking.home:bookingId=" + self.state.bookingId;
+		    }
+	    });
+    }
+
     function getBookings(){
 	    var self = this;
 	    //debugger;
 	    return new Promise(function(resolve) {
 		    dpd.bookings.get(self.state.bookingId, function (bkg, err) {
-			    debugger;
+			    //debugger;
 			    self.state.alert.alert(err);
 			    if (!err) {
 			    	self.state.booking = bkg;
-				    resolve(bkg);
+				    dpd.passengers.get({"bookingId":self.state.booking.id}, function(passengers, err) {
+					    //debugger;
+					    self.state.alert.alert(err);
+					    if(!err){
+					    	self.state.booking.numberOfPassengers = passengers.length;
+                            self.state.booking.totalPrice = (self.state.booking.numberOfPassengers * (self.state.booking.costTickets + self.state.booking.costLandArrangements)) + (self.state.booking.uniqueCode? self.state.booking.uniqueCode : 0) ;
+						    dpd.bookings.put(self.state.booking.id, self.state.booking, function(res, err){
+							    debugger;
+							    self.state.alert.alert(err);
+							    self.state.passengers = passengers;
+							    //if(!err) resolve(passengers);
+							    resolve(bkg);
+						    });
+					    }
+				    });
 			    }
 		    });
 	    });

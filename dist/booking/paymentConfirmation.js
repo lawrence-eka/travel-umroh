@@ -33,6 +33,7 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
   function initState(props) {
     return {
       alert: new Alert(null, $patchChanges, "alert"),
+      flow: (new Utils()).flow.booking,
     }
   }
 
@@ -42,17 +43,7 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
       debugger;
       var q = {
         travelAgentContactPersonId: storage.me.read().id,
-        isCancelled: false,
-        actualPayment: {
-          $ne: null
-        },
-        $or: [{
-            isPaymentConfirmed: null
-          },
-          {
-            isPaymentConfirmed: 0
-          },
-        ],
+        bookingStatus: 'WPV',
       };
       dpd.bookings.get(q, function(bookings, err) {
         debugger;
@@ -65,10 +56,11 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
   }
 
   function onRespond(paymentId, isApprove) {
+    var self = this;
     var q = {
       isPaymentConfirmed: (isApprove ? 1 : -1),
+      bookingStatus: self.state.flow.move('WPV', (isApprove ? 'paymentVerified' : 'paymentRejected'))
     }
-    var self = this;
     //debugger;
     dpd.bookings.put(paymentId, q, function(res, err) {
       //debugger;
@@ -139,52 +131,79 @@ yalla.framework.addComponent("/dist/booking/paymentConfirmation", (function() {
             if (slotName === "body") {
               _elementOpenStart("span", "");
               _elementOpenEnd("span");
-              _text("Travel Agency: " + ((payment.travelAgent.travelAgentName)) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Travel Date: " + ((payment.package.travelDateFrom).toStringDateRange(payment.package.travelDateUntil)) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Total passenger: " + (payment.numberOfPassengers ? payment.numberOfPassengers : '') + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Total Price: " + ((payment.totalPrice ? payment.totalPrice.toFormattedString() : '')) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("From Bank: " + ((payment.fromBank)) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Branch: " + (payment.fromBankBranch) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Account No: " + (payment.fromAccountNumber) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Account Name: " + (payment.fromAccountHolder) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Amount: " + (payment.actualPayment.toFormattedString()) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Transfer Date: " + (payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : '') + "");
               _elementOpenStart("div", "");
               _attr("class", "row");
               _elementOpenEnd("div");
               var _params = {
+                "type": "label",
+                "prompt": ('Travel Agency: ' + (payment.travelAgent.travelAgentName)),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Travel Date: ' + (payment.package.travelDateFrom).toStringDateRange(payment.package.travelDateUntil)),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Total passenger: ' + (payment.numberOfPassengers ? payment.numberOfPassengers : '')),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Total Price: ' + (payment.totalPrice ? payment.totalPrice.toFormattedString() : '')),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('From Bank: ' + payment.fromBank),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Branch: ' + payment.fromBankBranch),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Account No: ' + payment.fromAccountNumber),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Account Name: ' + payment.fromAccountHolder),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Amount Transferred: ' + payment.actualPayment.toFormattedString()),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
+                "type": "label",
+                "prompt": ('Transfer Date: ' + (payment.paymentDate ? payment.paymentDate.toDateComponents(false, true) : '')),
+                "innerDivClass": "custom-label-margin"
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {
                 "readonly": "readonly",
-                "userId": data.userId,
+                "userId": payment.userId,
                 "prompt": "Payment Slip",
+                "attachmentList": payment.paymentSlips,
                 "collection": "docspaymentslip",
-                "folder": "upload/docspaymentslip/"
+                "folder": "upload/docspaymentslip/",
+                "onSave": _state.onSave,
+                "name": "docsPaymentSlip",
+                "alert": _state.alert
               };
               _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               var _params = {

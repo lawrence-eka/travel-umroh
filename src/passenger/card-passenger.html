@@ -7,11 +7,6 @@
             <entry type="label" prompt.bind="'Name: ' + $passenger.firstName + ' ' + $passenger.middleName + ' ' + $passenger.lastName" innerDivClass="custom-entry-prompt"></entry>
             <entry type="label" prompt.bind="'Birth: ' + $passenger.birthPlace + ', ' + formatDate($passenger.birthday)" innerDivClass="custom-entry-prompt"></entry>
             <entry type="label" prompt.bind="'Passport No: ' + $passenger.passportNumber + ', valid until: ' + formatDate($passenger.passportExpiryDate)" innerDivClass="custom-entry-prompt"></entry>
-<!--
-            Name: {{$passenger.firstName}} {{$passenger.middleName}} {{$passenger.lastName}}<br/>
-            Birth: {{$passenger.birthPlace}}, {{($passenger.birthday).toDateComponents()}}<br/>
-            Passport No: {{$passenger.passportNumber}}; Expiry Date: {{($passenger.passportExpiryDate).toDateComponents()}}<br/>
--->
             <span if.bind="@booking.bookingStatus=='DPS'"  >
                 <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit()"></entry>
                 <entry type="button" value="Delete" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onDelete()"></entry>

@@ -31,12 +31,12 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    debugger;
+    //debugger;
     return {
       alert: new Alert(null, $patchChanges, "payment"),
       booking: null,
       flow: (new Utils()).flow.booking,
-      gotActualPayment: false,
+      //gotActualPayment:false,
       onSave: new Event(),
       //            bookingUtils: (new Utils()).bookings,
     }
@@ -46,15 +46,8 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     debugger;
   }
 
-  function whatRemarks() {
-    var status = this.state.bu.status(this.state.booking);
-    //debugger;
-    if (status.code == this.state.bu.paymentRejected) return "Payment is rejected by Travel Agent";
-    if (status.code == this.state.bu.bookingExpired) return "Booking is cancelled because there was no payment received within the booking expiration date";
-    else if (status.code == this.state.bu.bookingCancelled) return "Booking was cancelled by user";
-    else if (status.code == this.state.bu.waitingForPayment) return "Please make the payment before booking expires to avoid automatic cancellation";
-    else if (status.code == this.state.bu.paymentConfirmationPending) return "Payment received, waiting for verification";
-    else return "Payment received and verified";
+  function onBackToMyBookings() {
+    window.location.hash = "#app/booking.home:bookingId=" + this.state.booking.id;
   }
 
   function deleteActualPayment() {
@@ -68,12 +61,12 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
     booking.fromAccountHolder = '';
     booking.actualPayment = 0;
     booking.paymentDate = null;
+    booking.bookingStatus = self.state.flow.move(booking.bookingStatus, 'paymentCancellation');
+    booking.paymentSlips = [];
     dpd.bookings.put(booking.id, booking, function(bkg, err) {
       debugger;
       self.state.alert.alert(err);
-      if (!err) {
-        self.state.gotActualPayment = false;
-      }
+      //if(!err) {self.state.gotActualPayment = false;}
       $patchChanges();
     });
 
@@ -93,35 +86,41 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
       $patchChanges;
       return;
     }
-    booking.fromBank = form.elements.fromBank.value;
-    booking.fromBankBranch = form.elements.fromBankBranch.value;
-    booking.fromAccountNumber = form.elements.fromAccountNumber.value;
-    booking.fromAccountHolder = form.elements.fromAccountHolder.value;
-    booking.actualPayment = form.elements.actualPayment.value;
-    booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
-    dpd.bookings.put(booking.id, booking, function(bkg, err) {
-      //debugger;
-      self.state.alert.alert(err);
-      if (!err) {
-        self.state.onSave.publish(afterSaveAttachments.bind(self));
-      }
-    });
+    self.state.onSave.publish(afterSaveAttachments.bind(self));
   }
 
-  function afterSaveAttachments(result) {
-    debugger;
-    if (result) {
+  function afterSaveAttachments(res, err) {
+    //debugger;
+    var form = this.target.form;
+    var self = this;
+    var booking = self.state.booking;
+    if (err) {
       this.state.infoText = "";
       //$patchChanges("info");
-      this.state.alert.alert(result);
+      this.state.alert.alert(err);
     } else {
       //this.state.gotActualPayment = true;
-      $patchChanges();
+      // debugger;
+      this.state.booking.paymentSlips = res;
+      booking.fromBank = form.elements.fromBank.value;
+      booking.fromBankBranch = form.elements.fromBankBranch.value;
+      booking.fromAccountNumber = form.elements.fromAccountNumber.value;
+      booking.fromAccountHolder = form.elements.fromAccountHolder.value;
+      booking.actualPayment = form.elements.actualPayment.value;
+      booking.paymentDate = (new Date(form.elements.paymentDate.value)).getTime();
+      booking.bookingStatus = self.state.flow.move(booking.bookingStatus, 'payment');
+      dpd.bookings.put(booking.id, booking, function(bkg, err) {
+        debugger;
+        self.state.alert.alert(err);
+        if (!err) {
+          $patchChanges();
+        }
+      });
     }
   }
 
   function getPaymentDetails(bookingId) {
-    debugger;
+    //debugger;
     var self = this;
     return new Promise(function(resolve) {
       dpd.bookings.get(bookingId, function(bkg, err) {
@@ -184,14 +183,46 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
 
       function asyncFunc_1(data) {
         var _params = {
-          "booking": _state.booking,
-          "showOnly": "showOnly"
+          "title": 'Payment for ' + _state.booking.package.packageName,
+          "nofooter": "nofooter"
         };
-        _context["card-booking"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+          if (slotName === "body") {
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            var _params = {
+              "type": "button",
+              "value": "Back to My Booking",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
+                }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onBackToMyBookings.bind(self)();
+              }
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementClose("div");
+          }
+        });
         _elementOpenStart("span", "");
         _elementOpenEnd("span");
         yalla.framework.registerRef("payment", IncrementalDOM.currentElement(), function() {
-          if (_state.gotActualPayment) {
+          if (data.actualPayment) {
             var _params = {
               "title": "Actual Payment",
               "nofooter": "nofooter"
@@ -199,31 +230,76 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
             _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
               if (slotName === "body") {
                 _elementOpenStart("div", "");
-                _elementOpenEnd("div");
-                _text("From Bank: " + ((_state.booking.fromBank)) + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Branch: " + (_state.booking.fromBankBranch) + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Account No: " + (_state.booking.fromAccountNumber) + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Account Name: " + (_state.booking.fromAccountHolder) + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Amount: " + (_state.booking.actualPayment ? _state.booking.actualPayment.toFormattedString() : '') + "");
-                _elementOpenStart("br", "");
-                _elementOpenEnd("br");
-                _elementClose("br");
-                _text("Transfer Date: " + (_state.booking.paymentDate ? _state.booking.paymentDate.toDateComponents(false, true) : '') + "");
-                _elementOpenStart("div", "");
                 _attr("class", "row");
                 _elementOpenEnd("div");
+                var _params = {
+                  "type": "label",
+                  "prompt": ('From Bank: ' + _state.booking.fromBank),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "type": "label",
+                  "prompt": ('Branch: ' + _state.booking.fromBankBranch),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "type": "label",
+                  "prompt": ('Account No: ' + _state.booking.fromAccountNumber),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "type": "label",
+                  "prompt": ('Account Name: ' + _state.booking.fromAccountHolder),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "type": "label",
+                  "prompt": ('Amount: ' + (_state.booking.actualPayment ? _state.booking.actualPayment.toFormattedString() : '')),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "type": "label",
+                  "prompt": ('Transfer Date: ' + (_state.booking.paymentDate ? _state.booking.paymentDate.toDateComponents(false, true) : '')),
+                  "innerDivClass": "custom-label-margin"
+                };
+                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                var _params = {
+                  "readonly": _state.booking.bookingStatus != 'WFP',
+                  "userId": data.userId,
+                  "attachmentList": data.paymentSlips,
+                  "prompt": "Payment Slip",
+                  "collection": "docspaymentslip",
+                  "folder": "upload/docspaymentslip/",
+                  "onSave": _state.onSave,
+                  "onsaved": function(event) {
+                    var self = {
+                      target: event.target
+                    };
+                    self.properties = _props;
+                    if ('elements' in self.target) {
+                      self.elements = self.target.elements;
+                    }
+                    self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                    self.component = _component;
+                    self.component._state = self.component._state || {};
+                    self.state = self.component._state;
+                    self.emitEvent = function(eventName, data) {
+                      var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                      if ('on' + eventName in _props) {
+                        _props['on' + eventName](event);
+                      }
+                    };
+                    afterSaveAttachments.bind(self)();
+                  },
+                  "name": "docsPaymentSlip",
+                  "alert": _state.alert
+                };
+                _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 if (_state.flow.isTransitionAllowed(_state.booking.bookingStatus, 'DPS')) {
                   var _params = {
                     "type": "button",
@@ -253,15 +329,21 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                   _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 }
                 _elementClose("div");
-                _elementClose("div");
               }
             });
           }
           var _params = {
-            "title": "Payment Info",
-            "footer": whatRemarks.bind(self)()
+            "title": "Payment Info"
           };
           _context["card"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+            if (!data.actualPayment) {
+              if (slotName === "footer") {
+                _elementOpenStart("div", "");
+                _elementOpenEnd("div");
+                _text("Please make payment before the expiry date to avoid booking cancellation");
+                _elementClose("div");
+              }
+            }
             if (slotName === "body") {
               _elementOpenStart("div", "");
               _elementOpenEnd("div");
@@ -273,7 +355,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
               _elementOpenStart("br", "");
               _elementOpenEnd("br");
               _elementClose("br");
-              _text("Branch: Sidoarjo");
+              _text("1111                    Branch: Sidoarjo");
               _elementOpenStart("br", "");
               _elementOpenEnd("br");
               _elementClose("br");
@@ -298,7 +380,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
             _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           })()
           _elementClose("span");
-          if (!_state.gotActualPayment) {
+          if (!data.actualPayment) {
             var _params = {
               "title": "Actual Payment"
             };
@@ -363,6 +445,7 @@ yalla.framework.addComponent("/dist/booking/paymentDetails", (function() {
                 yalla.framework.registerRef("docsPaymentSlip", IncrementalDOM.currentElement(), function() {
                   var _params = {
                     "userId": data.userId,
+                    "attachmentList": data.paymentSlips,
                     "prompt": "Payment Slip",
                     "collection": "docspaymentslip",
                     "folder": "upload/docspaymentslip/",

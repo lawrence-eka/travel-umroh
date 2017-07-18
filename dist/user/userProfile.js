@@ -172,12 +172,12 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     }
   }
 
-  function afterSaveAttachments(result) {
+  function afterSaveAttachments(result, error) {
     //debugger;
-    if (result) {
+    if (error) {
       this.state.infoText = "";
       $patchChanges("info");
-      this.state.alert.alert(result);
+      this.state.alert.alert(error);
       //$patchChanges("docsTravelAgent");
     } else {
       this.emitEvent('save');

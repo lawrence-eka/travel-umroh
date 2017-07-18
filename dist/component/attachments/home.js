@@ -34,7 +34,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     var self = this;
     if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
     if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
-    //debugger;
+    debugger;
     var ms = (isNaN(parseInt(props.maxSize)) ? 1000000 : props.maxSize).toString().toLowerCase();
     ms = parseInt(ms) * (ms.indexOf('g') >= 0 ? 1000000000 : ms.indexOf('m') >= 0 ? 1000000 : ms.indexOf('k') >= 0 ? 1000 : 1);
     return {
@@ -47,6 +47,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       maxFile: isNaN(parseInt(props.maxFile)) ? 5 : parseInt(props.maxFile),
       name: props.name,
       error: null,
+      attachmentList: props.attachmentList,
     }
   }
 
@@ -66,13 +67,16 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     var self = this;
     //debugger;
     return new Promise(function(resolve) {
-      //debugger;
+      debugger;
       var q = {};
       if (self.state.userId) {
         q.uploaderId = self.state.userId;
+        q.id = {
+          $in: self.state.attachmentList
+        };
       }
       dpd[self.state.collection].get(q, function(data, statusCode, headers, config) {
-        //debugger;
+        debugger;
         self.state.curFiles = data;
         resolve(data);
       });
@@ -123,6 +127,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       });
       return;
     }
+    console.log(self);
     for (var i in this._state.newFiles) {
       //debugger;
       if (this._state.newFiles[i].size > this._state.maxSize) {
@@ -133,11 +138,32 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
         return;
       }
     }
-    Promise.all(deleteFiles.bind(this)().concat(saveFiles.bind(this)())).then(function() {
+    Promise.all(deleteFiles.bind(this)().concat(saveFiles.bind(this)())).then(function(results) {
+      console.log(self);
+      var r = [];
+      self._state.curFiles.forEach(function(x) {
+        r.push(x.id)
+      });
+      results.find(function(x) {
+        return x.hasOwnProperty('add')
+      }).add.forEach(function(x) {
+        r.push(x)
+      });
+      results.filter(function(x) {
+        return x.hasOwnProperty('del')
+      }).forEach(function(x) {
+        r = r.filter(function(i) {
+          return i != x.del;
+        })
+      });
       //debugger;
-      fnc();
+      $patchChanges("newFiles");
+      $patchChanges("existingFiles");
+      fnc(r);
     }).catch(function(err) {
-      fnc(err);
+      $patchChanges("newFiles");
+      $patchChanges("existingFiles");
+      fnc(null, err);
     });
   }
 
@@ -157,8 +183,17 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
                 message: err
               });
             } else {
+              //debugger;
+              var delFile = self._state.delFiles.find(function(x) {
+                return res.message.indexOf(x.filename) > 0;
+              });
+              self._state.delFiles.find(function(x) {
+                return res.message.indexOf(x.filename) > 0;
+              })
               console.log(res);
-              resolve();
+              resolve({
+                del: (delFile ? delFile.id : null)
+              });
             }
           });
         })
@@ -184,8 +219,16 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
           var response = JSON.parse(this.responseText);
 
           if (this.status < 300) {
+            //debugger;
+            var results = [];
+            response.forEach(function(x) {
+              results.push(x.id);
+            });
             console.log("Upload success.");
-            resolve();
+            self._state.newFiles.length = 0;
+            resolve({
+              add: results
+            });
           } else {
             console.log(response.message);
             reject({
