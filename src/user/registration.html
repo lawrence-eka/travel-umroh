@@ -1,7 +1,7 @@
 <inject from="/user/userProfile" name="profile"></inject>
 
 <div class="container small-margin-top">
-    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()" error.bind="@error" onSaved.bind="@onSaved"></profile>
+    <profile save.trigger="register(event)" cancel.trigger="cancelRegistration()" error.bind="@error" save.trigger="onSave(event)"></profile>
 </div>
 
 <script>
@@ -19,7 +19,7 @@
         window.location.hash = "#app";
     }
 
-    function register(){
+    function onSave(){
         window.location.hash = '#app/search-package.home';
     }
 </script>

@@ -47,7 +47,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
     window.location.hash = "#app";
   }
 
-  function register() {
+  function onSave() {
     window.location.hash = '#app/search-package.home';
   }
 
@@ -91,7 +91,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
             _props['on' + eventName](event);
           }
         };
-        register.bind(self)(event);
+        onSave.bind(self)(event);
       },
       "oncancel": function(event) {
         var self = {
@@ -113,8 +113,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
         };
         cancelRegistration.bind(self)();
       },
-      "error": _state.error,
-      "onSaved": _state.onSaved
+      "error": _state.error
     };
     _context["profile"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");
