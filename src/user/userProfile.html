@@ -193,12 +193,14 @@
 	    } else {
 		    profile.password = undefined;
 		    storage.me.save(profile, storage.me.isRemembered());
-		    this.state.onSave.publish(afterSaveAttachments.bind(this));
+		    debugger;
+		    if(this.state.onSave.listeners.length) this.state.onSave.publish(afterSaveAttachments.bind(this));
+		    else afterSaveAttachments.bind(this)();
 	    }
     }
 
     function afterSaveAttachments(result, error){
-    	//debugger;
+    	debugger;
     	if(error) {
     		debugger;
 		    this.state.infoText = "";

@@ -32,6 +32,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
 
   function initState(props) {
     var self = this;
+    debugger;
     if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
     if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
     debugger;
@@ -126,7 +127,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
 
   function onSaveEvent(fnc) {
     console.log('preparing all promises');
-    //debugger;
+    debugger;
     var self = this;
     //debugger;
     if (this._state.curFiles.length + this._state.newFiles.length - this._state.delFiles.length > this._state.maxFile) {

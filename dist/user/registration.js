@@ -48,6 +48,7 @@ yalla.framework.addComponent("/dist/user/registration", (function() {
   }
 
   function onSave() {
+    debugger;
     window.location.hash = '#app/search-package.home';
   }
 
