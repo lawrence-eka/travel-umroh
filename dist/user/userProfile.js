@@ -98,6 +98,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     profile.email = form.elements.email.value;
     profile.phone = form.elements.phone.value;
     profile.username = form.elements.email.value;
+    profile.isMember = form.elements.isMember.checked;
 
     if (profile.username) profile.username = profile.username.toLowerCase();
     if (form.elements.password.value != '') profile.password = form.elements.password.value;
@@ -105,12 +106,12 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     //debugger;
     profile.address1 = form.elements.address1.value;
     profile.city = form.elements.city.value;
-    if ((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
-      profile.isAdmin = (form.elements.isAdmin.checked);
-    } else {
-      delete profile.isAdmin;
-      if (profile.needApproval) delete profile.needApproval.isAdmin;
-    }
+    //        if((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
+    //        	profile.isAdmin = (form.elements.isAdmin.checked);
+    //        } else {
+    //        	delete profile.isAdmin;
+    //	        if(profile.needApproval) delete profile.needApproval.isAdmin;
+    //        }
 
     if ((profile.isTravelAgent ? true : false) != form.elements.isTravelAgent.checked) {
       profile.isTravelAgent = (form.elements.isTravelAgent.checked);
@@ -119,7 +120,8 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
       if (profile.needApproval) delete profile.needApproval.isTravelAgent;
     }
 
-    if (profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
+    //	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
+    if (profile.needApproval && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
       profile.needApproval = null;
     }
     register.bind(this)(profile);
@@ -130,16 +132,16 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   }
 
   function register(profile) {
-    //debugger;
+    debugger;
     //profile = profile.data;
     var self = this;
     if (!profile.id) {
       dpd.users.post(profile, function(user, err) {
         if (err) {
-          this.state.infoText = "";
+          debugger;
+          self.state.infoText = "";
           $patchChanges("info");
-          self.state.error = err;
-          $patchChanges();
+          self.state.alert.alert(err);
         } else {
           dpd.users.login({
             "username": profile.username,
@@ -271,13 +273,6 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               var _params = {
-                "type": "hidden",
-                "prompt": "username",
-                "name": "username",
-                "value": data.username
-              };
-              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-              var _params = {
                 "type": "email",
                 "prompt": "Email",
                 "name": "email",
@@ -307,35 +302,13 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                 "value": data.city
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-              if (!gotNeedApproval(data, 'isAdmin')) {
-                _elementOpenStart("div", "");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "checkbox",
-                  "prompt": "Administrator",
-                  "name": "isAdmin",
-                  "checked": data.isAdmin
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-              }
-              if (gotNeedApproval(data, 'isAdmin')) {
-                _elementOpenStart("div", "");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "checkbox",
-                  "prompt": "Administrator*",
-                  "name": "isAdmin",
-                  "checked": data.needApproval.isAdmin
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                var _params = {
-                  "type": "label",
-                  "prompt": ('*' + (data.needApproval.isAdmin ? 'Request for' : 'Revokal of') + ' Admin Access under review')
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-              }
+              var _params = {
+                "type": "checkbox",
+                "prompt": "Member",
+                "name": "isMember",
+                "checked": data.isMember
+              };
+              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               if (!gotNeedApproval(data, 'isTravelAgent')) {
                 _elementOpenStart("div", "");
                 _elementOpenEnd("div");

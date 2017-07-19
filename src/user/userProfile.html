@@ -16,13 +16,17 @@
                     <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName"></entry>
                     <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName"></entry>
 
-                    <entry type="hidden" prompt="username" name="username" value.bind="data.username"></entry>
+                    <!-- <entry type="hidden" prompt="username" name="username" value.bind="data.username"></entry> -->
                     <entry type="email" prompt="Email" name="email" value.bind="data.email" alias="username" alert.bind="@alert"></entry>
                     <entry type="text" prompt="Phone" name="phone" value.bind="data.phone"></entry>
 
                     <entry type="textarea" prompt="Address" name="address1" value.bind="data.address1"></entry>
 
                     <entry type="text" prompt="City" name="city" value.bind="data.city"></entry>
+
+                    <entry type="checkbox" prompt="Member" name="isMember" checked.bind="data.isMember"></entry>
+
+                    <!--
 
                     <div if.bind="!gotNeedApproval(data, 'isAdmin')">
                         <entry type="checkbox" prompt="Administrator" name="isAdmin" checked.bind="data.isAdmin"></entry>
@@ -31,6 +35,7 @@
                         <entry type="checkbox" prompt="Administrator*" name="isAdmin" checked.bind="data.needApproval.isAdmin"></entry>
                         <entry type="label" prompt.bind="('*' + (data.needApproval.isAdmin ? 'Request for' : 'Revokal of') + ' Admin Access under review')"></entry>
                     </div>
+                    -->
                     <div if.bind="!gotNeedApproval(data, 'isTravelAgent')">
                         <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
                     </div>
@@ -125,7 +130,8 @@
         profile.lastName = form.elements.lastName.value;
         profile.email = form.elements.email.value;
         profile.phone = form.elements.phone.value;
-        profile.username = form.elements.email.value;
+	    profile.username = form.elements.email.value;
+	    profile.isMember = form.elements.isMember.checked;
 
         if(profile.username) profile.username = profile.username.toLowerCase();
         if(form.elements.password.value != '') profile.password = form.elements.password.value;
@@ -133,12 +139,12 @@
         //debugger;
         profile.address1 = form.elements.address1.value;
         profile.city = form.elements.city.value;
-        if((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
-        	profile.isAdmin = (form.elements.isAdmin.checked);
-        } else {
-        	delete profile.isAdmin;
-	        if(profile.needApproval) delete profile.needApproval.isAdmin;
-        }
+//        if((profile.isAdmin ? true : false) != form.elements.isAdmin.checked) {
+//        	profile.isAdmin = (form.elements.isAdmin.checked);
+//        } else {
+//        	delete profile.isAdmin;
+//	        if(profile.needApproval) delete profile.needApproval.isAdmin;
+//        }
 
 	    if((profile.isTravelAgent ? true : false) != form.elements.isTravelAgent.checked) {
         	profile.isTravelAgent = (form.elements.isTravelAgent.checked);
@@ -147,7 +153,8 @@
 		    if(profile.needApproval) delete profile.needApproval.isTravelAgent;
 	    }
 
-	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
+//	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isAdmin') && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
+	    if(profile.needApproval && !profile.needApproval.hasOwnProperty('isTravelAgent')) {
 	    	profile.needApproval = null;
         }
         register.bind(this)(profile);
@@ -158,16 +165,16 @@
     }
 
     function register(profile) {
-	    //debugger;
+	    debugger;
 	    //profile = profile.data;
 	    var self = this;
 	    if(!profile.id) {
 		    dpd.users.post(profile, function (user, err) {
 			    if (err) {
-				    this.state.infoText = "";
+			    	debugger;
+				    self.state.infoText = "";
 				    $patchChanges("info");
-				    self.state.error = err;
-				    $patchChanges();
+				    self.state.alert.alert(err);
 			    } else {
 				    dpd.users.login({"username": profile.username, "password": profile.password}, function (user, err) {
                         profile.sid = user.id;

@@ -29,6 +29,7 @@ function Alert(alertType, patchFunction, refName) {
     }
 
     self.toArrayofMessages = function(message) {
+    	debugger;
 		var result = [];
 		if(!message) {
 			result = [];
