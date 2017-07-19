@@ -40,6 +40,11 @@ yalla.framework.addComponent("/dist/package/home", (function() {
     }
   }
 
+  function onPropertyChange(props) {
+    debugger;
+    if (props.isEditMode) this.state.isEditMode = props.isEditMode.newValue;
+  }
+
   function getTravelAgent() {
     var self = this;
     return new Promise(function(resolve) {
@@ -67,8 +72,9 @@ yalla.framework.addComponent("/dist/package/home", (function() {
   }
 
   function onAddPackage() {
+    debugger;
     this.state.editPackageId = null;
-    this.isEditMode = true;
+    this.state.isEditMode = true;
     $patchChanges();
   }
 

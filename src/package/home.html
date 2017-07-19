@@ -26,6 +26,11 @@
         }
     }
 
+    function onPropertyChange(props){
+	    debugger;
+	    if(props.isEditMode) this.state.isEditMode = props.isEditMode.newValue;
+    }
+
     function getTravelAgent() {
     	var self = this;
 	    return new Promise(function (resolve) {
@@ -53,8 +58,9 @@
     }
 
     function onAddPackage() {
+    	debugger;
     	this.state.editPackageId=null;
-	    this.isEditMode=true;
+	    this.state.isEditMode=true;
     	$patchChanges();
     }
 </script>

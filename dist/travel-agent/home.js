@@ -39,7 +39,13 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
     }
   }
 
+  function onPropertyChange(props) {
+    debugger;
+    if (props.isEditMode) this.state.isEditMode = props.isEditMode.newValue;
+  }
+
   function onAddTA() {
+    debugger;
     this.state.editTravelAgentId = null;
     this.state.isEditMode = true;
     $patchChanges();
