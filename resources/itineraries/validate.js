@@ -11,7 +11,7 @@ dpd.packages.get(this.packageId, function (pkg) {
     });
     
 });
-/*
+
 var fromDateType = "";
 var toDateType ="";
 var fromDateTime = null; 
@@ -76,10 +76,11 @@ var query = {
         }
     ]
 };
+/*
 dpd.itineraries.get(query, function (result) {
     errorIf(result && result.length > 0, "Date", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
 });
-
+*/
 
 dpd.packages.get(this.packageId, function (travelPackage) {
     if(travelPackage)
@@ -104,4 +105,3 @@ dpd.packages.get(this.packageId, function (travelPackage) {
         });
     }
 });
-*/

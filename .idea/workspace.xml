@@ -41,7 +41,7 @@
       <file leaf-file-name="edit-itinerary.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
+            <state relative-caret-position="644">
               <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
               <folding />
             </state>
@@ -470,12 +470,12 @@
       <workItem from="1499828067042" duration="17103000" />
       <workItem from="1499914736540" duration="16527000" />
       <workItem from="1500260598764" duration="21818000" />
-      <workItem from="1500295091949" duration="26784000" />
+      <workItem from="1500295091949" duration="27430000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="219559000" />
+    <option name="totallyTimeSpent" value="220205000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -910,7 +910,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
+        <state relative-caret-position="644">
           <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
           <folding />
         </state>
