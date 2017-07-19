@@ -13,7 +13,7 @@
     </div>
     <div if.bind="!$readonly">
         <form>
-            <entry type="file" name="addFile" change.trigger="onAddFile()"></entry>
+            <entry type="file" name="addFile" accept="image/jpeg, image/jpg" change.trigger="onAddFile()"></entry>
         </form>
     </div>
     <div class="container">
@@ -42,6 +42,16 @@
             name: props.name,
 		    error:null,
             attachmentList: props.attachmentList,
+            fileTypes:[
+	            {
+		            ext: '.jpg',
+		            type:'image/jpg',
+	            },
+	            {
+		            ext: '.jpeg',
+		            type:'image/jpeg',
+	            },
+            ]
         }
     }
 
@@ -65,7 +75,7 @@
             var q = {};
             if(self.state.userId) {
             	q.uploaderId = self.state.userId;
-            	q.id = {$in:self.state.attachmentList};
+            	if(self.state.attachmentList) q.id = {$in:self.state.attachmentList};
             }
 		    dpd[self.state.collection].get(q, function(data, statusCode, headers, config) {
 		    	debugger;
@@ -117,10 +127,19 @@
         	return;
         }
         console.log(self);
+        debugger;
 	    for(var i in this._state.newFiles) {
-		    //debugger;
-		    if (this._state.newFiles[i].size > this._state.maxSize) {
-			    fnc({
+            debugger;
+            var f = this._state.newFiles[i];
+		    if(!this._state.fileTypes.find(function(t) {return f.name.substr(f.name.length - t.ext.length).toLowerCase() == t.ext.toLowerCase()})) {
+		    	fnc(null, {
+				    name: this._state.name,
+				    message: 'The file type of ' + this._state.newFiles[i].name +' is not supported.',
+                });
+		    	return;
+            }
+            else if (this._state.newFiles[i].size > this._state.maxSize) {
+			    fnc(null, {
 				    name: this._state.name,
 				    message: this._state.newFiles[i].name + " (" + this._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + this._state.maxSize.toGMKByte() + ""
 			    });

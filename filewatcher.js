@@ -119,23 +119,22 @@ function fileAction(path, event) {
 			if ((!u) || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
 				//console.log('Copying', path,'...');
 				fse.copy(path, newPath, function (err) {
+					var filename = path.substr(path.lastIndexOf('\\') + 1);
 					if (err) console.log('Error during copying', path, 'to', newPath, 'for', event, 'event:', err);
-					else if (!q) console.log('path:', path, 'was copied to', newPath);
+					else if (!q) console.log(path,'copied to', newPath.split(filename)[0]);
 				});
 			} else {
 				fse.readFile(path, "utf8", function (err, data) {
 					if (err) {console.log('Error while trying to read',path,':',err);}
 					else {
-						//console.log('Uglifying', path,'...');
 						var uglified = uglifyJS.minify(data, uglifyOptions);
-						//console.log(path,' uglified, writing...');
 						fse.ensureFile(newPath, function(file, err){
 							if(err) console.log('Error during ensuring that', newPath, 'exists:', err);
 							else {
 								fse.writeFile(newPath, uglified.code, function (err) {
+									var filename = path.substr(path.lastIndexOf('\\') + 1);
 									if (err) console.log('Error during uglifying', path, 'to', newPath, 'for', event, 'event:', err);
-									else if (!q) console.log('path:', path, 'was uglified to', newPath);
-									//console.log('path:', path, 'was uglified to', newPath);
+									else if (!q) console.log(path,'uglified to', newPath.split(filename)[0]);
 								});
 							}
 						});
@@ -171,14 +170,14 @@ function actionSet(path, event, time) {
 }
 
 function watch() {
-	console.log('Now monitoring file changes in folder', m);
+	console.log('Monitoring file changes in folder', m);
 	if(c.length) console.log((u? 'uglify' : 'copy'),'them to', c);
 	console.log('and write the timestamp into', w, '...');
 
 	var chokidarOptions = {
 		persistent: true,
 		recursive: true,
-		ignoreInitial: false,
+		ignoreInitial: !f,
 		awaitWriteFinish: {
 			stabilityThreshold: 2000,
 		},
@@ -190,11 +189,9 @@ function watch() {
 			actionSet(path, "add", (stats ? stats.mtime : Date.now()));
 		})
 		.on("unlink", function (path, stats) {
-			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now());
 			actionSet(path, "delete", (stats ? stats.mtime : Date.now()));
 		})
 		.on("unlinkDir", function (path, stats) {
-			console.log('stats:', stats, '; now:', Date.now(), ';getTime:', Date.now());
 			actionSet(path, "delete", (stats ? stats.mtime : Date.now()));
 		})
 		.on("change", function (path, stats) {

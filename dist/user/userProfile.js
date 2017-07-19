@@ -175,6 +175,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
   function afterSaveAttachments(result, error) {
     //debugger;
     if (error) {
+      debugger;
       this.state.infoText = "";
       $patchChanges("info");
       this.state.alert.alert(error);
@@ -415,7 +416,7 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                   "userId": data.id,
                   "prompt": "Proof of Travel Agency",
                   "collection": "docstravelagent",
-                  "folder": "upload/docstravelagent",
+                  "folder": "upload/docstravelagent/",
                   "onSave": _state.onSave,
                   "onsaved": function(event) {
                     var self = {

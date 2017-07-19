@@ -1,0 +1,1 @@
+node filewatcher.js -m asset -c public\asset -m dist -c public\dist -w public\version.ver -f -u

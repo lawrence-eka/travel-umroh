@@ -173,6 +173,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _attr("value", setValue.bind(self)(_props.value, _props.min, _props.max));
       _attr("min", _props.min);
       _attr("max", _props.max);
+      _attr("accept", _props.accept);
       _attr("onfocusout", function(event) {
         var self = {
           target: event.target

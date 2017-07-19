@@ -91,6 +91,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "glyph": _props.glyph,
         "margin": _props.margin,
         "deleted": _props.deleted,
+        "accept": _props.accept,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -179,6 +180,7 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "glyph": _props.glyph,
         "margin": _props.margin,
         "deleted": _props.deleted,
+        "accept": _props.accept,
         "onchange": function(event) {
           var self = {
             target: event.target

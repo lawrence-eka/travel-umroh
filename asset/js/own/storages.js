@@ -343,5 +343,19 @@ function Loader() {
 	this.unloadedAssets = this.assets.length;
 };
 
+function authenticate(path){
+   return new Promise(function(resolve){
+        var specialAddress = [
+            "#user.login-form",
+            "#user.forgot-password",
+            "#user.reset-password",
+           "#user.registration",
+           '#common.privacyPolicy',
+       ];
+    console.log('Path = ', path);
+       resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
+   });
+}
+
 var scriptCache = new ScriptCache();
 var loader = new Loader();

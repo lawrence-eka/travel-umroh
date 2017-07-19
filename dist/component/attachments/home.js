@@ -48,6 +48,15 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       name: props.name,
       error: null,
       attachmentList: props.attachmentList,
+      fileTypes: [{
+          ext: '.jpg',
+          type: 'image/jpg',
+        },
+        {
+          ext: '.jpeg',
+          type: 'image/jpeg',
+        },
+      ]
     }
   }
 
@@ -71,7 +80,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       var q = {};
       if (self.state.userId) {
         q.uploaderId = self.state.userId;
-        q.id = {
+        if (self.state.attachmentList) q.id = {
           $in: self.state.attachmentList
         };
       }
@@ -128,10 +137,20 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       return;
     }
     console.log(self);
+    debugger;
     for (var i in this._state.newFiles) {
-      //debugger;
-      if (this._state.newFiles[i].size > this._state.maxSize) {
-        fnc({
+      debugger;
+      var f = this._state.newFiles[i];
+      if (!this._state.fileTypes.find(function(t) {
+          return f.name.substr(f.name.length - t.ext.length).toLowerCase() == t.ext.toLowerCase()
+        })) {
+        fnc(null, {
+          name: this._state.name,
+          message: 'The file type of ' + this._state.newFiles[i].name + ' is not supported.',
+        });
+        return;
+      } else if (this._state.newFiles[i].size > this._state.maxSize) {
+        fnc(null, {
           name: this._state.name,
           message: this._state.newFiles[i].name + " (" + this._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + this._state.maxSize.toGMKByte() + ""
         });
@@ -388,6 +407,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
           var _params = {
             "type": "file",
             "name": "addFile",
+            "accept": "image/jpeg, image/jpg",
             "onchange": function(event) {
               var self = {
                 target: event.target
