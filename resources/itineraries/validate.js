@@ -11,7 +11,7 @@ dpd.packages.get(this.packageId, function (pkg) {
     });
     
 });
-
+/*
 var fromDateType = "";
 var toDateType ="";
 var fromDateTime = null; 
@@ -104,3 +104,4 @@ dpd.packages.get(this.packageId, function (travelPackage) {
         });
     }
 });
+*/
