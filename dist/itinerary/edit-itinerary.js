@@ -113,8 +113,8 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
     if (this.state.entryType == 'Hotel') {
       itinerary.entry.hotel = form.elements.hotel.value;
       itinerary.entry.city = form.elements.city.value;
-      itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).setHours(12, 0, 1);
-      itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).setHours(11, 59, 59);
+      itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).setHours(23, 35, 35);
+      itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).setHours(0, 0, 1);
     } //checkout 31 des - checkin 31 des
     else {
       itinerary.entry.transport = form.elements.transport.value;
