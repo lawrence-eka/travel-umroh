@@ -163,13 +163,15 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       self._state.curFiles.forEach(function(x) {
         r.push(x.id)
       });
-      results.find(function(x) {
-        return x.hasOwnProperty('add')
-      }).add.forEach(function(x) {
+      debugger;
+      var added = results.find(function(x) {
+        return (x && x.hasOwnProperty('add'))
+      });
+      if (added) added.add.forEach(function(x) {
         r.push(x)
       });
       results.filter(function(x) {
-        return x.hasOwnProperty('del')
+        return (x && x.hasOwnProperty('del'))
       }).forEach(function(x) {
         r = r.filter(function(i) {
           return i != x.del;
