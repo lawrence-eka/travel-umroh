@@ -31,7 +31,6 @@ if(!internal && !query.checkIsLastAdmin && this.needApproval && this.needApprova
 {
 
     errorIf(!me.isAdmin, "credential", "Access unauthorized");
-    console.log("on validate", this);
     if(this.needApproval.isApproved)
     {
         this.isTravelAgent = (this.needApproval.hasOwnProperty("isTravelAgent") ? this.needApproval.isTravelAgent : this.isTravelAgent);

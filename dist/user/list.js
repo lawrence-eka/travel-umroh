@@ -30,7 +30,7 @@ yalla.framework.addComponent("/dist/user/list", (function() {
 
   function onPropertyChange(event) {};
 
-  const nbsp = " ";
+  var nbsp = " ";
 
   function initState(props) {
     return {
@@ -124,72 +124,77 @@ yalla.framework.addComponent("/dist/user/list", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        var _array = data || [];
-        _array.forEach(function(user) {
-          var _params = {
-            "nofooter": "nofooter",
-            "onclick": function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = _component;
-              self.component._state = self.component._state || {};
-              self.state = self.component._state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
+        if (data) {
+          _elementOpenStart("span", "");
+          _elementOpenEnd("span");
+          var _array = data || [];
+          _array.forEach(function(user) {
+            var _params = {
+              "nofooter": "nofooter",
+              "onclick": function(event) {
+                var self = {
+                  target: event.target
+                };
+                self.properties = _props;
+                if ('elements' in self.target) {
+                  self.elements = self.target.elements;
                 }
-              };
-              onManageUser.bind(self)(user.id);
-            }
-          };
-          _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-            if (slotName === "title") {
-              _elementOpenStart("div", "");
-              _elementOpenEnd("div");
-              _elementOpenStart("strong", "");
-              _elementOpenEnd("strong");
-              _text("" + ((user.firstName + ' ' + user.lastName).toTitleCase()) + "");
-              _elementClose("strong");
-              _elementClose("div");
-            }
-            if (slotName === "body") {
-              _elementOpenStart("div", "");
-              _elementOpenEnd("div");
-              _text("Email:" + (nbsp) + "" + (user.email) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Phone:" + (nbsp) + "" + (user.phone) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Address:" + (nbsp) + "" + (user.address1) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("City:" + (nbsp) + "" + (user.city) + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Admin:" + (nbsp) + "" + (user.isAdmin ? 'YES' : 'NO') + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _text("Travel Agent:" + (nbsp) + "" + (user.isTravelAgent ? 'YES' : 'NO') + "");
-              _elementOpenStart("br", "");
-              _elementOpenEnd("br");
-              _elementClose("br");
-              _elementClose("div");
-            }
+                self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+                self.component = _component;
+                self.component._state = self.component._state || {};
+                self.state = self.component._state;
+                self.emitEvent = function(eventName, data) {
+                  var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                  if ('on' + eventName in _props) {
+                    _props['on' + eventName](event);
+                  }
+                };
+                onManageUser.bind(self)(user.id);
+              }
+            };
+            _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+              if (slotName === "title") {
+                _elementOpenStart("div", "");
+                _elementOpenEnd("div");
+                _elementOpenStart("strong", "");
+                _elementOpenEnd("strong");
+                _text("" + ((user.firstName + ' ' + user.lastName).toTitleCase()) + "");
+                _elementClose("strong");
+                _elementClose("div");
+              }
+              if (slotName === "body") {
+                _elementOpenStart("div", "");
+                _elementOpenEnd("div");
+                _text("Email:" + (nbsp) + "" + (user.email) + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _text("Phone:" + (nbsp) + "" + (user.phone) + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _text("Address:" + (nbsp) + "" + (user.address1) + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _text("City:" + (nbsp) + "" + (user.city) + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _text("Admin:" + (nbsp) + "" + (user.isAdmin ? 'YES' : 'NO') + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _text("Travel Agent:" + (nbsp) + "" + (user.isTravelAgent ? 'YES' : 'NO') + "");
+                _elementOpenStart("br", "");
+                _elementOpenEnd("br");
+                _elementClose("br");
+                _elementClose("div");
+              }
+            });
           });
-        });
+          _elementClose("span");
+        }
       }
       var promise = searchUsers.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {

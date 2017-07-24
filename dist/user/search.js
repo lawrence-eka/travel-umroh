@@ -86,7 +86,7 @@ yalla.framework.addComponent("/dist/user/search", (function() {
     }
     _component._properties = _props;
     var _params = {
-      "title": "Search User",
+      "title": "Search for User",
       "footer": _state.recordsFound
     };
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {

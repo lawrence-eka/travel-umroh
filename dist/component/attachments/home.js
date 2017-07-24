@@ -49,15 +49,6 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
       name: props.name,
       error: null,
       attachmentList: props.attachmentList,
-      fileTypes: [{
-          ext: '.jpg',
-          type: 'image/jpg',
-        },
-        {
-          ext: '.jpeg',
-          type: 'image/jpeg',
-        },
-      ]
     }
   }
 
@@ -142,15 +133,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     for (var i in this._state.newFiles) {
       debugger;
       var f = this._state.newFiles[i];
-      if (!this._state.fileTypes.find(function(t) {
-          return f.name.substr(f.name.length - t.ext.length).toLowerCase() == t.ext.toLowerCase()
-        })) {
-        fnc(null, {
-          name: this._state.name,
-          message: 'The file type of ' + this._state.newFiles[i].name + ' is not supported.',
-        });
-        return;
-      } else if (this._state.newFiles[i].size > this._state.maxSize) {
+      if (this._state.newFiles[i].size > this._state.maxSize) {
         fnc(null, {
           name: this._state.name,
           message: this._state.newFiles[i].name + " (" + this._state.newFiles[i].size.toGMKByte() + ") is too large. Max size is " + this._state.maxSize.toGMKByte() + ""
@@ -228,44 +211,88 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     var self = this;
     console.log('promise to upload');
     return [new Promise(function(resolve, reject) {
-      var fd = new FormData()
+      var fd = new FormData();
       //debugger;
       if (self._state.newFiles.length > 0) {
+        /* new way started */
+        debugger;
+        var promises = [];
         for (var i in self._state.newFiles) {
-          //debugger;
-          fd.append("uploadedFile", self._state.newFiles[i])
+          var ip = new ImageProcessor();
+          promises.push(ip.toJpegBlob(self._state.newFiles[i]));
         }
-        var xhr = new XMLHttpRequest();
-        xhr.open('PUT', '/' + self._state.collection);
-        xhr.onload = function() {
-          var response = JSON.parse(this.responseText);
+        Promise.all(promises)
+          .then(function(imgs) {
+            debugger;
+            for (var i in imgs) {
+              fd.append("uploadedFile", imgs[i].blob, imgs[i].filename.name)
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', '/' + self._state.collection);
+            xhr.onload = function() {
+              var response = JSON.parse(this.responseText);
 
-          if (this.status < 300) {
-            //debugger;
-            var results = [];
-            response.forEach(function(x) {
-              results.push(x.id);
-            });
-            console.log("Upload success.");
-            self._state.newFiles.length = 0;
-            resolve({
-              add: results
-            });
-          } else {
-            console.log(response.message);
+              if (this.status < 300) {
+                //debugger;
+                var results = [];
+                response.forEach(function(x) {
+                  results.push(x.id);
+                });
+                console.log("Upload success.");
+                self._state.newFiles.length = 0;
+                resolve({
+                  add: results
+                });
+              } else {
+                console.log(response.message);
+                reject({
+                  name: self._state.name,
+                  message: response.message
+                });
+              }
+            };
+            xhr.onerror = function(err) {
+              reject({
+                name: self._state.name,
+                message: err
+              });
+            }
+            xhr.send(fd);
+          })
+          .catch(function(err) {
             reject({
               name: self._state.name,
-              message: response.message
+              message: err
             });
-          }
-        };
-        xhr.onerror = function(err) {
-          reject({
-            name: self._state.name,
-            message: err
           });
-        }
-        xhr.send(fd);
+
+        /* new way ended */
+        /* old way started
+        			    for(var i in self._state.newFiles) {
+                            fd.append("uploadedFile", self._state.newFiles[i])
+        			    }
+        			    var xhr = new XMLHttpRequest();
+        			    xhr.open('PUT', '/' + self._state.collection);
+        			    xhr.onload = function () {
+        				    var response = JSON.parse(this.responseText);
+
+        				    if(this.status < 300) {
+        				    	//debugger;
+        				    	var results = [];
+        					    response.forEach(function(x) {results.push(x.id);});
+        				    	console.log("Upload success.");
+        				    	self._state.newFiles.length = 0;
+        					    resolve({add: results});
+        				    } else {
+        					    console.log(response.message);
+        					    reject({name: self._state.name, message: response.message});
+        				    }
+        			    };
+        			    xhr.onerror = function (err) {
+                            reject({name: self._state.name, message: err});
+        			    }
+        			    xhr.send(fd);
+         old way ended */
       } else {
         console.log("Nothing to upload.");
         resolve();
@@ -410,7 +437,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
           var _params = {
             "type": "file",
             "name": "addFile",
-            "accept": "image/jpeg, image/jpg",
+            "accept": "image/*",
             "onchange": function(event) {
               var self = {
                 target: event.target

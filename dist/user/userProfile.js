@@ -415,8 +415,8 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
                   },
                   "name": "docsTravelAgent",
                   "alert": _state.alert,
-                  "maxFile": "3",
-                  "maxSize": "100k"
+                  "maxFile": "10",
+                  "maxSize": "100mb"
                 };
                 _context["attachments"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                 _elementClose("div");

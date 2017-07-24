@@ -7,28 +7,30 @@
         <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
     </span>
     <div data.load="searchUsers()">
-        <panel for.each="user in data" nofooter click.trigger="onManageUser(user.id)">
-            <div slot.name="title">
-                <strong>{{(user.firstName + ' ' + user.lastName).toTitleCase()}}</strong>
-            </div>
-            <div slot.name="body">
-                Email:{{nbsp}}{{user.email}}<br/>
-                Phone:{{nbsp}}{{user.phone}}<br/>
-                Address:{{nbsp}}{{user.address1}}<br/>
-                City:{{nbsp}}{{user.city}}<br/>
-                Admin:{{nbsp}}{{user.isAdmin? 'YES' : 'NO'}}<br/>
-                Travel Agent:{{nbsp}}{{user.isTravelAgent? 'YES' : 'NO'}}<br/>
-            </div>
-        </panel>
+        <span if.bind="data">
+            <panel for.each="user in data" nofooter click.trigger="onManageUser(user.id)">
+                <div slot.name="title">
+                    <strong>{{(user.firstName + ' ' + user.lastName).toTitleCase()}}</strong>
+                </div>
+                <div slot.name="body">
+                    Email:{{nbsp}}{{user.email}}<br/>
+                    Phone:{{nbsp}}{{user.phone}}<br/>
+                    Address:{{nbsp}}{{user.address1}}<br/>
+                    City:{{nbsp}}{{user.city}}<br/>
+                    Admin:{{nbsp}}{{user.isAdmin? 'YES' : 'NO'}}<br/>
+                    Travel Agent:{{nbsp}}{{user.isTravelAgent? 'YES' : 'NO'}}<br/>
+                </div>
+            </panel>
+        </span>
     </div>
 </div>
 <script>
-    const nbsp = " ";
+    var nbsp = " ";
     function initState(props) {
     	return {
     		query: props.query,
             alert: new Alert(null, $patchChanges, "alert"),
-		    onRecordsFound: props.onRecordsFound,
+            onRecordsFound: props.onRecordsFound,
         }
     }
 
@@ -52,7 +54,8 @@
 				    self.state.onRecordsFound.publish(recordsFound);
 				    resolve(users);
 			    });
-		    } else {
+		    }
+		    else {
     			//debugger;
 			    self.state.onRecordsFound.publish('Please enter search parameter');
     			resolve(null);

@@ -46,7 +46,7 @@
                 </div>
                 <div ref.name="docsTravelAgent">
                     <div class="row" if.bind="@showDocsTravelAgent">
-                        <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" folder="upload/docstravelagent/" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsTravelAgent" alert.bind="@alert" maxFile="3" maxSize="100k"></attachments>
+                        <attachments userId.bind="data.id" prompt="Proof of Travel Agency" collection="docstravelagent" folder="upload/docstravelagent/" onSave.bind="@onSave" saved.trigger="afterSaveAttachments()" name="docsTravelAgent" alert.bind="@alert" maxFile="10" maxSize="100mb"></attachments>
                     </div>
                 </div>
                 <div class="row" ref.name="alert">

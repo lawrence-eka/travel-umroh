@@ -96,8 +96,16 @@ storage.me.erase = function() {
  * Created by Lawrence Eka on 04-Jul-2017.
  */
 function ScriptCache(currentVersion){
-	this.version = storage.local.read("scriptsVersion");
-	this.scripts = storage.local.read("scripts") ? JSON.parse(storage.local.read("scripts")) : {};
+	try {
+		this.version = JSON.parse(storage.local.read("scriptsVersion"));
+	} catch(e) {
+		this.version = {};
+	}
+	try{
+		this.scripts = JSON.parse(storage.local.read("scripts"));
+	} catch(e) {
+		this.scripts = {};
+	}
 	this.promises = {};
 	this.isReset = false;
 	this.addPromise = function (url, attribute, resolve, reject) {
@@ -132,16 +140,23 @@ function ScriptCache(currentVersion){
 	};
 
 	this.setVersion = function(currentVersion) {
-		if(this.version != currentVersion) {
-			console.log("New version detected.");
-			this.version = currentVersion;
-			this.scripts = {};
-			this.promises = {};
-			storage.local.save("scriptsVersion", currentVersion);
-			storage.local.erase("scripts");
-			this.isReset = true;
+		currentVersion = currentVersion || {};
+		currentVersion.version = currentVersion.version || "0001.01.01.00.00.00";
+		debugger;
+		for(var url in this.version) { //iterate this.version instead of currenvVersion to make sure that urls that are no longer used, hence no longer part of currentVersion, be deleted from the cache.
+			if(currentVersion[url] != this.version[url]) {
+				console.log("New version detected.");
+				delete this.scripts['./' + url];
+				delete this.scripts[url];
+			}
 		}
-		//else this.isReset = false;
+
+		this.version = currentVersion;
+		//this.scripts = {};
+		this.promises = {};
+		storage.local.save("scriptsVersion",  JSON.stringify(currentVersion));
+		storage.local.save("scripts", JSON.stringify(this.scripts));
+		this.isReset = true;
 	};
 
 	this.setScript = function(url, req, resolveCompleteData) {
@@ -189,6 +204,8 @@ function Loader() {
 			}
 		},
 		{seq: 1, file: "asset/js/own/yalla-patch.js"},
+		{seq: 2, file: "asset/js/vendor/pica.min.js"},
+		{seq: 3, file: "asset/js/own/imageProcessor.js"},
 	];
 	
 	this.loadAssets = function (seq) {

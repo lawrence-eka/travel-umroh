@@ -5,7 +5,9 @@
     <span ref.name="searchPanel">
         <search search.trigger="onSearch(event)" recordsFound.bind="@recordsFound"></search>
     </span>
+
     <list query.bind="@query" onRecordsFound.bind="@onRecordsFound" manageUser.trigger="onManageUser(event)"></list>
+
 </div>
 <script>
     function initState(props) {

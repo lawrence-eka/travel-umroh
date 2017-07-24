@@ -1,8 +1,12 @@
+var crypto = require('crypto');
 var uglifyJS = require('uglify-js');
 var chokidar = require('chokidar');
 var fse = require('fs-extra');
 var klaw = require('klaw');
+var zlib = require('zlib');
+
 var version = '';
+var algorithm = 'sha1';
 
 var uglifyOptions = {
 	compress: {
@@ -42,7 +46,7 @@ var u = false;
 var q = false;
 var f = false;
 var errors=[];
-
+var library={};
 
 function pad(dig, num, char){
 	num = num || 2;
@@ -111,65 +115,113 @@ function getNewPath(path) {
 	return c[mIndex] + path.split(inEffect)[1];
 }
 
+function getStats(path){
+	if(fse.existsSync(path)) return fse.statSync(path);
+	else return null;
+}
 
+function writeLibrary(key, val) {
+	library[key] = val;
+	fse.writeFile(w, 'var ver = ' + JSON.stringify(library));
+
+	var gzip = zlib.createGzip();
+	var inp = fse.createReadStream(w);
+	var out = fse.createWriteStream(w + '.gzip');
+	inp.pipe(gzip).pipe(out);
+}
+
+function hash(text) {
+	var shasum = crypto.createHash(algorithm);
+	shasum.update(text);
+	return shasum.digest('hex');
+}
+
+function isEqual(text1, text2) {
+	return hash(text1) == hash(text2);
+}
+
+function afterFileAction(err, action, path, newPath){
+	var filename = path.substr(path.lastIndexOf('\\') + 1);
+	if (err) console.log('Error during', (action == 'u' ? 'uglifying' : 'copying'), path, 'to', newPath, 'for', event, 'event:', err);
+	else if (!q) {
+		if(action != 's') console.log((action == 'u' ? 'Uglified' : 'Copied'), path, 'to', newPath.split(filename)[0]);
+		else console.log('Skipped', path);
+	}
+	var newStats = getStats(newPath);
+	if(newStats && newStats.mtime) writeLibrary(path.split('\\').join('/'), Math.floor(newStats.mtime / 1000));
+	else console.log(path,'has no stats, omited from library.');
+}
+
+function readFile(filename){
+	try{
+		return fse.readFileSync(filename, 'utf8');
+	}
+	catch(e){
+		return '';
+	}
+}
 function fileAction(path, event) {
 	if(c.length > 0) {
 		var newPath = getNewPath(path);
 		if(event == "add" || event == "change") {
-			if ((!u) || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
-				//console.log('Copying', path,'...');
-				fse.copy(path, newPath, function (err) {
-					var filename = path.substr(path.lastIndexOf('\\') + 1);
-					if (err) console.log('Error during copying', path, 'to', newPath, 'for', event, 'event:', err);
-					else if (!q) console.log(path,'copied to', newPath.split(filename)[0]);
-				});
-			} else {
-				fse.readFile(path, "utf8", function (err, data) {
-					if (err) {console.log('Error while trying to read',path,':',err);}
-					else {
-						var uglified = uglifyJS.minify(data, uglifyOptions);
-						fse.ensureFile(newPath, function(file, err){
-							if(err) console.log('Error during ensuring that', newPath, 'exists:', err);
-							else {
-								fse.writeFile(newPath, uglified.code, function (err) {
-									var filename = path.substr(path.lastIndexOf('\\') + 1);
-									if (err) console.log('Error during uglifying', path, 'to', newPath, 'for', event, 'event:', err);
-									else if (!q) console.log(path,'uglified to', newPath.split(filename)[0]);
-								});
-							}
-						});
-					}
-				});
+			var skipped = false;
+			var uglified = '';
+
+			if((!u)  || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
+				skipped = isEqual(readFile(path), readFile(newPath));
+			}
+			else {
+				var data = readFile(path);
+				uglified = uglifyJS.minify(data, uglifyOptions).code;
+				skipped = isEqual(uglified, readFile(newPath));
+			}
+
+			//console.log(oldStats);
+			if(skipped) {
+				afterFileAction(null, 's', path, newPath);
+			}
+			else if ((!u) || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
+				fse.copySync(path, newPath);
+				afterFileAction(null, 'c', path, newPath);
+			}
+			else {
+				fse.ensureFileSync(newPath);
+				fse.writeFileSync(newPath, uglified);
+				afterFileAction(null, 'u', path, newPath);
 			}
 		} else if(event == "delete") {
-			fse.remove(newPath, function(err){
-				if (err) console.log('Error during deleting', newPath, 'for', event, 'event of', path, ':', err);
-				else if(!q) console.log(newPath,'deleted');
-			});
+			fse.removeSync(newPath);
+			console.log(newPath,'deleted');
 		}
 	}
 }
 
 function timeStamp(path, time) {
-	if((path.indexOf('.js') > 0) && time) {
+	if(time) {
 		var ver = new Date(time);
-		var newVersion = ver.getFullYear() + '.' + pad(ver.getMonth() + 1) + '.' + pad(ver.getDate()) + '.' + pad(ver.getHours()) + '.' + pad(ver.getMinutes()) + '.' + pad(ver.getSeconds());
-		if (newVersion > version) {
-			version = newVersion;
-			console.log('Latest version:', version, ' from', path);
-			fse.writeFile(w, "var ver = {version:'" + version + "'}  ", function () {
-			});
+		if((path.indexOf('.js') > 0)) {
+			var newVersion = ver.getFullYear() + '.' + pad(ver.getMonth() + 1) + '.' + pad(ver.getDate()) + '.' + pad(ver.getHours()) + '.' + pad(ver.getMinutes()) + '.' + pad(ver.getSeconds());
+			if (newVersion > version) {
+				version = newVersion;
+				console.log('Latest version:', version, ' from', path);
+				writeLibrary('version', version);
+				writeLibrary('dpd.js', Math.floor(time / 1000));
+			}
 		}
 	}
 }
 
 function actionSet(path, event, time) {
 	//console.log('action set for', path);
-	fileAction(path, event);
-	timeStamp(path, time);
+	return new Promise(function(resolve,reject){
+		fileAction(path, event);
+		timeStamp(path, time);
+		resolve();
+	});
 }
 
 function watch() {
+	//isEqual('node node_modules/yallajs/yalla-cli.js -s src', readFile('C:\\workspace\\esnaadm\\not yalla.bat'));
 	console.log('Monitoring file changes in folder', m);
 	if(c.length) console.log((u? 'uglify' : 'copy'),'them to', c);
 	console.log('and write the timestamp into', w, '...');

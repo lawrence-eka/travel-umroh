@@ -2,9 +2,141 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/img/IMG_9236.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/img/IMG_9238.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/img/image5-blur.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/img/not-image5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/img/sample-1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/img/IMG_9236.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/img/IMG_9238.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/img/image5-blur.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/img/not-image5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/img/sample-1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/version.ver.gzip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/js/own/imageProcessor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dist/user/list.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/library.lib" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/asset/js/own/imageProcessor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/buangaja/config.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pica-master.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/Document (3).docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/Document.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/font-awesome.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/fontawesome-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/image-encoded.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/index.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/jquery.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/lie.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/lodash.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/picademo/pica.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/testUniqueId.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yalla.bat" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/asset/js/pica/pica.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/pica.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/asset/js/pica/pica.min.js" afterPath="$PROJECT_DIR$/asset/js/vendor/pica.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/picademo/pica.min.js" afterPath="$PROJECT_DIR$/asset/js/vendor/pica.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.dpd/pids/mongod" afterPath="$PROJECT_DIR$/.dpd/pids/mongod" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/css/custom-style.css" afterPath="$PROJECT_DIR$/asset/css/custom-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/asset/js/own/storages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/dist/component/attachments/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/search.js" afterPath="$PROJECT_DIR$/dist/user/search.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/dist/user/userProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/filewatcher.bat" afterPath="$PROJECT_DIR$/filewatcher.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/filewatcher.js" afterPath="$PROJECT_DIR$/filewatcher.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" afterPath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/npm.js" afterPath="$PROJECT_DIR$/public/asset/js/npm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/alert.js" afterPath="$PROJECT_DIR$/public/asset/js/own/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/datePair.js" afterPath="$PROJECT_DIR$/public/asset/js/own/datePair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/event.js" afterPath="$PROJECT_DIR$/public/asset/js/own/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" afterPath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/public/asset/js/own/storages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/public/asset/js/own/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/application.js" afterPath="$PROJECT_DIR$/public/asset/js/src/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/customizer.js" afterPath="$PROJECT_DIR$/public/asset/js/src/customizer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/app.js" afterPath="$PROJECT_DIR$/public/dist/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" afterPath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/card-booking.js" afterPath="$PROJECT_DIR$/public/dist/booking/card-booking.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/home.js" afterPath="$PROJECT_DIR$/public/dist/booking/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/list.js" afterPath="$PROJECT_DIR$/public/dist/booking/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" afterPath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/card.js" afterPath="$PROJECT_DIR$/public/dist/comp/card.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/content.js" afterPath="$PROJECT_DIR$/public/dist/comp/content.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/drawer.js" afterPath="$PROJECT_DIR$/public/dist/comp/drawer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/header.js" afterPath="$PROJECT_DIR$/public/dist/comp/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" afterPath="$PROJECT_DIR$/public/dist/comp/itinerary/itinerary-page.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/comp/shell.js" afterPath="$PROJECT_DIR$/public/dist/comp/shell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/alert.js" afterPath="$PROJECT_DIR$/public/dist/component/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/list.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry-naked.js" afterPath="$PROJECT_DIR$/public/dist/component/entry-naked.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/footer.js" afterPath="$PROJECT_DIR$/public/dist/component/footer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/header.js" afterPath="$PROJECT_DIR$/public/dist/component/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/panel.js" afterPath="$PROJECT_DIR$/public/dist/component/panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/ppLink.js" afterPath="$PROJECT_DIR$/public/dist/component/ppLink.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/index.js" afterPath="$PROJECT_DIR$/public/dist/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/list.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/card-package.js" afterPath="$PROJECT_DIR$/public/dist/package/card-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/public/dist/package/edit-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/home.js" afterPath="$PROJECT_DIR$/public/dist/package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/list.js" afterPath="$PROJECT_DIR$/public/dist/package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/home.js" afterPath="$PROJECT_DIR$/public/dist/passenger/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/home.js" afterPath="$PROJECT_DIR$/public/dist/search-package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/list.js" afterPath="$PROJECT_DIR$/public/dist/search-package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" afterPath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" afterPath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-one.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-one.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-two.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-two.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/event.js" afterPath="$PROJECT_DIR$/public/dist/test-event/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/parent.js" afterPath="$PROJECT_DIR$/public/dist/test-event/parent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test.js" afterPath="$PROJECT_DIR$/public/dist/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/home.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/list.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" afterPath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/forgot-password.js" afterPath="$PROJECT_DIR$/public/dist/user/forgot-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/home.js" afterPath="$PROJECT_DIR$/public/dist/user/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/list.js" afterPath="$PROJECT_DIR$/public/dist/user/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/login-form.js" afterPath="$PROJECT_DIR$/public/dist/user/login-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myApprovals.js" afterPath="$PROJECT_DIR$/public/dist/user/myApprovals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/myProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/registration.js" afterPath="$PROJECT_DIR$/public/dist/user/registration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/reset-password.js" afterPath="$PROJECT_DIR$/public/dist/user/reset-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/search.js" afterPath="$PROJECT_DIR$/public/dist/user/search.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/userProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/version.ver" afterPath="$PROJECT_DIR$/public/version.ver" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/users/validate.js" afterPath="$PROJECT_DIR$/resources/users/validate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/attachments/home.html" afterPath="$PROJECT_DIR$/src/component/attachments/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/home.html" afterPath="$PROJECT_DIR$/src/user/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/list.html" afterPath="$PROJECT_DIR$/src/user/list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/search.html" afterPath="$PROJECT_DIR$/src/user/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/userProfile.html" afterPath="$PROJECT_DIR$/src/user/userProfile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yalla-compiler.bat" afterPath="$PROJECT_DIR$/yalla-compiler.bat" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,101 +154,71 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding>
-                <marker date="1500487087032" expanded="true" signature="789:1619" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userProfile.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="userProfile.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3668">
-              <caret line="176" column="47" lean-forward="false" selection-start-line="176" selection-start-column="47" selection-end-line="176" selection-end-column="47" />
+            <state relative-caret-position="110">
+              <caret line="47" column="68" lean-forward="false" selection-start-line="47" selection-start-column="68" selection-end-line="47" selection-end-column="68" />
               <folding>
-                <marker date="1500488117770" expanded="true" signature="558:2975" ph="..." />
-                <marker date="1500488117770" expanded="true" signature="4472:9589" ph="..." />
-                <marker date="1500488117770" expanded="true" signature="7099:7174" ph="{...}" />
-                <marker date="1500488117770" expanded="true" signature="7180:7301" ph="{...}" />
-                <marker date="1500488117770" expanded="true" signature="7739:7874" ph="{...}" />
-                <marker date="1500488117770" expanded="true" signature="8025:8065" ph="//..." />
+                <marker date="1500919385198" expanded="true" signature="7101:7176" ph="{...}" />
+                <marker date="1500919385198" expanded="true" signature="7182:7303" ph="{...}" />
+                <marker date="1500919385198" expanded="true" signature="7741:7876" ph="{...}" />
+                <marker date="1500919385198" expanded="true" signature="8027:8067" ph="//..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/user/search.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-528">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="alert.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/alert.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="alert.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/alert.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/package/home.html">
+        <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="62" column="19" lean-forward="false" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
+            <state relative-caret-position="973">
+              <caret line="127" column="12" lean-forward="false" selection-start-line="127" selection-start-column="12" selection-end-line="127" selection-end-column="12" />
+              <folding>
+                <marker date="1500916889794" expanded="true" signature="6489:8322" ph="/*...*/" />
+                <marker date="1500916889794" expanded="true" signature="8384:8465" ph="{...}" />
+                <marker date="1500916889794" expanded="true" signature="8591:9052" ph="{...}" />
+                <marker date="1500916889794" expanded="true" signature="8678:8916" ph="{...}" />
+                <marker date="1500916889794" expanded="true" signature="8922:9043" ph="{...}" />
+                <marker date="1500916889794" expanded="true" signature="9090:9168" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="515">
+              <caret line="29" column="10" lean-forward="false" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit-itinerary.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
+      <file leaf-file-name="filewatcher.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/filewatcher.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="141" column="94" lean-forward="false" selection-start-line="141" selection-start-column="94" selection-end-line="141" selection-end-column="94" />
-              <folding />
+            <state relative-caret-position="229">
+              <caret line="207" column="38" lean-forward="false" selection-start-line="207" selection-start-column="38" selection-end-line="207" selection-end-column="38" />
+              <folding>
+                <marker date="1500919061616" expanded="true" signature="4645:4687" ph="{...}" />
+                <marker date="1500919061616" expanded="true" signature="4735:4825" ph="{...}" />
+                <marker date="1500919061616" expanded="true" signature="4777:4825" ph="{...}" />
+                <marker date="1500919061616" expanded="true" signature="4894:4926" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-style.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
+      <file leaf-file-name="storages.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="68" column="18" lean-forward="false" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="card-travel-agent.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/travel-agent/card-travel-agent.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-              <folding />
+            <state relative-caret-position="353">
+              <caret line="190" column="30" lean-forward="true" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="30" />
+              <folding>
+                <marker date="1500912597350" expanded="true" signature="3467:4199" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,11 +235,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onready</find>
-      <find>.defaultComponent</find>
-      <find>debu</find>
-      <find>.start</find>
-      <find>assertNotNull</find>
       <find>setScript</find>
       <find>scriptSarc</find>
       <find>fulfillPromises</find>
@@ -163,6 +260,11 @@
       <find>existing</find>
       <find>username</find>
       <find>isAdmin</find>
+      <find>zlib</find>
+      <find>check</find>
+      <find>gzip</find>
+      <find>filetypes</find>
+      <find>/ 1000</find>
     </findStrings>
     <replaceStrings>
       <replace>gotActualPayment</replace>
@@ -174,11 +276,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/dist/index.js" />
-        <option value="$PROJECT_DIR$/src/app.html" />
-        <option value="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
-        <option value="$PROJECT_DIR$/public/asset/css/css-patch.css" />
         <option value="$PROJECT_DIR$/dist/yalla.js" />
         <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/asset/css/css-patch.css" />
@@ -211,20 +308,25 @@
         <option value="$PROJECT_DIR$/src/booking/paymentDetails.html" />
         <option value="$PROJECT_DIR$/src/booking/paymentConfirmation.html" />
         <option value="$PROJECT_DIR$/asset/js/own/utils.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
         <option value="$PROJECT_DIR$/src/component/entry.html" />
         <option value="$PROJECT_DIR$/src/component/entry-naked.html" />
-        <option value="$PROJECT_DIR$/filewatcher.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/user/login-form.html" />
         <option value="$PROJECT_DIR$/src/user/registration.html" />
-        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
         <option value="$PROJECT_DIR$/src/package/home.html" />
         <option value="$PROJECT_DIR$/src/itinerary/edit-itinerary.html" />
         <option value="$PROJECT_DIR$/src/travel-agent/home.html" />
         <option value="$PROJECT_DIR$/asset/js/own/alert.js" />
-        <option value="$PROJECT_DIR$/src/user/userProfile.html" />
         <option value="$PROJECT_DIR$/asset/css/custom-style.css" />
+        <option value="$PROJECT_DIR$/public/picademo/imageProcessor.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/user/search.html" />
+        <option value="$PROJECT_DIR$/public/picademo/index.html" />
+        <option value="$PROJECT_DIR$/public/picademo/index.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/imageProcessor.js" />
+        <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
+        <option value="$PROJECT_DIR$/filewatcher.js" />
+        <option value="$PROJECT_DIR$/src/user/userProfile.html" />
       </list>
     </option>
   </component>
@@ -277,6 +379,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -300,45 +403,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travel-umroh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="asset" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -351,13 +421,14 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\workspace\esnaadm\public\src\user" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Workspace\deployd\travel-umroh\asset\js\own" />
       <recent name="C:\Workspace\deployd\travel-umroh\public\dist" />
       <recent name="C:\Workspace\deployd\travel-umroh\public\asset\js\own" />
       <recent name="C:\workspace\esnaadm\public\asset\js\own" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\workspace\esnaadm\public\src\user" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.Dpd">
@@ -509,33 +580,38 @@
       <workItem from="1499828067042" duration="17103000" />
       <workItem from="1499914736540" duration="16527000" />
       <workItem from="1500260598764" duration="21818000" />
-      <workItem from="1500295091949" duration="31817000" />
+      <workItem from="1500295091949" duration="48739000" />
+      <workItem from="1500741172185" duration="4396000" />
+      <workItem from="1500779183373" duration="20791000" />
+      <workItem from="1500864762801" duration="4985000" />
+      <workItem from="1500869789296" duration="17052000" />
+      <workItem from="1500911730030" duration="6582000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224592000" />
+    <option name="totallyTimeSpent" value="295320000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.146875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14635417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07354555" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -551,49 +627,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itineraryList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/booking/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary-bulleted.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="38" column="16" lean-forward="false" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/prototypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/passenger/edit-passenger.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="22" lean-forward="false" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/passenger/card-passenger.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding>
-            <marker date="1499975206622" expanded="true" signature="862:1148" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -606,27 +643,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/version.js" />
     <entry file="file://$PROJECT_DIR$/public/buangaja.js" />
-    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/search-package/home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/uglifyjs-folder/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/search-package/home.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/uglifyjs-folder/index.js" />
     <entry file="file://$PROJECT_DIR$/public/testUniqueId.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
@@ -634,20 +652,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/datePair.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/search-package/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/asset/js/own/datePair.js" />
+    <entry file="file://$PROJECT_DIR$/public/dist/search-package/list.js" />
     <entry file="file://$PROJECT_DIR$/asset/js/own/event.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -655,13 +661,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/asset/js/own/event.js" />
     <entry file="file://$PROJECT_DIR$/dist/yalla.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -669,25 +669,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/component/attachments/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/yalla.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="8" column="2" lean-forward="false" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/component/attachments/list.js" />
+    <entry file="file://$PROJECT_DIR$/public/dist/yalla.js" />
     <entry file="file://$PROJECT_DIR$/src/component/attachments/list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -695,7 +682,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="669">
           <caret line="46" column="46" lean-forward="false" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -703,11 +689,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <marker date="1500309705220" expanded="true" signature="176:453" ph="..." />
-            <marker date="1500309705220" expanded="true" signature="473:1161" ph="..." />
-            <marker date="1500309705220" expanded="true" signature="652:842" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -715,7 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="814">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -723,27 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
-          <folding>
-            <marker date="1500284243039" expanded="true" signature="3289:3382" ph="..." />
-            <marker date="1500284243039" expanded="true" signature="3422:3518" ph="..." />
-            <marker date="1500284243039" expanded="true" signature="3528:3643" ph="..." />
-            <marker date="1500284243039" expanded="true" signature="3662:5509" ph="..." />
-            <marker date="1500284243039" expanded="true" signature="3694:3899" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="3708:3893" ph="{&quot;booking&quot;: props.booking...}" />
-            <marker date="1500284243039" expanded="true" signature="3937:4196" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="3979:4119" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4220:4294" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4331:4432" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4465:4556" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4587:4624" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4657:5499" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4741:5491" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4816:5028" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="4880:5018" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="5034:5484" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="5292:5468" ph="{...}" />
-            <marker date="1500284243039" expanded="true" signature="5375:5430" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -751,7 +710,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="26" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -759,7 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
           <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -767,7 +724,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="83" column="66" lean-forward="false" selection-start-line="83" selection-start-column="66" selection-end-line="83" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -775,47 +731,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/user/userProfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/storages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="344" column="0" lean-forward="false" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/app.js" />
+    <entry file="file://$PROJECT_DIR$/public/dist/user/userProfile.js" />
     <entry file="file://$PROJECT_DIR$/src/component/attachments/entry.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="858">
           <caret line="39" column="48" lean-forward="false" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -823,7 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="328" lean-forward="false" selection-start-line="2" selection-start-column="328" selection-end-line="2" selection-end-column="328" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,15 +754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
           <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/filewatcher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-396">
-          <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -847,15 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="62" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="17" column="42" lean-forward="false" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -863,18 +768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="17" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-          <folding>
-            <marker date="1500479538463" expanded="true" signature="1466:1785" ph="{&quot;name&quot;: props.name...}" />
-            <marker date="1500479538463" expanded="true" signature="4747:4999" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -882,7 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="22" column="17" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -890,7 +782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -898,7 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="526">
           <caret line="141" column="94" lean-forward="false" selection-start-line="141" selection-start-column="94" selection-end-line="141" selection-end-column="94" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -906,7 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="704">
           <caret line="62" column="19" lean-forward="false" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -914,9 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <marker date="1500487087032" expanded="true" signature="789:1619" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -924,46 +810,131 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/js/own/alert.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
+        <state relative-caret-position="527">
           <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
+    <entry file="file://$PROJECT_DIR$/public/asset/js/own/storages.js" />
+    <entry file="file://$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
+    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3668">
-          <caret line="176" column="47" lean-forward="false" selection-start-line="176" selection-start-column="47" selection-end-line="176" selection-end-column="47" />
-          <folding>
-            <marker date="1500488117770" expanded="true" signature="558:2975" ph="..." />
-            <marker date="1500488117770" expanded="true" signature="4472:9589" ph="..." />
-            <marker date="1500488117770" expanded="true" signature="7099:7174" ph="{...}" />
-            <marker date="1500488117770" expanded="true" signature="7180:7301" ph="{...}" />
-            <marker date="1500488117770" expanded="true" signature="7739:7874" ph="{...}" />
-            <marker date="1500488117770" expanded="true" signature="8025:8065" ph="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-528">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="289">
+          <caret line="40" column="8" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
+        <state relative-caret-position="1156">
           <caret line="68" column="18" lean-forward="false" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="63" lean-forward="true" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/picademo/imageProcessor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1452">
+          <caret line="66" column="77" lean-forward="false" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/picademo/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="130" column="21" lean-forward="true" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="973">
+          <caret line="127" column="12" lean-forward="false" selection-start-line="127" selection-start-column="12" selection-end-line="127" selection-end-column="12" />
+          <folding>
+            <marker date="1500916889794" expanded="true" signature="6489:8322" ph="/*...*/" />
+            <marker date="1500916889794" expanded="true" signature="8384:8465" ph="{...}" />
+            <marker date="1500916889794" expanded="true" signature="8591:9052" ph="{...}" />
+            <marker date="1500916889794" expanded="true" signature="8678:8916" ph="{...}" />
+            <marker date="1500916889794" expanded="true" signature="8922:9043" ph="{...}" />
+            <marker date="1500916889794" expanded="true" signature="9090:9168" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/imageProcessor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="591">
+          <caret line="72" column="8" lean-forward="false" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
+          <folding>
+            <marker date="1500915609075" expanded="true" signature="585:1227" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/picademo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="29" column="10" lean-forward="false" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/storages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="190" column="30" lean-forward="true" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="30" />
+          <folding>
+            <marker date="1500912597350" expanded="true" signature="3467:4199" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filewatcher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="207" column="38" lean-forward="false" selection-start-line="207" selection-start-column="38" selection-end-line="207" selection-end-column="38" />
+          <folding>
+            <marker date="1500919061616" expanded="true" signature="4645:4687" ph="{...}" />
+            <marker date="1500919061616" expanded="true" signature="4735:4825" ph="{...}" />
+            <marker date="1500919061616" expanded="true" signature="4777:4825" ph="{...}" />
+            <marker date="1500919061616" expanded="true" signature="4894:4926" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/userProfile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="47" column="68" lean-forward="false" selection-start-line="47" selection-start-column="68" selection-end-line="47" selection-end-column="68" />
+          <folding>
+            <marker date="1500919385198" expanded="true" signature="7101:7176" ph="{...}" />
+            <marker date="1500919385198" expanded="true" signature="7182:7303" ph="{...}" />
+            <marker date="1500919385198" expanded="true" signature="7741:7876" ph="{...}" />
+            <marker date="1500919385198" expanded="true" signature="8027:8067" ph="//..." />
+          </folding>
         </state>
       </provider>
     </entry>

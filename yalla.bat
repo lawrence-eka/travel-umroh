@@ -1,1 +1,0 @@
-node node_modules/yallajs/yalla-cli.js -s src

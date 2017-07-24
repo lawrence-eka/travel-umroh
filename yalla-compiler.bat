@@ -1,1 +1,1 @@
-node node_modules/yallajs/yalla-cli.js -s src -d dist -m compiler
+yalla-cli -s src -d dist -m compiler

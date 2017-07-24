@@ -1,0 +1,6 @@
+{
+	"type": "Fileupload",
+	"directory": "upload/buangaja",
+	"authorization": false,
+	"uniqueFilename": true
+}
