@@ -1,6 +1,13 @@
-body{
+body {
+    background: url('/asset/img/image5.jpg') no-repeat top center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     background-color: #525252;
+    font-family: 'Open Sans',Arial,Helvetica,Sans-Serif;
 }
+
 .centered-form{
     margin-top: 60px;
 }

@@ -1,1 +1,0 @@
-node yalla-cli.js -s src -d dist -m compiler

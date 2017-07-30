@@ -32,10 +32,10 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
 
   function initState(props) {
     var self = this;
-    debugger;
+    //debugger;
     if (props.onSave) props.onSave.subscribe(onSaveEvent.bind(self));
     if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
-    debugger;
+    //debugger;
     var ms = (isNaN(parseInt(props.maxSize)) ? 1000000 : props.maxSize).toString().toLowerCase();
     ms = parseInt(ms) * (ms.indexOf('g') >= 0 ? 1000000000 : ms.indexOf('m') >= 0 ? 1000000 : ms.indexOf('k') >= 0 ? 1000 : 1);
     return {
@@ -68,7 +68,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
     var self = this;
     //debugger;
     return new Promise(function(resolve) {
-      debugger;
+      //debugger;
       var q = {};
       if (self.state.userId) {
         q.uploaderId = self.state.userId;
@@ -77,7 +77,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
         };
       }
       dpd[self.state.collection].get(q, function(data, statusCode, headers, config) {
-        debugger;
+        //debugger;
         self.state.curFiles = data;
         resolve(data);
       });

@@ -96,18 +96,34 @@ storage.me.erase = function() {
  * Created by Lawrence Eka on 04-Jul-2017.
  */
 function ScriptCache(currentVersion){
-	try {
-		this.version = JSON.parse(storage.local.read("scriptsVersion"));
-	} catch(e) {
-		this.version = {};
-	}
 	try{
 		this.scripts = JSON.parse(storage.local.read("scripts"));
 	} catch(e) {
 		this.scripts = {};
 	}
+	try {
+		this.version = JSON.parse(storage.local.read("scriptsVersion"));
+	} catch(e) {
+		this.version = {};
+		this.scripts={} // scriptVersion is not present or not in the correct format, probably old one, hence clear script cache.
+	}
+
 	this.promises = {};
 	this.isReset = false;
+
+	this.decompress = function(a){
+		var na = new Uint8Array(a);
+		//debugger;
+		if(na[0] == 31 && na[1] == 139) { //GZIP magic number, 1F8B
+			try {
+				na = (new Zlib.Gunzip(na)).decompress();
+			} catch(e) {
+				return '';
+			}
+		}
+		return (new TextDecoder("utf-8")).decode(na);
+	}
+
 	this.addPromise = function (url, attribute, resolve, reject) {
 		if(!this.promises[url]) this.promises[url] = [];
 		this.promises[url].push({resolve:resolve, reject: reject});
@@ -118,16 +134,20 @@ function ScriptCache(currentVersion){
 		return this.promises[url].length == 1;
 	};
 
-	this.getScript = function(url, getCompleteData) {
+	this.getScript = function(url, getCompleteData, isPassThru) {
 		if(!this.scripts[url]) return null;
-		if(getCompleteData) {
+		else if(isPassThru) {
+			delete this.scripts[url];
+			return null;
+		}
+		else if(getCompleteData) {
 			var completeData = this.scripts[url];
 			completeData.url = url;
 			return (completeData); //called by loader
 		}
-		return (this.scripts[url].req); //called by yalla.js patch
+		else return (this.scripts[url]); //called by yalla.js patch
 	};
-	
+
 	this.fulfillPromises = function(url, isResolve,resolveCompleteData){
 		if(this.promises[url] && this.scripts[url]) {
 			//debugger;
@@ -139,10 +159,28 @@ function ScriptCache(currentVersion){
 		}
 	};
 
+	this.preprocess = function(cv) {
+		var ev={};
+		try {
+			ev = {version: cv['#']};
+			var bt = cv[':'];
+			var f = cv['/'];
+			Object.keys(cv).forEach(function (x) {
+				if ('#/:'.indexOf(x) < 0) {
+					var fi = x.substr(0, x.indexOf('/'));
+					var fl = x.substr(x.indexOf('/') + 1);
+					ev[(f[fi] ? f[fi] + '/' : '') + fl] = cv[x] + bt;
+				}
+			});
+		} catch(e) {}
+		//debugger;
+		return ev;
+	}
+
 	this.setVersion = function(currentVersion) {
-		currentVersion = currentVersion || {};
+		currentVersion = this.preprocess(currentVersion);
 		currentVersion.version = currentVersion.version || "0001.01.01.00.00.00";
-		debugger;
+		//debugger;
 		for(var url in this.version) { //iterate this.version instead of currenvVersion to make sure that urls that are no longer used, hence no longer part of currentVersion, be deleted from the cache.
 			if(currentVersion[url] != this.version[url]) {
 				console.log("New version detected.");
@@ -159,14 +197,18 @@ function ScriptCache(currentVersion){
 		this.isReset = true;
 	};
 
-	this.setScript = function(url, req, resolveCompleteData) {
+	this.setScript = function(url, req, resolveCompleteData, isPassThru) {
 		if(req){
 			//debugger;
 			attribute = (this.scripts[url] ? this.scripts[url].attribute : null);
-			this.scripts[url] = {req:{response: req.response, responseText: req.responseText}, attribute: attribute};
+//			this.scripts[url] = {response: req.response, responseText: req.responseText, attribute: attribute};
+			this.scripts[url] = {responseText: this.decompress(req.response), attribute: attribute};
 			this.fulfillPromises(url, true, resolveCompleteData);
 		} else {
 			this.fulfillPromises(url, false, resolveCompleteData);
+		}
+
+		if(!req || isPassThru) {
 			delete this.scripts[url];
 		}
 		storage.local.save("scripts", JSON.stringify(this.scripts));
@@ -174,8 +216,7 @@ function ScriptCache(currentVersion){
 
 };
 
-function Loader() {
-	//this.scriptCache = scriptCache;
+function Loader(cv) {
 	this.unloadedAssets =  0;
 	this.needLoading = false;
 	this.assets = [
@@ -207,7 +248,7 @@ function Loader() {
 		{seq: 2, file: "asset/js/vendor/pica.min.js"},
 		{seq: 3, file: "asset/js/own/imageProcessor.js"},
 	];
-	
+
 	this.loadAssets = function (seq) {
 		//var self = this;
 		//debugger;
@@ -219,8 +260,16 @@ function Loader() {
 			}
 		}
 	};
-	
-	this.fetch = function (url, postData, attribute) {
+
+	this.unpackAll = function(cv) {
+		var self = this;
+		this.fetch(cv, null, null, true).then(function(result){
+			scriptCache.setVersion(JSON.parse(result.responseText));
+			self.loadAssets(0);
+		});
+	}
+
+	this.fetch = function (url, postData, attribute, isPassThru) {
 
 		var XMLHttpFactories = [
 			function () {
@@ -256,8 +305,8 @@ function Loader() {
 		return new Promise(function (resolve, reject) {
 			// eka patch starts
 			//debugger;
-			var script = scriptCache.getScript(url, true);
-			if (script && script.req) {
+			var script = scriptCache.getScript(url, true, isPassThru);
+			if (script && script.responseText) {
 				resolve(script);
 				return;
 			}
@@ -267,13 +316,15 @@ function Loader() {
 			var req = createXMLHTTPObject();
 			req.timeout = 20000;
 			if (!req) return;
-			var method = (postData) ? "POST" : "GET";
-			req.open(method, url, true);
-			if (postData) {
-				req.setRequestHeader('Content-type', 'application/json');
-			}
+			//var method = (postData) ? "POST" : "GET";
+			//req.open(method, url, true);
+			req.open('GET', url, true);
+			req.responseType='arraybuffer';
+			// if (postData) {
+			// 	req.setRequestHeader('Content-type', 'application/json');
+			// }
 			req.ontimeout = function (e) {
-				scriptCache.setScript(url, null, true);
+				scriptCache.setScript(url, null, true, isPassThru);
 			};
 			req.onreadystatechange = function () {
 				if (req.readyState != 4) return;
@@ -281,15 +332,16 @@ function Loader() {
 					scriptCache.setScript(url, null, true);
 					return;
 				}
-				scriptCache.setScript(url, req, true);
+				scriptCache.setScript(url, req, true, isPassThru);
 			};
 			if (req.readyState == 4) {
 				return;
 			}
-			req.send(JSON.stringify(postData));
+			//req.send(JSON.stringify(postData));
+			req.send();
 		});
 	};
-	
+
 	this.attachScriptToDocument = function (seq, scriptData, direct) {
 		//debugger;
 		var s = null;
@@ -301,7 +353,7 @@ function Loader() {
 			//debugger;
 			s = document.createElement('script');
 			s.type = "text/javascript";
-			s.text = scriptData.req.responseText;
+			s.text = scriptData.responseText;
 
 			if (attribute) {
 				//debugger;
@@ -312,7 +364,7 @@ function Loader() {
 		} else {
 			s = document.createElement('style');
 			s.type = "text/css";
-			var css = scriptData.req.responseText;
+			var css = scriptData.responseText;
 			if (s.styleSheet) {
 				s.styleSheet.cssText = css;
 			} else {
@@ -320,7 +372,7 @@ function Loader() {
 			}
 		}
 		document.head.appendChild(s);
-		
+
 		//start of moved to here
 		self.unloadedAssets--;
 		//debugger;
@@ -355,24 +407,25 @@ function Loader() {
 		//end of moved to here
 	};
 
-	
 	//debugger;
 	this.unloadedAssets = this.assets.length;
 };
 
 function authenticate(path){
-   return new Promise(function(resolve){
-        var specialAddress = [
-            "#user.login-form",
-            "#user.forgot-password",
-            "#user.reset-password",
-           "#user.registration",
-           '#common.privacyPolicy',
-       ];
-    console.log('Path = ', path);
-       resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
-   });
+	return new Promise(function(resolve){
+		var specialAddress = [
+			"#user.login-form",
+			"#user.forgot-password",
+			"#user.reset-password",
+			"#user.registration",
+			'#common.privacyPolicy',
+		];
+		console.log('Path = ', path);
+		resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
+	});
 }
 
 var scriptCache = new ScriptCache();
-var loader = new Loader();
+//var loader = new Loader();
+//loader.unpackAll('./version.ver');
+(new Loader()).unpackAll('./version.ver');

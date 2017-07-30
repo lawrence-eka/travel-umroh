@@ -5,7 +5,6 @@ var fse = require('fs-extra');
 var klaw = require('klaw');
 var zlib = require('zlib');
 
-var version = '';
 var algorithm = 'sha1';
 
 var uglifyOptions = {
@@ -19,6 +18,7 @@ var uglifyOptions = {
 		if_return: true,
 		reduce_vars: true,
 		keep_fargs: false,
+		keep_fnames:true,
 //		properties: true,
 //		sequences: true,
 //		toplevel: true,
@@ -45,8 +45,23 @@ var w = '';
 var u = false;
 var q = false;
 var f = false;
+var z = false;
 var errors=[];
-var library={};
+
+var notZipable =[
+	'storages.js',
+	'gunzip',
+];
+
+var zipable =[
+	'.js',
+	'.css',
+];
+
+var library={':':0, '#':'', '/':[]};
+var baseTime = 0;
+var version = '';
+var folders=[];
 
 function pad(dig, num, char){
 	num = num || 2;
@@ -61,7 +76,7 @@ function getNextArgPair() {
 		result.key = argv[0];
 		argv.splice(0,1);
 	}
-	if('-q-u-f'.indexOf(result.key) < 0 && argv.length) {
+	if('-q-u-f-z'.indexOf(result.key) < 0 && argv.length) {
 		result.value = argv[0];
 		argv.splice(0,1);
 	}
@@ -84,6 +99,8 @@ for(var p = getNextArgPair(); p.key; p = getNextArgPair())
 		u = true;
 	} else if (p.key == '-f') {
 		f = true;
+	} else if (p.key == '-z') {
+		z = true;
 	} else {
 		errors.push("Unknown key: " + p.key);
 	}
@@ -122,12 +139,10 @@ function getStats(path){
 
 function writeLibrary(key, val) {
 	library[key] = val;
-	fse.writeFile(w, 'var ver = ' + JSON.stringify(library));
-
-	var gzip = zlib.createGzip();
-	var inp = fse.createReadStream(w);
-	var out = fse.createWriteStream(w + '.gzip');
-	inp.pipe(gzip).pipe(out);
+	//var text = 'var ver = ' + JSON.stringify(library);
+	var text = JSON.stringify(library);
+	if(!z) fse.writeFileSync(w, text);
+	else fse.writeFileSync(w, zlib.gzipSync(text));
 }
 
 function hash(text) {
@@ -137,61 +152,88 @@ function hash(text) {
 }
 
 function isEqual(text1, text2) {
-	return hash(text1) == hash(text2);
+	return hash(text1.toString('utf8')) == hash(text2.toString('utf8'));
 }
 
-function afterFileAction(err, action, path, newPath){
+function recordPath(path, time){
+	if(!baseTime) {
+		baseTime = time;
+		writeLibrary(':', baseTime);
+	}
+	time = time - baseTime;
+
+	var file = path.substr(path.lastIndexOf('/') + 1);
+	var folder = path.substr(0, path.lastIndexOf('/'));
+	if(folder != '') {
+		var idx = folders.indexOf(folder);
+		if (idx < 0) folders.push(folder);
+		var fCode = folders.indexOf(folder);
+		writeLibrary('/', folders);
+		file = fCode + '/' + file;
+	}
+	writeLibrary(file, time);
+}
+
+function afterFileAction(action, path, newPath){
 	var filename = path.substr(path.lastIndexOf('\\') + 1);
-	if (err) console.log('Error during', (action == 'u' ? 'uglifying' : 'copying'), path, 'to', newPath, 'for', event, 'event:', err);
-	else if (!q) {
-		if(action != 's') console.log((action == 'u' ? 'Uglified' : 'Copied'), path, 'to', newPath.split(filename)[0]);
-		else console.log('Skipped', path);
+	var actionDescription = (action == 'd' ? 'Deleted': action == 's' ? 'Skipped' : action == 'c' ? 'Copied' : action.indexOf('u') >=0 && action.indexOf('z') >= 0 ? 'Uglied & Gzipped' : action.indexOf('u') >=0 ? 'Uglified' : 'Gziped');
+	if (!q) {
+		console.log(actionDescription, path, ('ds'.indexOf(action) < 0 ? 'to' : ''), ('ds'.indexOf(action) < 0 ? newPath.split(filename)[0] : ''));
 	}
 	var newStats = getStats(newPath);
-	if(newStats && newStats.mtime) writeLibrary(path.split('\\').join('/'), Math.floor(newStats.mtime / 1000));
+	if(newStats && newStats.mtime) {
+		//writeLibrary(path.split('\\').join('/'), Math.floor(newStats.mtime / 1000));
+		recordPath(path.split('\\').join('/'), Math.floor(newStats.mtime / 1000));
+	}
 	else console.log(path,'has no stats, omited from library.');
 }
 
 function readFile(filename){
 	try{
-		return fse.readFileSync(filename, 'utf8');
+		return fse.readFileSync(filename);//, 'utf8');
 	}
 	catch(e){
 		return '';
 	}
 }
+
+function isMangle(path) {
+	return false;//path.indexOf('asset') == 0;
+}
+
 function fileAction(path, event) {
 	if(c.length > 0) {
+		var action ='';
 		var newPath = getNewPath(path);
 		if(event == "add" || event == "change") {
-			var skipped = false;
-			var uglified = '';
-
-			if((!u)  || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
-				skipped = isEqual(readFile(path), readFile(newPath));
-			}
-			else {
-				var data = readFile(path);
-				uglified = uglifyJS.minify(data, uglifyOptions).code;
-				skipped = isEqual(uglified, readFile(newPath));
-			}
-
-			//console.log(oldStats);
-			if(skipped) {
-				afterFileAction(null, 's', path, newPath);
-			}
-			else if ((!u) || (path.indexOf('.js') < 0) || (path.indexOf('.min.js') >= 0)) {
-				fse.copySync(path, newPath);
-				afterFileAction(null, 'c', path, newPath);
-			}
-			else {
-				fse.ensureFileSync(newPath);
-				fse.writeFileSync(newPath, uglified);
-				afterFileAction(null, 'u', path, newPath);
+			var data = readFile(path);
+			if(data) {
+				if (u && path.indexOf('.js') >= 0 && path.indexOf('.min.js') < 0) {
+					action += 'u';
+					data = uglifyJS.minify(data.toString('utf8'), uglifyOptions).code;
+				}
+				//if (z && path.indexOf('gunzip') < 0 && path.indexOf('storages.js') < 0 && path.indexOf('.jpg') < 0 && path.indexOf('.png') < 0  && path.indexOf('.woff') < 0 && path.indexOf('.ttf') < 0) {
+				//console.log(notZipped.filter(x=>path.indexOf(x) >= 0));
+				if (z && !notZipable.filter(x=>path.indexOf(x) >= 0).length && zipable.filter(x=>path.indexOf(x) >=0).length) {
+					action += 'z';
+					data = zlib.gzipSync(data);
+				}
+				var skipped = isEqual(data, readFile(newPath));
+				if (skipped) {
+					action = 's';
+					afterFileAction(action, path, newPath);
+				}
+				else {
+					action = (action ? action : 'c');
+					fse.ensureFileSync(newPath);
+					fse.writeFileSync(newPath, data);
+					afterFileAction(action, path, newPath);
+				}
 			}
 		} else if(event == "delete") {
+			action = 'd';
 			fse.removeSync(newPath);
-			console.log(newPath,'deleted');
+			afterFileAction(action, path, newPath);
 		}
 	}
 }
@@ -204,8 +246,8 @@ function timeStamp(path, time) {
 			if (newVersion > version) {
 				version = newVersion;
 				console.log('Latest version:', version, ' from', path);
-				writeLibrary('version', version);
-				writeLibrary('dpd.js', Math.floor(time / 1000));
+				writeLibrary('#', version);
+				recordPath('dpd.js', Math.floor(ver / 1000))
 			}
 		}
 	}
@@ -214,8 +256,8 @@ function timeStamp(path, time) {
 function actionSet(path, event, time) {
 	//console.log('action set for', path);
 	return new Promise(function(resolve,reject){
-		fileAction(path, event);
 		timeStamp(path, time);
+		fileAction(path, event);
 		resolve();
 	});
 }
@@ -223,7 +265,7 @@ function actionSet(path, event, time) {
 function watch() {
 	//isEqual('node node_modules/yallajs/yalla-cli.js -s src', readFile('C:\\workspace\\esnaadm\\not yalla.bat'));
 	console.log('Monitoring file changes in folder', m);
-	if(c.length) console.log((u? 'uglify' : 'copy'),'them to', c);
+	if(c.length) console.log((u? 'uglify' : 'copy'), (z? 'and gzip' : ''),'them to', c);
 	console.log('and write the timestamp into', w, '...');
 
 	var chokidarOptions = {

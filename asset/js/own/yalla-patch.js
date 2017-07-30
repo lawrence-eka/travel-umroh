@@ -42,7 +42,7 @@ yalla.utils.fetch = function (url, postData) {
 		// eka patch starts
 		var script = scriptCache.getScript(url);
 		console.log("URL: ", url, "Cache: ", script);
-		if (script) {
+		if (script && script.responseText) {
 			console.log("Udah Ada");
 			resolve(script);
 			return;
@@ -55,6 +55,7 @@ yalla.utils.fetch = function (url, postData) {
 		req.timeout = 2000;
 		if (!req) return;
 		var method = (postData) ? "POST" : "GET";
+		req.responseType='arraybuffer';
 		req.open(method, url, true);
 		if (postData) {
 			req.setRequestHeader('Content-type', 'application/json');
@@ -89,7 +90,7 @@ yalla.framework.attachScriptToDocument = function (url) {
 		var s = null;
 		s = document.createElement('script');
 		s.type = "text/javascript";
-		s.text = scriptCache.scripts['.' + url].req.responseText;
+		s.text = scriptCache.scripts['.' + url].responseText;
 		document.head.appendChild(s);
 
 		yalla.framework.componentLoadListener[url] = function () {
