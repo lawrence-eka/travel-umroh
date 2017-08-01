@@ -49,7 +49,7 @@ var z = false;
 var errors=[];
 
 var notZipable =[
-	'storages.js',
+	'loader.js',
 	'gunzip',
 ];
 
