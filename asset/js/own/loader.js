@@ -338,3 +338,7 @@ var scriptCache = new ScriptCache();
 //var loader = new Loader();
 //loader.unpackAll('./version.ver');
 (new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver');
+
+document.addEventListener('touchmove', function(event){
+	if(event.scale !==1){event.preventDefault();}
+}, true);
