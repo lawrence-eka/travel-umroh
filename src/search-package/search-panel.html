@@ -1,5 +1,6 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/home-button" name="home"></inject>
 
 <div >
     <panel title="Search Packages" footer.bind="@recordsFound">
@@ -11,6 +12,7 @@
                         <entry type="date" prompt="And" name="endDate" value.bind="@datePair.defaultEndDate()" min.bind="@datePair.minEndDate()"></entry>
                     </span>
                     <entry type="button" value="Search" click.trigger="search()"></entry>
+                    <home></home>
                 </div>
             </form>
         </div>

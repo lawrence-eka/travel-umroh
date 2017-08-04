@@ -70,6 +70,10 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
     var cardUserApprovals = _context["card-user-approvals"];
     _context["alert"] = $inject("/component/alert");
     var alert = _context["alert"];
+    _context["panel"] = $inject("/component/panel");
+    var panel = _context["panel"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.myApprovals");
     _elementOpenEnd("div");
@@ -114,13 +118,40 @@ yalla.framework.addComponent("/dist/user/myApprovals", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        if (!data || data.length == 0) {
-          var _params = {
-            "message": "No user needs approval for now.",
-            "alertType": "info"
-          };
-          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        }
+        var _params = {
+          "nofooter": "nofooter",
+          "title": "User Approvals"
+        };
+        _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+          if (slotName === "body") {
+            _elementOpenStart("div", "");
+            _elementOpenEnd("div");
+            if (!data || data.length == 0) {
+              var _params = {
+                "message": "No user needs approval for now.",
+                "alertType": "info"
+              };
+              _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            }
+            _elementOpenStart("span", "");
+            _elementOpenEnd("span");
+            yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+              var _params = {
+                "message": _state.alert.text.bind(self)(),
+                "alertType": _state.alert.type.bind(self)()
+              };
+              _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            })()
+            _elementClose("span");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            var _params = {};
+            _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            _elementClose("div");
+            _elementClose("div");
+          }
+        });
         var _array = data || [];
         _array.forEach(function(user) {
           _elementOpenStart("p", "");

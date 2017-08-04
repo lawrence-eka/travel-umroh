@@ -3,12 +3,20 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
+<inject from="/component/home-button" name="home"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
 
 <div data.load="loadBooking(@bookingId)">
-	<span ref.name="alert">
-		<alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
-	</span>
+	<panel nofooter title="Your Bookings">
+		<div slot.name="body">
+			<span ref.name="alert">
+				<alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+			</span>
+			<div class="row">
+				<home></home>
+			</div>
+		</div>
+	</panel>
 	<div if.bind="@editedBooking">
 		<card-booking booking.bind="@editedBooking" saved.trigger="onBookingSaved()" cancelled.trigger="onBookingCancelled()"></card-booking>
 	</div>

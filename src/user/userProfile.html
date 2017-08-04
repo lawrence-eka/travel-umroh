@@ -1,5 +1,6 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/home-button" name="home"></inject>
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
 <inject from="/component/attachments/home" name="attachments"></inject>
@@ -39,7 +40,8 @@
                     <div if.bind="!gotNeedApproval(data, 'isTravelAgent')">
                         <entry type="checkbox" prompt="Travel Agent" name="isTravelAgent" checked.bind="data.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
                     </div>
-                    <div if.bind="gotNeedApproval(data, 'isTravelAgent')">
+                    <div
+                            if.bind="gotNeedApproval(data, 'isTravelAgent')">
                         <entry type="checkbox" prompt="Travel Agent*" name="isTravelAgent" checked.bind="data.needApproval.isTravelAgent" click.trigger="onTravelAgentClick(event)"></entry>
                         <entry type="label" prompt.bind="('*' + (data.needApproval.isTravelAgent ? 'Request for' : 'Revokal of') + ' Travel Agent Access under review')"></entry>
                     </div>
@@ -53,7 +55,7 @@
                     <entry type="password" prompt="Password" name="password" value.bind="data.password" alert.bind="@alert"></entry>
                     <entry type="password" prompt="Repeat Password" name="repeatPassword" alert.bind="@alert"></entry>
                     <entry type="button" name="btnSave" value.bind="$profile ? 'Save' : 'Register'" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onRegister()"></entry>
-                    <entry type="button" name="btnCancel" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                    <home value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6"></home>
                 </div>
             </form>
             <span ref.name="alert">

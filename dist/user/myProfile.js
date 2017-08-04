@@ -69,11 +69,11 @@ yalla.framework.addComponent("/dist/user/myProfile", (function() {
   }
 
   function onCancel() {
-    window.location.hash = "#app/search-package.home";
+    window.location.hash = mainMenuPath;
   }
 
   function onSave() {
-    window.location.hash = '#app/search-package.home';
+    window.location.hash = mainMenuPath;
   }
 
   function $render(_props, _slotView) {

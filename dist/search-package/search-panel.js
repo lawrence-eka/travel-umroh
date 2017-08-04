@@ -59,6 +59,8 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _elementOpenStart("div", "");
     _attr("element", "dist.search-package.search-panel");
     _elementOpenEnd("div");
@@ -155,6 +157,8 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {};
+        _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         _elementClose("div");

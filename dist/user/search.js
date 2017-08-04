@@ -66,6 +66,8 @@ yalla.framework.addComponent("/dist/user/search", (function() {
   function $render(_props, _slotView) {
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
     _elementOpenStart("div", "");
@@ -172,6 +174,8 @@ yalla.framework.addComponent("/dist/user/search", (function() {
           }
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        var _params = {};
+        _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("form");
         _elementClose("div");

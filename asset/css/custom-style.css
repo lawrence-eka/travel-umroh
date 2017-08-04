@@ -1,10 +1,13 @@
 body {
-    background: url('/asset/img/image5.jpg') no-repeat top center fixed;
+    background: url('/asset/img/image7.jpg');
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
-    background-color: #525252;
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top center;
+    background-color: #ffffff;
     font-family: 'Open Sans',Arial,Helvetica,Sans-Serif;
 }
 
@@ -32,6 +35,10 @@ body {
     display: inline-block;
 }
 
+.form-panel {
+    padding-left:0 !important;
+    padding-right:0 !important;
+}
 
 .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
     display: inline-block;
@@ -142,12 +149,29 @@ body {
     text-decoration: line-through;
 }
 
+.menu-center {
+    text-align:center;
+    margin-left:0px !important;
+    margin-right:0px !important;
+}
+.menu-icon {
+    font-size:3rem;
+}
+.menu-block {
+    margin-top:20px !important;
+    margin-bottom:20px !important;
+}
+
+.menu-grid {
+    margin-top:100px !important;
+}
+
 .frosted-glass {
     position: relative;
 }
 
 .frosted-glass::before {
-    background-image: url('/asset/img/image5.jpg');
+    /*background-image: url('/asset/img/image5.jpg');*/
     filter: blur(5px);
     background-size: cover;
     /*opacity: 0.5;*/

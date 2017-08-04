@@ -1,0 +1,9 @@
+<inject from="/component/entry" name="entry"></inject>
+<div>
+    <entry type="button" value.bind="($value ? $value : 'Close')" divClass.bind='$divClass' click.trigger="home()"></entry>
+</div>
+<script>
+    function home() {
+	    window.location.hash = mainMenuPath;
+    }
+</script>

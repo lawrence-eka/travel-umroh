@@ -3,7 +3,7 @@
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/ppLink" name="ppLink"></inject>
 
-<div class="margin-top-login-panel">
+<div class="container margin-top-login-panel">
     <panel notitle>
         <div slot.name="footer">
             <ppLink></ppLink>
@@ -18,7 +18,7 @@
                     <entry type="button" value="Sign In" click.trigger="login()"></entry>
                     <entry type="hyperlink" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" href="#user.forgot-password" class="custom-entry-prompt" prompt="Forgot Password"></entry>
                     <entry type="hyperlink" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right" href="#user.registration" class="custom-entry-prompt" prompt="New User"></entry>
-                    <entry type="label" prompt.bind="'Ver.' + scriptCache.version" innerDivClass="custom-entry-prompt"></entry>
+                    <entry type="label" prompt.bind="'Ver.' + scriptCache.version.version" innerDivClass="custom-entry-prompt"></entry>
                 </form>
             </div>
             <span ref.name="alert">
@@ -57,7 +57,7 @@
                 	debugger;
                 	me.sid = user.id;
 	                storage.me.save(me, rememberMe);
-	                window.location.hash="#app/search-package.home"
+	                window.location.hash=mainMenuPath
                 });
             }
         })

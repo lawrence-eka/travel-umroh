@@ -76,6 +76,8 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
     var entry = _context["entry"];
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _elementOpenStart("div", "");
     _attr("element", "dist.travel-agent.home");
     _elementOpenEnd("div");
@@ -130,9 +132,11 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
         if (slotName === "body") {
           _elementOpenStart("span", "");
           _elementOpenEnd("span");
+          _elementOpenStart("div", "");
+          _attr("class", "row");
+          _elementOpenEnd("div");
           var _params = {
             "type": "button",
-            "naked": "naked",
             "value": "Add New Travel Agency",
             "onclick": function(event) {
               var self = {
@@ -156,6 +160,9 @@ yalla.framework.addComponent("/dist/travel-agent/home", (function() {
             }
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          var _params = {};
+          _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+          _elementClose("div");
           _elementClose("span");
         }
       });

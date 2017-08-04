@@ -2,13 +2,17 @@
 <inject from="/travel-agent/edit-travel-agent" name="edit-travel-agent"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/panel" name="panel"></inject>
+<inject from="/component/home-button" name="home"></inject>
 
 <div>
     <edit-travel-agent if.bind="@isEditMode" travelAgentId.bind="@editTravelAgentId" close.trigger="onCloseEditor()"></edit-travel-agent>
     <span if.bind="!@isEditMode" >
         <panel nofooter title="My Travel Agencies">
             <span slot.name="body">
-                <entry type="button" naked value="Add New Travel Agency" click.trigger="onAddTA()"></entry>
+                <div class="row">
+                    <entry type="button" value="Add New Travel Agency" click.trigger="onAddTA()"></entry>
+                    <home></home>
+                </div>
             </span>
         </panel>
         <list editTA.trigger="onEditTA(event)" showPackages.trigger="onShowPackages(event)"></list>

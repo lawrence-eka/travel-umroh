@@ -1,12 +1,24 @@
 <inject from="/user/card-user-approvals" name="card-user-approvals"></inject>
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/home-button" name="home"></inject>
 
 <div>
     <span ref.name="alert">
         <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
     </span>
     <div data.load="loadUserApprovals()">
-        <alert message="No user needs approval for now." alertType="info" if.bind="!data || data.length==0"></alert>
+        <panel nofooter title="User Approvals">
+            <div slot.name="body">
+                <alert message="No user needs approval for now." alertType="info" if.bind="!data || data.length==0"></alert>
+                <span ref.name="alert">
+                    <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+                </span>
+                <div class="row">
+                    <home></home>
+                </div>
+            </div>
+        </panel>
         <p for.each="user in data">
             <card-user-approvals user.bind="user" approve.trigger="onApprove(event, true)" reject.trigger="onApprove(event, false)"></card-user-approvals>
         </p>

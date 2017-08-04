@@ -194,6 +194,8 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
     var alert = _context["alert"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
     _context["ppLink"] = $inject("/component/ppLink");
@@ -470,32 +472,10 @@ yalla.framework.addComponent("/dist/user/userProfile", (function() {
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
               var _params = {
-                "type": "button",
-                "name": "btnCancel",
                 "value": "Cancel",
-                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-                "onclick": function(event) {
-                  var self = {
-                    target: event.target
-                  };
-                  self.properties = _props;
-                  if ('elements' in self.target) {
-                    self.elements = self.target.elements;
-                  }
-                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                  self.component = _component;
-                  self.component._state = self.component._state || {};
-                  self.state = self.component._state;
-                  self.emitEvent = function(eventName, data) {
-                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                    if ('on' + eventName in _props) {
-                      _props['on' + eventName](event);
-                    }
-                  };
-                  onCancel.bind(self)();
-                }
+                "divClass": "col-xs-6 col-sm-6 col-md-6 col-lg-6"
               };
-              _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             })()
             _elementClose("div");
             _elementClose("form");

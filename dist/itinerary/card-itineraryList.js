@@ -30,6 +30,12 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
 
   function onPropertyChange(event) {};
 
+  function initState(props) {
+    return {
+      me: storage.me.read(),
+    };
+  }
+
   function onBook() {
     this.emitEvent('book');
   }
@@ -44,6 +50,8 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
     var panel = _context["panel"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _context["card"] = $inject("/itinerary/card-itinerary-bulleted");
     var card = _context["card"];
     _elementOpenStart("style", "");
@@ -89,32 +97,42 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
       if (slotName === "footer") {
         _elementOpenStart("div", "");
         _elementOpenEnd("div");
-        var _params = {
-          "type": "button",
-          "value": "Book This!",
-          "naked": "naked",
-          "onclick": function(event) {
-            var self = {
-              target: event.target
-            };
-            self.properties = _props;
-            if ('elements' in self.target) {
-              self.elements = self.target.elements;
-            }
-            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-            self.component = _component;
-            self.component._state = self.component._state || {};
-            self.state = self.component._state;
-            self.emitEvent = function(eventName, data) {
-              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-              if ('on' + eventName in _props) {
-                _props['on' + eventName](event);
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        if (_state.me) {
+          var _params = {
+            "type": "button",
+            "value": "Book This!",
+            "naked": "naked",
+            "onclick": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
               }
-            };
-            onBook.bind(self)();
-          }
-        };
-        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onBook.bind(self)();
+            }
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        }
+        if (!_state.me) {
+          var _params = {};
+          _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        }
+        _elementClose("div");
         _elementClose("div");
       }
     });

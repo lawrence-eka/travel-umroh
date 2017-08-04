@@ -86,7 +86,6 @@ function ScriptCache(cv){
 	this.setVersion = function(cv) {
 		cv = this.preprocess(cv);
 		cv.version = cv.version || "0001.01.01.00.00.00";
-		//debugger;
 		for(var url in this.version) { //iterate this.version instead of currenvVersion to make sure that urls that are no longer used, hence no longer part of currentVersion, be deleted from the cache.
 			if(cv[url] != this.version[url]) {
 				console.log("New version detected.");
@@ -124,7 +123,6 @@ function Loader(cv) {
 	this.unloadedAssets =  0;
 	this.needLoading = false;
 	this.assets = [
-		{seq: 2, file: "asset/css/form-panel.css"},
 		{seq: 2, file: "asset/css/font-awesome.min.css"},
 		{seq: 2, file: "asset/css/bootstrap.min.css"},
 		{seq: 3, file: "asset/css/css-patch.css"},
@@ -225,13 +223,8 @@ function Loader(cv) {
 			var req = createXMLHTTPObject();
 			req.timeout = 20000;
 			if (!req) return;
-			//var method = (postData) ? "POST" : "GET";
-			//req.open(method, url, true);
 			req.open('GET', url, true);
 			req.responseType='arraybuffer';
-			// if (postData) {
-			// 	req.setRequestHeader('Content-type', 'application/json');
-			// }
 			req.ontimeout = function (e) {
 				scriptCache.setScript(url, null, true, isPassThru);
 			};
@@ -320,6 +313,8 @@ function Loader(cv) {
 	this.unloadedAssets = this.assets.length;
 };
 
+var mainMenuPath = '#app/main-menu.menu-grid';
+
 function authenticate(path){
 	return new Promise(function(resolve){
 		var specialAddress = [
@@ -330,7 +325,9 @@ function authenticate(path){
 			'#common.privacyPolicy',
 		];
 		console.log('Path = ', path);
-		resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
+		//resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
+		//resolve(storage.me.read()? path ? path : mainMenuPath : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : '#user.login-form');
+		resolve(path && path != '#app' ? path : mainMenuPath);
 	});
 }
 
@@ -338,7 +335,3 @@ var scriptCache = new ScriptCache();
 //var loader = new Loader();
 //loader.unpackAll('./version.ver');
 (new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver');
-
-document.addEventListener('touchmove', function(event){
-	if(event.scale !==1){event.preventDefault();}
-}, false);

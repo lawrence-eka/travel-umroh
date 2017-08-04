@@ -1,11 +1,23 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/alert" name="alert"></inject>
+<inject from="/component/home-button" name="home"></inject>
 <inject from="/component/attachments/home" name="attachments"></inject>
 
 <div>
     <div data.load="loadPayments()">
-        <alert message="No payment needs confirmation for now." alertType="info" if.bind="!data || data.length==0"></alert>
+        <panel nofooter title="Received Payments">
+            <div slot.name="body">
+                <alert message="No payment needs confirmation for now." alertType="info" if.bind="!data || data.length==0"></alert>
+                <span ref.name="alert">
+                    <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+                </span>
+                <div class="row">
+                    <home></home>
+                </div>
+            </div>
+        </panel>
+
         <span for.each="payment in data">
             <panel title.bind="payment.package.packageName" nofooter>
                 <span slot.name="body">
@@ -28,9 +40,6 @@
             </panel>
         </span>
     </div>
-    <span ref.name="alert">
-        <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
-    </span>
 </div>
 
 <script>

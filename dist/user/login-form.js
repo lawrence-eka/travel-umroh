@@ -58,7 +58,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
           debugger;
           me.sid = user.id;
           storage.me.save(me, rememberMe);
-          window.location.hash = "#app/search-package.home"
+          window.location.hash = mainMenuPath
         });
       }
     })
@@ -76,7 +76,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
     var ppLink = _context["ppLink"];
     _elementOpenStart("div", "");
     _attr("element", "dist.user.login-form");
-    _attr("class", "margin-top-login-panel");
+    _attr("class", "container margin-top-login-panel");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -178,7 +178,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         var _params = {
           "type": "label",
-          "prompt": 'Ver.' + scriptCache.version,
+          "prompt": 'Ver.' + scriptCache.version.version,
           "innerDivClass": "custom-entry-prompt"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

@@ -34,6 +34,20 @@ yalla.framework.addComponent("/dist/app", (function() {
     return storage.me.read();
   }
 
+  document.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) {
+      event.preventDefault();
+    }
+  }, false);
+  //	var lastTouchEnd = 0;
+  //	document.addEventListener('touchend', function (event) {
+  //	  var now = (new Date()).getTime();
+  //	  if (now - lastTouchEnd <= 300) {
+  //	    event.preventDefault();
+  //	  }
+  //	  lastTouchEnd = now;
+  //	}, false);
+
 
   function $render(_props, _slotView) {
     _context["login-panel"] = $inject("/user/login-form");
@@ -77,21 +91,9 @@ yalla.framework.addComponent("/dist/app", (function() {
       self.state = self.component._state;
 
       function asyncFunc_1(data) {
-        if (data) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          var _params = {};
-          _context["app-header"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          _slotView("default", {});
-          _elementClose("div");
-        }
-        if (!data) {
-          _elementOpenStart("div", "");
-          _elementOpenEnd("div");
-          var _params = {};
-          _context["login-panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-          _elementClose("div");
-        }
+        var _params = {};
+        _context["app-header"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _slotView("default", {});
       }
       var promise = checkCurrentUser.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {

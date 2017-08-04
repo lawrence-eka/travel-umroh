@@ -1,1 +1,1 @@
-cancelIf(!me, "needRelogin");
+//cancelIf(!me, "needRelogin");

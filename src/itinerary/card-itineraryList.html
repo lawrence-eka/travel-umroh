@@ -1,5 +1,6 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/component/home-button" name="home"></inject>
 <inject from="/itinerary/card-itinerary-bulleted" name="card"></inject>
 <style>
     .custom-indent {
@@ -16,13 +17,19 @@
             </div>
         </div>
         <div slot.name="footer">
-            <entry type="button" value="Book This!" naked click.trigger="onBook()"></entry>
+            <div class="row">
+                <entry if.bind='@me' type="button" value="Book This!" naked click.trigger="onBook()"></entry>
+                <home if.bind='!@me'></home>
+            </div>
         </div>
 
     </panel>
 </div>
 
 <script>
+    function initState(props){
+    	return {me:storage.me.read(),};
+    }
     function onBook() {
         this.emitEvent('book');
     }
