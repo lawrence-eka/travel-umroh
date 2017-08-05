@@ -1,0 +1,23 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/home-button" name="home"></inject>
+
+<div data.load="getGeoLoc()">
+    <panel title='Pray Times'>
+        <div slot.name="body">
+            {{JSON.stringify(data)}}
+        </div>
+        <div slot.name="footer">
+            <div class="row">
+                <home></home>
+            </div>
+        </div>
+    </panel>
+</div>
+
+<script>
+//	function getData() {
+//		return new Promise(function(resolve) {
+//			getGeoLoc().then(function(loc){resolve(loc)}).catch(function(err){resolve(err)});
+//		})
+//	}
+</script>

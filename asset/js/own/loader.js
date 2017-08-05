@@ -131,6 +131,7 @@ function Loader(cv) {
 		{seq: 2, file: "asset/css/sticky-footer-navbar.css"},
 		{seq: 2, file: "asset/js/jquery.min.js"},
 		{seq: 4, file: "asset/js/bootstrap.min.js"},
+		{seq: 4, file: "asset/js/own/geoLocation.js"},
 		{seq: 2, file: "dpd.js"},
 		{seq: 2, file: "asset/js/own/prototypes.js"},
 		{seq: 2, file: "asset/js/own/datePair.js"},

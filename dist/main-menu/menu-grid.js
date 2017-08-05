@@ -30,6 +30,11 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
 
   function onPropertyChange(event) {};
 
+
+  /*
+     AIzaSyDonITuQJoUTbTjBSvrwv9nvlZ8tTzSD7Y
+     */
+
   function initState(props) {
     var a = actionable();
     //debugger;
@@ -40,7 +45,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
   }
 
   function actionable() {
-    var result = '|schedule|login|praytimes|qibla|dua|';
+    var result = '|schedule|login|praytimes|qibla|dua|map|';
     var me = storage.me.read();
     if (me) {
       result += 'profile|bookings|';
@@ -94,33 +99,6 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     _elementOpenStart("div", "");
     _attr("class", "row menu-grid");
     _elementOpenEnd("div");
-    if (isActionable("profile", _component)) {
-      var _params = {
-        "icon": "address-card-o",
-        "text": "Profile",
-        "onclick": function(event) {
-          var self = {
-            target: event.target
-          };
-          self.properties = _props;
-          if ('elements' in self.target) {
-            self.elements = self.target.elements;
-          }
-          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = _component;
-          self.component._state = self.component._state || {};
-          self.state = self.component._state;
-          self.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-            if ('on' + eventName in _props) {
-              _props['on' + eventName](event);
-            }
-          };
-          onClick.bind(self)('#app/user.myProfile');
-        }
-      };
-      _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-    }
     if (isActionable("schedule", _component)) {
       var _params = {
         "icon": "calendar",
@@ -202,33 +180,6 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
-    if (isActionable("approveUsers", _component)) {
-      var _params = {
-        "icon": "files-o",
-        "text": "Approvals",
-        "onclick": function(event) {
-          var self = {
-            target: event.target
-          };
-          self.properties = _props;
-          if ('elements' in self.target) {
-            self.elements = self.target.elements;
-          }
-          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = _component;
-          self.component._state = self.component._state || {};
-          self.state = self.component._state;
-          self.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-            if ('on' + eventName in _props) {
-              _props['on' + eventName](event);
-            }
-          };
-          onClick.bind(self)('#app/user.myApprovals');
-        }
-      };
-      _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-    }
     if (isActionable("confirmPayment", _component)) {
       var _params = {
         "icon": "money",
@@ -252,6 +203,33 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
             }
           };
           onClick.bind(self)('#app/booking.paymentConfirmation');
+        }
+      };
+      _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    }
+    if (isActionable("approveUsers", _component)) {
+      var _params = {
+        "icon": "files-o",
+        "text": "Approvals",
+        "onclick": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onClick.bind(self)('#app/user.myApprovals');
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -283,10 +261,10 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     }
-    if (isActionable("prayTimes", _component)) {
+    if (isActionable("map", _component)) {
       var _params = {
-        "icon": "clock-o",
-        "text": "Pray Times",
+        "icon": "map-marker",
+        "text": "Map",
         "onclick": function(event) {
           var self = {
             target: event.target
@@ -305,7 +283,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
               _props['on' + eventName](event);
             }
           };
-          onClick.bind(self)('#app/user.home');
+          onClick.bind(self)('#app/map.home');
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -332,7 +310,34 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
               _props['on' + eventName](event);
             }
           };
-          onClick.bind(self)('#app/user.home');
+          onClick.bind(self)('#app/qibla.home');
+        }
+      };
+      _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    }
+    if (isActionable("prayTimes", _component)) {
+      var _params = {
+        "icon": "clock-o",
+        "text": "Pray Times",
+        "onclick": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onClick.bind(self)('#app/pray-times.home');
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -360,6 +365,33 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
             }
           };
           onClick.bind(self)('#app/user.home');
+        }
+      };
+      _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    }
+    if (isActionable("profile", _component)) {
+      var _params = {
+        "icon": "address-card-o",
+        "text": "Profile",
+        "onclick": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onClick.bind(self)('#app/user.myProfile');
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

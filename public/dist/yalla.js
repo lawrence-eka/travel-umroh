@@ -1,1 +1,2231 @@
-!function(global){function isArray(value){return"[object Array]"===Object.prototype.toString.call(value)}function asyncFlush(){for(var i=0;i<asyncQueue.length;i++)asyncQueue[i][0](asyncQueue[i][1]);asyncQueue=[],asyncTimer=!1}function asyncCall(callback,arg){asyncQueue.push([callback,arg]),asyncTimer||(asyncTimer=!0,asyncSetTimer(asyncFlush,0))}function invokeResolver(resolver,promise){function rejectPromise(reason){reject(promise,reason)}try{resolver(function resolvePromise(value){resolve(promise,value)},rejectPromise)}catch(e){rejectPromise(e)}}function invokeCallback(subscriber){var owner=subscriber.owner,settled=owner.state_,value=owner.data_,callback=subscriber[settled],promise=subscriber.then;if("function"==typeof callback){settled=FULFILLED;try{value=callback(value)}catch(e){reject(promise,e)}}handleThenable(promise,value)||(settled===FULFILLED&&resolve(promise,value),settled===REJECTED&&reject(promise,value))}function handleThenable(promise,value){var resolved;try{if(promise===value)throw new TypeError("A promises callback cannot return that same promise.");if(value&&("function"==typeof value||"object"==typeof value)){var then=value.then;if("function"==typeof then)return then.call(value,function(val){resolved||(resolved=!0,value!==val?resolve(promise,val):fulfill(promise,val))},function(reason){resolved||(resolved=!0,reject(promise,reason))}),!0}}catch(e){return resolved||reject(promise,e),!0}return!1}function resolve(promise,value){promise!==value&&handleThenable(promise,value)||fulfill(promise,value)}function fulfill(promise,value){promise.state_===PENDING&&(promise.state_=SEALED,promise.data_=value,asyncCall(publishFulfillment,promise))}function reject(promise,reason){promise.state_===PENDING&&(promise.state_=SEALED,promise.data_=reason,asyncCall(publishRejection,promise))}function publish(promise){var callbacks=promise.then_;promise.then_=void 0;for(var i=0;i<callbacks.length;i++)invokeCallback(callbacks[i])}function publishFulfillment(promise){promise.state_=FULFILLED,publish(promise)}function publishRejection(promise){promise.state_=REJECTED,publish(promise)}function Promise(resolver){if("function"!=typeof resolver)throw new TypeError("Promise constructor takes a function argument");if(this instanceof Promise==0)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this.then_=[],invokeResolver(resolver,this)}var NativePromise=global.Promise,nativePromiseSupported=NativePromise&&"resolve"in NativePromise&&"reject"in NativePromise&&"all"in NativePromise&&"race"in NativePromise&&function(){var resolve;return new NativePromise(function(r){resolve=r}),"function"==typeof resolve}();"undefined"!=typeof exports&&exports?(exports.Promise=nativePromiseSupported?NativePromise:Promise,exports.Polyfill=Promise):"function"==typeof define&&define.amd?define(function(){return nativePromiseSupported?NativePromise:Promise}):nativePromiseSupported||(global.Promise=Promise);var asyncTimer,PENDING="pending",SEALED="sealed",FULFILLED="fulfilled",REJECTED="rejected",NOOP=function(){},asyncSetTimer="undefined"!=typeof setImmediate?setImmediate:setTimeout,asyncQueue=[];Promise.prototype={constructor:Promise,state_:PENDING,then_:null,data_:void 0,then:function(onFulfillment,onRejection){var subscriber={owner:this,then:new this.constructor(NOOP),fulfilled:onFulfillment,rejected:onRejection};return this.state_===FULFILLED||this.state_===REJECTED?asyncCall(invokeCallback,subscriber):this.then_.push(subscriber),subscriber.then},catch:function(onRejection){return this.then(null,onRejection)}},Promise.all=function(promises){var Class=this;if(!isArray(promises))throw new TypeError("You must pass an array to Promise.all().");return new Class(function(resolve,reject){for(var promise,results=[],remaining=0,i=0;i<promises.length;i++)(promise=promises[i])&&"function"==typeof promise.then?promise.then(function resolver(index){return remaining++,function(value){results[index]=value,--remaining||resolve(results)}}(i),reject):results[i]=promise;remaining||resolve(results)})},Promise.race=function(promises){var Class=this;if(!isArray(promises))throw new TypeError("You must pass an array to Promise.race().");return new Class(function(resolve,reject){for(var promise,i=0;i<promises.length;i++)(promise=promises[i])&&"function"==typeof promise.then?promise.then(resolve,reject):resolve(promise)})},Promise.resolve=function(value){var Class=this;return value&&"object"==typeof value&&value.constructor===Class?value:new Class(function(resolve){resolve(value)})},Promise.reject=function(reason){return new this(function(resolve,reject){reject(reason)})}}("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this),[Element.prototype,CharacterData.prototype,DocumentType.prototype].forEach(function(item){item.hasOwnProperty("remove")||Object.defineProperty(item,"remove",{configurable:!0,enumerable:!0,writable:!0,value:function remove(){this.parentNode.removeChild(this)}})}),function(global,factory){"object"==typeof exports&&"undefined"!=typeof module?factory(exports):"function"==typeof define&&define.amd?define(["exports"],factory):factory(global.IncrementalDOM={})}(this,function(exports){"use strict";function Blank(){}function NodeData(nodeName,key){this.attrs=createMap(),this.attrsArr=[],this.newAttrs=createMap(),this.staticsApplied=!1,this.key=key,this.keyMap=createMap(),this.keyMapValid=!0,this.focused=!1,this.nodeName=nodeName,this.text=null}function Context(){this.created=notifications.nodesCreated&&[],this.deleted=notifications.nodesDeleted&&[]}var hasOwnProperty=Object.prototype.hasOwnProperty;Blank.prototype=Object.create(null);var has=function(map,property){return hasOwnProperty.call(map,property)},createMap=function(){return new Blank},DATA_PROP="__incrementalDOMData",initData=function(node,nodeName,key){var data=new NodeData(nodeName,key);return node[DATA_PROP]=data,data},getData=function(node){return importNode(node),node[DATA_PROP]},importNode=function(node){if(!node[DATA_PROP]){var isElement=node instanceof Element,nodeName=isElement?node.localName:node.nodeName,key=isElement?node.getAttribute("key"):null,data=initData(node,nodeName,key);if(key&&(getData(node.parentNode).keyMap[key]=node),isElement)for(var attributes=node.attributes,attrs=data.attrs,newAttrs=data.newAttrs,attrsArr=data.attrsArr,i=0;i<attributes.length;i+=1){var attr=attributes[i],name=attr.name,value=attr.value;attrs[name]=value,newAttrs[name]=void 0,attrsArr.push(name),attrsArr.push(value)}for(var child=node.firstChild;child;child=child.nextSibling)importNode(child)}},getNamespaceForTag=function(tag,parent){return"svg"===tag?"http://www.w3.org/2000/svg":"foreignObject"===getData(parent).nodeName?null:parent.namespaceURI},createElement=function(doc,parent,tag,key){var namespace=getNamespaceForTag(tag,parent),el=void 0;return el=namespace?doc.createElementNS(namespace,tag):doc.createElement(tag),initData(el,tag,key),el},createText=function(doc){var node=doc.createTextNode("");return initData(node,"#text",null),node},notifications={nodesCreated:null,nodesDeleted:null};Context.prototype.markCreated=function(node){this.created&&this.created.push(node)},Context.prototype.markDeleted=function(node){this.deleted&&this.deleted.push(node)},Context.prototype.notifyChanges=function(){this.created&&this.created.length>0&&notifications.nodesCreated(this.created),this.deleted&&this.deleted.length>0&&notifications.nodesDeleted(this.deleted)};var isDocumentRoot=function(node){return node instanceof Document||node instanceof DocumentFragment},getAncestry=function(node,root){for(var ancestry=[],cur=node;cur!==root;)ancestry.push(cur),cur=cur.parentNode;return ancestry},getRoot=function(node){for(var cur=node,prev=cur;cur;)prev=cur,cur=cur.parentNode;return prev},getActiveElement=function(node){var root=getRoot(node);return isDocumentRoot(root)?root.activeElement:null},getFocusedPath=function(node,root){var activeElement=getActiveElement(node);return activeElement&&node.contains(activeElement)?getAncestry(activeElement,root):[]},moveBefore=function(parentNode,node,referenceNode){for(var insertReferenceNode=node.nextSibling,cur=referenceNode;cur!==node;){var next=cur.nextSibling;parentNode.insertBefore(cur,insertReferenceNode),cur=next}},context=null,currentNode=null,currentParent=null,doc=null,markFocused=function(focusPath,focused){for(var i=0;i<focusPath.length;i+=1)getData(focusPath[i]).focused=focused},patchFactory=function(run){return function(node,fn,data){var prevContext=context,prevDoc=doc,prevCurrentNode=currentNode,prevCurrentParent=currentParent;context=new Context,doc=node.ownerDocument,currentParent=node.parentNode;var focusPath=getFocusedPath(node,currentParent);markFocused(focusPath,!0);var retVal=run(node,fn,data);return markFocused(focusPath,!1),context.notifyChanges(),context=prevContext,doc=prevDoc,currentNode=prevCurrentNode,currentParent=prevCurrentParent,retVal}},patchInner=patchFactory(function(node,fn,data){return currentNode=node,enterNode(),fn(data),exitNode(),node}),patchOuter=patchFactory(function(node,fn,data){var startNode={nextSibling:node};return currentNode=startNode,fn(data),node!==currentNode&&node.parentNode&&removeChild(currentParent,node,getData(currentParent).keyMap),startNode===currentNode?null:currentNode}),matches=function(matchNode,nodeName,key){var data=getData(matchNode);return nodeName===data.nodeName&&key==data.key},alignWithDOM=function(nodeName,key){if(!currentNode||!matches(currentNode,nodeName,key)){var parentData=getData(currentParent),currentNodeData=currentNode&&getData(currentNode),keyMap=parentData.keyMap,node=void 0;if(key){var keyNode=keyMap[key];keyNode&&(matches(keyNode,nodeName,key)?node=keyNode:keyNode===currentNode?context.markDeleted(keyNode):removeChild(currentParent,keyNode,keyMap))}node||(node="#text"===nodeName?createText(doc):createElement(doc,currentParent,nodeName,key),key&&(keyMap[key]=node),context.markCreated(node)),getData(node).focused?moveBefore(currentParent,node,currentNode):currentNodeData&&currentNodeData.key&&!currentNodeData.focused?(currentParent.replaceChild(node,currentNode),parentData.keyMapValid=!1):currentParent.insertBefore(node,currentNode),currentNode=node}},removeChild=function(node,child,keyMap){node.removeChild(child),context.markDeleted(child);var key=getData(child).key;key&&delete keyMap[key]},clearUnvisitedDOM=function(){var node=currentParent,data=getData(node),keyMap=data.keyMap,keyMapValid=data.keyMapValid,child=node.lastChild,key=void 0;if(child!==currentNode||!keyMapValid){for(;child!==currentNode;)removeChild(node,child,keyMap),child=node.lastChild;if(!keyMapValid){for(key in keyMap)(child=keyMap[key]).parentNode!==node&&(context.markDeleted(child),delete keyMap[key]);data.keyMapValid=!0}}},enterNode=function(){currentParent=currentNode,currentNode=null},getNextNode=function(){return currentNode?currentNode.nextSibling:currentParent.firstChild},nextNode=function(){currentNode=getNextNode()},exitNode=function(){clearUnvisitedDOM(),currentNode=currentParent,currentParent=currentParent.parentNode},coreElementOpen=function(tag,key){return nextNode(),alignWithDOM(tag,key),enterNode(),currentParent},coreElementClose=function(){return exitNode(),currentNode},coreText=function(){return nextNode(),alignWithDOM("#text",null),currentNode},skipNode=nextNode,symbols={default:"__default"},getNamespace=function(name){return 0===name.lastIndexOf("xml:",0)?"http://www.w3.org/XML/1998/namespace":0===name.lastIndexOf("xlink:",0)?"http://www.w3.org/1999/xlink":void 0},applyAttr=function(el,name,value){if(null==value)el.removeAttribute(name);else{var attrNS=getNamespace(name);attrNS?el.setAttributeNS(attrNS,name,value):el.setAttribute(name,value)}},applyProp=function(el,name,value){el[name]=value},setStyleValue=function(style,prop,value){prop.indexOf("-")>=0?style.setProperty(prop,value):style[prop]=value},updateAttribute=function(el,name,value){var attrs=getData(el).attrs;attrs[name]!==value&&((attributes[name]||attributes[symbols.default])(el,name,value),attrs[name]=value)},attributes=createMap();attributes[symbols.default]=function(el,name,value){var type=typeof value;"object"===type||"function"===type?applyProp(el,name,value):applyAttr(el,name,value)},attributes.style=function(el,name,style){if("string"==typeof style)el.style.cssText=style;else{el.style.cssText="";var elStyle=el.style,obj=style;for(var prop in obj)has(obj,prop)&&setStyleValue(elStyle,prop,obj[prop])}};var argsBuilder=[],elementOpen=function(tag,key,statics){var node=coreElementOpen(tag,key),data=getData(node);if(!data.staticsApplied){if(statics)for(var _i=0;_i<statics.length;_i+=2){var name=statics[_i],value=statics[_i+1];updateAttribute(node,name,value)}data.staticsApplied=!0}for(var attrsArr=data.attrsArr,newAttrs=data.newAttrs,isNew=!attrsArr.length,i=3,j=0;i<arguments.length;i+=2,j+=2){var _attr=arguments[i];if(isNew)attrsArr[j]=_attr,newAttrs[_attr]=void 0;else if(attrsArr[j]!==_attr)break;value=arguments[i+1],(isNew||attrsArr[j+1]!==value)&&(attrsArr[j+1]=value,updateAttribute(node,_attr,value))}if(i<arguments.length||j<attrsArr.length){for(;i<arguments.length;i+=1,j+=1)attrsArr[j]=arguments[i];for(j<attrsArr.length&&(attrsArr.length=j),i=0;i<attrsArr.length;i+=2){var name=attrsArr[i],value=attrsArr[i+1];newAttrs[name]=value}for(var _attr2 in newAttrs)updateAttribute(node,_attr2,newAttrs[_attr2]),newAttrs[_attr2]=void 0}return node},elementClose=function(){return coreElementClose()};exports.patch=patchInner,exports.patchInner=patchInner,exports.patchOuter=patchOuter,exports.currentElement=function(){return currentParent},exports.currentPointer=function(){return getNextNode()},exports.skip=function(){currentNode=currentParent.lastChild},exports.skipNode=skipNode,exports.elementVoid=function(){return elementOpen.apply(null,arguments),elementClose()},exports.elementOpenStart=function(tag,key,statics){argsBuilder[0]=tag,argsBuilder[1]=key,argsBuilder[2]=statics},exports.elementOpenEnd=function(){var node=elementOpen.apply(null,argsBuilder);return argsBuilder.length=0,node},exports.elementOpen=elementOpen,exports.elementClose=elementClose,exports.text=function(value){var node=coreText(),data=getData(node);if(data.text!==value){data.text=value;for(var formatted=value,i=1;i<arguments.length;i+=1)formatted=(0,arguments[i])(formatted);node.data=formatted}return node},exports.attr=function(name,value){argsBuilder.push(name),argsBuilder.push(value)},exports.symbols=symbols,exports.attributes=attributes,exports.applyAttr=applyAttr,exports.applyProp=applyProp,exports.notifications=notifications,exports.importNode=importNode});var yalla=function(){"use strict";function showErrorInBrowser(message){var errorDiv=document.createElement("div");errorDiv.style="background:#000;color: red;padding:10px;position:fixed;bottom:0px;right:0px;left:0px;z-index:10000;";var deleteButton=document.createElement("button");deleteButton.innerText="OK",deleteButton.style="float:right;background-color: #4CAF50; /* Green */ border: none; padding:5px; color: white; text-align: center; text-decoration: none; display: inline-block; font-size: 12px;",deleteButton.onclick=function(event){event.target.parentNode.remove()};var messageDiv=document.createElement("div");messageDiv.innerText=message,messageDiv.style="font-size:20px",errorDiv.appendChild(deleteButton),errorDiv.appendChild(messageDiv),document.body.appendChild(errorDiv)}function refsRegistered(refName,component){for(var i=0;i<framework.refs.length;i++){var refInfo=framework.refs[i];if(refInfo.name==refName&&refInfo.component==component)return!0}return!1}function unregisterRef(refName,component){for(var index=-1,i=0;i<framework.refs.length;i++){var refInfo=framework.refs[i];refInfo.name==refName&&refInfo.component==component&&(index=i)}index>=0&&framework.refs.splice(index,1)}function patchGlobal(){var address=[framework.defaultComponent],addressString="";""!=window.location.hash?addressString=window.location.hash.substring(1,window.location.hash.length):0==window.location.search.indexOf("?_escaped_fragment_=")&&(addressString=decodeURIComponent(window.location.search.substring("?_escaped_fragment_=".length,window.location.search.length))),addressString&&addressString.length>0&&(address=addressString.split("/").map(function(addr){return addr&&0==addr.indexOf("!")&&addr.length>1&&(addr=addr.substring(1,addr.length)),addr}).filter(function(addr){return!!(addr&&addr.length>0&&addr.indexOf("!")<0)}));var componentAndParams=address.map(function(pathQuery){var valParams=pathQuery.split(":"),path=valParams[0].replace(/\./g,"/");return valParams.splice(0,1),{componentPath:path,params:valParams.reduce(function(current,param){var parVal=param.split("=");return current[parVal[0]]=parVal[1],current},{})}}),addressToChain=componentAndParams.map(function(item){return item.componentPath});framework.renderChain(addressToChain).then(function(){var render=componentAndParams.reduceRight(function(slotView,compAndParam){var component=compAndParam,path=framework.composePathFromBase(component.componentPath),comp=yalla.components[path];return function(slotName){!comp||void 0!=slotName&&"default"!=slotName||comp.render(component.params,slotView)}},function(){});IncrementalDOM.patch(document.querySelector(framework.domTarget),function(){render()})}).catch(function(err){log.error(err.stack)})}function lengthableObjectToArray(object){var result=[];if(object&&object.length>0)for(var i=0;i<object.length;i++){var item=object[i];result.push(item)}return result}var yalla={utils:{},framework:{},log:{},components:{}},log=yalla.log;log.debug=function(){},log.info=function(){},log.error=function(message){showErrorInBrowser(message)};var utils=yalla.utils;utils.nonEmptyArray=function(array){return Array.isArray(array)&&array.length>0},utils.firstItemInArray=function(array){return!!utils.nonEmptyArray(array)&&array[0]},utils.argumentsToArray=function(array){for(var result=[],arg=0;arg<array.length;++arg){var item=array[arg];result.push(item)}return result},utils.assertNotNull=function(){for(var i=0;i<arguments.length;i++)if(null==arguments[i]||void 0==arguments[i])return!1;return!0},utils.merge=function(objectOne,objectTwo){var result={};for(var prop in objectOne)objectOne.hasOwnProperty(prop)&&(result[prop]=objectOne[prop]);for(var prop in objectTwo)objectTwo.hasOwnProperty(prop)&&(result[prop]=objectTwo[prop]);return result},utils.dateFormat=function formatDate(date,format,utc){function ii(i,len){var s=i+"";for(len=len||2;s.length<len;)s="0"+s;return s}var MMMM=["\0","January","February","March","April","May","June","July","August","September","October","November","December"],MMM=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],dddd=["","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],ddd=["","Sun","Mon","Tue","Wed","Thu","Fri","Sat"],y=utc?date.getUTCFullYear():date.getFullYear();format=(format=(format=format.replace(/(^|[^\\])yyyy+/g,"$1"+y)).replace(/(^|[^\\])yy/g,"$1"+y.toString().substr(2,2))).replace(/(^|[^\\])y/g,"$1"+y);var M=(utc?date.getUTCMonth():date.getMonth())+1;format=(format=(format=(format=format.replace(/(^|[^\\])MMMM+/g,"$1"+MMMM[0])).replace(/(^|[^\\])MMM/g,"$1"+MMM[0])).replace(/(^|[^\\])MM/g,"$1"+ii(M))).replace(/(^|[^\\])M/g,"$1"+M);var d=utc?date.getUTCDate():date.getDate();format=(format=(format=(format=format.replace(/(^|[^\\])dddd+/g,"$1"+dddd[0])).replace(/(^|[^\\])ddd/g,"$1"+ddd[0])).replace(/(^|[^\\])dd/g,"$1"+ii(d))).replace(/(^|[^\\])d/g,"$1"+d);var H=utc?date.getUTCHours():date.getHours();format=(format=format.replace(/(^|[^\\])HH+/g,"$1"+ii(H))).replace(/(^|[^\\])H/g,"$1"+H);var h=H>12?H-12:0==H?12:H;format=(format=format.replace(/(^|[^\\])hh+/g,"$1"+ii(h))).replace(/(^|[^\\])h/g,"$1"+h);var m=utc?date.getUTCMinutes():date.getMinutes();format=(format=format.replace(/(^|[^\\])mm+/g,"$1"+ii(m))).replace(/(^|[^\\])m/g,"$1"+m);var s=utc?date.getUTCSeconds():date.getSeconds();format=(format=format.replace(/(^|[^\\])ss+/g,"$1"+ii(s))).replace(/(^|[^\\])s/g,"$1"+s);var f=utc?date.getUTCMilliseconds():date.getMilliseconds();format=format.replace(/(^|[^\\])fff+/g,"$1"+ii(f,3)),f=Math.round(f/10),format=format.replace(/(^|[^\\])ff/g,"$1"+ii(f)),f=Math.round(f/10),format=format.replace(/(^|[^\\])f/g,"$1"+f);var T=H<12?"AM":"PM";format=(format=format.replace(/(^|[^\\])TT+/g,"$1"+T)).replace(/(^|[^\\])T/g,"$1"+T.charAt(0));var t=T.toLowerCase();format=(format=format.replace(/(^|[^\\])tt+/g,"$1"+t)).replace(/(^|[^\\])t/g,"$1"+t.charAt(0));var tz=-date.getTimezoneOffset(),K=utc||!tz?"Z":tz>0?"+":"-";if(!utc){var tzMin=(tz=Math.abs(tz))%60;K+=ii(Math.floor(tz/60))+":"+ii(tzMin)}format=format.replace(/(^|[^\\])K/g,"$1"+K);var day=(utc?date.getUTCDay():date.getDay())+1;return format=format.replace(new RegExp(dddd[0],"g"),dddd[day]),format=format.replace(new RegExp(ddd[0],"g"),ddd[day]),format=format.replace(new RegExp(MMMM[0],"g"),MMMM[M]),format=format.replace(new RegExp(MMM[0],"g"),MMM[M]),format=format.replace(/\\(.)/g,"$1")},utils.fetch=function(url,postData){function createXMLHTTPObject(){for(var xmlhttp=!1,i=0;i<XMLHttpFactories.length;i++){try{xmlhttp=XMLHttpFactories[i]()}catch(e){continue}break}return xmlhttp}var XMLHttpFactories=[function(){return new XMLHttpRequest},function(){return new ActiveXObject("Msxml2.XMLHTTP")},function(){return new ActiveXObject("Msxml3.XMLHTTP")},function(){return new ActiveXObject("Microsoft.XMLHTTP")}];return new Promise(function(resolve,reject){var req=createXMLHTTPObject();if(req.timeout=2e3,req){var method=postData?"POST":"GET";req.open(method,url,!0),postData&&req.setRequestHeader("Content-type","application/json"),req.ontimeout=function(){reject(req)},req.onreadystatechange=function(){4==req.readyState&&(200==req.status||304==req.status?resolve(req):reject(req))},4!=req.readyState&&req.send(JSON.stringify(postData))}})};var framework=yalla.framework;framework.filePrefix=".js",framework.base="src",framework.componentLoadListener={},framework.refs=[],framework.createInjector=function(componentPath){var relativePath=componentPath.substring(0,componentPath.lastIndexOf("/"));return function Injector(inject){var path=relativePath+"/"+inject;return"/"==inject.charAt(0)&&(path=framework.composePathFromBase(inject)),yalla.components[path]}},framework.addComponent=function(name,component){yalla.components[name]=component;var path=name+framework.filePrefix;path in framework.componentLoadListener&&framework.componentLoadListener[path].call()},framework.attachScriptToDocument=function(url){return url.substring(0,url.length-".js".length)in yalla.components?Promise.resolve(!0):url in framework.componentLoadListener?Promise.resolve(!0):new Promise(function(resolve){var s=document.createElement("script");s.setAttribute("src","."+url),document.head.appendChild(s),framework.componentLoadListener[url]=function(){resolve(url),delete framework.componentLoadListener[url]}})},framework.composePathFromBase=function(component){var fromRoot="/"==component.charAt(0);return"/"+framework.base+(fromRoot?"":"/")+component},framework.loadScriptAndDependency=function(component){if(component.indexOf(".")>0)return log.error("Invalid dependency : "+component),Promise.reject();var componentPath=framework.composePathFromBase(component);if(componentPath in yalla.components)return Promise.resolve(!0);var url=componentPath+framework.filePrefix;return component.substring(0,component.lastIndexOf("/")+1),new Promise(function(resolve){utils.fetch("."+url).then(function(req){var injects=(req.responseText.match(/\$inject\(.*?\)/g)||[]).map(function(inject){return inject.substring('$inject("'.length,inject.length-2)});if(utils.nonEmptyArray(injects)){var injectsPromise=injects.map(function(inject){return"/"!=inject.charAt(0)&&(inject="/"+inject),framework.loadScriptAndDependency(inject)});Promise.all(injectsPromise).then(function(){framework.attachScriptToDocument(url).then(function(){resolve(url)})})}else framework.attachScriptToDocument(url).then(function(){resolve(url)})},function(){log.error("Unable to fetch "+url)})})},framework.getParentComponent=function(node){var _node=node;do{if("element"in _node.attributes||"BODY"==_node.nodeName)return _node;_node=_node.parentNode}while(_node);return null},framework.validComponentName=function(component,componentName){return component._state&&component._state._name==componentName},framework.renderChain=function(address){return address.reduceRight(function(current,path){return current.then(function(){return new Promise(function(resolve){framework.loadScriptAndDependency(path).then(function(){resolve(!0)})})})},Promise.resolve(!1))},framework.propertyCheckChanges=function(oldProperties,newProperties,onPropertyChange){if(null!=oldProperties&&null!=newProperties&&null!=onPropertyChange){var result={},comparedProps=[];for(var prop in oldProperties)if(comparedProps.push(prop),oldProperties.hasOwnProperty(prop)){if("function"==typeof oldProperties[prop])continue;newProperties.hasOwnProperty(prop)?result[prop]={leftValue:oldProperties[prop],rightValue:newProperties[prop]}:result[prop]={leftValue:oldProperties[prop],rightValue:null}}for(var prop in newProperties)if(newProperties.hasOwnProperty(prop)&&comparedProps.indexOf(prop)<0){if("function"==typeof newProperties[prop])continue;result[prop]={leftValue:null,rightValue:newProperties[prop]}}var propertyChangesEvent={};for(var prop in result)if(result[prop].leftValue!==result[prop].rightValue){var operation="";operation=null==result[prop].leftValue?"add":null==result[prop].rightValue?"remove":"change",propertyChangesEvent[prop]={type:operation,oldValue:result[prop].leftValue,newValue:result[prop].rightValue},propertyChangesEvent.hasValue=!0}propertyChangesEvent.hasValue&&(delete propertyChangesEvent.hasValue,onPropertyChange(propertyChangesEvent))}},framework.registerRef=function(refName,component,renderFunction){return component._refName=refName,refsRegistered(refName,component)||framework.refs.push({name:refName,component:component,render:renderFunction}),renderFunction},framework.start=function(){var scripts=document.querySelector("script[src$='yalla.js']")||[];if(!utils.assertNotNull(scripts.attributes["yalla-component"],scripts.attributes["yalla-base"],scripts.attributes["yalla-domtarget"]))throw new Error("script tag should contain attributes 'yalla-component', 'yalla-base' and 'yalla-domtarget'");var component=scripts.attributes["yalla-component"].nodeValue,base=scripts.attributes["yalla-base"].nodeValue,domTarget=scripts.attributes["yalla-domtarget"].nodeValue,routingCallback=!!scripts.attributes["yalla-routing"]&&scripts.attributes["yalla-routing"].nodeValue;framework.base=base,framework.domTarget=domTarget,framework.defaultComponent=component,framework.beforeRenderToScreen=function(){return new Promise(function(resolve){if(routingCallback&&"function"==typeof window[routingCallback]){var path=window.location.hash;window[routingCallback](path).then(function(newPath){newPath&&newPath!=path?(resolve(!1),log.info("Re-routing path to new location"),window.location.hash=newPath):resolve(!0)})}else resolve(!0)})},framework.renderToScreen()},framework.renderToScreen=function(){var args=arguments;framework.beforeRenderToScreen().then(function(ok){ok&&(0==args.length?patchGlobal():2==args.length&&"function"==typeof args[1]?IncrementalDOM.patch(args[0],args[1]):args.length>0&&lengthableObjectToArray(args).forEach(function(refName){yalla.framework.refs.filter(function(refInfo){return refInfo.name===refName}).forEach(function(refInfo){IncrementalDOM.patch(refInfo.component,function(){refInfo.render()})})}))})},framework.beforeRenderToScreen=function(){return Promise.resolve(!0)};var attributes=IncrementalDOM.attributes;return["checked","selected","disabled","readonly","required","multiple","ismap"].forEach(function(key){attributes[key]=function(element,name,value){value?element.setAttribute(key,!0):element.removeAttribute(key)}}),attributes.value=function(element,name,value){element.value=value},IncrementalDOM.notifications.nodesCreated=function(nodes){nodes.forEach(function(node){node.oncreated&&node.oncreated.call(node,{target:node,currentTarget:node})})},IncrementalDOM.notifications.nodesDeleted=function(nodes){nodes.forEach(function(node){node._refName&&unregisterRef(node._refName,node),node.ondeleted&&node.ondeleted.call(node,{target:node,currentTarget:node})})},yalla}();window.onload=function(){yalla.framework.start()},"onhashchange"in window?window.onhashchange=function(){window.location.reload()}:alert("Browser not supported");
+/*
+version : 0.0.58
+*/
+
+(function (global) {
+
+//
+// Check for native Promise and it has correct interface
+//
+
+    var NativePromise = global['Promise'];
+    var nativePromiseSupported =
+        NativePromise &&
+        // Some of these methods are missing from
+        // Firefox/Chrome experimental implementations
+        'resolve' in NativePromise &&
+        'reject' in NativePromise &&
+        'all' in NativePromise &&
+        'race' in NativePromise &&
+        // Older version of the spec had a resolver object
+        // as the arg rather than a function
+        (function () {
+            var resolve;
+            new NativePromise(function (r) {
+                resolve = r;
+            });
+            return typeof resolve === 'function';
+        })();
+
+
+//
+// export if necessary
+//
+
+    if (typeof exports !== 'undefined' && exports) {
+        // node.js
+        exports.Promise = nativePromiseSupported ? NativePromise : Promise;
+        exports.Polyfill = Promise;
+    }
+    else {
+        // AMD
+        if (typeof define == 'function' && define.amd) {
+            define(function () {
+                return nativePromiseSupported ? NativePromise : Promise;
+            });
+        }
+        else {
+            // in browser add to global
+            if (!nativePromiseSupported)
+                global['Promise'] = Promise;
+        }
+    }
+
+
+//
+// Polyfill
+//
+
+    var PENDING = 'pending';
+    var SEALED = 'sealed';
+    var FULFILLED = 'fulfilled';
+    var REJECTED = 'rejected';
+    var NOOP = function () {
+    };
+
+    function isArray(value) {
+        return Object.prototype.toString.call(value) === '[object Array]';
+    }
+
+// async calls
+    var asyncSetTimer = typeof setImmediate !== 'undefined' ? setImmediate : setTimeout;
+    var asyncQueue = [];
+    var asyncTimer;
+
+    function asyncFlush() {
+        // run promise callbacks
+        for (var i = 0; i < asyncQueue.length; i++)
+            asyncQueue[i][0](asyncQueue[i][1]);
+
+        // reset async asyncQueue
+        asyncQueue = [];
+        asyncTimer = false;
+    }
+
+    function asyncCall(callback, arg) {
+        asyncQueue.push([callback, arg]);
+
+        if (!asyncTimer) {
+            asyncTimer = true;
+            asyncSetTimer(asyncFlush, 0);
+        }
+    }
+
+
+    function invokeResolver(resolver, promise) {
+        function resolvePromise(value) {
+            resolve(promise, value);
+        }
+
+        function rejectPromise(reason) {
+            reject(promise, reason);
+        }
+
+        try {
+            resolver(resolvePromise, rejectPromise);
+        } catch (e) {
+            rejectPromise(e);
+        }
+    }
+
+    function invokeCallback(subscriber) {
+        var owner = subscriber.owner;
+        var settled = owner.state_;
+        var value = owner.data_;
+        var callback = subscriber[settled];
+        var promise = subscriber.then;
+
+        if (typeof callback === 'function') {
+            settled = FULFILLED;
+            try {
+                value = callback(value);
+            } catch (e) {
+                reject(promise, e);
+            }
+        }
+
+        if (!handleThenable(promise, value)) {
+            if (settled === FULFILLED)
+                resolve(promise, value);
+
+            if (settled === REJECTED)
+                reject(promise, value);
+        }
+    }
+
+    function handleThenable(promise, value) {
+        var resolved;
+
+        try {
+            if (promise === value)
+                throw new TypeError('A promises callback cannot return that same promise.');
+
+            if (value && (typeof value === 'function' || typeof value === 'object')) {
+                var then = value.then;  // then should be retrived only once
+
+                if (typeof then === 'function') {
+                    then.call(value, function (val) {
+                        if (!resolved) {
+                            resolved = true;
+
+                            if (value !== val)
+                                resolve(promise, val);
+                            else
+                                fulfill(promise, val);
+                        }
+                    }, function (reason) {
+                        if (!resolved) {
+                            resolved = true;
+
+                            reject(promise, reason);
+                        }
+                    });
+
+                    return true;
+                }
+            }
+        } catch (e) {
+            if (!resolved)
+                reject(promise, e);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    function resolve(promise, value) {
+        if (promise === value || !handleThenable(promise, value))
+            fulfill(promise, value);
+    }
+
+    function fulfill(promise, value) {
+        if (promise.state_ === PENDING) {
+            promise.state_ = SEALED;
+            promise.data_ = value;
+
+            asyncCall(publishFulfillment, promise);
+        }
+    }
+
+    function reject(promise, reason) {
+        if (promise.state_ === PENDING) {
+            promise.state_ = SEALED;
+            promise.data_ = reason;
+
+            asyncCall(publishRejection, promise);
+        }
+    }
+
+    function publish(promise) {
+        var callbacks = promise.then_;
+        promise.then_ = undefined;
+
+        for (var i = 0; i < callbacks.length; i++) {
+            invokeCallback(callbacks[i]);
+        }
+    }
+
+    function publishFulfillment(promise) {
+        promise.state_ = FULFILLED;
+        publish(promise);
+    }
+
+    function publishRejection(promise) {
+        promise.state_ = REJECTED;
+        publish(promise);
+    }
+
+    /**
+     * @class
+     */
+    function Promise(resolver) {
+        if (typeof resolver !== 'function')
+            throw new TypeError('Promise constructor takes a function argument');
+
+        if (this instanceof Promise === false)
+            throw new TypeError('Failed to construct \'Promise\': Please use the \'new\' operator, this object constructor cannot be called as a function.');
+
+        this.then_ = [];
+
+        invokeResolver(resolver, this);
+    }
+
+    Promise.prototype = {
+        constructor: Promise,
+
+        state_: PENDING,
+        then_: null,
+        data_: undefined,
+
+        then: function (onFulfillment, onRejection) {
+            var subscriber = {
+                owner: this,
+                then: new this.constructor(NOOP),
+                fulfilled: onFulfillment,
+                rejected: onRejection
+            };
+
+            if (this.state_ === FULFILLED || this.state_ === REJECTED) {
+                // already resolved, call callback async
+                asyncCall(invokeCallback, subscriber);
+            }
+            else {
+                // subscribe
+                this.then_.push(subscriber);
+            }
+
+            return subscriber.then;
+        },
+
+        'catch': function (onRejection) {
+            return this.then(null, onRejection);
+        }
+    };
+
+    Promise.all = function (promises) {
+        var Class = this;
+
+        if (!isArray(promises))
+            throw new TypeError('You must pass an array to Promise.all().');
+
+        return new Class(function (resolve, reject) {
+            var results = [];
+            var remaining = 0;
+
+            function resolver(index) {
+                remaining++;
+                return function (value) {
+                    results[index] = value;
+                    if (!--remaining)
+                        resolve(results);
+                };
+            }
+
+            for (var i = 0, promise; i < promises.length; i++) {
+                promise = promises[i];
+
+                if (promise && typeof promise.then === 'function')
+                    promise.then(resolver(i), reject);
+                else
+                    results[i] = promise;
+            }
+
+            if (!remaining)
+                resolve(results);
+        });
+    };
+
+    Promise.race = function (promises) {
+        var Class = this;
+
+        if (!isArray(promises))
+            throw new TypeError('You must pass an array to Promise.race().');
+
+        return new Class(function (resolve, reject) {
+            for (var i = 0, promise; i < promises.length; i++) {
+                promise = promises[i];
+
+                if (promise && typeof promise.then === 'function')
+                    promise.then(resolve, reject);
+                else
+                    resolve(promise);
+            }
+        });
+    };
+
+    Promise.resolve = function (value) {
+        var Class = this;
+
+        if (value && typeof value === 'object' && value.constructor === Class)
+            return value;
+
+        return new Class(function (resolve) {
+            resolve(value);
+        });
+    };
+
+    Promise.reject = function (reason) {
+        var Class = this;
+
+        return new Class(function (resolve, reject) {
+            reject(reason);
+        });
+    };
+
+})(typeof window != 'undefined' ? window : typeof global != 'undefined' ? global : typeof self != 'undefined' ? self : this);
+
+// from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+(function (arr) {
+    arr.forEach(function (item) {
+        if (item.hasOwnProperty('remove')) {
+            return;
+        }
+        Object.defineProperty(item, 'remove', {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+                this.parentNode.removeChild(this);
+            }
+        });
+    });
+})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
+/**
+ * @license
+ * Copyright 2015 The Incremental DOM Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS-IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+        typeof define === 'function' && define.amd ? define(['exports'], factory) :
+            (factory((global.IncrementalDOM = {})));
+}(this, function (exports) { 'use strict';
+
+    /**
+     * Copyright 2015 The Incremental DOM Authors. All Rights Reserved.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *      http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS-IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+
+    /**
+     * A cached reference to the hasOwnProperty function.
+     */
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+    /**
+     * A constructor function that will create blank objects.
+     * @constructor
+     */
+    function Blank() {}
+
+    Blank.prototype = Object.create(null);
+
+    /**
+     * Used to prevent property collisions between our "map" and its prototype.
+     * @param {!Object<string, *>} map The map to check.
+     * @param {string} property The property to check.
+     * @return {boolean} Whether map has property.
+     */
+    var has = function (map, property) {
+        return hasOwnProperty.call(map, property);
+    };
+
+    /**
+     * Creates an map object without a prototype.
+     * @return {!Object}
+     */
+    var createMap = function () {
+        return new Blank();
+    };
+
+    /**
+     * The property name where we store Incremental DOM data.
+     */
+    var DATA_PROP = '__incrementalDOMData';
+
+    /**
+     * Keeps track of information needed to perform diffs for a given DOM node.
+     * @param {!string} nodeName
+     * @param {?string=} key
+     * @constructor
+     */
+    function NodeData(nodeName, key) {
+        /**
+         * The attributes and their values.
+         * @const {!Object<string, *>}
+         */
+        this.attrs = createMap();
+
+        /**
+         * An array of attribute name/value pairs, used for quickly diffing the
+         * incomming attributes to see if the DOM node's attributes need to be
+         * updated.
+         * @const {Array<*>}
+         */
+        this.attrsArr = [];
+
+        /**
+         * The incoming attributes for this Node, before they are updated.
+         * @const {!Object<string, *>}
+         */
+        this.newAttrs = createMap();
+
+        /**
+         * Whether or not the statics have been applied for the node yet.
+         * {boolean}
+         */
+        this.staticsApplied = false;
+
+        /**
+         * The key used to identify this node, used to preserve DOM nodes when they
+         * move within their parent.
+         * @const
+         */
+        this.key = key;
+
+        /**
+         * Keeps track of children within this node by their key.
+         * {!Object<string, !Element>}
+         */
+        this.keyMap = createMap();
+
+        /**
+         * Whether or not the keyMap is currently valid.
+         * @type {boolean}
+         */
+        this.keyMapValid = true;
+
+        /**
+         * Whether or the associated node is, or contains, a focused Element.
+         * @type {boolean}
+         */
+        this.focused = false;
+
+        /**
+         * The node name for this node.
+         * @const {string}
+         */
+        this.nodeName = nodeName;
+
+        /**
+         * @type {?string}
+         */
+        this.text = null;
+    }
+
+    /**
+     * Initializes a NodeData object for a Node.
+     *
+     * @param {Node} node The node to initialize data for.
+     * @param {string} nodeName The node name of node.
+     * @param {?string=} key The key that identifies the node.
+     * @return {!NodeData} The newly initialized data object
+     */
+    var initData = function (node, nodeName, key) {
+        var data = new NodeData(nodeName, key);
+        node[DATA_PROP] = data;
+        return data;
+    };
+
+    /**
+     * Retrieves the NodeData object for a Node, creating it if necessary.
+     *
+     * @param {?Node} node The Node to retrieve the data for.
+     * @return {!NodeData} The NodeData for this Node.
+     */
+    var getData = function (node) {
+        importNode(node);
+        return node[DATA_PROP];
+    };
+
+    /**
+     * Imports node and its subtree, initializing caches.
+     *
+     * @param {?Node} node The Node to import.
+     */
+    var importNode = function (node) {
+        if (node[DATA_PROP]) {
+            return;
+        }
+
+        var isElement = node instanceof Element;
+        var nodeName = isElement ? node.localName : node.nodeName;
+        var key = isElement ? node.getAttribute('key') : null;
+        var data = initData(node, nodeName, key);
+
+        if (key) {
+            getData(node.parentNode).keyMap[key] = node;
+        }
+
+        if (isElement) {
+            var attributes = node.attributes;
+            var attrs = data.attrs;
+            var newAttrs = data.newAttrs;
+            var attrsArr = data.attrsArr;
+
+            for (var i = 0; i < attributes.length; i += 1) {
+                var attr = attributes[i];
+                var name = attr.name;
+                var value = attr.value;
+
+                attrs[name] = value;
+                newAttrs[name] = undefined;
+                attrsArr.push(name);
+                attrsArr.push(value);
+            }
+        }
+
+        for (var child = node.firstChild; child; child = child.nextSibling) {
+            importNode(child);
+        }
+    };
+
+    /**
+     * Gets the namespace to create an element (of a given tag) in.
+     * @param {string} tag The tag to get the namespace for.
+     * @param {?Node} parent
+     * @return {?string} The namespace to create the tag in.
+     */
+    var getNamespaceForTag = function (tag, parent) {
+        if (tag === 'svg') {
+            return 'http://www.w3.org/2000/svg';
+        }
+
+        if (getData(parent).nodeName === 'foreignObject') {
+            return null;
+        }
+
+        return parent.namespaceURI;
+    };
+
+    /**
+     * Creates an Element.
+     * @param {Document} doc The document with which to create the Element.
+     * @param {?Node} parent
+     * @param {string} tag The tag for the Element.
+     * @param {?string=} key A key to identify the Element.
+     * @return {!Element}
+     */
+    var createElement = function (doc, parent, tag, key) {
+        var namespace = getNamespaceForTag(tag, parent);
+        var el = undefined;
+
+        if (namespace) {
+            el = doc.createElementNS(namespace, tag);
+        } else {
+            el = doc.createElement(tag);
+        }
+
+        initData(el, tag, key);
+
+        return el;
+    };
+
+    /**
+     * Creates a Text Node.
+     * @param {Document} doc The document with which to create the Element.
+     * @return {!Text}
+     */
+    var createText = function (doc) {
+        var node = doc.createTextNode('');
+        initData(node, '#text', null);
+        return node;
+    };
+
+    /**
+     * Copyright 2015 The Incremental DOM Authors. All Rights Reserved.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *      http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS-IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+
+    /** @const */
+    var notifications = {
+        /**
+         * Called after patch has compleated with any Nodes that have been created
+         * and added to the DOM.
+         * @type {?function(Array<!Node>)}
+         */
+        nodesCreated: null,
+
+        /**
+         * Called after patch has compleated with any Nodes that have been removed
+         * from the DOM.
+         * Note it's an applications responsibility to handle any childNodes.
+         * @type {?function(Array<!Node>)}
+         */
+        nodesDeleted: null
+    };
+
+    /**
+     * Keeps track of the state of a patch.
+     * @constructor
+     */
+    function Context() {
+        /**
+         * @type {(Array<!Node>|undefined)}
+         */
+        this.created = notifications.nodesCreated && [];
+
+        /**
+         * @type {(Array<!Node>|undefined)}
+         */
+        this.deleted = notifications.nodesDeleted && [];
+    }
+
+    /**
+     * @param {!Node} node
+     */
+    Context.prototype.markCreated = function (node) {
+        if (this.created) {
+            this.created.push(node);
+        }
+    };
+
+    /**
+     * @param {!Node} node
+     */
+    Context.prototype.markDeleted = function (node) {
+        if (this.deleted) {
+            this.deleted.push(node);
+        }
+    };
+
+    /**
+     * Notifies about nodes that were created during the patch opearation.
+     */
+    Context.prototype.notifyChanges = function () {
+        if (this.created && this.created.length > 0) {
+            notifications.nodesCreated(this.created);
+        }
+
+        if (this.deleted && this.deleted.length > 0) {
+            notifications.nodesDeleted(this.deleted);
+        }
+    };
+
+    /**
+     * Copyright 2016 The Incremental DOM Authors. All Rights Reserved.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *      http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS-IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+
+    /**
+     * @param {!Node} node
+     * @return {boolean} True if the node the root of a document, false otherwise.
+     */
+    var isDocumentRoot = function (node) {
+        // For ShadowRoots, check if they are a DocumentFragment instead of if they
+        // are a ShadowRoot so that this can work in 'use strict' if ShadowRoots are
+        // not supported.
+        return node instanceof Document || node instanceof DocumentFragment;
+    };
+
+    /**
+     * @param {!Node} node The node to start at, inclusive.
+     * @param {?Node} root The root ancestor to get until, exclusive.
+     * @return {!Array<!Node>} The ancestry of DOM nodes.
+     */
+    var getAncestry = function (node, root) {
+        var ancestry = [];
+        var cur = node;
+
+        while (cur !== root) {
+            ancestry.push(cur);
+            cur = cur.parentNode;
+        }
+
+        return ancestry;
+    };
+
+    /**
+     * @param {!Node} node
+     * @return {!Node} The root node of the DOM tree that contains node.
+     */
+    var getRoot = function (node) {
+        var cur = node;
+        var prev = cur;
+
+        while (cur) {
+            prev = cur;
+            cur = cur.parentNode;
+        }
+
+        return prev;
+    };
+
+    /**
+     * @param {!Node} node The node to get the activeElement for.
+     * @return {?Element} The activeElement in the Document or ShadowRoot
+     *     corresponding to node, if present.
+     */
+    var getActiveElement = function (node) {
+        var root = getRoot(node);
+        return isDocumentRoot(root) ? root.activeElement : null;
+    };
+
+    /**
+     * Gets the path of nodes that contain the focused node in the same document as
+     * a reference node, up until the root.
+     * @param {!Node} node The reference node to get the activeElement for.
+     * @param {?Node} root The root to get the focused path until.
+     * @return {!Array<Node>}
+     */
+    var getFocusedPath = function (node, root) {
+        var activeElement = getActiveElement(node);
+
+        if (!activeElement || !node.contains(activeElement)) {
+            return [];
+        }
+
+        return getAncestry(activeElement, root);
+    };
+
+    /**
+     * Like insertBefore, but instead instead of moving the desired node, instead
+     * moves all the other nodes after.
+     * @param {?Node} parentNode
+     * @param {!Node} node
+     * @param {?Node} referenceNode
+     */
+    var moveBefore = function (parentNode, node, referenceNode) {
+        var insertReferenceNode = node.nextSibling;
+        var cur = referenceNode;
+
+        while (cur !== node) {
+            var next = cur.nextSibling;
+            parentNode.insertBefore(cur, insertReferenceNode);
+            cur = next;
+        }
+    };
+
+    /** @type {?Context} */
+    var context = null;
+
+    /** @type {?Node} */
+    var currentNode = null;
+
+    /** @type {?Node} */
+    var currentParent = null;
+
+    /** @type {?Document} */
+    var doc = null;
+
+    /**
+     * @param {!Array<Node>} focusPath The nodes to mark.
+     * @param {boolean} focused Whether or not they are focused.
+     */
+    var markFocused = function (focusPath, focused) {
+        for (var i = 0; i < focusPath.length; i += 1) {
+            getData(focusPath[i]).focused = focused;
+        }
+    };
+
+    /**
+     * Returns a patcher function that sets up and restores a patch context,
+     * running the run function with the provided data.
+     * @param {function((!Element|!DocumentFragment),!function(T),T=): ?Node} run
+     * @return {function((!Element|!DocumentFragment),!function(T),T=): ?Node}
+     * @template T
+     */
+    var patchFactory = function (run) {
+        /**
+         * TODO(moz): These annotations won't be necessary once we switch to Closure
+         * Compiler's new type inference. Remove these once the switch is done.
+         *
+         * @param {(!Element|!DocumentFragment)} node
+         * @param {!function(T)} fn
+         * @param {T=} data
+         * @return {?Node} node
+         * @template T
+         */
+        var f = function (node, fn, data) {
+            var prevContext = context;
+            var prevDoc = doc;
+            var prevCurrentNode = currentNode;
+            var prevCurrentParent = currentParent;
+            var previousInAttributes = false;
+            var previousInSkip = false;
+
+            context = new Context();
+            doc = node.ownerDocument;
+            currentParent = node.parentNode;
+
+            if ('production' !== 'production') {}
+
+            var focusPath = getFocusedPath(node, currentParent);
+            markFocused(focusPath, true);
+            var retVal = run(node, fn, data);
+            markFocused(focusPath, false);
+
+            if ('production' !== 'production') {}
+
+            context.notifyChanges();
+
+            context = prevContext;
+            doc = prevDoc;
+            currentNode = prevCurrentNode;
+            currentParent = prevCurrentParent;
+
+            return retVal;
+        };
+        return f;
+    };
+
+    /**
+     * Patches the document starting at node with the provided function. This
+     * function may be called during an existing patch operation.
+     * @param {!Element|!DocumentFragment} node The Element or Document
+     *     to patch.
+     * @param {!function(T)} fn A function containing elementOpen/elementClose/etc.
+     *     calls that describe the DOM.
+     * @param {T=} data An argument passed to fn to represent DOM state.
+     * @return {!Node} The patched node.
+     * @template T
+     */
+    var patchInner = patchFactory(function (node, fn, data) {
+        currentNode = node;
+
+        enterNode();
+        fn(data);
+        exitNode();
+
+        if ('production' !== 'production') {}
+
+        return node;
+    });
+
+    /**
+     * Patches an Element with the the provided function. Exactly one top level
+     * element call should be made corresponding to `node`.
+     * @param {!Element} node The Element where the patch should start.
+     * @param {!function(T)} fn A function containing elementOpen/elementClose/etc.
+     *     calls that describe the DOM. This should have at most one top level
+     *     element call.
+     * @param {T=} data An argument passed to fn to represent DOM state.
+     * @return {?Node} The node if it was updated, its replacedment or null if it
+     *     was removed.
+     * @template T
+     */
+    var patchOuter = patchFactory(function (node, fn, data) {
+        var startNode = /** @type {!Element} */{ nextSibling: node };
+        var expectedNextNode = null;
+        var expectedPrevNode = null;
+
+        if ('production' !== 'production') {}
+
+        currentNode = startNode;
+        fn(data);
+
+        if ('production' !== 'production') {}
+
+        if (node !== currentNode && node.parentNode) {
+            removeChild(currentParent, node, getData(currentParent).keyMap);
+        }
+
+        return startNode === currentNode ? null : currentNode;
+    });
+
+    /**
+     * Checks whether or not the current node matches the specified nodeName and
+     * key.
+     *
+     * @param {!Node} matchNode A node to match the data to.
+     * @param {?string} nodeName The nodeName for this node.
+     * @param {?string=} key An optional key that identifies a node.
+     * @return {boolean} True if the node matches, false otherwise.
+     */
+    var matches = function (matchNode, nodeName, key) {
+        var data = getData(matchNode);
+
+        // Key check is done using double equals as we want to treat a null key the
+        // same as undefined. This should be okay as the only values allowed are
+        // strings, null and undefined so the == semantics are not too weird.
+        return nodeName === data.nodeName && key == data.key;
+    };
+
+    /**
+     * Aligns the virtual Element definition with the actual DOM, moving the
+     * corresponding DOM node to the correct location or creating it if necessary.
+     * @param {string} nodeName For an Element, this should be a valid tag string.
+     *     For a Text, this should be #text.
+     * @param {?string=} key The key used to identify this element.
+     */
+    var alignWithDOM = function (nodeName, key) {
+        if (currentNode && matches(currentNode, nodeName, key)) {
+            return;
+        }
+
+        var parentData = getData(currentParent);
+        var currentNodeData = currentNode && getData(currentNode);
+        var keyMap = parentData.keyMap;
+        var node = undefined;
+
+        // Check to see if the node has moved within the parent.
+        if (key) {
+            var keyNode = keyMap[key];
+            if (keyNode) {
+                if (matches(keyNode, nodeName, key)) {
+                    node = keyNode;
+                } else if (keyNode === currentNode) {
+                    context.markDeleted(keyNode);
+                } else {
+                    removeChild(currentParent, keyNode, keyMap);
+                }
+            }
+        }
+
+        // Create the node if it doesn't exist.
+        if (!node) {
+            if (nodeName === '#text') {
+                node = createText(doc);
+            } else {
+                node = createElement(doc, currentParent, nodeName, key);
+            }
+
+            if (key) {
+                keyMap[key] = node;
+            }
+
+            context.markCreated(node);
+        }
+
+        // Re-order the node into the right position, preserving focus if either
+        // node or currentNode are focused by making sure that they are not detached
+        // from the DOM.
+        if (getData(node).focused) {
+            // Move everything else before the node.
+            moveBefore(currentParent, node, currentNode);
+        } else if (currentNodeData && currentNodeData.key && !currentNodeData.focused) {
+            // Remove the currentNode, which can always be added back since we hold a
+            // reference through the keyMap. This prevents a large number of moves when
+            // a keyed item is removed or moved backwards in the DOM.
+            currentParent.replaceChild(node, currentNode);
+            parentData.keyMapValid = false;
+        } else {
+            currentParent.insertBefore(node, currentNode);
+        }
+
+        currentNode = node;
+    };
+
+    /**
+     * @param {?Node} node
+     * @param {?Node} child
+     * @param {?Object<string, !Element>} keyMap
+     */
+    var removeChild = function (node, child, keyMap) {
+        node.removeChild(child);
+        context.markDeleted( /** @type {!Node}*/child);
+
+        var key = getData(child).key;
+        if (key) {
+            delete keyMap[key];
+        }
+    };
+
+    /**
+     * Clears out any unvisited Nodes, as the corresponding virtual element
+     * functions were never called for them.
+     */
+    var clearUnvisitedDOM = function () {
+        var node = currentParent;
+        var data = getData(node);
+        var keyMap = data.keyMap;
+        var keyMapValid = data.keyMapValid;
+        var child = node.lastChild;
+        var key = undefined;
+
+        if (child === currentNode && keyMapValid) {
+            return;
+        }
+
+        while (child !== currentNode) {
+            removeChild(node, child, keyMap);
+            child = node.lastChild;
+        }
+
+        // Clean the keyMap, removing any unusued keys.
+        if (!keyMapValid) {
+            for (key in keyMap) {
+                child = keyMap[key];
+                if (child.parentNode !== node) {
+                    context.markDeleted(child);
+                    delete keyMap[key];
+                }
+            }
+
+            data.keyMapValid = true;
+        }
+    };
+
+    /**
+     * Changes to the first child of the current node.
+     */
+    var enterNode = function () {
+        currentParent = currentNode;
+        currentNode = null;
+    };
+
+    /**
+     * @return {?Node} The next Node to be patched.
+     */
+    var getNextNode = function () {
+        if (currentNode) {
+            return currentNode.nextSibling;
+        } else {
+            return currentParent.firstChild;
+        }
+    };
+
+    /**
+     * Changes to the next sibling of the current node.
+     */
+    var nextNode = function () {
+        currentNode = getNextNode();
+    };
+
+    /**
+     * Changes to the parent of the current node, removing any unvisited children.
+     */
+    var exitNode = function () {
+        clearUnvisitedDOM();
+
+        currentNode = currentParent;
+        currentParent = currentParent.parentNode;
+    };
+
+    /**
+     * Makes sure that the current node is an Element with a matching tagName and
+     * key.
+     *
+     * @param {string} tag The element's tag.
+     * @param {?string=} key The key used to identify this element. This can be an
+     *     empty string, but performance may be better if a unique value is used
+     *     when iterating over an array of items.
+     * @return {!Element} The corresponding Element.
+     */
+    var coreElementOpen = function (tag, key) {
+        nextNode();
+        alignWithDOM(tag, key);
+        enterNode();
+        return (/** @type {!Element} */currentParent
+        );
+    };
+
+    /**
+     * Closes the currently open Element, removing any unvisited children if
+     * necessary.
+     *
+     * @return {!Element} The corresponding Element.
+     */
+    var coreElementClose = function () {
+        if ('production' !== 'production') {}
+
+        exitNode();
+        return (/** @type {!Element} */currentNode
+        );
+    };
+
+    /**
+     * Makes sure the current node is a Text node and creates a Text node if it is
+     * not.
+     *
+     * @return {!Text} The corresponding Text Node.
+     */
+    var coreText = function () {
+        nextNode();
+        alignWithDOM('#text', null);
+        return (/** @type {!Text} */currentNode
+        );
+    };
+
+    /**
+     * Gets the current Element being patched.
+     * @return {!Element}
+     */
+    var currentElement = function () {
+        if ('production' !== 'production') {}
+        return (/** @type {!Element} */currentParent
+        );
+    };
+
+    /**
+     * @return {Node} The Node that will be evaluated for the next instruction.
+     */
+    var currentPointer = function () {
+        if ('production' !== 'production') {}
+        return getNextNode();
+    };
+
+    /**
+     * Skips the children in a subtree, allowing an Element to be closed without
+     * clearing out the children.
+     */
+    var skip = function () {
+        if ('production' !== 'production') {}
+        currentNode = currentParent.lastChild;
+    };
+
+    /**
+     * Skips the next Node to be patched, moving the pointer forward to the next
+     * sibling of the current pointer.
+     */
+    var skipNode = nextNode;
+
+    /**
+     * Copyright 2015 The Incremental DOM Authors. All Rights Reserved.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *      http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS-IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+
+    /** @const */
+    var symbols = {
+        default: '__default'
+    };
+
+    /**
+     * @param {string} name
+     * @return {string|undefined} The namespace to use for the attribute.
+     */
+    var getNamespace = function (name) {
+        if (name.lastIndexOf('xml:', 0) === 0) {
+            return 'http://www.w3.org/XML/1998/namespace';
+        }
+
+        if (name.lastIndexOf('xlink:', 0) === 0) {
+            return 'http://www.w3.org/1999/xlink';
+        }
+    };
+
+    /**
+     * Applies an attribute or property to a given Element. If the value is null
+     * or undefined, it is removed from the Element. Otherwise, the value is set
+     * as an attribute.
+     * @param {!Element} el
+     * @param {string} name The attribute's name.
+     * @param {?(boolean|number|string)=} value The attribute's value.
+     */
+    var applyAttr = function (el, name, value) {
+        if (value == null) {
+            el.removeAttribute(name);
+        } else {
+            var attrNS = getNamespace(name);
+            if (attrNS) {
+                el.setAttributeNS(attrNS, name, value);
+            } else {
+                el.setAttribute(name, value);
+            }
+        }
+    };
+
+    /**
+     * Applies a property to a given Element.
+     * @param {!Element} el
+     * @param {string} name The property's name.
+     * @param {*} value The property's value.
+     */
+    var applyProp = function (el, name, value) {
+        el[name] = value;
+    };
+
+    /**
+     * Applies a value to a style declaration. Supports CSS custom properties by
+     * setting properties containing a dash using CSSStyleDeclaration.setProperty.
+     * @param {CSSStyleDeclaration} style
+     * @param {!string} prop
+     * @param {*} value
+     */
+    var setStyleValue = function (style, prop, value) {
+        if (prop.indexOf('-') >= 0) {
+            style.setProperty(prop, /** @type {string} */value);
+        } else {
+            style[prop] = value;
+        }
+    };
+
+    /**
+     * Applies a style to an Element. No vendor prefix expansion is done for
+     * property names/values.
+     * @param {!Element} el
+     * @param {string} name The attribute's name.
+     * @param {*} style The style to set. Either a string of css or an object
+     *     containing property-value pairs.
+     */
+    var applyStyle = function (el, name, style) {
+        if (typeof style === 'string') {
+            el.style.cssText = style;
+        } else {
+            el.style.cssText = '';
+            var elStyle = el.style;
+            var obj = /** @type {!Object<string,string>} */style;
+
+            for (var prop in obj) {
+                if (has(obj, prop)) {
+                    setStyleValue(elStyle, prop, obj[prop]);
+                }
+            }
+        }
+    };
+
+    /**
+     * Updates a single attribute on an Element.
+     * @param {!Element} el
+     * @param {string} name The attribute's name.
+     * @param {*} value The attribute's value. If the value is an object or
+     *     function it is set on the Element, otherwise, it is set as an HTML
+     *     attribute.
+     */
+    var applyAttributeTyped = function (el, name, value) {
+        var type = typeof value;
+
+        if (type === 'object' || type === 'function') {
+            applyProp(el, name, value);
+        } else {
+            applyAttr(el, name, /** @type {?(boolean|number|string)} */value);
+        }
+    };
+
+    /**
+     * Calls the appropriate attribute mutator for this attribute.
+     * @param {!Element} el
+     * @param {string} name The attribute's name.
+     * @param {*} value The attribute's value.
+     */
+    var updateAttribute = function (el, name, value) {
+        var data = getData(el);
+        var attrs = data.attrs;
+
+        if (attrs[name] === value) {
+            return;
+        }
+
+        var mutator = attributes[name] || attributes[symbols.default];
+        mutator(el, name, value);
+
+        attrs[name] = value;
+    };
+
+    /**
+     * A publicly mutable object to provide custom mutators for attributes.
+     * @const {!Object<string, function(!Element, string, *)>}
+     */
+    var attributes = createMap();
+
+    // Special generic mutator that's called for any attribute that does not
+    // have a specific mutator.
+    attributes[symbols.default] = applyAttributeTyped;
+
+    attributes['style'] = applyStyle;
+
+    /**
+     * The offset in the virtual element declaration where the attributes are
+     * specified.
+     * @const
+     */
+    var ATTRIBUTES_OFFSET = 3;
+
+    /**
+     * Builds an array of arguments for use with elementOpenStart, attr and
+     * elementOpenEnd.
+     * @const {Array<*>}
+     */
+    var argsBuilder = [];
+
+    /**
+     * @param {string} tag The element's tag.
+     * @param {?string=} key The key used to identify this element. This can be an
+     *     empty string, but performance may be better if a unique value is used
+     *     when iterating over an array of items.
+     * @param {?Array<*>=} statics An array of attribute name/value pairs of the
+     *     static attributes for the Element. These will only be set once when the
+     *     Element is created.
+     * @param {...*} var_args, Attribute name/value pairs of the dynamic attributes
+     *     for the Element.
+     * @return {!Element} The corresponding Element.
+     */
+    var elementOpen = function (tag, key, statics, var_args) {
+        if ('production' !== 'production') {}
+
+        var node = coreElementOpen(tag, key);
+        var data = getData(node);
+
+        if (!data.staticsApplied) {
+            if (statics) {
+                for (var _i = 0; _i < statics.length; _i += 2) {
+                    var name = /** @type {string} */statics[_i];
+                    var value = statics[_i + 1];
+                    updateAttribute(node, name, value);
+                }
+            }
+            // Down the road, we may want to keep track of the statics array to use it
+            // as an additional signal about whether a node matches or not. For now,
+            // just use a marker so that we do not reapply statics.
+            data.staticsApplied = true;
+        }
+
+        /*
+         * Checks to see if one or more attributes have changed for a given Element.
+         * When no attributes have changed, this is much faster than checking each
+         * individual argument. When attributes have changed, the overhead of this is
+         * minimal.
+         */
+        var attrsArr = data.attrsArr;
+        var newAttrs = data.newAttrs;
+        var isNew = !attrsArr.length;
+        var i = ATTRIBUTES_OFFSET;
+        var j = 0;
+
+        for (; i < arguments.length; i += 2, j += 2) {
+            var _attr = arguments[i];
+            if (isNew) {
+                attrsArr[j] = _attr;
+                newAttrs[_attr] = undefined;
+            } else if (attrsArr[j] !== _attr) {
+                break;
+            }
+
+            var value = arguments[i + 1];
+            if (isNew || attrsArr[j + 1] !== value) {
+                attrsArr[j + 1] = value;
+                updateAttribute(node, _attr, value);
+            }
+        }
+
+        if (i < arguments.length || j < attrsArr.length) {
+            for (; i < arguments.length; i += 1, j += 1) {
+                attrsArr[j] = arguments[i];
+            }
+
+            if (j < attrsArr.length) {
+                attrsArr.length = j;
+            }
+
+            /*
+             * Actually perform the attribute update.
+             */
+            for (i = 0; i < attrsArr.length; i += 2) {
+                var name = /** @type {string} */attrsArr[i];
+                var value = attrsArr[i + 1];
+                newAttrs[name] = value;
+            }
+
+            for (var _attr2 in newAttrs) {
+                updateAttribute(node, _attr2, newAttrs[_attr2]);
+                newAttrs[_attr2] = undefined;
+            }
+        }
+
+        return node;
+    };
+
+    /**
+     * Declares a virtual Element at the current location in the document. This
+     * corresponds to an opening tag and a elementClose tag is required. This is
+     * like elementOpen, but the attributes are defined using the attr function
+     * rather than being passed as arguments. Must be folllowed by 0 or more calls
+     * to attr, then a call to elementOpenEnd.
+     * @param {string} tag The element's tag.
+     * @param {?string=} key The key used to identify this element. This can be an
+     *     empty string, but performance may be better if a unique value is used
+     *     when iterating over an array of items.
+     * @param {?Array<*>=} statics An array of attribute name/value pairs of the
+     *     static attributes for the Element. These will only be set once when the
+     *     Element is created.
+     */
+    var elementOpenStart = function (tag, key, statics) {
+        if ('production' !== 'production') {}
+
+        argsBuilder[0] = tag;
+        argsBuilder[1] = key;
+        argsBuilder[2] = statics;
+    };
+
+    /***
+     * Defines a virtual attribute at this point of the DOM. This is only valid
+     * when called between elementOpenStart and elementOpenEnd.
+     *
+     * @param {string} name
+     * @param {*} value
+     */
+    var attr = function (name, value) {
+        if ('production' !== 'production') {}
+
+        argsBuilder.push(name);
+        argsBuilder.push(value);
+    };
+
+    /**
+     * Closes an open tag started with elementOpenStart.
+     * @return {!Element} The corresponding Element.
+     */
+    var elementOpenEnd = function () {
+        if ('production' !== 'production') {}
+
+        var node = elementOpen.apply(null, argsBuilder);
+        argsBuilder.length = 0;
+        return node;
+    };
+
+    /**
+     * Closes an open virtual Element.
+     *
+     * @param {string} tag The element's tag.
+     * @return {!Element} The corresponding Element.
+     */
+    var elementClose = function (tag) {
+        if ('production' !== 'production') {}
+
+        var node = coreElementClose();
+
+        if ('production' !== 'production') {}
+
+        return node;
+    };
+
+    /**
+     * Declares a virtual Element at the current location in the document that has
+     * no children.
+     * @param {string} tag The element's tag.
+     * @param {?string=} key The key used to identify this element. This can be an
+     *     empty string, but performance may be better if a unique value is used
+     *     when iterating over an array of items.
+     * @param {?Array<*>=} statics An array of attribute name/value pairs of the
+     *     static attributes for the Element. These will only be set once when the
+     *     Element is created.
+     * @param {...*} var_args Attribute name/value pairs of the dynamic attributes
+     *     for the Element.
+     * @return {!Element} The corresponding Element.
+     */
+    var elementVoid = function (tag, key, statics, var_args) {
+        elementOpen.apply(null, arguments);
+        return elementClose(tag);
+    };
+
+    /**
+     * Declares a virtual Text at this point in the document.
+     *
+     * @param {string|number|boolean} value The value of the Text.
+     * @param {...(function((string|number|boolean)):string)} var_args
+     *     Functions to format the value which are called only when the value has
+     *     changed.
+     * @return {!Text} The corresponding text node.
+     */
+    var text = function (value, var_args) {
+        if ('production' !== 'production') {}
+
+        var node = coreText();
+        var data = getData(node);
+
+        if (data.text !== value) {
+            data.text = /** @type {string} */value;
+
+            var formatted = value;
+            for (var i = 1; i < arguments.length; i += 1) {
+                /*
+                 * Call the formatter function directly to prevent leaking arguments.
+                 * https://github.com/google/incremental-dom/pull/204#issuecomment-178223574
+                 */
+                var fn = arguments[i];
+                formatted = fn(formatted);
+            }
+
+            node.data = formatted;
+        }
+
+        return node;
+    };
+
+    exports.patch = patchInner;
+    exports.patchInner = patchInner;
+    exports.patchOuter = patchOuter;
+    exports.currentElement = currentElement;
+    exports.currentPointer = currentPointer;
+    exports.skip = skip;
+    exports.skipNode = skipNode;
+    exports.elementVoid = elementVoid;
+    exports.elementOpenStart = elementOpenStart;
+    exports.elementOpenEnd = elementOpenEnd;
+    exports.elementOpen = elementOpen;
+    exports.elementClose = elementClose;
+    exports.text = text;
+    exports.attr = attr;
+    exports.symbols = symbols;
+    exports.attributes = attributes;
+    exports.applyAttr = applyAttr;
+    exports.applyProp = applyProp;
+    exports.notifications = notifications;
+    exports.importNode = importNode;
+
+}));
+
+var yalla = (function () {
+
+    "use strict";
+    var yalla = {
+        utils: {},
+        framework: {},
+        log: {},
+        components: {}
+    };
+
+    var log = yalla.log;
+
+    log.debug = function (message) {
+        console.log('%c' + message, 'font-size:0.9em;color:#999999;font-family=verdana');
+    };
+
+    log.info = function (message) {
+        console.log('%c' + message, 'font-size:1.2em;color:#666666;font-family=verdana');
+    };
+
+    log.error = function (message) {
+        console.log('%c' + message, 'font-size:1.2em;color:red;font-family=verdana');
+        showErrorInBrowser(message);
+    };
+
+    function showErrorInBrowser(message){
+        var errorDiv = document.createElement('div');
+        errorDiv.style = 'background:#000;color: red;padding:10px;position:fixed;bottom:0px;right:0px;left:0px;z-index:10000;';
+        var deleteButton = document.createElement('button');
+        deleteButton.innerText = 'OK';
+        deleteButton.style = 'float:right;background-color: #4CAF50; /* Green */ border: none; padding:5px; color: white; text-align: center; text-decoration: none; display: inline-block; font-size: 12px;';
+        deleteButton.onclick = function(event){
+            event.target.parentNode.remove();
+        };
+        var messageDiv = document.createElement('div');
+        messageDiv.innerText = message;
+        messageDiv.style = 'font-size:20px';
+        errorDiv.appendChild(deleteButton);
+        errorDiv.appendChild(messageDiv);
+        document.body.appendChild(errorDiv);
+    }
+
+    var utils = yalla.utils;
+
+    utils.nonEmptyArray = function (array) {
+        return Array.isArray(array) && array.length > 0;
+    };
+
+    utils.firstItemInArray = function (array) {
+        if (utils.nonEmptyArray(array)) {
+            return array[0];
+        }
+        return false;
+    };
+
+    utils.argumentsToArray = function (array) {
+        var result = [];
+        for (var arg = 0; arg < array.length; ++arg) {
+            var item = array[arg];
+            result.push(item);
+        }
+        return result;
+    };
+
+    utils.assertNotNull = function () {
+        for (var i = 0; i < arguments.length; i++) {
+            if (arguments[i] == null || arguments[i] == undefined) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    utils.merge = function(objectOne,objectTwo){
+        var result = {};
+        for(var prop in objectOne){
+            if(objectOne.hasOwnProperty(prop)){
+                result[prop] = objectOne[prop];
+            }
+        }
+        for(var prop in objectTwo){
+            if(objectTwo.hasOwnProperty(prop)){
+                result[prop] = objectTwo[prop];
+            }
+        }
+        return result;
+    };
+
+    /*
+     * dd-MMM-yyyy
+     * dddd h:mmtt d MMM yyyy
+     * M/d/y
+     * HH:mm:ss
+     * hh:mm:ss TT
+     * yy/M/d
+     * ddd MMM d \a\t h:mm TT
+     */
+    utils.dateFormat = function formatDate(date, format, utc){
+        var MMMM = ["\x00", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var MMM = ["\x01", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var dddd = ["\x02", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var ddd = ["\x03", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        function ii(i, len) { var s = i + ""; len = len || 2; while (s.length < len) s = "0" + s; return s; }
+
+        var y = utc ? date.getUTCFullYear() : date.getFullYear();
+        format = format.replace(/(^|[^\\])yyyy+/g, "$1" + y);
+        format = format.replace(/(^|[^\\])yy/g, "$1" + y.toString().substr(2, 2));
+        format = format.replace(/(^|[^\\])y/g, "$1" + y);
+
+        var M = (utc ? date.getUTCMonth() : date.getMonth()) + 1;
+        format = format.replace(/(^|[^\\])MMMM+/g, "$1" + MMMM[0]);
+        format = format.replace(/(^|[^\\])MMM/g, "$1" + MMM[0]);
+        format = format.replace(/(^|[^\\])MM/g, "$1" + ii(M));
+        format = format.replace(/(^|[^\\])M/g, "$1" + M);
+
+        var d = utc ? date.getUTCDate() : date.getDate();
+        format = format.replace(/(^|[^\\])dddd+/g, "$1" + dddd[0]);
+        format = format.replace(/(^|[^\\])ddd/g, "$1" + ddd[0]);
+        format = format.replace(/(^|[^\\])dd/g, "$1" + ii(d));
+        format = format.replace(/(^|[^\\])d/g, "$1" + d);
+
+        var H = utc ? date.getUTCHours() : date.getHours();
+        format = format.replace(/(^|[^\\])HH+/g, "$1" + ii(H));
+        format = format.replace(/(^|[^\\])H/g, "$1" + H);
+
+        var h = H > 12 ? H - 12 : H == 0 ? 12 : H;
+        format = format.replace(/(^|[^\\])hh+/g, "$1" + ii(h));
+        format = format.replace(/(^|[^\\])h/g, "$1" + h);
+
+        var m = utc ? date.getUTCMinutes() : date.getMinutes();
+        format = format.replace(/(^|[^\\])mm+/g, "$1" + ii(m));
+        format = format.replace(/(^|[^\\])m/g, "$1" + m);
+
+        var s = utc ? date.getUTCSeconds() : date.getSeconds();
+        format = format.replace(/(^|[^\\])ss+/g, "$1" + ii(s));
+        format = format.replace(/(^|[^\\])s/g, "$1" + s);
+
+        var f = utc ? date.getUTCMilliseconds() : date.getMilliseconds();
+        format = format.replace(/(^|[^\\])fff+/g, "$1" + ii(f, 3));
+        f = Math.round(f / 10);
+        format = format.replace(/(^|[^\\])ff/g, "$1" + ii(f));
+        f = Math.round(f / 10);
+        format = format.replace(/(^|[^\\])f/g, "$1" + f);
+
+        var T = H < 12 ? "AM" : "PM";
+        format = format.replace(/(^|[^\\])TT+/g, "$1" + T);
+        format = format.replace(/(^|[^\\])T/g, "$1" + T.charAt(0));
+
+        var t = T.toLowerCase();
+        format = format.replace(/(^|[^\\])tt+/g, "$1" + t);
+        format = format.replace(/(^|[^\\])t/g, "$1" + t.charAt(0));
+
+        var tz = -date.getTimezoneOffset();
+        var K = utc || !tz ? "Z" : tz > 0 ? "+" : "-";
+        if (!utc)
+        {
+            tz = Math.abs(tz);
+            var tzHrs = Math.floor(tz / 60);
+            var tzMin = tz % 60;
+            K += ii(tzHrs) + ":" + ii(tzMin);
+        }
+        format = format.replace(/(^|[^\\])K/g, "$1" + K);
+
+        var day = (utc ? date.getUTCDay() : date.getDay()) + 1;
+        format = format.replace(new RegExp(dddd[0], "g"), dddd[day]);
+        format = format.replace(new RegExp(ddd[0], "g"), ddd[day]);
+
+        format = format.replace(new RegExp(MMMM[0], "g"), MMMM[M]);
+        format = format.replace(new RegExp(MMM[0], "g"), MMM[M]);
+
+        format = format.replace(/\\(.)/g, "$1");
+
+        return format;
+    };
+
+    utils.fetch = function (url, postData) {
+
+        var XMLHttpFactories = [
+            function () {
+                return new XMLHttpRequest()
+            },
+            function () {
+                return new ActiveXObject("Msxml2.XMLHTTP")
+            },
+            function () {
+                return new ActiveXObject("Msxml3.XMLHTTP")
+            },
+            function () {
+                return new ActiveXObject("Microsoft.XMLHTTP")
+            }
+        ];
+
+        function createXMLHTTPObject() {
+            var xmlhttp = false;
+            for (var i = 0; i < XMLHttpFactories.length; i++) {
+                try {
+                    xmlhttp = XMLHttpFactories[i]();
+                }
+                catch (e) {
+                    continue;
+                }
+                break;
+            }
+            return xmlhttp;
+        }
+
+        return new Promise(function (resolve, reject) {
+            var req = createXMLHTTPObject();
+            req.timeout = 2000;
+            if (!req) return;
+            var method = (postData) ? "POST" : "GET";
+            req.open(method, url, true);
+            if (postData) {
+                req.setRequestHeader('Content-type', 'application/json');
+            }
+            req.ontimeout = function (e) {
+                reject(req);
+            };
+            req.onreadystatechange = function () {
+                if (req.readyState != 4) return;
+                if (req.status != 200 && req.status != 304) {
+                    reject(req);
+                    return;
+                }
+                resolve(req);
+            };
+            if (req.readyState == 4) {
+                return;
+            }
+            req.send(JSON.stringify(postData));
+        });
+    };
+
+    var framework = yalla.framework;
+    framework.filePrefix = '.js';
+    framework.base = 'src';
+    framework.componentLoadListener = {};
+    framework.refs = [];
+    framework.createInjector = function (componentPath) {
+        var relativePath = componentPath.substring(0, componentPath.lastIndexOf("/"));
+
+        function Injector(inject) {
+            var path = relativePath + "/" + inject;
+            if (inject.charAt(0) == '/') {
+                path = framework.composePathFromBase(inject)
+            }
+            return yalla.components[path];
+        }
+
+        return Injector;
+    };
+
+    framework.addComponent = function (name, component) {
+        yalla.components[name] = component;
+        var path = name + framework.filePrefix;
+        if (path in framework.componentLoadListener) {
+            framework.componentLoadListener[path].call();
+        }
+    };
+
+    framework.attachScriptToDocument = function (url) {
+        var componentPath = url.substring(0, url.length - ".js".length);
+        if (componentPath in yalla.components) {
+            return Promise.resolve(true);
+        }
+        if (url in framework.componentLoadListener) {
+            return Promise.resolve(true);
+        }
+        return new Promise(function (resolve) {
+            var s = document.createElement('script');
+            s.setAttribute("src", '.' + url);
+            document.head.appendChild(s);
+            framework.componentLoadListener[url] = function () {
+                resolve(url);
+                delete framework.componentLoadListener[url];
+            };
+        });
+    };
+
+    framework.composePathFromBase = function (component) {
+        var fromRoot = (component.charAt(0) == '/');
+        return "/" + framework.base + (fromRoot ? '' : '/') + component;
+    };
+
+    framework.loadScriptAndDependency = function (component) {
+        if(component.indexOf('.')>0){
+            log.error('Invalid dependency : '+component);
+            return Promise.reject();
+        }
+        var componentPath = framework.composePathFromBase(component);
+        if (componentPath in yalla.components) {
+            return Promise.resolve(true);
+        }
+        var url = componentPath + framework.filePrefix;
+
+        var relativePath = component.substring(0, component.lastIndexOf("/") + 1);
+        return new Promise(function (resolve) {
+            utils.fetch('.' + url).then(function (req) {
+                var injects = (req.responseText.match(/\$inject\(.*?\)/g) || []).map(function (inject) {
+                    return inject.substring('$inject("'.length, inject.length - 2);
+                });
+
+                if (utils.nonEmptyArray(injects)) {
+                    var injectsPromise = injects.map(function (inject) {
+                        if (inject.charAt(0) != '/') {
+                            inject = "/" + inject;
+                        }
+                        return framework.loadScriptAndDependency(inject);
+                    });
+                    Promise.all(injectsPromise).then(function () {
+                        framework.attachScriptToDocument(url).then(function () {
+                            resolve(url);
+                        });
+                    });
+                } else {
+                    framework.attachScriptToDocument(url).then(function () {
+                        resolve(url);
+                    });
+                }
+            }, function () {
+                log.error('Unable to fetch ' + url);
+            });
+        });
+    };
+
+    framework.getParentComponent = function(node){
+        var _node = node;
+        do{
+            if('element' in _node.attributes || _node.nodeName == 'BODY'){
+                return _node;
+            }
+            _node = _node.parentNode;
+        }while(_node);
+        return null;
+    };
+
+    framework.validComponentName = function(component,componentName){
+        return component._state && component._state._name == componentName;
+    };
+
+    framework.renderChain = function (address) {
+        return address.reduceRight(function (current, path) {
+            return current.then(function () {
+                return new Promise(function (resolve) {
+                    framework.loadScriptAndDependency(path).then(function () {
+                        resolve(true);
+                    });
+                });
+            });
+        }, Promise.resolve(false));
+    };
+
+    framework.propertyCheckChanges = function(oldProperties, newProperties, onPropertyChange){
+        if(oldProperties == null || newProperties == null || onPropertyChange == null){
+            return;
+        }
+        var result = {};
+        var comparedProps = [];
+        for (var prop in oldProperties) {
+            comparedProps.push(prop);
+            if(oldProperties.hasOwnProperty(prop)){
+                if(typeof oldProperties[prop] == 'function'){
+                    continue;
+                }
+                if(newProperties.hasOwnProperty(prop)){
+                    result[prop] = {
+                        leftValue : oldProperties[prop],
+                        rightValue : newProperties[prop]
+                    }
+                }else{
+                    result[prop] = {
+                        leftValue : oldProperties[prop],
+                        rightValue : null
+                    }
+                }
+
+            }
+        }
+        for (var prop in newProperties){
+            if(newProperties.hasOwnProperty(prop) && comparedProps.indexOf(prop) < 0){
+                if(typeof newProperties[prop] == 'function'){
+                    continue;
+                }
+                result[prop] = {
+                    leftValue : null,
+                    rightValue : newProperties[prop]
+                }
+            }
+        }
+        var propertyChangesEvent = {};
+
+        for (var prop in result){
+            if(result[prop].leftValue !== result[prop].rightValue){
+                var operation = '';
+                if(result[prop].leftValue == null){
+                    operation = 'add';
+                }else if(result[prop].rightValue == null){
+                    operation = 'remove';
+                }else{
+                    operation = 'change';
+                }
+                propertyChangesEvent[prop] = {
+                    type : operation,
+                    oldValue : result[prop].leftValue,
+                    newValue : result[prop].rightValue
+                };
+                propertyChangesEvent.hasValue = true;
+            }
+        }
+        if(propertyChangesEvent.hasValue){
+            delete propertyChangesEvent.hasValue;
+            onPropertyChange(propertyChangesEvent);
+        }
+    };
+
+    framework.registerRef = function(refName,component,renderFunction){
+        component._refName = refName;
+        if(!refsRegistered(refName,component)){
+            framework.refs.push({
+                name : refName,
+                component : component,
+                render : renderFunction
+            })
+        }
+        return renderFunction;
+    };
+
+    function refsRegistered (refName,component){
+        for (var i = 0;i<framework.refs.length;i++){
+            var refInfo = framework.refs[i];
+            if(refInfo.name == refName && refInfo.component == component){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function unregisterRef(refName,component){
+        var index = -1;
+        for (var i = 0;i<framework.refs.length;i++){
+            var refInfo = framework.refs[i];
+            if(refInfo.name == refName && refInfo.component == component){
+                index = i;
+            }
+        }
+        if(index >=0){
+            framework.refs.splice(index,1);
+            console.log('unregistered component');
+        }
+    }
+
+
+    framework.start = function () {
+        var scripts = document.querySelector("script[src$='yalla.js']") || [];
+        if (!utils.assertNotNull(scripts.attributes['yalla-component'], scripts.attributes['yalla-base'], scripts.attributes['yalla-domtarget'])) {
+            throw new Error("script tag should contain attributes 'yalla-component', 'yalla-base' and 'yalla-domtarget'");
+        }
+        var component = scripts.attributes['yalla-component'].nodeValue;
+        var base = scripts.attributes['yalla-base'].nodeValue;
+        var domTarget = scripts.attributes['yalla-domtarget'].nodeValue;
+        var routingCallback = scripts.attributes['yalla-routing'] ? scripts.attributes['yalla-routing'].nodeValue : false;
+
+        framework.base = base;
+        framework.domTarget = domTarget;
+        framework.defaultComponent = component;
+        framework.beforeRenderToScreen = function(){
+            return new Promise(function (resolve){
+                if(routingCallback && typeof window[routingCallback] == 'function'){
+                    var path = window.location.hash;
+                    window[routingCallback](path).then(function(newPath){
+                        if(newPath && newPath != path){
+                            resolve(false);
+                            log.info('Re-routing path to new location');
+                            window.location.hash = newPath;
+                        }else{
+                            resolve(true);
+                        }
+                    });
+                }else{
+                    resolve(true);
+                }
+            });
+        };
+        framework.renderToScreen();
+    };
+
+    function patchGlobal() {
+        var address = [framework.defaultComponent];
+        var addressString = '';
+        var googleEscapedFragment = '?_escaped_fragment_=';
+        if (window.location.hash != "") {
+            addressString = window.location.hash.substring(1, window.location.hash.length);
+        }else if(window.location.search.indexOf(googleEscapedFragment) == 0){
+            addressString = decodeURIComponent(window.location.search.substring(googleEscapedFragment.length,window.location.search.length));
+        }
+        if(addressString && addressString.length > 0){
+            address = addressString.split("/").map(function(addr){
+                if(addr && addr.indexOf('!') == 0 && addr.length > 1){
+                    addr = addr.substring(1,addr.length);
+                }
+                return addr;
+            }).filter(function(addr){
+                if(addr && addr.length > 0 && addr.indexOf('!') < 0){
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        var componentAndParams = address.map(function (pathQuery) {
+            var valParams = pathQuery.split(':');
+            var path = valParams[0].replace(/\./g, '/');
+            valParams.splice(0, 1);
+            var params = valParams.reduce(function (current, param) {
+                var parVal = param.split('=');
+                current[parVal[0]] = parVal[1];
+                return current;
+            }, {});
+            return {
+                componentPath: path,
+                params: params
+            }
+        });
+        var addressToChain = componentAndParams.map(function (item) {
+            return item.componentPath;
+        });
+
+        framework.renderChain(addressToChain).then(function () {
+            var render = componentAndParams.reduceRight(function (slotView, compAndParam) {
+                var component = compAndParam;
+                var path = framework.composePathFromBase(component.componentPath);
+                var comp = yalla.components[path];
+                return function (slotName) {
+                    if (comp && (undefined == slotName || slotName == 'default')) {
+                        comp.render(component.params, slotView);
+                    }
+                }
+            }, function () {
+            });
+            IncrementalDOM.patch(document.querySelector(framework.domTarget), function () {
+                render();
+            });
+        }).catch(function (err) {
+            log.error(err.stack);
+        });
+    }
+
+    function lengthableObjectToArray(object) {
+        var result = [];
+        if (object && object.length > 0) {
+            for (var i = 0; i < object.length; i++) {
+                var item = object[i];
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    framework.renderToScreen = function () {
+        var args = arguments;
+        framework.beforeRenderToScreen().then(function (ok) {
+            if(!ok){
+                return;
+            }
+            if(args.length == 0){
+                patchGlobal();
+            } else if (args.length == 2 && (typeof args[1] === 'function')) {
+                IncrementalDOM.patch(args[0], args[1]);
+            } else if(args.length > 0){
+                // this must be an array
+                var changesToPatch = lengthableObjectToArray(args);
+                changesToPatch.forEach(function(refName){
+                   yalla.framework.refs.filter(function(refInfo){
+                       return refInfo.name === refName;
+                   }).forEach(function(refInfo){
+                       IncrementalDOM.patch(refInfo.component,function(){refInfo.render()});
+                   })
+                });
+            }
+        });
+    };
+
+
+    framework.beforeRenderToScreen = function () {
+        return Promise.resolve(true);
+    };
+
+
+    var attributes = IncrementalDOM.attributes;
+    // html5 boolean attributes
+    /*
+     checked             (input type=checkbox/radio)
+     selected            (option)
+     disabled            (input, textarea, button, select, option, optgroup)
+     readonly            (input type=text/password, textarea)
+     multiple            (select)
+     ismap     isMap     (img, input type=image)
+
+     defer               (script)
+     declare             (object; never used)
+     noresize  noResize  (frame)
+     nowrap    noWrap    (td, th; deprecated)
+     noshade   noShade   (hr; deprecated)
+     compact             (ul, ol, dl, menu, dir; deprecated)
+     */
+    ['checked','selected','disabled','readonly','required','multiple','ismap'].forEach(function(key){
+        attributes[key] = function (element, name, value) {
+            if (value) {
+                element.setAttribute(key, true);
+            } else {
+                element.removeAttribute(key);
+            }
+        };
+    });
+
+    // BUG Fix for the attributes.value not updating in IncrementalDOM
+    attributes.value = function(element,name,value){
+        element.value = value;
+    };
+
+
+    IncrementalDOM.notifications.nodesCreated = function (nodes) {
+        nodes.forEach(function (node) {
+            if (node.oncreated) {
+                node.oncreated.call(node, {target:node,currentTarget:node});
+            }
+        });
+    };
+
+    IncrementalDOM.notifications.nodesDeleted = function (nodes) {
+        console.log('nodes deleted');
+        nodes.forEach(function (node) {
+            if(node._refName){
+                unregisterRef(node._refName,node);
+            }
+            if (node.ondeleted) {
+                node.ondeleted.call(node, {target:node,currentTarget:node});
+            }
+        });
+    };
+
+    return yalla;
+})();
+
+
+window.onload = function () {
+    yalla.framework.start();
+};
+
+if ("onhashchange" in window) {
+    window.onhashchange = function () {
+        //yalla.framework.renderToScreen();
+        window.location.reload();
+    }
+} else {
+    alert('Browser not supported');
+}

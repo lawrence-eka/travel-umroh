@@ -2,49 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/asset/css/form-panel.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/asset/css/form-panel.css" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.css.map" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.min.css.map" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.min.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap.css.map" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap.min.css.map" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap.min.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/asset/js/own/geoLocation.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/map/home.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/map/map.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pray-times/home.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qibla/home.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/version.ver" afterPath="$PROJECT_DIR$/public/version.ver" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.dpd/pids/mongod" afterPath="$PROJECT_DIR$/.dpd/pids/mongod" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/css/custom-style.css" afterPath="$PROJECT_DIR$/asset/css/custom-style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/loader.js" afterPath="$PROJECT_DIR$/asset/js/own/loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/app.js" afterPath="$PROJECT_DIR$/dist/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/booking/home.js" afterPath="$PROJECT_DIR$/dist/booking/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/booking/paymentConfirmation.js" afterPath="$PROJECT_DIR$/dist/booking/paymentConfirmation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/dist/itinerary/card-itineraryList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/search-package/search-panel.js" afterPath="$PROJECT_DIR$/dist/search-package/search-panel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/travel-agent/home.js" afterPath="$PROJECT_DIR$/dist/travel-agent/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/login-form.js" afterPath="$PROJECT_DIR$/dist/user/login-form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/myApprovals.js" afterPath="$PROJECT_DIR$/dist/user/myApprovals.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/myProfile.js" afterPath="$PROJECT_DIR$/dist/user/myProfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/search.js" afterPath="$PROJECT_DIR$/dist/user/search.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/dist/user/userProfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.css" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap-theme.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap.css" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/public/asset/css/bootstrap.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/css-patch.css" afterPath="$PROJECT_DIR$/public/asset/css/css-patch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/custom-style.css" afterPath="$PROJECT_DIR$/public/asset/css/custom-style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/font-awesome.css" afterPath="$PROJECT_DIR$/public/asset/css/font-awesome.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/public/asset/css/font-awesome.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/ie10-viewport-bug-workaround.css" afterPath="$PROJECT_DIR$/public/asset/css/ie10-viewport-bug-workaround.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/navbar-fixed-top.css" afterPath="$PROJECT_DIR$/public/asset/css/navbar-fixed-top.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/registration.css" afterPath="$PROJECT_DIR$/public/asset/css/registration.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/signin.css" afterPath="$PROJECT_DIR$/public/asset/css/signin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/sticky-footer-navbar.css" afterPath="$PROJECT_DIR$/public/asset/css/sticky-footer-navbar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/main-menu/menu-grid.js" afterPath="$PROJECT_DIR$/dist/main-menu/menu-grid.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/customize.min.js" afterPath="$PROJECT_DIR$/public/asset/js/customize.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/docs.min.js" afterPath="$PROJECT_DIR$/public/asset/js/docs.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" afterPath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/jquery.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/base64.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/base64.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/rawdeflate.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/rawdeflate.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/rawinflate.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/rawinflate.js" />
@@ -58,25 +29,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/public/asset/js/own/storages.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/public/asset/js/own/utils.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" afterPath="$PROJECT_DIR$/public/asset/js/raw-files.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/application.js" afterPath="$PROJECT_DIR$/public/asset/js/src/application.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/customizer.js" afterPath="$PROJECT_DIR$/public/asset/js/src/customizer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/ZeroClipboard.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/anchor.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/holder.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jquery.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/jszip.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/less.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/pica.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/pica.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/uglify.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/zlib.js/deflate.min.js" afterPath="$PROJECT_DIR$/public/asset/js/zlib.js/deflate.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/zlib.js/gunzip.js" afterPath="$PROJECT_DIR$/public/asset/js/zlib.js/gunzip.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/zlib.js/gzip.min.js" afterPath="$PROJECT_DIR$/public/asset/js/zlib.js/gzip.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/zlib.js/inflate.min.js" afterPath="$PROJECT_DIR$/public/asset/js/zlib.js/inflate.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/style.css" afterPath="$PROJECT_DIR$/public/asset/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/app.js" afterPath="$PROJECT_DIR$/public/dist/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" afterPath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/card-booking.js" afterPath="$PROJECT_DIR$/public/dist/booking/card-booking.js" />
@@ -99,6 +57,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/entry.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/footer.js" afterPath="$PROJECT_DIR$/public/dist/component/footer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/header.js" afterPath="$PROJECT_DIR$/public/dist/component/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/home-button.js" afterPath="$PROJECT_DIR$/public/dist/component/home-button.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/panel.js" afterPath="$PROJECT_DIR$/public/dist/component/panel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/ppLink.js" afterPath="$PROJECT_DIR$/public/dist/component/ppLink.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/index.js" afterPath="$PROJECT_DIR$/public/dist/index.js" />
@@ -108,6 +67,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/home.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/list.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/main-menu/menu-block.js" afterPath="$PROJECT_DIR$/public/dist/main-menu/menu-block.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/main-menu/menu-grid.js" afterPath="$PROJECT_DIR$/public/dist/main-menu/menu-grid.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/card-package.js" afterPath="$PROJECT_DIR$/public/dist/package/card-package.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/public/dist/package/edit-package.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/home.js" afterPath="$PROJECT_DIR$/public/dist/package/home.js" />
@@ -141,20 +102,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/search.js" afterPath="$PROJECT_DIR$/public/dist/user/search.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/userProfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/packages/beforerequest.js" afterPath="$PROJECT_DIR$/resources/packages/beforerequest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/travelagents/beforerequest.js" afterPath="$PROJECT_DIR$/resources/travelagents/beforerequest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/result.txt" afterPath="$PROJECT_DIR$/result.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.html" afterPath="$PROJECT_DIR$/src/app.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/booking/home.html" afterPath="$PROJECT_DIR$/src/booking/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/booking/paymentConfirmation.html" afterPath="$PROJECT_DIR$/src/booking/paymentConfirmation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" afterPath="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/search-package/search-panel.html" afterPath="$PROJECT_DIR$/src/search-package/search-panel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/travel-agent/home.html" afterPath="$PROJECT_DIR$/src/travel-agent/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/login-form.html" afterPath="$PROJECT_DIR$/src/user/login-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/myApprovals.html" afterPath="$PROJECT_DIR$/src/user/myApprovals.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/myProfile.html" afterPath="$PROJECT_DIR$/src/user/myProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/search.html" afterPath="$PROJECT_DIR$/src/user/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/userProfile.html" afterPath="$PROJECT_DIR$/src/user/userProfile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main-menu/menu-grid.html" afterPath="$PROJECT_DIR$/src/main-menu/menu-grid.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -172,23 +121,77 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="loader.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
+      <file leaf-file-name="menu-grid.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main-menu/menu-grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="123" column="29" lean-forward="true" selection-start-line="123" selection-start-column="29" selection-end-line="123" selection-end-column="29" />
+            <state relative-caret-position="484">
+              <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="44" />
               <folding>
-                <marker date="1501782260472" expanded="true" signature="3427:9672" ph="{...}" />
+                <marker date="1501875376036" expanded="true" signature="3132:3188" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu-grid.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main-menu/menu-grid.html">
+      <file leaf-file-name="geoLocation.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/js/own/geoLocation.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+              <folding>
+                <element signature="n#!!doc;n#getGeoLoc#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pray-times/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/map/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1364">
+              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#panel#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="133" lean-forward="false" selection-start-line="9" selection-start-column="133" selection-end-line="9" selection-end-column="133" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qibla/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/itinerary/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -199,56 +202,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2002">
               <caret line="91" column="48" lean-forward="false" selection-start-line="91" selection-start-column="48" selection-end-line="91" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/dist/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="custom-style.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menu-block.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main-menu/menu-block.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="48" lean-forward="false" selection-start-line="0" selection-start-column="48" selection-end-line="0" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/header.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-600">
-              <caret line="7" column="46" lean-forward="false" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -311,12 +264,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/passenger/edit-passenger.html" />
-        <option value="$PROJECT_DIR$/asset/js/own/prototypes.js" />
-        <option value="$PROJECT_DIR$/src/passenger/card-passenger.html" />
-        <option value="$PROJECT_DIR$/public/buangaja.js" />
-        <option value="$PROJECT_DIR$/public/asset/js/own/event.js" />
-        <option value="$PROJECT_DIR$/public/dist/search-package/list.js" />
         <option value="$PROJECT_DIR$/asset/js/own/event.js" />
         <option value="$PROJECT_DIR$/public/version.ver" />
         <option value="$PROJECT_DIR$/public/dist/yalla.js" />
@@ -339,7 +286,6 @@
         <option value="$PROJECT_DIR$/src/component/attachments/home.html" />
         <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/asset/js/own/storages.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/filewatcher.js" />
         <option value="$PROJECT_DIR$/src/component/menuBlock.html" />
         <option value="$PROJECT_DIR$/src/component/menu-block.html" />
@@ -359,9 +305,16 @@
         <option value="$PROJECT_DIR$/src/app.html" />
         <option value="$PROJECT_DIR$/public/asset/css/form-panel.css" />
         <option value="$PROJECT_DIR$/public/asset/js/own/loader.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
-        <option value="$PROJECT_DIR$/src/main-menu/menu-grid.html" />
         <option value="$PROJECT_DIR$/asset/css/custom-style.css" />
+        <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
+        <option value="$PROJECT_DIR$/src/prayer-time/home.html" />
+        <option value="$PROJECT_DIR$/src/pray-times/home.html" />
+        <option value="$PROJECT_DIR$/src/qibla/home.html" />
+        <option value="$PROJECT_DIR$/src/main-menu/menu-grid.html" />
+        <option value="$PROJECT_DIR$/src/map/map.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/geoLocation.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/map/home.html" />
       </list>
     </option>
   </component>
@@ -375,10 +328,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="1" />
-    <option name="width" value="1918" />
-    <option name="height" value="1028" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -415,6 +368,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -437,7 +391,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pray-times" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -454,8 +444,18 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -469,21 +469,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="asset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
+              <option name="myItemId" value="asset" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main-menu" />
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="own" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -671,33 +702,35 @@
       <workItem from="1501422741542" duration="12151000" />
       <workItem from="1501649807537" duration="692000" />
       <workItem from="1501729715561" duration="21849000" />
-      <workItem from="1501776502537" duration="9095000" />
+      <workItem from="1501776502537" duration="15365000" />
+      <workItem from="1501874532703" duration="676000" />
+      <workItem from="1501875327665" duration="12631000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="414869000" />
+    <option name="totallyTimeSpent" value="434446000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1918" height="1028" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14631578" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14479166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07662835" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32854405" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32821077" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955106" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -713,39 +746,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/component/alert.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/storages.js" />
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
-    <entry file="file://$PROJECT_DIR$/public/picademo/imageProcessor.js" />
-    <entry file="file://$PROJECT_DIR$/public/picademo/index.js" />
-    <entry file="file://$PROJECT_DIR$/asset/js/own/imageProcessor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="72" column="8" lean-forward="false" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/picademo/index.html" />
-    <entry file="file://$PROJECT_DIR$/src/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/asset/js/own/alert.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
@@ -764,7 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,7 +778,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="51" column="11" lean-forward="false" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -839,14 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -900,7 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="50" column="37" lean-forward="true" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -908,7 +897,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -916,7 +904,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
           <caret line="20" column="89" lean-forward="false" selection-start-line="20" selection-start-column="89" selection-end-line="20" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -924,7 +911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="51" lean-forward="false" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -932,7 +918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -940,7 +925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -948,7 +932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="14" column="51" lean-forward="false" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -956,7 +939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -964,7 +946,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-600">
           <caret line="7" column="46" lean-forward="false" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -972,6 +953,53 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/asset/css/form-panel.css" />
+    <entry file="file://$PROJECT_DIR$/asset/css/form-panel.css" />
+    <entry file="file://$PROJECT_DIR$/public/asset/js/own/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="121" column="21" lean-forward="true" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/main-menu/menu-grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6732">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2926">
+          <caret line="133" column="48" lean-forward="false" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
+          <folding>
+            <marker date="1501872624209" expanded="true" signature="3427:9721" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -984,40 +1012,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/css/form-panel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/form-panel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/asset/js/own/loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="121" column="21" lean-forward="true" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="123" column="29" lean-forward="true" selection-start-line="123" selection-start-column="29" selection-end-line="123" selection-end-column="29" />
-          <folding>
-            <marker date="1501782260472" expanded="true" signature="3427:9672" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary-bulleted.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2002">
@@ -1026,43 +1020,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/main-menu/menu-grid.js">
+    <entry file="file://$PROJECT_DIR$/src/itinerary/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6732">
+        <state relative-caret-position="264">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qibla/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dist/map/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-926">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js">
+    <entry file="file://$PROJECT_DIR$/public/dist/map/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-660">
+        <state relative-caret-position="-1320">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/map/map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/block.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="228" column="16" lean-forward="false" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main-menu/menu-grid.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="44" />
+          <folding>
+            <marker date="1501875376036" expanded="true" signature="3132:3188" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pray-times/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/geoLocation.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc;n#getGeoLoc#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="133" lean-forward="false" selection-start-line="9" selection-start-column="133" selection-end-line="9" selection-end-column="133" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/app.js">
+    <entry file="file://$PROJECT_DIR$/src/map/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="1364">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#panel#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
