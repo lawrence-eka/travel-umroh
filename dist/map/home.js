@@ -36,33 +36,37 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
   function initMap(loc) {
     getGeoLoc().then(function(loc) {
-      var map = new google.maps.Map(document.getElementsByName('map')[0], {
-        zoom: 17,
-        center: loc,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      });
+      if (!loc.err) {
+        var map = new google.maps.Map(document.getElementsByName('map')[0], {
+          zoom: 17,
+          center: loc,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
 
-      marker = new google.maps.Marker({
-        position: loc,
-        map: map,
-        animation: google.maps.Animation.DROP,
-      });
+        marker = new google.maps.Marker({
+          position: loc,
+          map: map,
+          animation: google.maps.Animation.DROP,
+        });
 
-      circle = new google.maps.Circle({
-        center: loc,
-        radius: loc.acc,
-        map: map,
-        fillColor: '#0000ff',
-        fillOpacity: 0.3,
-        strokeColor: '#0000ff',
-        strokeOpacity: 0.0,
-      });
+        circle = new google.maps.Circle({
+          center: loc,
+          radius: loc.acc,
+          map: map,
+          fillColor: '#0000ff',
+          fillOpacity: 0.3,
+          strokeColor: '#0000ff',
+          strokeOpacity: 0.0,
+        });
 
-      var options = {
-        enableHighAccuracy: true,
-        timeout: 10000
-      };
-      watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 10000
+        };
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+      } else {
+        alert(loc.msg);
+      }
     });
   }
 
