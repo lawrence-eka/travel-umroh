@@ -60,7 +60,7 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
       var options = {
         enableHighAccuracy: true,
-        timeout: 1000
+        timeout: 10000
       };
       watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
     });

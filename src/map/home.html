@@ -42,7 +42,7 @@
                 strokeOpacity: 0.0,
             });
 
-			var options = {enableHighAccuracy: true,timeout: 1000};
+			var options = {enableHighAccuracy: true,timeout: 10000};
 			watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 		});
 	}
