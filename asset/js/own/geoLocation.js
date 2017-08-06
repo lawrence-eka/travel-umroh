@@ -3,9 +3,9 @@
  */
 
 function GeoLocation() {
-	var watchId;
-	var onWatchSuccess;
-	var onWatchError;
+	this.watchId;
+	this.onWatchSuccess;
+	this.onWatchError;
 
 	this.getLocation = function() {
 		return new Promise(function (resolve) {
@@ -36,19 +36,21 @@ function GeoLocation() {
 			});
 		})
 	}
-	this.watchLocation = function(option) {
+	this.watchLocation = function(os, oe, option) {
+		this.onWatchSuccess = os;
+		this.onWatchError = oe;
 		options = option || {enableHighAccuracy: true, timeout: 10000};
-		this.watchId = navigator.geolocation.watchPosition(onSuccess, onError, options);
+		this.watchId = navigator.geolocation.watchPosition(this.onSuccess.bind(this), this.onError.bind(this), options);
 		return this.watchId;
 	}
 
-	function onSuccess(position) {
+	this.onSuccess = function(position) {
 		var l = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		onWatchSuccess(l, position.coords.accuracy);
+		this.onWatchSuccess(l, position.coords.accuracy);
 	}
 
-	function onError(error) {
-		onWatchError(error);
+	this.onError= function(error) {
+		this.onWatchError(error);
 	}
 
 	this.clearWatch = function() {

@@ -91,7 +91,6 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     debugger;
     this._state.alert.alert(error);
   }
-  debugger;
 
 
   function $render(_props, _slotView) {
@@ -124,22 +123,9 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
-        _elementOpenEnd("div");
-        _elementOpenStart("span", "");
-        _elementOpenEnd("span");
-        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
-          var _params = {
-            "alertType": _state.alert.type.bind(self)(),
-            "message": _state.alert.text.bind(self)()
-          };
-          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        })()
-        _elementClose("span");
-        _elementOpenStart("div", "");
         _attr("name", "map");
-        _attr("style", "width:100%;height:80%");
+        _attr("style", "width:100%;height:500px");
         _elementOpenEnd("div");
-        _elementClose("div");
         _elementClose("div");
       }
       if (slotName === "footer") {
