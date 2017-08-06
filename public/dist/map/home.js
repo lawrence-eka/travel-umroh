@@ -47,9 +47,11 @@ yalla.framework.addComponent("/dist/map/home", (function() {
   var circle = null;
 
   function initMap() {
-    debugger;
+    console.log(1);
     geo.getLocation().then(function(loc) {
+      console.log(2);
       if (!loc.err) {
+        console.log(3);
         var map = new google.maps.Map(document.getElementsByName('map')[0], {
           zoom: 17,
           center: loc,
@@ -74,6 +76,7 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
         geo.watchLocation(onSuccess, onError);
       } else {
+        console.log(4);
         alert(loc.msg);
       }
     });
@@ -123,9 +126,22 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "alertType": _state.alert.type.bind(self)(),
+            "message": _state.alert.text.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
+        _elementOpenStart("div", "");
         _attr("name", "map");
         _attr("style", "width:100%;height:500px");
         _elementOpenEnd("div");
+        _elementClose("div");
         _elementClose("div");
       }
       if (slotName === "footer") {

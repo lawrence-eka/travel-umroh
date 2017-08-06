@@ -4,7 +4,13 @@
 
 <div>
     <panel title='Map'>
-        <div slot.name='body' name = 'map' style='width:100%;height:500px'>
+        <div slot.name='body'>
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
+            <div name = 'map' style='width:100%;height:500px'>
+
+            </div>
         </div>
         <div slot.name="footer">
             <div class="row">
@@ -33,9 +39,11 @@
 	var circle = null;
 
 	function initMap() {
-		debugger;
+		console.log(1);
 		geo.getLocation().then(function(loc) {
+			console.log(2);
 			if(!loc.err) {
+				console.log(3);
 				var map = new google.maps.Map(document.getElementsByName('map')[0], {
 					zoom: 17,
 					center: loc,
@@ -61,6 +69,7 @@
 				geo.watchLocation(onSuccess, onError);
 			}
 			else {
+				console.log(4);
 				alert(loc.msg);
             }
 		});
