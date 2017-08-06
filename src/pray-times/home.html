@@ -1,10 +1,17 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/home-button" name="home"></inject>
 
-<div data.load="getGeoLoc()">
+<div data.load="geo.getLocation()">
     <panel title='Pray Times'>
         <div slot.name="body">
             {{JSON.stringify(data)}}
+            {{JSON.stringify(test2((new Date()),'MWL'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'ISNA'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'Egypt'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'Makkah'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'Karachi'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'Tehran'))}}<br/>
+            {{JSON.stringify(test2((new Date()),'Jafari'))}}<br/>
         </div>
         <div slot.name="footer">
             <div class="row">
@@ -15,9 +22,17 @@
 </div>
 
 <script>
-//	function getData() {
-//		return new Promise(function(resolve) {
-//			getGeoLoc().then(function(loc){resolve(loc)}).catch(function(err){resolve(err)});
-//		})
-//	}
+    function test2(date, method){
+	    var j;
+    	prayTimes.setMethod(method);
+    	prayTimes.adjust({
+    		highLats:'AngleBased',
+            asr:'Standard',
+            midnight:'Standard',
+        })
+	    j = prayTimes.getTimes(date, [24.5174234,54.9895103], 4);
+	    j.method = method;
+	    return j;
+    }
+
 </script>
