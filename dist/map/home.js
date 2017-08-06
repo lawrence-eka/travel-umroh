@@ -30,12 +30,25 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
   function onPropertyChange(event) {};
 
-  var watchID = null;
+  function initState(props) {
+    var state = {
+      alert: new Alert(null, $patchChanges, "alert"),
+      infoText: '',
+    }
+    if ((typeof google) == 'undefined') {
+      state.alert.alert('Google Map is not available at the moment');
+    } else {
+      google.maps.event.addDomListener(window, 'load', initMap);
+    }
+
+    return state;
+  }
   var marker = null;
   var circle = null;
 
-  function initMap(loc) {
-    getGeoLoc().then(function(loc) {
+  function initMap() {
+    debugger;
+    geo.getLocation().then(function(loc) {
       if (!loc.err) {
         var map = new google.maps.Map(document.getElementsByName('map')[0], {
           zoom: 17,
@@ -59,40 +72,26 @@ yalla.framework.addComponent("/dist/map/home", (function() {
           strokeOpacity: 0.0,
         });
 
-        var options = {
-          enableHighAccuracy: true,
-          timeout: 10000
-        };
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+        geo.watchLocation(onSuccess, onError);
       } else {
         alert(loc.msg);
       }
     });
   }
 
-  function onSuccess(position) {
-    var l = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-    marker.setPosition(l);
-    circle.setCenter(l);
-    circle.setRadius(position.coords.accuracy);
-  }
-
-  // clear the watch that was started earlier
-  //
-  function clearWatch() {
-    if (watchID != null) {
-      navigator.geolocation.clearWatch(watchID);
-      watchID = null;
-    }
+  function onSuccess(pos, accuracy) {
+    marker.setPosition(pos);
+    circle.setCenter(pos);
+    circle.setRadius(accuracy);
   }
 
   // onError Callback receives a PositionError object
   //
   function onError(error) {
-    console.log(JSON.stringify(error));
+    debugger;
+    this._state.alert.alert(error);
   }
-  google.maps.event.addDomListener(window, 'load', initMap);
+  debugger;
 
 
   function $render(_props, _slotView) {
@@ -100,6 +99,8 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     var panel = _context["panel"];
     _context["home"] = $inject("/component/home-button");
     var home = _context["home"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.map.home");
     _elementOpenEnd("div");
@@ -123,9 +124,22 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
       if (slotName === "body") {
         _elementOpenStart("div", "");
-        _attr("name", "map");
-        _attr("style", "width:100%;height:600px");
         _elementOpenEnd("div");
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "alertType": _state.alert.type.bind(self)(),
+            "message": _state.alert.text.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
+        _elementOpenStart("div", "");
+        _attr("name", "map");
+        _attr("style", "width:100%;height:80%");
+        _elementOpenEnd("div");
+        _elementClose("div");
         _elementClose("div");
       }
       if (slotName === "footer") {

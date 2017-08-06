@@ -96,7 +96,7 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
           }
         });
       }
-      var promise = getGeoLoc.bind(self)();
+      var promise = geo.getLocation.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {

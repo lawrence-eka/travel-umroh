@@ -30,11 +30,19 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
 
   function onPropertyChange(event) {};
 
-  //	function getData() {
-  //		return new Promise(function(resolve) {
-  //			getGeoLoc().then(function(loc){resolve(loc)}).catch(function(err){resolve(err)});
-  //		})
-  //	}
+  function test2(date, method) {
+    var j;
+    prayTimes.setMethod(method);
+    prayTimes.adjust({
+      highLats: 'AngleBased',
+      asr: 'Standard',
+      midnight: 'Standard',
+    })
+    j = prayTimes.getTimes(date, [24.5174234, 54.9895103], 4);
+    j.method = method;
+    return j;
+  }
+
 
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
@@ -80,7 +88,34 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
           if (slotName === "body") {
             _elementOpenStart("div", "");
             _elementOpenEnd("div");
-            _text("" + (JSON.stringify(data)) + "");
+            _text("" + (JSON.stringify(data)) + "            " + (JSON.stringify(test2((new Date()), 'MWL'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'ISNA'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'Egypt'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'Makkah'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'Karachi'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'Tehran'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
+            _text("" + (JSON.stringify(test2((new Date()), 'Jafari'))) + "");
+            _elementOpenStart("br", "");
+            _elementOpenEnd("br");
+            _elementClose("br");
             _elementClose("div");
           }
           if (slotName === "footer") {
@@ -96,7 +131,7 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
           }
         });
       }
-      var promise = getGeoLoc.bind(self)();
+      var promise = geo.getLocation.bind(self)();
       if (promise && typeof promise == "object" && "then" in promise) {
         _skip();
         promise.then(function(_result) {
