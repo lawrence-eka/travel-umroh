@@ -40,8 +40,10 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     } else {
       console.log(0);
 
-      google.maps.event.addDomListener(window, 'load', initMap);
+      //google.maps.event.addDomListener(window, 'load', initMap);
       console.log(0.5);
+      initMap();
+      console.log(0.7);
     }
 
     return state;
