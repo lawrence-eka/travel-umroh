@@ -41,6 +41,7 @@ yalla.framework.addComponent("/dist/map/home", (function() {
       console.log(0);
 
       google.maps.event.addDomListener(window, 'load', initMap);
+      console.log(0.5);
     }
 
     return state;
