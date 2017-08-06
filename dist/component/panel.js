@@ -117,6 +117,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     }
     _elementOpenStart("div", "");
     _attr("class", "panel-body custom-panel-layout");
+    _attr("style", _props.style);
     _elementOpenEnd("div");
     _text("" + (_props.body ? _props.body : '') + "");
     if (_props.test) {

@@ -8,7 +8,7 @@
             <span ref.name="alert">
                 <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
             </span>
-            <div name = 'map' style='width:100%;height:500px'>
+            <div name = 'map' style.bind='@screenSize'>
 
             </div>
         </div>
@@ -23,6 +23,7 @@
 <script>
     function initState(props){
     	var state = {
+		    screenSize:'width:100%;height:' + screen.height * 0.6 + 'px',
 		    alert: new Alert(null, $patchChanges, "alert"),
             infoText:'',
         }
@@ -30,12 +31,7 @@
     		state.alert.alert('Google Map is not available at the moment');
 	    }
 	    else {
-		    console.log(0);
-
-		    //google.maps.event.addDomListener(window, 'load', initMap);
-		    console.log(0.5);
 		    initMap();
-		    console.log(0.7);
 	    }
 
         return state;
@@ -44,11 +40,8 @@
 	var circle = null;
 
 	function initMap() {
-		console.log(1);
 		geo.getLocation().then(function(loc) {
-			console.log(2);
 			if(!loc.err) {
-				console.log(3);
 				var map = new google.maps.Map(document.getElementsByName('map')[0], {
 					zoom: 17,
 					center: loc,
@@ -74,7 +67,6 @@
 				geo.watchLocation(onSuccess, onError);
 			}
 			else {
-				console.log(4);
 				alert(loc.msg);
             }
 		});

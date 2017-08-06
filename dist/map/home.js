@@ -32,18 +32,14 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
   function initState(props) {
     var state = {
+      screenSize: 'width:100%;height:' + screen.height * 0.6 + 'px',
       alert: new Alert(null, $patchChanges, "alert"),
       infoText: '',
     }
     if ((typeof google) == 'undefined') {
       state.alert.alert('Google Map is not available at the moment');
     } else {
-      console.log(0);
-
-      //google.maps.event.addDomListener(window, 'load', initMap);
-      console.log(0.5);
       initMap();
-      console.log(0.7);
     }
 
     return state;
@@ -52,11 +48,8 @@ yalla.framework.addComponent("/dist/map/home", (function() {
   var circle = null;
 
   function initMap() {
-    console.log(1);
     geo.getLocation().then(function(loc) {
-      console.log(2);
       if (!loc.err) {
-        console.log(3);
         var map = new google.maps.Map(document.getElementsByName('map')[0], {
           zoom: 17,
           center: loc,
@@ -81,7 +74,6 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
         geo.watchLocation(onSuccess, onError);
       } else {
-        console.log(4);
         alert(loc.msg);
       }
     });
@@ -144,7 +136,7 @@ yalla.framework.addComponent("/dist/map/home", (function() {
         _elementClose("span");
         _elementOpenStart("div", "");
         _attr("name", "map");
-        _attr("style", "width:100%;height:500px");
+        _attr("style", _state.screenSize);
         _elementOpenEnd("div");
         _elementClose("div");
         _elementClose("div");

@@ -12,7 +12,7 @@
                         </h3>
                         <slot-view  name="title"></slot-view>
                     </div>
-                    <div class="panel-body custom-panel-layout">
+                    <div class="panel-body custom-panel-layout" style.bind="$style">
                         {{$body ? $body : ''}}
                         <div if.bind="$test">
                             PANEL BODY
