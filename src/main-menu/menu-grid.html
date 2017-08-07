@@ -2,56 +2,19 @@
 
 <div>
     <div class="row menu-grid">
-        <menu-block if.bind='isActionable("schedule",_component)' icon="calendar" text="Schedule" click.trigger="onClick('#app/search-package.home')"></menu-block>
-        <menu-block if.bind='isActionable("bookings",_component)' icon="ticket" text="Bookings" click.trigger="onClick('#app/booking.home')"></menu-block>
-        <menu-block if.bind='isActionable("travelAgent",_component)' icon="plane" text="Travel Agent" click.trigger="onClick('#app/travel-agent.home')"></menu-block>
-        <menu-block if.bind='isActionable("confirmPayment",_component)' icon="money" text="Payments" click.trigger="onClick('#app/booking.paymentConfirmation')"></menu-block>
-        <menu-block if.bind='isActionable("approveUsers",_component)' icon="files-o" text="Approvals" click.trigger="onClick('#app/user.myApprovals')"></menu-block>
-        <menu-block if.bind='isActionable("manageUsers",_component)' icon="users" text="Users" click.trigger="onClick('#app/user.home')"></menu-block>
-        <menu-block if.bind='isActionable("map",_component)' icon="map-marker" text="Map" click.trigger="onClick('#app/map.home')"></menu-block>
-        <menu-block if.bind='isActionable("qibla",_component)' icon="compass" text="Qibla" click.trigger="onClick('#app/qibla.home')"></menu-block>
-        <menu-block if.bind='isActionable("prayTimes",_component)' icon="clock-o" text="Pray Times" click.trigger="onClick('#app/pray-times.home')"></menu-block>
-        <menu-block if.bind='isActionable("dua",_component)' icon="signing" text="Duas" click.trigger="onClick('#app/user.home')"></menu-block>
-        <menu-block if.bind='isActionable("profile",_component)' icon="address-card-o" text="Profile" click.trigger="onClick('#app/user.myProfile')"></menu-block>
-        <menu-block if.bind='isActionable("login",_component)' icon="power-off" text.bind="(@me ? 'Log Out' : 'Log In')" click.trigger="onLogin()"></menu-block>
+        <span for.each="item in mainMenu()">
+            <menu-block icon.bind="item.icon" text.bind="item.short" click.trigger="(item.addr? onClick(item.addr) : onLogin())"></menu-block>
+        </span>
     </div>
 </div>
 
 <script>
-
-	/*
-     AIzaSyDonITuQJoUTbTjBSvrwv9nvlZ8tTzSD7Y
-     */
-
-    function initState(props){
-        var a = actionable();
-        //debugger;
-        return {
-            actionable: a,
-            me: storage.me.read(),
-        }
-    }
-
-    function actionable(){
-        var result = '|schedule|login|praytimes|qibla|dua|map|';
-        var me = storage.me.read();
-        if(me) {
-            result += 'profile|bookings|';
-            if(me.isTravelAgent) result += 'travelagent|confirmpayment|';
-            if(me.isAdmin) result += 'manageusers|approveusers|';
-        }
-        return result.toLowerCase();
-    }
-
-    function isActionable(action,self) {
-        //debugger;
-        return (self._state.actionable.indexOf('|' + action.toLowerCase() + '|') >=0);
-    }
     function onClick(path){
         window.location.hash = path;
     }
+
     function onLogin(){
-        if(this.state.me) {
+        if(storage.me.read()) {
             dpd.users.logout(function (err) {
                 //debugger;
                 storage.me.erase();

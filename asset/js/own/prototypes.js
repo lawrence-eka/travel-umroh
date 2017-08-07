@@ -2,6 +2,12 @@
  * Created by Lawrence Eka on 24-May-2017.
  */
 
+String.prototype.padStart = function(targetLength, padString){
+	if(this.length>=targetLength) return this;
+
+	padString = padString || ' ';
+	return padString.repeat(targetLength - this.length) + this;
+}
 
 String.prototype.replaceAll = function(toFind, replaceWith) {
 	return this.split(toFind).join(replaceWith);
@@ -77,14 +83,15 @@ Date.prototype.toTimeComponents = function(asComponents, withSSms) {
 
 }
 
-Date.prototype.toDateComponents = function(asComponents, withHHMM, withSSms)
+Date.prototype.toDateComponents = function(asComponents, withHHMM, withSSms, withDay)
 {
 	if(!this|| ((typeof this.getMonth) !== 'function') || (isNaN(this.getTime())))
 	{
 		if(asComponents) return undefined;
 		else return "";
 	}
-	
+
+	var dy = "SunMonTueWedThuFriSat".substr(this.getDay() * 3, 3);
 	var dt = this.getDate();
 	var mo = "JanFebMarAprMayJunJulAugSepOctNovDec".substr(this.getMonth() * 3, 3);
 	var yr = this.getFullYear();
@@ -107,9 +114,13 @@ Date.prototype.toDateComponents = function(asComponents, withHHMM, withSSms)
 				result["milliseconds"] = time["milliseconds"];
 			}
 		}
+		if (withDay){
+			result["day"] = dy;
+		}
+
 		return result;
 	}
-	else return dt.toString() + " " + mo + " " + yr.toString() + (withHHMM ? " " + time : "");
+	else return (withDay? dy + ' ' : '' ) + dt.toString() + " " + mo + " " + yr.toString() + (withHHMM ? " " + time : "");
 }
 
 Date.prototype.toStringDateRange = function(endDate)
@@ -150,8 +161,8 @@ Date.prototype.addHours = function(numOfHours) {
 	return new Date(newThis.setHours(newThis.getHours() + parseInt(numOfHours)));
 }
 
-Number.prototype.toDateComponents = function(asComponents, withHHMM, withSSms) {
-    return (new Date(this)).toDateComponents(asComponents, withHHMM, withSSms);
+Number.prototype.toDateComponents = function(asComponents, withHHMM, withSSms, withDay) {
+    return (new Date(this)).toDateComponents(asComponents, withHHMM, withSSms, withDay);
 }
 
 Number.prototype.toTimeComponents = function(asComponents, withSSms) {
@@ -217,6 +228,9 @@ Number.prototype.toDayOffset = function(endDate) {
     return Math.floor((endDate - this)/86400000)
 }
 
+Number.prototype.padStart = function(targetLength, padString){
+	return this.toString().padStart(targetLength, padString || '0');
+}
 /*
 
 */

@@ -41,9 +41,9 @@ yalla.utils.fetch = function (url, postData) {
 		
 		// eka patch starts
 		var script = scriptCache.getScript(url);
-		console.log("URL: ", url, "Cache: ", script);
+		//console.log("URL: ", url, "Cache: ", script);
 		if (script && script.responseText) {
-			console.log("Udah Ada");
+			//console.log("Udah Ada");
 			resolve(script);
 			return;
 		}

@@ -31,51 +31,28 @@ yalla.framework.addComponent("/dist/component/header", (function() {
   function onPropertyChange(event) {};
 
 
-  function generateMenu(me) {
-    //debugger;
-    if (!me) return [];
-    var menusBase = [{
-        label: (me.firstName + " " + me.lastName).toTitleCase(),
-        ref: '#app/user.myProfile'
-      },
-      {
-        label: 'Find Package',
-        ref: '#app/search-package.home'
-      },
-      {
-        label: 'My Booking',
-        ref: '#app/booking.home'
-      }
-    ];
-
-    var menuEnd = [{
-      label: 'Logout',
-      ref: '#',
-      clickTrigger: logout
-    }];
-
-    if (me.isTravelAgent) {
-      menusBase.push({
-        label: 'My Travel Agent',
-        ref: '#app/travel-agent.home'
-      });
-      menusBase.push({
-        label: 'Payment Confirmation',
-        ref: '#app/booking.paymentConfirmation'
-      });
-    }
-    if (me.isAdmin) {
-      menusBase.push({
-        label: 'Approvals',
-        ref: '#app/user.myApprovals'
-      });
-      menusBase.push({
-        label: 'Manage Users',
-        ref: '#app/user.home'
-      });
-    }
-    return menusBase.concat(menuEnd);
-  }
+  //    function generateMenu(me){
+  //    	//debugger;
+  //        if(!me) return [];
+  //        var menusBase = [
+  //            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
+  //            {label:'Find Package',ref:'#app/search-package.home'},
+  //            {label:'My Booking',ref:'#app/booking.home'}
+  //        ];
+  //
+  //        var menuEnd = [
+  //            {label:'Logout',ref:'#', clickTrigger: logout}];
+  //
+  //        if(me.isTravelAgent){
+  //	        menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
+  //	        menusBase.push({label:'Payment Confirmation',ref:'#app/booking.paymentConfirmation'});
+  //        }
+  //        if(me.isAdmin){
+  //	        menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
+  //	        menusBase.push({label:'Manage Users',ref:'#app/user.home'});
+  //        }
+  //        return menusBase.concat(menuEnd);
+  //    }
 
 
   function getMe() {
@@ -175,13 +152,13 @@ yalla.framework.addComponent("/dist/component/header", (function() {
         _elementOpenStart("ul", "");
         _attr("class", "nav navbar-nav");
         _elementOpenEnd("ul");
-        var _array = generateMenu(data) || [];
+        var _array = mainMenu() || [];
         _array.forEach(function(menu) {
           _elementOpenStart("li", "");
           _elementOpenEnd("li");
-          if (menu.ref != '#') {
+          if (menu.addr) {
             _elementOpenStart("a", "");
-            _attr("href", menu.ref);
+            _attr("href", menu.addr);
             _attr("onclick", function(event) {
               var self = {
                 target: event.target
@@ -203,10 +180,10 @@ yalla.framework.addComponent("/dist/component/header", (function() {
               hideMenu.bind(self)();
             });
             _elementOpenEnd("a");
-            _text("" + (menu.label) + "");
+            _text("" + ((menu.long ? menu.long : menu.short)) + "");
             _elementClose("a");
           }
-          if (menu.ref == '#') {
+          if (!menu.addr) {
             _elementOpenStart("a", "");
             _attr("onclick", function(event) {
               var self = {
@@ -230,7 +207,7 @@ yalla.framework.addComponent("/dist/component/header", (function() {
             });
             _attr("class", "custom-mouse-pointer");
             _elementOpenEnd("a");
-            _text("" + (menu.label) + "");
+            _text("" + ((menu.long ? menu.long : menu.short)) + "");
             _elementClose("a");
           }
           _elementClose("li");

@@ -86,10 +86,13 @@ function ScriptCache(cv){
 	this.setVersion = function(cv) {
 		cv = this.preprocess(cv);
 		cv.version = cv.version || "0001.01.01.00.00.00";
+
 		for(var url in this.version) { //iterate this.version instead of currenvVersion to make sure that urls that are no longer used, hence no longer part of currentVersion, be deleted from the cache.
 			if(cv[url] != this.version[url]) {
+				//debugger;
 				console.log("New version detected.");
 				delete this.scripts['./' + url];
+				delete this.scripts['/' + url];
 				delete this.scripts[url];
 			}
 		}
@@ -122,42 +125,9 @@ function ScriptCache(cv){
 function Loader(cv) {
 	this.unloadedAssets =  0;
 	this.needLoading = false;
-	this.assets = [
-		{seq: 2, file: "asset/css/font-awesome.min.css"},
-		{seq: 2, file: "asset/css/bootstrap.min.css"},
-		{seq: 3, file: "asset/css/css-patch.css"},
-		{seq: 2, file: "asset/css/custom-style.css"},
-		{seq: 2, file: "asset/css/ie10-viewport-bug-workaround.css"},
-		{seq: 2, file: "asset/css/sticky-footer-navbar.css"},
-		{seq: 2, file: "asset/js/jquery.min.js"},
-		{seq: 4, file: "asset/js/bootstrap.min.js"},
-		{seq: 4, file: "asset/js/own/geoLocation.js"},
-		{seq: 4, file: "asset/js/vendor/PrayTimes.js"},
-		{seq: 2, file: "dpd.js"},
-		{seq: 2, file: "asset/js/own/prototypes.js"},
-		{seq: 2, file: "asset/js/own/datePair.js"},
-		{seq: 2, file: "asset/js/own/alert.js"},
-		{seq: 2, file: "asset/js/own/utils.js"},
-		{seq: 2, file: "asset/js/own/event.js"},
-		{seq: 0, file: "asset/js/own/storages.js"},
-		{seq: 0, file: "asset/js/zlib/gunzip.min.js"},
-		{seq: 0, file: "dist/yalla.js",
-			attribute: {
-				id: "yallaScript",
-				"yalla-component": "app",
-				"yalla-base": "dist",
-				"yalla-domtarget": "body",
-				"yalla-routing": "authenticate"
-			}
-		},
-		{seq: 1, file: "asset/js/own/yalla-patch.js"},
-		{seq: 2, file: "asset/js/vendor/pica.min.js"},
-		{seq: 3, file: "asset/js/own/imageProcessor.js"},
-	];
-	
+	this.assets;// = assets;
+
 	this.loadAssets = function (seq) {
-		//var self = this;
-		//debugger;
 		for (var i in this.assets) {
 			if (this.assets[i].seq == seq && !this.assets[i].called) {
 				//console.log("loading asset seq:", seq, "=", this.assets[i].file)
@@ -167,19 +137,26 @@ function Loader(cv) {
 		}
 	};
 	
-	this.unpackAll = function(z, cv) {
+	this.unpackAll = function(z, cv, as) {
 		var self = this;
 		this.fetch(z)
-		.then(this.attachScriptToDocument.bind(this, null))
-		.then(this.fetch.bind(this, cv, null, null, true))
-		.then(function(result){
-			scriptCache.setVersion(JSON.parse(result.responseText));
-			self.loadAssets(0);
-		});
+			.then(this.attachScriptToDocument.bind(this, null))
+			.then(this.fetch.bind(this, cv, null, null, true))
+			.then(function(result) {
+				scriptCache.setVersion(JSON.parse(result.responseText));
+			})
+			.then(this.fetch.bind(this, as))
+			.then(this.attachScriptToDocument.bind(this, null))
+			.then(function(result) {
+				//debugger;
+				self.assets = assets;
+				self.unloadedAssets = self.assets.length;
+				self.loadAssets(0);
+			});
 	}
 	
 	this.fetch = function (url, postData, attribute, isPassThru) {
-		
+		//debugger;
 		var XMLHttpFactories = [
 			function () {
 				return new XMLHttpRequest()
@@ -312,23 +289,12 @@ function Loader(cv) {
 	};
 	
 	//debugger;
-	this.unloadedAssets = this.assets.length;
+	//this.unloadedAssets = this.assets.length;
 };
-
-var mainMenuPath = '#app/main-menu.menu-grid';
 
 function authenticate(path){
 	return new Promise(function(resolve){
-		var specialAddress = [
-			"#user.login-form",
-			"#user.forgot-password",
-			"#user.reset-password",
-			"#user.registration",
-			'#common.privacyPolicy',
-		];
 		console.log('Path = ', path);
-		//resolve(storage.me.read()? path ? path : "#app/search-package.home" : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : "#app");
-		//resolve(storage.me.read()? path ? path : mainMenuPath : typeof specialAddress.find(function(x){return path.indexOf(x) >= 0;}) != 'undefined' ? path : '#user.login-form');
 		resolve(path && path != '#app' ? path : mainMenuPath);
 	});
 }
@@ -336,4 +302,4 @@ function authenticate(path){
 var scriptCache = new ScriptCache();
 //var loader = new Loader();
 //loader.unpackAll('./version.ver');
-(new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver');
+(new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver', '/asset/js/own/loaderData.js');

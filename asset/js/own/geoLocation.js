@@ -59,6 +59,26 @@ function GeoLocation() {
 			this.watchId = null;
 		}
 	}
+	
+	this.getLocationName =function(location) {
+		//debugger;
+		return new Promise(function(resolve){
+			//debugger;
+			var geocoder = new google.maps.Geocoder;
+			geocoder.geocode({'location': location}, function(results, status) {
+				//debugger;
+				if (status === 'OK') {
+					if (results) {
+						resolve(results[1].address_components[0].short_name);
+					} else {
+						resolve('Unknown Location');
+					}
+				} else {
+					resolve(status);
+				}
+			});
+		});
+	}
 }
 
 var geo = new GeoLocation();

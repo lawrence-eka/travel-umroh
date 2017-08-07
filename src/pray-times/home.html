@@ -1,17 +1,45 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/home-button" name="home"></inject>
+<inject from="/component/entry-naked" name="entry"></inject>
 
-<div data.load="geo.getLocation()">
+<div data.load="getTimes(@date)">
     <panel title='Pray Times'>
         <div slot.name="body">
-            {{JSON.stringify(data)}}
-            {{JSON.stringify(test2((new Date()),'MWL'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'ISNA'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'Egypt'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'Makkah'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'Karachi'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'Tehran'))}}<br/>
-            {{JSON.stringify(test2((new Date()),'Jafari'))}}<br/>
+            <div class="row">
+                <div class="col-xs-2">
+                    <i class="fa fa-angle-left custom-bold-text" click.trigger="onNextDay(-1)"></i>
+                </div>
+                <span ref.name="display">
+                <div class="col-xs-8 custom-date-text">
+                    <entry type='label' prompt.bind='(@date).toDateComponents(false, true, false, true)' class="custom-normal-text"></entry>
+                </div>
+                </span>
+                <div class="col-xs-2">
+                    <div class="pull-right">
+                        <i class="fa fa-angle-right custom-bold-text" click.trigger="onNextDay(1)"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 custom-date-text">
+                    <entry type='label' prompt.bind="@locName" class="custom-normal-text "></entry>
+                </div>
+            </div>
+            <span for.each="time in data">
+                <div class="row">
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <entry type='label' prompt.bind='time.name' class.bind="('custom-normal-text ' + (time.next ? 'custom-bold-text' : 'custom-lighter-text'))"></entry>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="pull-right">
+                            <entry type='label' prompt.bind='time.time' class.bind="('custom-normal-text ' + (time.next ? 'custom-bold-text' : 'custom-lighter-text'))"></entry>
+                        </div>
+                    </div>
+                </div>
+            </span>
         </div>
         <div slot.name="footer">
             <div class="row">
@@ -22,17 +50,51 @@
 </div>
 
 <script>
-    function test2(date, method){
-	    var j;
-    	prayTimes.setMethod(method);
-    	prayTimes.adjust({
-    		highLats:'AngleBased',
-            asr:'Standard',
-            midnight:'Standard',
+
+    function initState(props){
+    	var state = {
+    		date:new Date(),
+            location:null,
+            locName:'Unknown',
+        };
+    	return state;
+    }
+    function onNextDay(offset){
+    	//debugger;
+	    this.state.date = this.state.date.addDays(offset);
+	    $patchChanges();
+    }
+    function getTimes(date){
+    	var self =this;
+    	return new Promise(function(resolve){
+    		geo.getLocation().then(function(loc) {
+			    loc = loc.err ? {lat:21.4225,lng:39.8262} : loc; // default to Kaabah coordinate
+                self.state.location = loc;
+                //debugger;
+                geo.getLocationName(loc).then(function(name){
+                	//debugger;
+                	self.state.locName = name;
+	                //loc = loc.err ? {lat:24.5174234,lng:54.9895103} : loc;
+	                var j;
+	                prayTimes.setMethod('Egypt');
+	                prayTimes.adjust({
+		                highLats:'AngleBased',
+		                asr:'Standard',
+		                midnight:'Standard',
+	                })
+	                j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
+	                //j.method = method;
+	                var k=[];
+	                for(var i = 0; i < Object.keys(j).length; i++) {
+		                k.push({name:Object.keys(j)[i].toTitleCase(), time:j[Object.keys(j)[i]],});
+	                }
+	                k = k.sort(function(a, b){return a.time < b.time ? -1 : a.time == b.time ? 0 : 1});
+	                k.find(x=> x.time>= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2))['next']=true;
+
+	                resolve(k);
+                });
+            })
         })
-	    j = prayTimes.getTimes(date, [24.5174234,54.9895103], 4);
-	    j.method = method;
-	    return j;
     }
 
 </script>
