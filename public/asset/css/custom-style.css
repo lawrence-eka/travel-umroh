@@ -90,6 +90,18 @@ body {
 .custom-normal-text {
     margin-bottom:0 !important;
     font-size:1em !important;
+    font-weight:normal !important;
+}
+
+.custom-italic-text {
+    font-style:italic !important;
+}
+
+.custom-arabic-text {
+    margin-bottom:0 !important;
+    font-size:1.8em !important;
+    font-weight:lighter !important;
+    text-align:right;
 }
 
 .custom-lighter-text {
@@ -104,6 +116,11 @@ body {
 
 .custom-bold-text {
     font-weight:bold !important;
+}
+
+.custom-bottom-border{
+    border-bottom : 2px solid #cccccc !important;
+
 }
 
 .custom-register-here {

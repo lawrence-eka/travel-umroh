@@ -30,12 +30,6 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
 
   function onPropertyChange(event) {};
 
-  //	function getData() {
-  //		return new Promise(function(resolve) {
-  //			getGeoLoc().then(function(loc){resolve(loc)}).catch(function(err){resolve(err)});
-  //		})
-  //	}
-
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
