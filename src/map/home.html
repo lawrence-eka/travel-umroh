@@ -30,59 +30,16 @@
 	    if((typeof google) == 'undefined') {
     		state.alert.alert('Google Map is not available at the moment');
 	    }
-	    else {
-		    initMap();
-	    }
 
         return state;
     }
-	var marker = null;
-	var circle = null;
 
 	function initMap() {
-		geo.getLocation().then(function(loc) {
-			if(!loc.err) {
-				var map = new google.maps.Map(document.getElementsByName('map')[0], {
-					zoom: 17,
-					center: loc,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				});
-
-				marker = new google.maps.Marker({
-					position: loc,
-					map: map,
-					animation: google.maps.Animation.DROP,
-				});
-
-				circle = new google.maps.Circle({
-					center: loc,
-					radius: loc.acc,
-					map: map,
-					fillColor: '#0000ff',
-					fillOpacity: 0.3,
-					strokeColor: '#0000ff',
-					strokeOpacity: 0.0,
-				});
-
-				geo.watchLocation(onSuccess, onError);
-			}
-			else {
-				alert(loc.msg);
-            }
-		});
+		geo.showLocation(document.getElementsByName('map')[0]);
 	}
 
-	function onSuccess(pos, accuracy) {
-		marker.setPosition(pos);
-		circle.setCenter(pos);
-		circle.setRadius(accuracy);
-	}
-
-	// onError Callback receives a PositionError object
-	//
-	function onError(error) {
-		debugger;
-		this._state.alert.alert(error);
-	}
+    window.onload = function(e){
+	    if((typeof google) != 'undefined') initMap();
+    }
 
 </script>

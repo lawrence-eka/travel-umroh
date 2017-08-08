@@ -1,28 +1,22 @@
 <inject from="/component/panel" name="panel"></inject>
-<inject from="/component/home-button" name="home"></inject>
 <inject from="/component/entry-naked" name="entry"></inject>
+<inject from="/component/home-button" name="home"></inject>
 
 <div data.load="getTimes(@date)">
     <panel title='Pray Times'>
         <div slot.name="body">
             <div class="row">
-                <div class="col-xs-2">
-                    <i class="fa fa-angle-left custom-bold-text" click.trigger="onNextDay(-1)"></i>
+                <div class="col-xs-2" click.trigger="onNextDay(-1)">
+                    <i class="fa fa-angle-left custom-bold-text"></i>
                 </div>
-                <span ref.name="display">
-                <div class="col-xs-8 custom-date-text">
-                    <entry type='label' prompt.bind='(@date).toDateComponents(false, true, false, true)' class="custom-normal-text"></entry>
+                <div class="col-xs-8 custom-pray-times-date">
+                    <entry type='label' prompt.bind='(@date).toDateComponents(false, true, false, true)' class="custom-pray-times-date-text"></entry>
+                    <entry type='label' prompt.bind="@locName" class="custom-entry-prompt"></entry>
                 </div>
-                </span>
-                <div class="col-xs-2">
+                <div class="col-xs-2" click.trigger="onNextDay(1)">
                     <div class="pull-right">
-                        <i class="fa fa-angle-right custom-bold-text" click.trigger="onNextDay(1)"></i>
+                        <i class="fa fa-angle-right custom-bold-text"></i>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 custom-date-text">
-                    <entry type='label' prompt.bind="@locName" class="custom-normal-text "></entry>
                 </div>
             </div>
             <span for.each="time in data">
@@ -55,46 +49,59 @@
     	var state = {
     		date:new Date(),
             location:null,
-            locName:'Unknown',
+            locName:null,
         };
     	return state;
     }
     function onNextDay(offset){
-    	//debugger;
 	    this.state.date = this.state.date.addDays(offset);
 	    $patchChanges();
+    }
+
+    function getLoc() {
+    	var self = this;
+    	return new Promise(function(resolve){
+		    if(self.state.location) resolve(self.state.location);
+		    geo.getLocation().then(function(loc) {
+			    self.state.location = loc;
+		    	resolve(loc);
+            });
+        });
+    }
+
+    function getLocName(loc) {
+    	var self = this;
+        return new Promise(function(resolve){
+	        if(self.state.location) resolve(self.state.locName);
+	        geo.getLocationName(loc).then(function(name){
+		        self.state.locName = name;
+		        resolve(name);
+	        })
+        })
     }
     function getTimes(date){
     	var self =this;
     	return new Promise(function(resolve){
-    		geo.getLocation().then(function(loc) {
-			    loc = loc.err ? {lat:21.4225,lng:39.8262} : loc; // default to Kaabah coordinate
-                self.state.location = loc;
-                //debugger;
-                geo.getLocationName(loc).then(function(name){
-                	//debugger;
-                	self.state.locName = name;
-	                //loc = loc.err ? {lat:24.5174234,lng:54.9895103} : loc;
-	                var j;
-	                prayTimes.setMethod('Egypt');
-	                prayTimes.adjust({
-		                highLats:'AngleBased',
-		                asr:'Standard',
-		                midnight:'Standard',
-	                })
-	                j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
-	                //j.method = method;
-	                var k=[];
-	                for(var i = 0; i < Object.keys(j).length; i++) {
-		                k.push({name:Object.keys(j)[i].toTitleCase(), time:j[Object.keys(j)[i]],});
-	                }
-	                k = k.sort(function(a, b){return a.time < b.time ? -1 : a.time == b.time ? 0 : 1});
-	                k.find(x=> x.time>= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2))['next']=true;
-
-	                resolve(k);
-                });
-            })
-        })
+            getLoc.bind(self)().then(getLocName.bind(self)).then(function(){
+	            var j;
+	            var loc = self.state.location;
+	            prayTimes.setMethod('Egypt');
+	            prayTimes.adjust({
+		            highLats:'AngleBased',
+		            asr:'Standard',
+		            midnight:'Standard',
+	            })
+	            j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
+	            var k=[];
+	            for(var i = 0; i < Object.keys(j).length; i++) {
+		            k.push({name:Object.keys(j)[i].toTitleCase(), time:j[Object.keys(j)[i]],});
+	            }
+	            k = k.sort(function(a, b){return a.time < b.time ? -1 : a.time == b.time ? 0 : 1});
+	            var x = k.findIndex(x=> x.time>= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2));
+	            if(x >= 0) k[x]['next']=true;
+	            resolve(k);
+            });
+        });
     }
 
 </script>

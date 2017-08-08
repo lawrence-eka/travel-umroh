@@ -1,0 +1,28 @@
+<inject from="/component/entry-naked" name="entry"></inject>
+
+<div class="container">
+    <div class="row" click.trigger="onExpand()">
+        <div class="col-xs-1">
+            <i class.bind="@class"></i>
+        </div>
+        <div class="col-xs-10 custom-prayer">
+            <entry type="label" prompt.bind="@name" class="custom-bold-text"></entry>
+        </div>
+    </div>
+</div>
+
+<script>
+    function initState(props){
+    	return {
+    		class: "fa fa-plus-square-o",
+            name: props.name,
+        }
+    }
+
+    function onExpand() {
+    	if(this.state.class == "fa fa-minus-square-o") this.state.class = "fa fa-plus-square-o";
+    	else this.state.class = "fa fa-minus-square-o";
+    	this.emitEvent('expand', {isExpand: this.state.class == "fa fa-minus-square-o", name:this.state.name});
+	    $patchChanges();
+    }
+</script>
