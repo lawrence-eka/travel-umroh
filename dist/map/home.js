@@ -38,6 +38,8 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     }
     if ((typeof google) == 'undefined') {
       state.alert.alert('Google Map is not available at the moment');
+    } else {
+      initMap();
     }
 
     return state;
