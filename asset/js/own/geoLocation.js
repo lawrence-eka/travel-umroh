@@ -3,7 +3,7 @@
  */
 
 function GeoLocation() {
-	var map, watchId, marker, circle, showQibla, alert;
+	var map, watchId, marker, circle, showQibla, alert, qiblaLine;
 	var status = typeof google != 'undefined';
 	var self = this;
 	var kaabahLoc = {lat:21.4225,lng:39.8262, alt:0, acc:1000,};
@@ -15,7 +15,8 @@ function GeoLocation() {
 		circle.setCenter(pos);
 		circle.setRadius(position.coords.accuracy);
 		if(showQibla) {
-			(new google.maps.Polyline({
+			qiblaLine.setMap(null);
+			qiblaLine = (new google.maps.Polyline({
 				path: [
 					{lat:position.coords.latitude, lng:position.coords.longitude},
 					kaabahLoc,
@@ -24,7 +25,8 @@ function GeoLocation() {
 				strokeColor: '#11ff11',
 				strokeOpacity: 0.7,
 				strokeWeight: 2
-			})).setMap(map);
+			}));
+			qiblaLine.setMap(map);
 		}
 	}
 
@@ -95,7 +97,7 @@ function GeoLocation() {
 					strokeOpacity: 0.0,
 				});
 				if(showQibla) {
-					(new google.maps.Polyline({
+					qiblaLine = (new google.maps.Polyline({
 						path: [
 							loc,
 							kaabahLoc,
@@ -104,7 +106,8 @@ function GeoLocation() {
 						strokeColor: '#11ff11',
 						strokeOpacity: 0.7,
 						strokeWeight: 2
-					})).setMap(map);
+					}));
+					qiblaLine.setMap(map);
 				}
 
 				options = options || {enableHighAccuracy: true, timeout: 10000};

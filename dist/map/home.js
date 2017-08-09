@@ -39,7 +39,8 @@ yalla.framework.addComponent("/dist/map/home", (function() {
     geo.showLocation(map, false, onAlert);
     //}
   }
-  window.onload = initMap;
+
+  setTimeout(initMap, 0);
 
   function initState(props) {
     var state = {
