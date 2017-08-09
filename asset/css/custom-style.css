@@ -125,7 +125,7 @@ body {
 }
 
 .custom-pray-times-date {
-    text-align:center;
+    text-align:center !important;
     padding-left:5px !important;
     padding-right:5px !important;
     margin-bottom:0 !important;
