@@ -79,11 +79,12 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
       getLoc.bind(self)().then(getLocName.bind(self)).then(function() {
         var j;
         var loc = self.state.location;
-        prayTimes.setMethod('Egypt');
+        prayTimes.setMethod('Makkah');
         prayTimes.adjust({
           highLats: 'AngleBased',
           asr: 'Standard',
           midnight: 'Standard',
+          fajr: 19.5,
         });
         j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
         var k = [];
