@@ -24,7 +24,7 @@ function mainMenu (){
 			{code:'map', icon:'map-marker',short:'Map', addr:'#app/map.home'},
 			{code:'qibla', icon:'compass',short:'Qibla', addr:'#app/qibla.home'},
 			{code:'prayTimes', icon:'clock-o',short:'Pray Times', addr:'#app/pray-times.home'},
-			{code:'steps', icon:'map-o',short:'Step-by-Step', addr:'#app/umroh-procedure.home'},
+			{code:'steps', icon:'map-o',short:'Ritual', addr:'#app/umroh-procedure.home'},
 			{code:'prayers', icon:'signing',short:'Prayers', addr:'#app/prayers.home'},
 			{code:'profile', icon:'address-card-o',short:'Profile', long:(me? me.firstName + ' ' + me.lastName:''), addr:'#app/user.myProfile'},
 			{code:'login', icon:'power-off', short: (me? 'Log Out' : 'Log In')},
