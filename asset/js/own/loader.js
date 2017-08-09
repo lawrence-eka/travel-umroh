@@ -4,11 +4,13 @@
 function ScriptCache(cv){
 	try{
 		this.scripts = JSON.parse(localStorage.getItem("scripts"));
+		if(!this.scripts) this.scripts = {};
 	} catch(e) {
 		this.scripts = {};
 	}
 	try {
 		this.version = JSON.parse(localStorage.getItem("scriptsVersion"));
+		if(!this.version) this.version ={};
 	} catch(e) {
 		this.version = {};
 		this.scripts={} // scriptVersion is not present or not in the correct format, probably old one, hence clear script cache.
@@ -41,7 +43,7 @@ function ScriptCache(cv){
 	};
 	
 	this.getScript = function(url, getCompleteData, isPassThru) {
-		if(!this.scripts[url]) return null;
+		if(!this.scripts || !this.scripts[url]) return null;
 		else if(isPassThru) {
 			delete this.scripts[url];
 			return null;
@@ -107,7 +109,7 @@ function ScriptCache(cv){
 	this.setScript = function(url, req, resolveCompleteData, isPassThru) {
 		if(req){
 			//debugger;
-			attribute = (this.scripts[url] ? this.scripts[url].attribute : null);
+			attribute = (this.scripts && this.scripts[url] ? this.scripts[url].attribute : null);
 			this.scripts[url] = {responseText: this.decompress(req.response), attribute: attribute};
 			this.fulfillPromises(url, true, resolveCompleteData);
 		} else {
