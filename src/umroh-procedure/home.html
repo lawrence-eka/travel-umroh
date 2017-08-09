@@ -1,0 +1,98 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry-naked" name="entry"></inject>
+<inject from="/component/collapsible-entry" name="collapsible"></inject>
+<inject from="/component/home-button" name="home"></inject>
+
+<div data.load="getProcedure()">
+    <panel title='Steps of Umra'>
+        <div slot.name="body">
+            <span for.each="step in data">
+                <collapsible name.bind="step.name" isLastEntry.bind="step.fin">
+                    <div slot.name="detail">
+                        <span for.each="rem in step.remarks">
+                            <div class="col-xs-12">
+                                <entry type="label" prompt.bind="rem.msg" class.bind="(rem.bold? 'custom-bold-text' : 'custom-normal-text')"></entry>
+                            </div>
+                        </span>
+                    </div>
+                </collapsible>
+            </span>
+        </div>
+        <div slot.name="footer">
+            <div class="row">
+                <home></home>
+            </div>
+        </div>
+    </panel>
+</div>
+<script>
+
+	function getProcedure() {
+		return new Promise(function(resolve){
+			resolve(procedure);
+		});
+	}
+
+	var procedure = [
+		{
+			name: 'Menuju Miqat',
+			remarks: [{msg:"Miqat adalah garis start jama'ah mulai melakan prosesi umrah bisa masjid Dzulhulaifah atau Abyar 'Ali."}],
+		},
+		{
+			name: 'Persiapan Ber-ihram',
+			remarks: [{msg:"Mandi, mengenakan ihram, berwudhlu, shalat sunnah ihram 2 rakaat"}],
+		},
+		{
+			name: 'Membaca niat umroh',
+			remarks: [
+                {msg:"Setelah membaca niat umroh, jauhi hal-hal berikut"},
+                {msg:"Bagi pria", bold:true},
+                {msg:"1.Memakai pakaian biasa"},
+                {msg:"2.Memakai sepatu yang menutupi mata kaki"},
+                {msg:"3.Memakai penutup kepala yang melekat dengan kepala seperti topi & peci"},
+                {msg:"Bagi wanita", bold:true},
+                {msg:"1.Berkaos tangan"},
+                {msg:"2.Menutup muka"},
+                {msg:"Bagi pria dan wanita", bold:true},
+                {msg:"1.Mengenakan wangi-wangian"},
+                {msg:"2.Memotong kuku, dan mencabut/memotong rambut badan"},
+                {msg:"3.Memburu atau menganiaya hewan"},
+                {msg:"4.Kawin, mengawinkan, atau meminang wanita untuk dinikahi"},
+                {msg:"5.Bercumcu atau bersetubuh"},
+                {msg:"6.Memaki, bertengkar, atau mengeluarkan kata-kata kotor"},
+                {msg:"7.Memotong tumbuhan di Tanah Haram"}
+            ],
+		},
+		{
+			name: 'Berangkat menuju Mekah',
+			remarks: [{msg:"Selama perjalanan, perbanyaklah berdzikir dan membaca Talbiyah"}],
+		},
+		{
+			name: 'Memasuki Masjid Al Haram',
+			remarks: [{msg:"Dahulukan kaki kanan, sambil membaca Doa Memasuki Masjid Al-Haram."}],
+		},
+		{
+			name: 'Melakukan Tawaf',
+			remarks: [{msg:"Berjalan kaki mengelilingi Kaabah sebanyak 7 kali, dengan posisi Kaabah di sisi kiri. Tawaf dimulai dan berakhir di hadapan Hajar Aswat."}],
+		},
+		{
+			name: 'Shalat 2 Rakaat di hadapam Maqam Ibrahim',
+			remarks: [{msg:"Bacalah surat Al-Kafirun di rakaat pertama dan surat Al-Ikhlas di rakaat kedua."}],
+		},
+		{
+			name: 'Minum air Zam-Zam',
+			remarks: [{msg:"Istirahat sejenak lalu minum air Zam-Zam sambil membaca Doa Minum Air Zam-Zam."}],
+		},
+		{
+			name: "Melakukan Sa'i",
+			remarks: [{msg:"Perjalanan pulang pergi sebanyak 7 kali antara bukit Safa dan bukit Marwah. Saat berada di antara dua lampu hijau, disunnahkan bagi laki-laki untuk berlari-lari kecil."}],
+		},
+		{
+			name: 'Melakukan Tahlul',
+			remarks: [{msg:"Bacalah Doa sebelum Tahlul sebelum mulai pemotongan rambut, dan Doa Sesudah Tahlul setelah pemotongan selesai. Rambut laki-laki boleh digundul atau cukup dipotong pendek, sedangkan rambut perempuan cukup dipotong 2.5 cm sejumput atau merata."}],
+            fin:true,
+		},
+	];
+
+</script>
+

@@ -48,7 +48,10 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
   function getLoc() {
     var self = this;
     return new Promise(function(resolve) {
-      if (self.state.location) resolve(self.state.location);
+      if (self.state.location) {
+        resolve(self.state.location);
+        return;
+      }
       geo.getLocation().then(function(loc) {
         self.state.location = loc;
         resolve(loc);
@@ -59,7 +62,10 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
   function getLocName(loc) {
     var self = this;
     return new Promise(function(resolve) {
-      if (self.state.location) resolve(self.state.locName);
+      if (self.state.locName) {
+        resolve(self.state.locName);
+        return;
+      }
       geo.getLocationName(loc).then(function(name) {
         self.state.locName = name;
         resolve(name);
@@ -78,7 +84,7 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
           highLats: 'AngleBased',
           asr: 'Standard',
           midnight: 'Standard',
-        })
+        });
         j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
         var k = [];
         for (var i = 0; i < Object.keys(j).length; i++) {
@@ -90,7 +96,9 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
         k = k.sort(function(a, b) {
           return a.time < b.time ? -1 : a.time == b.time ? 0 : 1
         });
-        var x = k.findIndex(x => x.time >= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2));
+        var x = k.findIndex(function(x) {
+          return (x.time >= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2));
+        });
         if (x >= 0) k[x]['next'] = true;
         resolve(k);
       });
@@ -184,12 +192,6 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
               "class": "custom-pray-times-date-text"
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            var _params = {
-              "type": "label",
-              "prompt": _state.locName,
-              "class": "custom-entry-prompt"
-            };
-            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
             _elementOpenStart("div", "");
             _attr("class", "col-xs-2");
@@ -222,6 +224,20 @@ yalla.framework.addComponent("/dist/pray-times/home", (function() {
             _elementOpenEnd("i");
             _elementClose("i");
             _elementClose("div");
+            _elementClose("div");
+            _elementClose("div");
+            _elementOpenStart("div", "");
+            _attr("class", "row");
+            _elementOpenEnd("div");
+            _elementOpenStart("div", "");
+            _attr("class", "col-xs-12 custom-pray-times-date");
+            _elementOpenEnd("div");
+            var _params = {
+              "type": "label",
+              "prompt": _state.locName,
+              "class": "custom-entry-prompt"
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("div");
             _elementClose("div");
             var _array = data || [];

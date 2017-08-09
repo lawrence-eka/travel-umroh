@@ -2,16 +2,14 @@
 <inject from="/component/entry-naked" name="entry"></inject>
 <inject from="/prayers/prayer-name" name="pname"></inject>
 <inject from="/component/home-button" name="home"></inject>
+<inject from="/component/collapsible-entry" name="collapsible"></inject>
 
 <div data.load="getDuas()">
     <panel title='Prayers'>
         <div slot.name="body">
             <span for.each="dua in data">
-                <div class="row">
-                    <pname name.bind="dua.name" expand.trigger="onExpand(event)"></pname>
-                </div>
-                <div  if.bind="dua.isExpanded">
-                    <div class="row">
+                <collapsible name.bind="dua.name" isLastEntry.bind="dua.fin">
+                    <div slot.name="detail">
                         <div class="col-xs-12">
                             <div class="pull-right">
                                 <entry type="label" prompt.bind='dua.arabic' class="custom-arabic-text"></entry>
@@ -27,10 +25,7 @@
                             <entry type="label" prompt.bind="dua.indonesia" class="custom-normal-text"></entry>
                         </div>
                     </div>
-                    <div if.bind="!dua.fin" class="custom-bottom-border">
-                        <entry type="label" prompt=" " class="custom-normal-text"></entry>
-                    </div>
-                </div>
+                </collapsible>
             </span>
         </div>
         <div slot.name="footer">
@@ -41,13 +36,6 @@
     </panel>
 </div>
 <script>
-
-    function onExpand(event){
-    	var i = duas.findIndex(x=> x.name == event.data.name);
-    	if (i >= 0) {
-    		duas[i].isExpanded = event.data.isExpand;
-        }
-    }
 
     function getDuas() {
     	return new Promise(function(resolve){
@@ -79,6 +67,12 @@
 		    arabic: 'اَللّٰهُمَّ هٰذَا حَرَمُكَ وَأَمْنُكَ فَحَرِّمْ لَحْمِيْ وَدَمِيْ وَشَعْرِيْ وَبَشَرِيْ عَلَى النَّارِ وَاٰمِنِّيْ مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ وَاجْعَلْنِيْ مِنْ أَوْلِيَآئِكَ وَأَهْلِ طَاعَتِكَ',
 		    latin: 'Allahumma haadza haramuka wa amnuka faharrimlahmi wadamii wabasyarii ‘alannar, wa aminnii min ‘adzabika yauma tab’atsu ‘ibaadaka waj’alnii min auliyaa ika wa ahli thoo’atik.',
 		    indonesia: 'Ya Allah kota ini adalah tanah Haram-Mu dan tempat yang aman, maka hindarkanlah daging, darah, rambut, bulu dan kulitku dari neraka. Amankanlah aku dari siksaMu pada hari Engkau membangkitkan aku ke dalam golongan auliaMu dan ahli ta’at pada Mu.',
+	    },
+	    {
+		    name: 'Doa Saat Masuk Masjidil Haram',
+		    arabic: 'اَللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ فَحَيِّنَا رَبَّنَا بِالسَّلَامِ وَأَدْخِلْنَا الْجَنَّةَ دَارَالسَّلَامَ تَبَارَكْتَ وَتَعَالَيْتَ يَا ذَاالْجَلَالِ وَاْلإِكْرَامِ. اَللّٰهُمَّ افْتَحْ لِيْ أَبْوَابَ رَحْمَتِكَ وَمَغْفِرَتِكَ وَأَدْخِلْنِيْ فِيْهَا. بِسْمِ اللهِ وَالْحَمْدُ ِللهِ وَالصَّلَاةُ وَالسَّلَامُ عَلٰى رَسُوْلِ اللهِ',
+		    latin: 'Allahumma antassalaam, waminkassalaam fahayyinaa rabbanaa bissalaam wa adkhilnal jannata daarassalaam tabaarakta wata’aalaita yaa dzaljalaali wal ikraam. Allahummaftah lii abwaaba rahmatika wamaghfiratika wa adkhilnii fiihaa. Bismillahi walhamdulillahi wasshalaatu wassalaamu ‘alaa rasuulillaah.',
+		    indonesia: 'Ya Allah Engkau sumber keselamatan, dan daripadaMu lah datangnya keselamatan itu semua. Maka sambutlah kami wahai tuhan dengan selamat sejahtera dan masukanlah kami ke dalam surga negeriMu yang bahagia, Maha Pemberi berkat dan Maha Tinggilah Engkau wahai Tuhan yang punya keagungan dan kehormatan. Ya Allah bukakanlah untukku pintu rahmat dan ampunan, masukanlah aku ke dalam ampunanMu. Dengan nama Allah dan segala puji bagi Allah salawat dan salam untuk Rasulullah.',
 	    },
 	    {
 		    name: 'Doa Melihat Ka’bah',

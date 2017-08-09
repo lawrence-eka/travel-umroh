@@ -1,10 +1,16 @@
 <inject from="/component/panel" name="panel"></inject>
 <inject from="/component/home-button" name="home"></inject>
+<inject from="/component/alert" name="alert"></inject>
 
-<div data.load="geo.getLocation()">
+<div>
     <panel title='Qibla'>
-        <div slot.name="body">
-            {{JSON.stringify(data)}}
+        <div slot.name='body'>
+            <span ref.name="alert">
+                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+            </span>
+            <div name = 'map' style.bind='@screenSize'>
+
+            </div>
         </div>
         <div slot.name="footer">
             <div class="row">
@@ -15,4 +21,31 @@
 </div>
 
 <script>
+    var alert;
+
+    function initMap() {
+	    debugger;
+	    var map = document.getElementsByName('map')[0];
+	    //if(map) {
+	    	geo.showLocation(map, true, onAlert);
+	    //}
+    }
+    window.onload = initMap;
+
+    function initState(props){
+		var state = {
+			screenSize:'width:100%;height:' + screen.height * 0.6 + 'px',
+			alert: new Alert(null, $patchChanges, "alert"),
+			infoText:'',
+		}
+		alert = state.alert;
+		return state;
+	}
+
+	function onAlert(err){
+		debugger;
+		if(err.msg) alert.alert(err.msg);
+		else (alert.alert(err));
+    }
+
 </script>

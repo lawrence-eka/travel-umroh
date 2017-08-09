@@ -1,0 +1,39 @@
+<inject from="/component/entry-naked" name="entry"></inject>
+
+<div>
+    <div class="row" click.trigger="onExpand()">
+        <div class="col-xs-1">
+            <i class.bind="@class"></i>
+        </div>
+        <div class="col-xs-10 custom-prayer">
+            <entry type="label" prompt.bind="@name" class="custom-bold-text"></entry>
+        </div>
+    </div>
+    <span if.bind="@isExpanded">
+        <div class="row">
+            <slot-view name="detail"></slot-view>
+        </div>
+        <div if.bind="!@isLastEntry" class="custom-bottom-border">
+            <entry type="label" prompt=" " class="custom-normal-text"></entry>
+        </div>
+    </span>
+</div>
+
+<script>
+	function initState(props){
+		return {
+			class: "fa fa-plus-square-o",
+			name: props.name,
+            isLastEntry:props.isLastEntry,
+            isExpanded:false,
+		}
+	}
+
+	function onExpand() {
+		if(this.state.class == "fa fa-minus-square-o") this.state.class = "fa fa-plus-square-o";
+		else this.state.class = "fa fa-minus-square-o";
+		this.state.isExpanded = (this.state.class == "fa fa-minus-square-o");
+		this.emitEvent('expand', {isExpand: this.state.isExpanded, name:this.state.name});
+		$patchChanges();
+	}
+</script>

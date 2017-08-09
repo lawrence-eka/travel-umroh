@@ -11,12 +11,16 @@
                 </div>
                 <div class="col-xs-8 custom-pray-times-date">
                     <entry type='label' prompt.bind='(@date).toDateComponents(false, true, false, true)' class="custom-pray-times-date-text"></entry>
-                    <entry type='label' prompt.bind="@locName" class="custom-entry-prompt"></entry>
                 </div>
                 <div class="col-xs-2" click.trigger="onNextDay(1)">
                     <div class="pull-right">
                         <i class="fa fa-angle-right custom-bold-text"></i>
                     </div>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-xs-12 custom-pray-times-date">
+                    <entry type='label' prompt.bind="@locName" class="custom-entry-prompt"></entry>
                 </div>
             </div>
             <span for.each="time in data">
@@ -61,7 +65,10 @@
     function getLoc() {
     	var self = this;
     	return new Promise(function(resolve){
-		    if(self.state.location) resolve(self.state.location);
+		    if(self.state.location) {
+		    	resolve(self.state.location);
+		    	return;
+		    }
 		    geo.getLocation().then(function(loc) {
 			    self.state.location = loc;
 		    	resolve(loc);
@@ -72,7 +79,10 @@
     function getLocName(loc) {
     	var self = this;
         return new Promise(function(resolve){
-	        if(self.state.location) resolve(self.state.locName);
+	        if(self.state.locName) {
+	        	resolve(self.state.locName);
+	        	return;
+	        }
 	        geo.getLocationName(loc).then(function(name){
 		        self.state.locName = name;
 		        resolve(name);
@@ -90,14 +100,14 @@
 		            highLats:'AngleBased',
 		            asr:'Standard',
 		            midnight:'Standard',
-	            })
+	            });
 	            j = prayTimes.getTimes(date, [loc.lat, loc.lng], 4);
 	            var k=[];
 	            for(var i = 0; i < Object.keys(j).length; i++) {
 		            k.push({name:Object.keys(j)[i].toTitleCase(), time:j[Object.keys(j)[i]],});
 	            }
 	            k = k.sort(function(a, b){return a.time < b.time ? -1 : a.time == b.time ? 0 : 1});
-	            var x = k.findIndex(x=> x.time>= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2));
+	            var x = k.findIndex(function(x){ return (x.time>= date.getHours().padStart(2) + ':' + date.getMinutes().padStart(2));});
 	            if(x >= 0) k[x]['next']=true;
 	            resolve(k);
             });

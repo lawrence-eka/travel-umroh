@@ -30,27 +30,32 @@ yalla.framework.addComponent("/dist/map/home", (function() {
 
   function onPropertyChange(event) {};
 
+  var alert;
+
+  function initMap() {
+    debugger;
+    var map = document.getElementsByName('map')[0];
+    //if(map) {
+    geo.showLocation(map, false, onAlert);
+    //}
+  }
+  window.onload = initMap;
+
   function initState(props) {
     var state = {
       screenSize: 'width:100%;height:' + screen.height * 0.6 + 'px',
       alert: new Alert(null, $patchChanges, "alert"),
       infoText: '',
     }
-    if ((typeof google) == 'undefined') {
-      state.alert.alert('Google Map is not available at the moment');
-    } else {
-      initMap();
-    }
-
+    alert = state.alert;
+    //initMap();
     return state;
   }
 
-  function initMap() {
-    geo.showLocation(document.getElementsByName('map')[0]);
-  }
-
-  window.onload = function(e) {
-    if ((typeof google) != 'undefined') initMap();
+  function onAlert(err) {
+    debugger;
+    if (err.msg) alert.alert(err.msg);
+    else(alert.alert(err));
   }
 
 

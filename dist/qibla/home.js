@@ -30,11 +30,41 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
 
   function onPropertyChange(event) {};
 
+  var alert;
+
+  function initMap() {
+    debugger;
+    var map = document.getElementsByName('map')[0];
+    //if(map) {
+    geo.showLocation(map, true, onAlert);
+    //}
+  }
+  window.onload = initMap;
+
+  function initState(props) {
+    var state = {
+      screenSize: 'width:100%;height:' + screen.height * 0.6 + 'px',
+      alert: new Alert(null, $patchChanges, "alert"),
+      infoText: '',
+    }
+    alert = state.alert;
+    return state;
+  }
+
+  function onAlert(err) {
+    debugger;
+    if (err.msg) alert.alert(err.msg);
+    else(alert.alert(err));
+  }
+
+
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
     _context["home"] = $inject("/component/home-button");
     var home = _context["home"];
+    _context["alert"] = $inject("/component/alert");
+    var alert = _context["alert"];
     _elementOpenStart("div", "");
     _attr("element", "dist.qibla.home");
     _elementOpenEnd("div");
@@ -52,60 +82,41 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    (function(domNode) {
-      var node = domNode.element;
-      var self = {
-        target: node
-      };
-      self.properties = _props;
-      if ('elements' in self.target) {
-        self.elements = self.target.elements;
+    var _params = {
+      "title": "Qibla"
+    };
+    _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+      if (slotName === "body") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("span", "");
+        _elementOpenEnd("span");
+        yalla.framework.registerRef("alert", IncrementalDOM.currentElement(), function() {
+          var _params = {
+            "alertType": _state.alert.type.bind(self)(),
+            "message": _state.alert.text.bind(self)()
+          };
+          _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        })()
+        _elementClose("span");
+        _elementOpenStart("div", "");
+        _attr("name", "map");
+        _attr("style", _state.screenSize);
+        _elementOpenEnd("div");
+        _elementClose("div");
+        _elementClose("div");
       }
-      self.currentTarget = self.target;
-      self.component = _component;
-      self.component._state = self.component._state || {};
-      self.state = self.component._state;
-
-      function asyncFunc_1(data) {
-        var _params = {
-          "title": "Qibla"
-        };
-        _context["panel"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
-          if (slotName === "body") {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            _text("" + (JSON.stringify(data)) + "");
-            _elementClose("div");
-          }
-          if (slotName === "footer") {
-            _elementOpenStart("div", "");
-            _elementOpenEnd("div");
-            _elementOpenStart("div", "");
-            _attr("class", "row");
-            _elementOpenEnd("div");
-            var _params = {};
-            _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-            _elementClose("div");
-            _elementClose("div");
-          }
-        });
+      if (slotName === "footer") {
+        _elementOpenStart("div", "");
+        _elementOpenEnd("div");
+        _elementOpenStart("div", "");
+        _attr("class", "row");
+        _elementOpenEnd("div");
+        var _params = {};
+        _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+        _elementClose("div");
       }
-      var promise = geo.getLocation.bind(self)();
-      if (promise && typeof promise == "object" && "then" in promise) {
-        _skip();
-        promise.then(function(_result) {
-          $patchChanges(node, function() {
-            asyncFunc_1.call(self, _result)
-          });
-        }).catch(function(err) {
-          console.log(err);
-        });
-      } else {
-        asyncFunc_1.call(self, promise)
-      }
-    })({
-      element: IncrementalDOM.currentElement(),
-      pointer: IncrementalDOM.currentPointer()
     });
     _elementClose("div");
   }

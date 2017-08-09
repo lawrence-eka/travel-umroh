@@ -3,16 +3,43 @@
  */
 
 function GeoLocation() {
-	var watchId;
-	var marker;
-	var circle;
-	var map;
+	var map, watchId, marker, circle, showQibla, alert;
 	var status = typeof google != 'undefined';
 	var self = this;
+	var kaabahLoc = {lat:21.4225,lng:39.8262, alt:0, acc:1000,};
+
+
+	function onWatchSuccess(position) {
+		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		marker.setPosition(pos);
+		circle.setCenter(pos);
+		circle.setRadius(position.coords.accuracy);
+		if(showQibla) {
+			(new google.maps.Polyline({
+				path: [
+					{lat:position.coords.latitude, lng:position.coords.longitude},
+					kaabahLoc,
+				],
+				geodesic:true,
+				strokeColor: '#11ff11',
+				strokeOpacity: 0.7,
+				strokeWeight: 2
+			})).setMap(map);
+		}
+	}
+
+	function onWatchError(error) {
+		if(alert) alert(error)
+		else console.log(error);
+	}
 
 	this.getLocation = function() {
 		return new Promise(function (resolve) {
-			if(!status) resolve({lat:21.4225,lng:39.8262, alt:0, acc:1000,}); // default to Kaabah coordinate
+			if(!status) {
+				if(alert) alert('Google Map is not available at the moment');
+				resolve(kaabahLoc);
+				return;
+			} // default to Kaabah coordinate
 			navigator.geolocation.getCurrentPosition(function (position) {
 				resolve({
 					lat: position.coords.latitude,
@@ -41,9 +68,11 @@ function GeoLocation() {
 		})
 	}
 
-	this.showLocation = function(mapCanvas, options) {
+	this.showLocation = function(mapCanvas, isShowQibla, onAlert, options) {
+		alert = onAlert;
 		this.getLocation().then(function(loc){
 			if(!loc.err) {
+				showQibla = isShowQibla;
 				map = new google.maps.Map(mapCanvas, {
 					zoom: 17,
 					center: loc,
@@ -65,9 +94,25 @@ function GeoLocation() {
 					strokeColor: '#0000ff',
 					strokeOpacity: 0.0,
 				});
+				if(showQibla) {
+					(new google.maps.Polyline({
+						path: [
+							loc,
+							kaabahLoc,
+						],
+						geodesic:true,
+						strokeColor: '#11ff11',
+						strokeOpacity: 0.7,
+						strokeWeight: 2
+					})).setMap(map);
+				}
 
 				options = options || {enableHighAccuracy: true, timeout: 10000};
 				watchId = navigator.geolocation.watchPosition(onWatchSuccess, onWatchError, options);
+				return loc;
+			}
+			else {
+				alert(loc);
 			}
 		});
 	}
@@ -78,12 +123,15 @@ function GeoLocation() {
 			watchId = null;
 		}
 	}
-	
+
 	this.getLocationName =function(location) {
 		//debugger;
 		return new Promise(function(resolve){
 			//debugger;
-			if(typeof google == 'undefined') resolve('Makkah (Default)');
+			if(typeof google == 'undefined') {
+				resolve('Al Haram (Default)');
+				return;
+			}
 			var geocoder = new google.maps.Geocoder;
 			geocoder.geocode({'location': location}, function(results, status) {
 				//debugger;
@@ -99,18 +147,6 @@ function GeoLocation() {
 			});
 		});
 	}
-
-	function onWatchSuccess(position) {
-		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		marker.setPosition(pos);
-		circle.setCenter(pos);
-		circle.setRadius(position.coords.accuracy);
-	}
-
-	function onWatchError(error) {
-		console.log(error);
-	}
-
 }
 
 var geo = new GeoLocation();

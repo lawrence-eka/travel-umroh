@@ -1,28 +1,27 @@
 <inject from="/main-menu/menu-block" name="menu-block"></inject>
 
-<div>
-    <div class="row menu-grid">
+<div class="container">
+    <div class="row row-centered custom-menu-grid">
         <span for.each="item in mainMenu()">
-            <menu-block icon.bind="item.icon" text.bind="item.short" click.trigger="(item.addr? onClick(item.addr) : onLogin())"></menu-block>
+            <menu-block icon.bind="item.icon" text.bind="item.short" click.trigger="onClick(item.addr)"></menu-block>
         </span>
     </div>
 </div>
 
 <script>
     function onClick(path){
-        window.location.hash = path;
-    }
-
-    function onLogin(){
-        if(storage.me.read()) {
-            dpd.users.logout(function (err) {
-                //debugger;
-                storage.me.erase();
-                window.location.hash = '#app';
-            });
+    	if(!path) {
+		    if(storage.me.read()) {
+			    dpd.users.logout(function (err) {
+				    //debugger;
+				    storage.me.erase();
+				    path = '#app';
+			    });
+		    }
+		    else {
+			    path = '#user.login-form';
+		    }
         }
-        else {
-            window.location.hash = '#user.login-form';
-        }
+	    window.location.hash = path;
     }
 </script>

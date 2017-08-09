@@ -31,13 +31,6 @@ yalla.framework.addComponent("/dist/prayers/home", (function() {
   function onPropertyChange(event) {};
 
 
-  function onExpand(event) {
-    var i = duas.findIndex(x => x.name == event.data.name);
-    if (i >= 0) {
-      duas[i].isExpanded = event.data.isExpand;
-    }
-  }
-
   function getDuas() {
     return new Promise(function(resolve) {
       resolve(duas);
@@ -67,6 +60,12 @@ yalla.framework.addComponent("/dist/prayers/home", (function() {
       arabic: 'اَللّٰهُمَّ هٰذَا حَرَمُكَ وَأَمْنُكَ فَحَرِّمْ لَحْمِيْ وَدَمِيْ وَشَعْرِيْ وَبَشَرِيْ عَلَى النَّارِ وَاٰمِنِّيْ مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ وَاجْعَلْنِيْ مِنْ أَوْلِيَآئِكَ وَأَهْلِ طَاعَتِكَ',
       latin: 'Allahumma haadza haramuka wa amnuka faharrimlahmi wadamii wabasyarii ‘alannar, wa aminnii min ‘adzabika yauma tab’atsu ‘ibaadaka waj’alnii min auliyaa ika wa ahli thoo’atik.',
       indonesia: 'Ya Allah kota ini adalah tanah Haram-Mu dan tempat yang aman, maka hindarkanlah daging, darah, rambut, bulu dan kulitku dari neraka. Amankanlah aku dari siksaMu pada hari Engkau membangkitkan aku ke dalam golongan auliaMu dan ahli ta’at pada Mu.',
+    },
+    {
+      name: 'Doa Saat Masuk Masjidil Haram',
+      arabic: 'اَللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ فَحَيِّنَا رَبَّنَا بِالسَّلَامِ وَأَدْخِلْنَا الْجَنَّةَ دَارَالسَّلَامَ تَبَارَكْتَ وَتَعَالَيْتَ يَا ذَاالْجَلَالِ وَاْلإِكْرَامِ. اَللّٰهُمَّ افْتَحْ لِيْ أَبْوَابَ رَحْمَتِكَ وَمَغْفِرَتِكَ وَأَدْخِلْنِيْ فِيْهَا. بِسْمِ اللهِ وَالْحَمْدُ ِللهِ وَالصَّلَاةُ وَالسَّلَامُ عَلٰى رَسُوْلِ اللهِ',
+      latin: 'Allahumma antassalaam, waminkassalaam fahayyinaa rabbanaa bissalaam wa adkhilnal jannata daarassalaam tabaarakta wata’aalaita yaa dzaljalaali wal ikraam. Allahummaftah lii abwaaba rahmatika wamaghfiratika wa adkhilnii fiihaa. Bismillahi walhamdulillahi wasshalaatu wassalaamu ‘alaa rasuulillaah.',
+      indonesia: 'Ya Allah Engkau sumber keselamatan, dan daripadaMu lah datangnya keselamatan itu semua. Maka sambutlah kami wahai tuhan dengan selamat sejahtera dan masukanlah kami ke dalam surga negeriMu yang bahagia, Maha Pemberi berkat dan Maha Tinggilah Engkau wahai Tuhan yang punya keagungan dan kehormatan. Ya Allah bukakanlah untukku pintu rahmat dan ampunan, masukanlah aku ke dalam ampunanMu. Dengan nama Allah dan segala puji bagi Allah salawat dan salam untuk Rasulullah.',
     },
     {
       name: 'Doa Melihat Ka’bah',
@@ -129,6 +128,8 @@ yalla.framework.addComponent("/dist/prayers/home", (function() {
     var pname = _context["pname"];
     _context["home"] = $inject("/component/home-button");
     var home = _context["home"];
+    _context["collapsible"] = $inject("/component/collapsible-entry");
+    var collapsible = _context["collapsible"];
     _elementOpenStart("div", "");
     _attr("element", "dist.prayers.home");
     _elementOpenEnd("div");
@@ -172,88 +173,40 @@ yalla.framework.addComponent("/dist/prayers/home", (function() {
             _array.forEach(function(dua) {
               _elementOpenStart("span", "");
               _elementOpenEnd("span");
-              _elementOpenStart("div", "");
-              _attr("class", "row");
-              _elementOpenEnd("div");
               var _params = {
                 "name": dua.name,
-                "onexpand": function(event) {
-                  var self = {
-                    target: event.target
-                  };
-                  self.properties = _props;
-                  if ('elements' in self.target) {
-                    self.elements = self.target.elements;
-                  }
-                  self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-                  self.component = _component;
-                  self.component._state = self.component._state || {};
-                  self.state = self.component._state;
-                  self.emitEvent = function(eventName, data) {
-                    var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                    if ('on' + eventName in _props) {
-                      _props['on' + eventName](event);
-                    }
-                  };
-                  onExpand.bind(self)(event);
-                }
+                "isLastEntry": dua.fin
               };
-              _context["pname"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-              _elementClose("div");
-              if (dua.isExpanded) {
-                _elementOpenStart("div", "");
-                _elementOpenEnd("div");
-                _elementOpenStart("div", "");
-                _attr("class", "row");
-                _elementOpenEnd("div");
-                _elementOpenStart("div", "");
-                _attr("class", "col-xs-12");
-                _elementOpenEnd("div");
-                _elementOpenStart("div", "");
-                _attr("class", "pull-right");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "label",
-                  "prompt": dua.arabic,
-                  "class": "custom-arabic-text"
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-                _elementClose("div");
-                _elementOpenStart("div", "");
-                _attr("class", "col-xs-12");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "label",
-                  "prompt": dua.latin,
-                  "class": "custom-normal-text custom-italic-text"
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-                _elementOpenStart("div", "");
-                _attr("class", "col-xs-12");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "label",
-                  "prompt": " ",
-                  "class": "custom-normal-text"
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-                _elementOpenStart("div", "");
-                _attr("class", "col-xs-12");
-                _elementOpenEnd("div");
-                var _params = {
-                  "type": "label",
-                  "prompt": dua.indonesia,
-                  "class": "custom-normal-text"
-                };
-                _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-                _elementClose("div");
-                _elementClose("div");
-                if (!dua.fin) {
+              _context["collapsible"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+                if (slotName === "detail") {
                   _elementOpenStart("div", "");
-                  _attr("class", "custom-bottom-border");
+                  _elementOpenEnd("div");
+                  _elementOpenStart("div", "");
+                  _attr("class", "col-xs-12");
+                  _elementOpenEnd("div");
+                  _elementOpenStart("div", "");
+                  _attr("class", "pull-right");
+                  _elementOpenEnd("div");
+                  var _params = {
+                    "type": "label",
+                    "prompt": dua.arabic,
+                    "class": "custom-arabic-text"
+                  };
+                  _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                  _elementClose("div");
+                  _elementClose("div");
+                  _elementOpenStart("div", "");
+                  _attr("class", "col-xs-12");
+                  _elementOpenEnd("div");
+                  var _params = {
+                    "type": "label",
+                    "prompt": dua.latin,
+                    "class": "custom-normal-text custom-italic-text"
+                  };
+                  _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                  _elementClose("div");
+                  _elementOpenStart("div", "");
+                  _attr("class", "col-xs-12");
                   _elementOpenEnd("div");
                   var _params = {
                     "type": "label",
@@ -262,9 +215,19 @@ yalla.framework.addComponent("/dist/prayers/home", (function() {
                   };
                   _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
                   _elementClose("div");
+                  _elementOpenStart("div", "");
+                  _attr("class", "col-xs-12");
+                  _elementOpenEnd("div");
+                  var _params = {
+                    "type": "label",
+                    "prompt": dua.indonesia,
+                    "class": "custom-normal-text"
+                  };
+                  _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+                  _elementClose("div");
+                  _elementClose("div");
                 }
-                _elementClose("div");
-              }
+              });
               _elementClose("span");
             });
             _elementClose("div");

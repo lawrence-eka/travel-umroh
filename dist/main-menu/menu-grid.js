@@ -31,19 +31,18 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
   function onPropertyChange(event) {};
 
   function onClick(path) {
-    window.location.hash = path;
-  }
-
-  function onLogin() {
-    if (storage.me.read()) {
-      dpd.users.logout(function(err) {
-        //debugger;
-        storage.me.erase();
-        window.location.hash = '#app';
-      });
-    } else {
-      window.location.hash = '#user.login-form';
+    if (!path) {
+      if (storage.me.read()) {
+        dpd.users.logout(function(err) {
+          //debugger;
+          storage.me.erase();
+          path = '#app';
+        });
+      } else {
+        path = '#user.login-form';
+      }
     }
+    window.location.hash = path;
   }
 
   function $render(_props, _slotView) {
@@ -51,6 +50,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     var menuBlock = _context["menu-block"];
     _elementOpenStart("div", "");
     _attr("element", "dist.main-menu.menu-grid");
+    _attr("class", "container");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -67,7 +67,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
-    _attr("class", "row menu-grid");
+    _attr("class", "row row-centered custom-menu-grid");
     _elementOpenEnd("div");
     var _array = mainMenu() || [];
     _array.forEach(function(item) {
@@ -94,7 +94,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
               _props['on' + eventName](event);
             }
           };
-          (item.addr ? onClick(item.addr) : onLogin());
+          onClick.bind(self)(item.addr);
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

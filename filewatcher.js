@@ -210,11 +210,12 @@ function fileAction(path, event) {
 			if(data) {
 				if (u && path.indexOf('.js') >= 0 && path.indexOf('.min.js') < 0) {
 					action += 'u';
+					//console.log('Uglifying', path);
 					data = uglifyJS.minify(data.toString('utf8'), uglifyOptions).code;
 				}
 				//if (z && path.indexOf('gunzip') < 0 && path.indexOf('storages.js') < 0 && path.indexOf('.jpg') < 0 && path.indexOf('.png') < 0  && path.indexOf('.woff') < 0 && path.indexOf('.ttf') < 0) {
 				//console.log(notZipped.filter(x=>path.indexOf(x) >= 0));
-				if (z && !notZipable.filter(x=>path.indexOf(x) >= 0).length && zipable.filter(x=>path.indexOf(x) >=0).length) {
+				if (z && !notZipable.filter(function(x) {return path.indexOf(x) >= 0}).length && zipable.filter(function(x){return path.indexOf(x) >=0}).length) {
 					action += 'z';
 					data = zlib.gzipSync(data);
 				}

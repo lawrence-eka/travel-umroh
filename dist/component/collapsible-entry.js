@@ -1,9 +1,9 @@
-yalla.framework.addComponent("/dist/main-menu/menu-block", (function() {
+yalla.framework.addComponent("/dist/component/collapsible-entry", (function() {
   var $patchChanges = yalla.framework.renderToScreen;
-  var $inject = yalla.framework.createInjector("/dist/main-menu/menu-block");
+  var $inject = yalla.framework.createInjector("/dist/component/collapsible-entry");
   var $export = {};
-  var $path = "/dist/main-menu/menu-block";
-  var _elementName = "dist.main-menu.menu-block";
+  var $path = "/dist/component/collapsible-entry";
+  var _elementName = "dist.component.collapsible-entry";
   var _context = {};
   var _parentComponent = yalla.framework.getParentComponent;
   var _merge = yalla.utils.merge;
@@ -30,18 +30,31 @@ yalla.framework.addComponent("/dist/main-menu/menu-block", (function() {
 
   function onPropertyChange(event) {};
 
-  function whatIcon(icon) {
-    return "fa fa-" + icon + " custom-menu-icon";
+  function initState(props) {
+    return {
+      class: "fa fa-plus-square-o",
+      name: props.name,
+      isLastEntry: props.isLastEntry,
+      isExpanded: false,
+    }
   }
 
-  function onClick() {
-    this.emitEvent('click');
+  function onExpand() {
+    if (this.state.class == "fa fa-minus-square-o") this.state.class = "fa fa-plus-square-o";
+    else this.state.class = "fa fa-minus-square-o";
+    this.state.isExpanded = (this.state.class == "fa fa-minus-square-o");
+    this.emitEvent('expand', {
+      isExpand: this.state.isExpanded,
+      name: this.state.name
+    });
+    $patchChanges();
   }
 
   function $render(_props, _slotView) {
+    _context["entry"] = $inject("/component/entry-naked");
+    var entry = _context["entry"];
     _elementOpenStart("div", "");
-    _attr("element", "dist.main-menu.menu-block");
-    _attr("class", "col-xs-6 col-sm-4 col-md-3 col-lg-3 col-centered");
+    _attr("element", "dist.component.collapsible-entry");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -58,7 +71,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-block", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
-    _attr("class", "custom-menu-block");
+    _attr("class", "row");
     _attr("onclick", function(event) {
       var self = {
         target: event.target
@@ -77,34 +90,50 @@ yalla.framework.addComponent("/dist/main-menu/menu-block", (function() {
           _props['on' + eventName](event);
         }
       };
-      onClick.bind(self)();
+      onExpand.bind(self)();
     });
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "row");
-    _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "custom-menu-center");
+    _attr("class", "col-xs-1");
     _elementOpenEnd("div");
     _elementOpenStart("i", "");
-    _attr("class", whatIcon.bind(self)(_props.icon));
+    _attr("class", _state.class);
     _elementOpenEnd("i");
     _elementClose("i");
     _elementClose("div");
-    _elementClose("div");
     _elementOpenStart("div", "");
-    _attr("class", "row");
+    _attr("class", "col-xs-10 custom-prayer");
     _elementOpenEnd("div");
-    _elementOpenStart("div", "");
-    _attr("class", "custom-menu-center");
-    _elementOpenEnd("div");
-    _elementOpenStart("strong", "");
-    _elementOpenEnd("strong");
-    _text("" + (_props.text) + "");
-    _elementClose("strong");
+    var _params = {
+      "type": "label",
+      "prompt": _state.name,
+      "class": "custom-bold-text"
+    };
+    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
     _elementClose("div");
     _elementClose("div");
-    _elementClose("div");
+    if (_state.isExpanded) {
+      _elementOpenStart("span", "");
+      _elementOpenEnd("span");
+      _elementOpenStart("div", "");
+      _attr("class", "row");
+      _elementOpenEnd("div");
+      _slotView("detail", {});
+      _elementClose("div");
+      if (!_state.isLastEntry) {
+        _elementOpenStart("div", "");
+        _attr("class", "custom-bottom-border");
+        _elementOpenEnd("div");
+        var _params = {
+          "type": "label",
+          "prompt": " ",
+          "class": "custom-normal-text"
+        };
+        _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _elementClose("div");
+      }
+      _elementClose("span");
+    }
     _elementClose("div");
   }
   if (typeof $render === "function") {
