@@ -155,7 +155,7 @@
 }
 
 .custom-std-anim {
-    animation: showPanel 0.75s ease-in-out both;
+    animation: showPanel 0.5s ease-in-out both;
 }
 
 .custom-container-layout{
