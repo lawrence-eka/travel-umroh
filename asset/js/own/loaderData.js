@@ -12,7 +12,21 @@ var specialAddress = [
 	'#common.privacyPolicy',
 ];
 
-function mainMenu (){
+function mainMenu (path){
+	if(path != undefined) {
+		if(path == '') {
+			if(storage.me.read()) {
+				dpd.users.logout(function (err) {
+					//debugger;
+					storage.me.erase();
+					window.location.hash = '#app';
+				});
+			}
+			else window.location.hash = '#user.login-form';
+		} else window.location.hash = path;
+		return;
+	}
+
 	var me = storage.me.read();
 	var menu = [
 			{code:'schedule', icon:'calendar',short:'Schedule', long:'Find Schedule', addr:'#app/search-package.home'},
@@ -26,8 +40,8 @@ function mainMenu (){
 			{code:'prayTimes', icon:'clock-o',short:'Pray Times', addr:'#app/pray-times.home'},
 			{code:'steps', icon:'map-o',short:'Ritual', addr:'#app/umroh-procedure.home'},
 			{code:'prayers', icon:'signing',short:'Prayers', addr:'#app/prayers.home'},
-			{code:'profile', icon:'address-card-o',short:'Profile', long:(me? me.firstName + ' ' + me.lastName:''), addr:'#app/user.myProfile'},
-			{code:'login', icon:'power-off', short: (me? 'Log Out' : 'Log In')},
+			{code:'profile', icon:'address-card-o',short:'Profile', long:(me? (me.firstName + ' ' + me.lastName).toTitleCase():''), addr:'#app/user.myProfile'},
+			{code:'login', icon:'power-off', short: (me? 'Log Out' : 'Log In'), addr:''},
 		];
 /**/
 	function actionable(){
@@ -54,7 +68,7 @@ var assets = [
 	{seq: 4, file: "asset/js/bootstrap.min.js"},
 	{seq: 4, file: "asset/js/own/geoLocation.js"},
 	{seq: 4, file: "asset/js/vendor/PrayTimes.js"},
-	{seq: 2, file: "dpd.js"},/**/
+	{seq: 2, file: "dpd.js"},
 	{seq: 2, file: "asset/js/own/prototypes.js"},
 	{seq: 2, file: "asset/js/own/datePair.js"},
 	{seq: 2, file: "asset/js/own/alert.js"},

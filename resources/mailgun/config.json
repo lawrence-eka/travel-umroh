@@ -1,12 +1,14 @@
 {
-	"type": "Email",
+	"type": "Mailgun",
 	"host": "smtp.mailgun.org",
 	"port": "465",
 	"ssl": true,
 	"username": "postmaster@markimroh.tk",
 	"password": "5bce3653c1e4c7bfb0e4daffe67b084d",
-	"defaultFromAddress": "do-not-reply@markimroh.tk",
+	"defaultFromAddress": "do-not-reply@umrohyuk.net",
 	"internalOnly": true,
 	"productionOnly": true,
-	"base64": false
+	"base64": false,
+	"apikey": "key-e3d531f268cd2e0d09cb9ee9ed4341b4",
+	"apiurl": "https://api.mailgun.net/v3/umrohyuk.net"
 }

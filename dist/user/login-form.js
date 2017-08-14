@@ -38,6 +38,7 @@ yalla.framework.addComponent("/dist/user/login-form", (function() {
   }
 
   function login() {
+    debugger;
     var form = this.target.form;
     var userName = form.elements.username.value.toLowerCase();
     var password = form.elements.password.value;

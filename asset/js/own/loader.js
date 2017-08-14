@@ -301,7 +301,12 @@ function authenticate(path){
 	});
 }
 
-var scriptCache = new ScriptCache();
-//var loader = new Loader();
-//loader.unpackAll('./version.ver');
-(new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver', '/asset/js/own/loaderData.js');
+try {
+	var scriptCache = new ScriptCache();
+	//var loader = new Loader();
+	//loader.unpackAll('./version.ver');
+	(new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver', '/asset/js/own/loaderData.js');
+}
+catch(e) {
+	console.log(e);
+}

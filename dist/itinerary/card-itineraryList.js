@@ -40,11 +40,6 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
     this.emitEvent('book');
   }
 
-  function whatClass(item) {
-    item = item ? item : 'hotel';
-    return "fa fa-" + item + " icon-center";
-  }
-
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
@@ -54,10 +49,6 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
     var home = _context["home"];
     _context["card"] = $inject("/itinerary/card-itinerary-bulleted");
     var card = _context["card"];
-    _elementOpenStart("style", "");
-    _elementOpenEnd("style");
-    _text("\n[element='dist.itinerary.card-itineraryList'] .custom-indent {padding-left:10px !important;}");
-    _elementClose("style");
     _elementOpenStart("div", "");
     _attr("element", "dist.itinerary.card-itineraryList");
     _elementOpenEnd("div");
@@ -104,7 +95,6 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
           var _params = {
             "type": "button",
             "value": "Book This!",
-            "naked": "naked",
             "onclick": function(event) {
               var self = {
                 target: event.target
@@ -128,10 +118,8 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
-        if (!_state.me) {
-          var _params = {};
-          _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-        }
+        var _params = {};
+        _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("div");
       }

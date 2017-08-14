@@ -1,0 +1,57 @@
+ <div class="navbar-fixed-top">
+    <span ref.name="burger">
+        <div class="custom-navbar navbar-header">
+            <i class.bind='whatButton()' click.trigger="onClick()" ></i>
+        </div>
+        <div class.bind="drawerCover()" click.trigger="hideMenu()">
+            <div id="navbar" class.bind="drawerClass()">
+                <ul class="nav navbar-nav menu">
+                    <li for.each="menu in mainMenu()">
+                        <a click.trigger="mainMenu(menu.addr)" class="custom-mouse-pointer">{{(menu.long ? menu.long : menu.short)}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </span>
+</div>
+<script>
+	var isDrawedOpened;
+
+	function whatButton(){
+		console.log('lher');
+		var result = [];
+		result.push('fa');
+		if(isDrawedOpened){
+			result.push('fa-chevron-up');
+		}else{
+			result.push('fa-bars');
+		}
+		result.push('burger-button');
+		return result.join(' ');
+	}
+
+	function drawerClass(){
+		console.log('lhor');
+		if(isDrawedOpened)return "drawer expand";
+        else return "drawer";
+    }
+
+    function drawerCover() {
+	    if(isDrawedOpened)return "screen-cover";
+	    else return 'screen-uncover';
+    }
+	function onClick() {
+		isDrawedOpened = !isDrawedOpened;
+		console.log('lhars');
+		this.emitEvent('click', isDrawedOpened);
+		$patchChanges("burger");
+	}
+
+    function hideMenu(){
+    	console.log('lhir');
+	    isDrawedOpened = false;
+	    $patchChanges("burger");
+    }
+</script>
+
+

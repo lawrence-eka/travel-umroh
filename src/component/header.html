@@ -9,13 +9,8 @@
             </button>
             <a class="navbar-brand" href="#"></a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse" data.load="getMe()" >
+        <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-<!--
-                <li for.each="menu in generateMenu(data)">
-                    <a href.bind="menu.ref" if.bind="menu.ref!='#'" click.trigger="hideMenu()">{{menu.label}}</a>
-                    <a click.trigger="logout()" if.bind="menu.ref=='#'" class="custom-mouse-pointer">{{menu.label}}</a>
-                    -->
                 <li for.each="menu in mainMenu()">
                     <a href.bind="menu.addr" if.bind="menu.addr" click.trigger="hideMenu()">{{(menu.long ? menu.long : menu.short)}}</a>
                     <a click.trigger="logout()" if.bind="!menu.addr" class="custom-mouse-pointer">{{(menu.long ? menu.long : menu.short)}}</a>
@@ -24,37 +19,9 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-
+<style>
+</style>
 <script>
-
-//    function generateMenu(me){
-//    	//debugger;
-//        if(!me) return [];
-//        var menusBase = [
-//            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
-//            {label:'Find Package',ref:'#app/search-package.home'},
-//            {label:'My Booking',ref:'#app/booking.home'}
-//        ];
-//
-//        var menuEnd = [
-//            {label:'Logout',ref:'#', clickTrigger: logout}];
-//
-//        if(me.isTravelAgent){
-//	        menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
-//	        menusBase.push({label:'Payment Confirmation',ref:'#app/booking.paymentConfirmation'});
-//        }
-//        if(me.isAdmin){
-//	        menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
-//	        menusBase.push({label:'Manage Users',ref:'#app/user.home'});
-//        }
-//        return menusBase.concat(menuEnd);
-//    }
-
-
-    function getMe(){
-        return storage.me.read();
-    }
-
     function logout(){
     	//debugger;
         dpd.users.logout(function(err) {

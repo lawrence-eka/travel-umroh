@@ -1,14 +1,100 @@
-body {
-    background: url('/asset/img/image7.jpg');
+.body {
+    background: url('/asset/img/image6.jpg');
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: 90% auto;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: top center;
+    background-position: top 60px center ;
     background-color: #ffffff;
     font-family: 'Open Sans',Arial,Helvetica,Sans-Serif;
+}
+
+.body-no-background{
+    background: none;
+}
+
+@media (max-width: 2000px) {
+    .custom-fixed-top {
+        position: fixed;
+        top: 0px;
+        left:0px;
+    }
+    .burger-button{
+        font-size: 2rem;
+        color: black;
+        padding: 10px !important;
+    }
+    .expand{
+        display:block !important;
+        max-height:80vh !important;
+        max-width: 50vw;
+        border-right: 1px solid !important;
+        border-bottom: 1px solid !important;
+        border-color: #e7e7e7 !important;
+        border-bottom-right-radius: 0.5em !important;
+    }
+    .drawer {
+        max-height: 0vh;
+        max-width: 50vw;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        background-color: #f8f8f8 !important;
+        margin: 0 !important;
+        transition: 0.5s all ease;
+    }
+
+    .screen-cover{
+        height:100vh;
+    }
+
+    .screen-uncover{
+        height:0;
+    }
+
+    .navbar-nav {
+        float: none!important;
+        margin:0 !important;
+        overflow-y: auto;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display:block;
+        font-size: 0.8em;
+    }
+
+    .nav>li>a {
+        padding-left:5px !important;
+        padding-top:5px !important;
+        padding-bottom:5px !important;
+    }
+    .menu {
+        list-style-position: inside;
+        overflow: hidden !important;
+    }
+    .custom-navbar {
+        min-height: 40px !important;
+        border-bottom: 1px solid transparent !important;
+        border-color: #e7e7e7 !important;
+        background-color: #f8f8f8 !important;
+    }
+
+    .navbar-header {
+        float: none;
+    }
+
+}
+
+.custom-main-menu-image {
+    height:100%;
+    width:100%;
+    padding-left:0 !important;
+    padding-right:0 !important;
 }
 
 .centered-form{
@@ -63,6 +149,15 @@ body {
     padding-bottom:5px !important;
 }
 
+@keyframes showPanel {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.custom-std-anim {
+    animation: showPanel 0.75s ease-in-out both;
+}
+
 .custom-container-layout{
     margin: 0px 5px 0px 5px !important;
     padding: 0px 5px 0px 5px !important;
@@ -92,6 +187,8 @@ body {
     float:none;
     text-align:left;
     margin-right:-4px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .custom-entry-prompt {
@@ -216,12 +313,8 @@ custom-pray-times-date-text {
     font-size:3rem;
 }
 .custom-menu-block {
-    margin-top:20px !important;
-    margin-bottom:20px !important;
-}
-
-.custom-menu-grid {
-    margin-top:100px !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
 }
 
 .frosted-glass {
@@ -241,3 +334,4 @@ custom-pray-times-date-text {
     height: 100%;
     overflow: hidden;
 }
+

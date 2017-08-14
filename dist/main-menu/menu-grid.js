@@ -30,19 +30,9 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
 
   function onPropertyChange(event) {};
 
-  function onClick(path) {
-    if (!path) {
-      if (storage.me.read()) {
-        dpd.users.logout(function(err) {
-          //debugger;
-          storage.me.erase();
-          path = '#app';
-        });
-      } else {
-        path = '#user.login-form';
-      }
-    }
-    window.location.hash = path;
+  function initState(props) {
+    document.body.className = "body-no-background";
+    return {};
   }
 
   function $render(_props, _slotView) {
@@ -50,7 +40,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     var menuBlock = _context["menu-block"];
     _elementOpenStart("div", "");
     _attr("element", "dist.main-menu.menu-grid");
-    _attr("class", "container");
+    _attr("class", "container custom-std-anim");
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -67,7 +57,20 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
-    _attr("class", "row row-centered custom-menu-grid");
+    _attr("class", "row row-centered");
+    _elementOpenEnd("div");
+    _elementOpenStart("div", "");
+    _attr("class", "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered");
+    _elementOpenEnd("div");
+    _elementOpenStart("img", "");
+    _attr("src", "/asset/img/image6.jpg");
+    _attr("class", "custom-main-menu-image");
+    _elementOpenEnd("img");
+    _elementClose("img");
+    _elementClose("div");
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("class", "row row-centered");
     _elementOpenEnd("div");
     var _array = mainMenu() || [];
     _array.forEach(function(item) {
@@ -94,7 +97,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
               _props['on' + eventName](event);
             }
           };
-          onClick.bind(self)(item.addr);
+          mainMenu.bind(self)(item.addr);
         }
       };
       _context["menu-block"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

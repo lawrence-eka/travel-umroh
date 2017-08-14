@@ -1,18 +1,9 @@
-<inject from="/user/login-form" name="login-panel"></inject>
-<inject from="/user/reset-password" name="reset-password"></inject>
-<inject from="/component/header" name="app-header"></inject>
+<inject from="/component/navbar" name="navbar"></inject>
 
 <div class="container">
     <div data.load="checkCurrentUser()">
-       <!-- <div if.bind="data"> -->
-            <app-header></app-header>
-            <slot-view></slot-view>
-        <!-- </div> -->
-        <!--
-        <div if.bind="!data">
-            <login-panel></login-panel>
-        </div>
-        -->
+        <navbar></navbar>
+        <slot-view></slot-view>
     </div>
 </div>
 

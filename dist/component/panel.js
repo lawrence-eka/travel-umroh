@@ -65,7 +65,7 @@ yalla.framework.addComponent("/dist/component/panel", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
-    _attr("class", "container custom-container-layout");
+    _attr("class", "container custom-container-layout custom-std-anim");
     _attr("onclick", function(event) {
       var self = {
         target: event.target

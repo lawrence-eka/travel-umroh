@@ -1,4 +1,5 @@
 console.log("Login event, will send mail.");
+/*
 dpd.mailgun.post({
   to      : 'lawrence.eka@gmail.com',
   subject : 'Login Notification',
@@ -7,3 +8,4 @@ dpd.mailgun.post({
     console.log("Mail Sending Result: ", results);
     console.log("Mail Sending Error: ", err);
 }); 
+*/

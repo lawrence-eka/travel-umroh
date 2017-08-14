@@ -1,27 +1,21 @@
 <inject from="/main-menu/menu-block" name="menu-block"></inject>
 
-<div class="container">
-    <div class="row row-centered custom-menu-grid">
+<div class="container custom-std-anim">
+    <div class="row row-centered">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered">
+            <img src="/asset/img/image6.jpg" class="custom-main-menu-image">
+        </div>
+    </div>
+    <div class="row row-centered">
         <span for.each="item in mainMenu()">
-            <menu-block icon.bind="item.icon" text.bind="item.short" click.trigger="onClick(item.addr)"></menu-block>
+            <menu-block icon.bind="item.icon" text.bind="item.short" click.trigger="mainMenu(item.addr)"></menu-block>
         </span>
     </div>
 </div>
 
 <script>
-    function onClick(path){
-    	if(!path) {
-		    if(storage.me.read()) {
-			    dpd.users.logout(function (err) {
-				    //debugger;
-				    storage.me.erase();
-				    path = '#app';
-			    });
-		    }
-		    else {
-			    path = '#user.login-form';
-		    }
-        }
-	    window.location.hash = path;
+    function initState(props){
+    	document.body.className="body-no-background";
+    	return {};
     }
 </script>

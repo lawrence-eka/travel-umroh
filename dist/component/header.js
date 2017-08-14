@@ -30,35 +30,6 @@ yalla.framework.addComponent("/dist/component/header", (function() {
 
   function onPropertyChange(event) {};
 
-
-  //    function generateMenu(me){
-  //    	//debugger;
-  //        if(!me) return [];
-  //        var menusBase = [
-  //            {label:(me.firstName + " " + me.lastName).toTitleCase(),ref:'#app/user.myProfile'},
-  //            {label:'Find Package',ref:'#app/search-package.home'},
-  //            {label:'My Booking',ref:'#app/booking.home'}
-  //        ];
-  //
-  //        var menuEnd = [
-  //            {label:'Logout',ref:'#', clickTrigger: logout}];
-  //
-  //        if(me.isTravelAgent){
-  //	        menusBase.push({label:'My Travel Agent',ref:'#app/travel-agent.home'});
-  //	        menusBase.push({label:'Payment Confirmation',ref:'#app/booking.paymentConfirmation'});
-  //        }
-  //        if(me.isAdmin){
-  //	        menusBase.push({label:'Approvals',ref:'#app/user.myApprovals'});
-  //	        menusBase.push({label:'Manage Users',ref:'#app/user.home'});
-  //        }
-  //        return menusBase.concat(menuEnd);
-  //    }
-
-
-  function getMe() {
-    return storage.me.read();
-  }
-
   function logout() {
     //debugger;
     dpd.users.logout(function(err) {
@@ -134,106 +105,76 @@ yalla.framework.addComponent("/dist/component/header", (function() {
     _attr("id", "navbar");
     _attr("class", "collapse navbar-collapse");
     _elementOpenEnd("div");
-    (function(domNode) {
-      var node = domNode.element;
-      var self = {
-        target: node
-      };
-      self.properties = _props;
-      if ('elements' in self.target) {
-        self.elements = self.target.elements;
-      }
-      self.currentTarget = self.target;
-      self.component = _component;
-      self.component._state = self.component._state || {};
-      self.state = self.component._state;
-
-      function asyncFunc_1(data) {
-        _elementOpenStart("ul", "");
-        _attr("class", "nav navbar-nav");
-        _elementOpenEnd("ul");
-        var _array = mainMenu() || [];
-        _array.forEach(function(menu) {
-          _elementOpenStart("li", "");
-          _elementOpenEnd("li");
-          if (menu.addr) {
-            _elementOpenStart("a", "");
-            _attr("href", menu.addr);
-            _attr("onclick", function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = _component;
-              self.component._state = self.component._state || {};
-              self.state = self.component._state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
-                }
-              };
-              hideMenu.bind(self)();
-            });
-            _elementOpenEnd("a");
-            _text("" + ((menu.long ? menu.long : menu.short)) + "");
-            _elementClose("a");
+    _elementOpenStart("ul", "");
+    _attr("class", "nav navbar-nav");
+    _elementOpenEnd("ul");
+    var _array = mainMenu() || [];
+    _array.forEach(function(menu) {
+      _elementOpenStart("li", "");
+      _elementOpenEnd("li");
+      if (menu.addr) {
+        _elementOpenStart("a", "");
+        _attr("href", menu.addr);
+        _attr("onclick", function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
           }
-          if (!menu.addr) {
-            _elementOpenStart("a", "");
-            _attr("onclick", function(event) {
-              var self = {
-                target: event.target
-              };
-              self.properties = _props;
-              if ('elements' in self.target) {
-                self.elements = self.target.elements;
-              }
-              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-              self.component = _component;
-              self.component._state = self.component._state || {};
-              self.state = self.component._state;
-              self.emitEvent = function(eventName, data) {
-                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-                if ('on' + eventName in _props) {
-                  _props['on' + eventName](event);
-                }
-              };
-              logout.bind(self)();
-            });
-            _attr("class", "custom-mouse-pointer");
-            _elementOpenEnd("a");
-            _text("" + ((menu.long ? menu.long : menu.short)) + "");
-            _elementClose("a");
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          hideMenu.bind(self)();
+        });
+        _elementOpenEnd("a");
+        _text("" + ((menu.long ? menu.long : menu.short)) + "");
+        _elementClose("a");
+      }
+      if (!menu.addr) {
+        _elementOpenStart("a", "");
+        _attr("onclick", function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
           }
-          _elementClose("li");
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          logout.bind(self)();
         });
-        _elementClose("ul");
+        _attr("class", "custom-mouse-pointer");
+        _elementOpenEnd("a");
+        _text("" + ((menu.long ? menu.long : menu.short)) + "");
+        _elementClose("a");
       }
-      var promise = getMe.bind(self)();
-      if (promise && typeof promise == "object" && "then" in promise) {
-        _skip();
-        promise.then(function(_result) {
-          $patchChanges(node, function() {
-            asyncFunc_1.call(self, _result)
-          });
-        }).catch(function(err) {
-          console.log(err);
-        });
-      } else {
-        asyncFunc_1.call(self, promise)
-      }
-    })({
-      element: IncrementalDOM.currentElement(),
-      pointer: IncrementalDOM.currentPointer()
+      _elementClose("li");
     });
+    _elementClose("ul");
     _elementClose("div");
     _elementClose("div");
     _elementClose("nav");
+    _elementOpenStart("style", "");
+    _elementOpenEnd("style");
+    _elementClose("style");
   }
   if (typeof $render === "function") {
     $export.render = $render;

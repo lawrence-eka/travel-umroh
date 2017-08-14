@@ -2,13 +2,6 @@
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/component/home-button" name="home"></inject>
 <inject from="/itinerary/card-itinerary-bulleted" name="card"></inject>
-<style>
-    .custom-indent {
-        padding-left:10px !important;
-    }
-
-</style>
-
 <div>
     <panel notitle>
         <div slot.name="body">
@@ -18,8 +11,8 @@
         </div>
         <div slot.name="footer">
             <div class="row">
-                <entry if.bind='@me' type="button" value="Book This!" naked click.trigger="onBook()"></entry>
-                <home if.bind='!@me'></home>
+                <entry if.bind='@me' type="button" value="Book This!" click.trigger="onBook()"></entry>
+                <home></home>
             </div>
         </div>
 
@@ -32,10 +25,5 @@
     }
     function onBook() {
         this.emitEvent('book');
-    }
-
-    function whatClass(item) {
-        item = item ? item : 'hotel';
-        return "fa fa-" + item + " icon-center";
     }
 </script>

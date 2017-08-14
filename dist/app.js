@@ -50,12 +50,8 @@ yalla.framework.addComponent("/dist/app", (function() {
 
 
   function $render(_props, _slotView) {
-    _context["login-panel"] = $inject("/user/login-form");
-    var loginPanel = _context["login-panel"];
-    _context["reset-password"] = $inject("/user/reset-password");
-    var resetPassword = _context["reset-password"];
-    _context["app-header"] = $inject("/component/header");
-    var appHeader = _context["app-header"];
+    _context["navbar"] = $inject("/component/navbar");
+    var navbar = _context["navbar"];
     _elementOpenStart("div", "");
     _attr("element", "dist.app");
     _attr("class", "container");
@@ -92,7 +88,7 @@ yalla.framework.addComponent("/dist/app", (function() {
 
       function asyncFunc_1(data) {
         var _params = {};
-        _context["app-header"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        _context["navbar"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _slotView("default", {});
       }
       var promise = checkCurrentUser.bind(self)();
