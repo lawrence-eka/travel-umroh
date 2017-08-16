@@ -38,43 +38,44 @@ yalla.utils.fetch = function (url, postData) {
 	}
 	
 	return new Promise(function (resolve, reject) {
-		
-		// eka patch starts
-		var script = scriptCache.getScript(url);
-		//console.log("URL: ", url, "Cache: ", script);
-		if (script && script.responseText) {
-			//console.log("Udah Ada");
-			resolve(script);
-			return;
-		}
-		console.log("Belum Ada");
-		if(!scriptCache.addPromise(url, null, resolve, reject)) return; // if there is already an on going request for this script, return;
-		//eka patch ends
-		
-		var req = createXMLHTTPObject();
-		req.timeout = 2000;
-		if (!req) return;
-		var method = (postData) ? "POST" : "GET";
-		req.responseType='arraybuffer';
-		req.open(method, url, true);
-		if (postData) {
-			req.setRequestHeader('Content-type', 'application/json');
-		}
-		req.ontimeout = function (e) {
-			scriptCache.setScript(url);
-		};
-		req.onreadystatechange = function () {
-			if (req.readyState != 4) return;
-			if (req.status != 200 && req.status != 304) {
-				scriptCache.setScript(url, null);
-				return;
-			}
-			scriptCache.setScript(url, req);
-		};
-		if (req.readyState == 4) {
-			return;
-		}
-		req.send(JSON.stringify(postData));
+		scriptCache.getOrFetch(url, postData, false, false, resolve, reject);
+		// // eka patch starts
+		// var script = scriptCache.getScript(url);
+		// //console.log("URL: ", url, "Cache: ", script);
+		// if (script && script.responseText) {
+		// 	//console.log("Udah Ada");
+		// 	resolve(script);
+		// 	return;
+		// }
+		// console.log("Belum Ada");
+		// if(!scriptCache.addPromise(url, null, resolve, reject)) return; // if there is already an on going request for this script, return;
+		// //eka patch ends
+		//
+		// var req = createXMLHTTPObject();
+		// //req.timeout = 2000;
+		// if (!req) return;
+		// var method = (postData) ? "POST" : "GET";
+		// // eka: set responsetype = 'arraybuffer' if you want manual gzip uncompression.
+		// //req.responseType='arraybuffer';
+		// req.open(method, url, true);
+		// if (postData) {
+		// 	req.setRequestHeader('Content-type', 'application/json');
+		// }
+		// req.ontimeout = function (e) {
+		// 	scriptCache.setScript(url);
+		// };
+		// req.onreadystatechange = function () {
+		// 	if (req.readyState != 4) return;
+		// 	if (req.status != 200 && req.status != 304) {
+		// 		scriptCache.setScript(url, null);
+		// 		return;
+		// 	}
+		// 	scriptCache.setScript(url, req);
+		// };
+		// if (req.readyState == 4) {
+		// 	return;
+		// }
+		// req.send(JSON.stringify(postData));
 	});
 };
 

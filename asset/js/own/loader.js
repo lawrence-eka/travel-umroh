@@ -2,14 +2,24 @@
  * Created by Lawrence Eka on 04-Jul-2017.
  */
 function ScriptCache(cv){
+	var hasLocalStorage = true;
+	try {
+		localStorage.setItem('test', 'test');
+		localStorage.removeItem('test');
+		console.log('localStorage is available');
+	} catch(e){
+		console.log('localStorage is not available');
+		hasLocalStorage = false;
+	}
+
 	try{
-		this.scripts = JSON.parse(localStorage.getItem("scripts"));
+		if(hasLocalStorage) this.scripts = JSON.parse(localStorage.getItem("scripts"));
 		if(!this.scripts) this.scripts = {};
 	} catch(e) {
 		this.scripts = {};
 	}
 	try {
-		this.version = JSON.parse(localStorage.getItem("scriptsVersion"));
+		if(hasLocalStorage) this.version = JSON.parse(localStorage.getItem("scriptsVersion"));
 		if(!this.version) this.version ={};
 	} catch(e) {
 		this.version = {};
@@ -101,8 +111,11 @@ function ScriptCache(cv){
 		
 		this.version = cv;
 		this.promises = {};
-		localStorage.setItem("scriptsVersion", JSON.stringify(cv));
-		localStorage.setItem("scripts", JSON.stringify(this.scripts));
+		//if(hasLocalStorage) {
+		if(hasLocalStorage) {
+			localStorage.setItem("scriptsVersion", JSON.stringify(cv));
+			localStorage.setItem("scripts", JSON.stringify(this.scripts));
+		}
 		this.isReset = true;
 	};
 	
@@ -110,7 +123,9 @@ function ScriptCache(cv){
 		if(req){
 			//debugger;
 			attribute = (this.scripts && this.scripts[url] ? this.scripts[url].attribute : null);
-			this.scripts[url] = {responseText: this.decompress(req.response), attribute: attribute};
+			this.scripts[url] = {responseText: req.response, attribute: attribute};
+			//eka: enable this when you want to handle manual gzip uncompression
+			//this.scripts[url] = {responseText: this.decompress(req.response), attribute: attribute};
 			this.fulfillPromises(url, true, resolveCompleteData);
 		} else {
 			this.fulfillPromises(url, false, resolveCompleteData);
@@ -119,9 +134,72 @@ function ScriptCache(cv){
 		if(!req || isPassThru) {
 			delete this.scripts[url];
 		}
-		localStorage.setItem("scripts", JSON.stringify(this.scripts));
+		if(hasLocalStorage) localStorage.setItem("scripts", JSON.stringify(this.scripts));
 	};
-	
+
+	//debugger;
+	var XMLHttpFactories = [
+		function () {
+			return new XMLHttpRequest()
+		},
+		function () {
+			return new ActiveXObject("Msxml2.XMLHTTP")
+		},
+		function () {
+			return new ActiveXObject("Msxml3.XMLHTTP")
+		},
+		function () {
+			return new ActiveXObject("Microsoft.XMLHTTP")
+		}
+	];
+
+	function createXMLHTTPObject() {
+		var xmlhttp = false;
+		for (var i = 0; i < XMLHttpFactories.length; i++) {
+			try {
+				xmlhttp = XMLHttpFactories[i]();
+			}
+			catch (e) {
+				continue;
+			}
+			break;
+		}
+		return xmlhttp;
+	}
+
+	this.getOrFetch = function(url, attribute, getCompleteData, isPassThru, resolve, reject) {
+		// eka patch starts
+		//debugger;
+		var script = scriptCache.getScript(url, getCompleteData, isPassThru);
+		if (script && script.responseText) {
+			if(resolve) resolve(script);
+			return;
+		}
+		if (!scriptCache.addPromise(url, attribute, resolve, reject)) return; // if there is already an on going request for this script, return;
+		//eka patch ends
+
+		var req = createXMLHTTPObject();
+		//req.timeout = 2000;
+		if (!req) return;
+		// eka: set responsetype = 'arraybuffer' if you want manual gzip uncompression.
+		//req.responseType='arraybuffer';
+		req.open('GET', url, true);
+		req.ontimeout = function (e) {
+			scriptCache.setScript(url, null, getCompleteData, isPassThru);
+		};
+		req.onreadystatechange = function () {
+			if (req.readyState != 4) return;
+			if (req.status != 200 && req.status != 304) {
+				scriptCache.setScript(url, null, true);
+				return;
+			}
+			scriptCache.setScript(url, req, getCompleteData, isPassThru);
+		};
+		if (req.readyState == 4) {
+			return;
+		}
+		req.send();
+	}
 };
 
 function Loader(cv) {
@@ -134,16 +212,18 @@ function Loader(cv) {
 			if (this.assets[i].seq == seq && !this.assets[i].called) {
 				//console.log("loading asset seq:", seq, "=", this.assets[i].file)
 				this.assets[i].called = true;
-				this.fetch("./" + this.assets[i].file, null, this.assets[i].attribute).then(this.attachScriptToDocument.bind(this, seq));
+				this.fetch("./" + this.assets[i].file, this.assets[i].attribute).then(this.attachScriptToDocument.bind(this, seq));
 			}
 		}
 	};
 	
 	this.unpackAll = function(z, cv, as) {
 		var self = this;
-		this.fetch(z)
-			.then(this.attachScriptToDocument.bind(this, null))
-			.then(this.fetch.bind(this, cv, null, null, true))
+		this.fetch(cv, null, true)
+// eka: enable this when you want to handle gzip manually
+//		this.fetch(z)
+//			.then(this.attachScriptToDocument.bind(this, null))
+//			.then(this.fetch.bind(this, cv, null, null, true))
 			.then(function(result) {
 				scriptCache.setVersion(JSON.parse(result.responseText));
 			})
@@ -157,76 +237,15 @@ function Loader(cv) {
 			});
 	}
 	
-	this.fetch = function (url, postData, attribute, isPassThru) {
-		//debugger;
-		var XMLHttpFactories = [
-			function () {
-				return new XMLHttpRequest()
-			},
-			function () {
-				return new ActiveXObject("Msxml2.XMLHTTP")
-			},
-			function () {
-				return new ActiveXObject("Msxml3.XMLHTTP")
-			},
-			function () {
-				return new ActiveXObject("Microsoft.XMLHTTP")
-			}
-		];
-		
-		function createXMLHTTPObject() {
-			var xmlhttp = false;
-			for (var i = 0; i < XMLHttpFactories.length; i++) {
-				try {
-					xmlhttp = XMLHttpFactories[i]();
-				}
-				catch (e) {
-					continue;
-				}
-				break;
-			}
-			return xmlhttp;
-		}
-		
-		var self = this;
-		//debugger;
+	this.fetch = function (url, attribute, isPassThru) {
 		return new Promise(function (resolve, reject) {
-			// eka patch starts
-			//debugger;
-			var script = scriptCache.getScript(url, true, isPassThru);
-			if (script && script.responseText) {
-				resolve(script);
-				return;
-			}
-			if (!scriptCache.addPromise(url, attribute, resolve, reject)) return; // if there is already an on going request for this script, return;
-			//eka patch ends
-			
-			var req = createXMLHTTPObject();
-			req.timeout = 20000;
-			if (!req) return;
-			req.open('GET', url, true);
-			req.responseType='arraybuffer';
-			req.ontimeout = function (e) {
-				scriptCache.setScript(url, null, true, isPassThru);
-			};
-			req.onreadystatechange = function () {
-				if (req.readyState != 4) return;
-				if (req.status != 200 && req.status != 304) {
-					scriptCache.setScript(url, null, true);
-					return;
-				}
-				scriptCache.setScript(url, req, true, isPassThru);
-			};
-			if (req.readyState == 4) {
-				return;
-			}
-			//req.send(JSON.stringify(postData));
-			req.send();
+			scriptCache.getOrFetch(url, attribute, true, isPassThru, resolve, reject);
 		});
 	};
 	
 	this.attachScriptToDocument = function (seq, scriptData) {
 		//debugger;
+		console.log('attach ' + scriptData.url + '.');
 		var s = null;
 		var url = scriptData.url;
 		var attribute = scriptData.attribute;
@@ -258,55 +277,67 @@ function Loader(cv) {
 		
 		//start of moved to here
 		self.unloadedAssets--;
-		//debugger;
-		//console.log
 		if(url.indexOf("dist/yalla.js") >= 0){//} && scriptCache.isReset) {
 			var ego = self;
 			window.onload = function () {
 				//debugger;
 				ego.needLoading=true;
-				//console.log("temporary onload");
 			};
 			//scriptCache.isReset = false;
 		} else if(self.unloadedAssets==0) {
 			var ego = self;
 			//debugger;
 			window.onload = function () {
-				//console.log("Patched window.onload triggered");
 				ego.needLoading = false;
 				yalla.framework.start();
 			};
 			//debugger;
 			if(self.needLoading || scriptCache.isReset) {
-				//console.log("Need loading.")
 				yalla.framework.start();
 				scriptCache.isReset = false;
 			} else if(self.unloadedAssets==0) {
-				//console.log("No need to reload");
 			}
 		}
-		//console.log("asset seq:", seq, '=', url, "loaded.")
 		if(!isNaN(seq) && seq != null) self.loadAssets(seq + 1);
 		//end of moved to here
 	};
-	
+
+	this.run = function() {
+		try {
+			//scriptCache = new ScriptCache();
+			this.unpackAll('asset/js/zlib/gunzip.min.js', './version.ver', '/asset/js/own/loaderData.js');
+		}
+		catch (e) {
+			console.log(e);
+		}
+	}
+
 	//debugger;
 	//this.unloadedAssets = this.assets.length;
+	this.isPrerequisitesMet = function(){
+		var self = this;
+		if(typeof Promise == 'undefined' || Promise.toString().indexOf("[native code]") == -1){
+			console.log('Promise is not available, need polyfill.');
+			scriptCache.getOrFetch('asset/js/vendor/promise.min.js', null, true, false, function(scriptData){
+				self.attachScriptToDocument(null, scriptData);
+				self.run();
+			});
+			return;
+		} else {
+			self.run();
+		}
+	}
 };
 
 function authenticate(path){
 	return new Promise(function(resolve){
-		console.log('Path = ', path);
 		resolve(path && path != '#app' ? path : mainMenuPath);
 	});
 }
 
-try {
+try{
 	var scriptCache = new ScriptCache();
-	//var loader = new Loader();
-	//loader.unpackAll('./version.ver');
-	(new Loader()).unpackAll('asset/js/zlib/gunzip.min.js', './version.ver', '/asset/js/own/loaderData.js');
-}
-catch(e) {
-	console.log(e);
+	(new Loader()).isPrerequisitesMet();
+} catch(e){
+	console.log('Error: ' + e);
 }
