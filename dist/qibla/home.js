@@ -43,8 +43,7 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
 
   function initState(props) {
     var state = {
-      //			screenSize:'width:100%;height:' + screen.height * 0.6 + 'px',
-      screenSize: 'width:80vh;height:60vh',
+      screenSize: 'width:100%;height:' + screen.height * 0.6 + 'px',
       alert: new Alert(null, $patchChanges, "alert"),
       infoText: '',
     }
