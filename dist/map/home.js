@@ -33,14 +33,14 @@ yalla.framework.addComponent("/dist/map/home", (function() {
   var alert;
 
   function initMap() {
-    debugger;
+    //debugger;
     var map = document.getElementsByName('map')[0];
     //if(map) {
     geo.showLocation(map, false, onAlert);
     //}
   }
 
-  setTimeout(initMap, 0);
+  setTimeout(initMap, 1000);
 
   function initState(props) {
     var state = {
