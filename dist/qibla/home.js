@@ -39,7 +39,7 @@ yalla.framework.addComponent("/dist/qibla/home", (function() {
     geo.showLocation(map, true, onAlert);
     //}
   }
-  setTimeout(initMap, 0);
+  setTimeout(initMap, 1000);
 
   function initState(props) {
     var state = {
