@@ -20,7 +20,8 @@
         margin.bind="$margin"
         deleted.bind="$deleted"
         accept.bind="$accept"
-        change.trigger="onChange()"
+        change.trigger="onChange(event)"
+        keyUp.trigger="onKeyUp(event)"
         click.trigger="onClick()"
         focusout.trigger="onFocusOut()">
     </entry-naked>
@@ -45,7 +46,8 @@
                 margin.bind="$margin"
                 deleted.bind="$deleted"
                 accept.bind="$accept"
-                change.trigger="onChange()"
+                change.trigger="onChange(event)"
+                keyUp.trigger="onKeyUp(event)"
                 click.trigger="onClick(event)"
                 focusout.trigger="onFocusOut()">
             </entry-naked>
@@ -72,8 +74,12 @@
     	this.emitEvent("focusout");
     }
 
-    function onChange() {
-    	this.emitEvent('change');
+    function onChange(event) {
+	    this.emitEvent('change', event.data);
+    }
+
+    function onKeyUp(event) {
+	    this.emitEvent('keyUp', event.data);
     }
 </script>
 

@@ -9,7 +9,7 @@ function GeoLocation() {
 	this.circle;
 	this.showQibla;
 	this.qiblaLine;
-	this.alert;
+	this.onAlert;
 	//var map, watchId, marker, circle, showQibla, alert, qiblaLine;
 	var status = typeof google != 'undefined';
 	var self = this;
@@ -18,7 +18,7 @@ function GeoLocation() {
 	this.getLocation = function() {
 		return new Promise(function (resolve) {
 			if(!status) {
-				if(alert) alert('Google Map is not available at the moment');
+				if(this.onAlert) this.onAlert('Google Map is not available at the moment');
 				resolve(kaabahLoc);
 				return;
 			} // default to Kaabah coordinate
@@ -74,7 +74,7 @@ function GeoLocation() {
 	}
 	
 	function onWatchError(error) {
-		if(alert) alert(error)
+		if(this.onAlert) this.onAlert(error)
 		else console.log(error);
 	}
 	
@@ -82,9 +82,14 @@ function GeoLocation() {
 		
 		var self = this;
 		
-		self.alert = onAlert;
+		self.onAlert = onAlert;
 		self.showQibla = isShowQibla;
-		
+
+		if(!status) {
+			if(this.onAlert) this.onAlert('Google Map is not available at the moment');
+			return;
+		} // default to Kaabah coordinate
+
 		self.map = new google.maps.Map(mapCanvas, {
 			zoom: 17,
 			center: kaabahLoc,
@@ -134,7 +139,7 @@ function GeoLocation() {
 				return loc;
 			}
 			else {
-				alert(loc);
+				self.onAlert(loc);
 			}
 		});
 	}

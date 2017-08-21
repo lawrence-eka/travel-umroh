@@ -66,6 +66,9 @@ yalla.framework.attachScriptToDocument = function (url) {
 };
 
 yalla.framework.start = function () {
+	//debugger;
+	if(yalla.framework.isStarted) return;
+	yalla.framework.isStarted = true;
 	console.log("framework start invoked");
 	var scripts = document.querySelector("script[id='yallaScript']") || [];
 	//debugger;

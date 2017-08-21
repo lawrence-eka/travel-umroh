@@ -48,8 +48,12 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     this.emitEvent("focusout");
   }
 
-  function onChange() {
-    this.emitEvent('change');
+  function onChange(event) {
+    this.emitEvent('change', event.data);
+  }
+
+  function onKeyUp(event) {
+    this.emitEvent('keyUp', event.data);
   }
 
   function $render(_props, _slotView) {
@@ -110,7 +114,27 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
               _props['on' + eventName](event);
             }
           };
-          onChange.bind(self)();
+          onChange.bind(self)(event);
+        },
+        "onkeyUp": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onKeyUp.bind(self)(event);
         },
         "onclick": function(event) {
           var self = {
@@ -199,7 +223,27 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
               _props['on' + eventName](event);
             }
           };
-          onChange.bind(self)();
+          onChange.bind(self)(event);
+        },
+        "onkeyUp": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onKeyUp.bind(self)(event);
         },
         "onclick": function(event) {
           var self = {

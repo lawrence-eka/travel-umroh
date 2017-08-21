@@ -68,16 +68,18 @@ var assets = [
 	{seq: 4, file: "asset/js/bootstrap.min.js"},
 	{seq: 4, file: "asset/js/own/geoLocation.js"},
 	{seq: 4, file: "asset/js/vendor/PrayTimes.js"},
+	{seq: 2, file: "asset/css/awesomplete.css"},
+	{seq: 4, file: "asset/js/awesomplete/awesomplete.js"},
 	{seq: 2, file: "dpd.js"},
 	{seq: 2, file: "asset/js/own/prototypes.js"},
 	{seq: 2, file: "asset/js/own/datePair.js"},
 	{seq: 2, file: "asset/js/own/alert.js"},
 	{seq: 2, file: "asset/js/own/utils.js"},
 	{seq: 2, file: "asset/js/own/event.js"},
-	{seq: 0, file: "asset/js/own/storages.js"},
-	{seq: 0, file: "asset/js/zlib/gunzip.min.js"},
+	{seq: 1, file: "asset/js/own/storages.js"},
+	{seq: 1, file: "asset/js/zlib/gunzip.min.js"},
 	{seq: 0, file: "asset/js/own/loaderData.js"},
-	{seq: 0, file: "dist/yalla.js",
+	{seq: 1, file: "dist/yalla.js",
 		attribute: {
 			id: "yallaScript",
 			"yalla-component": "app",
@@ -86,7 +88,7 @@ var assets = [
 			"yalla-routing": "authenticate"
 		}
 	},
-	{seq: 1, file: "asset/js/own/yalla-patch.js"},
+	{seq: 2, file: "asset/js/own/yalla-patch.js"},
 	{seq: 2, file: "asset/js/vendor/pica.min.js"},
 	{seq: 3, file: "asset/js/own/imageProcessor.js"},
 ];

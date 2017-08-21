@@ -1,6 +1,6 @@
 <span style.bind="calculateRootStyle($margin)">
     <label if.bind="($glyph || $prompt) && (whatType($type) == 'label' || (whatType($type) != 'checkbox' && whatType($type) != 'hyperlink' && whatType($type) != 'hidden'))" class.bind="(($class ? $class : 'custom-entry-prompt' + ($deleted ? ' custom-deleted-text' : '')))" click.trigger="onPromptClick()">{{$prompt ? $prompt:''}}<span if.bind="$glyph" class.bind="'glyphicon glyphicon-' + $glyph" ></span></label>
-    <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" accept.bind="$accept" focusout.trigger="onFocusOut()" change.trigger="onChange()">
+    <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" accept.bind="$accept" focusout.trigger="onFocusOut()" change.trigger="onChange()" keyup.trigger="onKeyUp()">
     <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value">
     <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="$value" click.trigger="onButtonClicked()">
     <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm" focusout.trigger="onFocusOut()">{{($value ? $value : '')}}</textarea>
@@ -22,17 +22,37 @@
             <option for.each="entry in $entries" value.bind="entry" selected.bind="entry==$value">{{entry}}</option>
         </select>
     </div>
+    <div if.bind="whatType($type) == 'lookup'">
+        <input class="form-control input-sm" name.bind="$name" data-minchars="1" value.bind="$value"/>
+    </div>
     <label if.bind="@error && whatType($type) != 'hidden'" class="custom-entry-prompt custom-error-text">{{@error}}</label>
 </span>
 
 <script>
+//    var as;
+//    var state = {
+//    	inited:false,
+//    }
+	function initAwesomplete(state) {
+//    	debugger;
+		if(state.inited) return;
+		state.inited = true;
+		new Awesomplete(document.getElementsByName(state.name)[0], {list:state.entries});
+	}
+
     function initState(props) {
+//debugger;
+    var state = {
+    	inited:false,
+    }
+
 	    if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
-    	return {
-    		name: props.name,
-            error:null,
-            alias: props.alias,
-        }
+	    state.name = props.name;
+	    state.error = null;
+	    state.alias = props.alias;
+	    state.entries = props.entries;
+	    if(props.type == 'lookup') setTimeout(initAwesomplete.bind(this, state), 0);
+    	return state;
     }
 
     function calculateRootStyle(margin){
@@ -77,7 +97,7 @@
 	}
 
 	function whatType(type) {
-		if('|textarea|label|hidden|button|checkbox|hyperlink|select|'.indexOf('|' + type + '|') >= 0) return type;
+		if('|textarea|label|hidden|button|checkbox|hyperlink|select|lookup|datalist|'.indexOf('|' + type + '|') >= 0) return type;
 		else return 'other';
 	}
 
@@ -97,8 +117,12 @@
 		this.emitEvent("focusout");
 	}
 
-	function onChange() {
-		this.emitEvent("change");
+    function onChange() {
+	    this.emitEvent("change", this.target.value);
+    }
+
+    function onKeyUp() {
+	    this.emitEvent("keyUp", this.target.value);
     }
 
     function onCheckboxClick(event){

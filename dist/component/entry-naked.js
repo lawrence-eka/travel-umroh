@@ -30,13 +30,32 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
 
   function onPropertyChange(event) {};
 
+  //    var as;
+  //    var state = {
+  //    	inited:false,
+  //    }
+  function initAwesomplete(state) {
+    //    	debugger;
+    if (state.inited) return;
+    state.inited = true;
+    new Awesomplete(document.getElementsByName(state.name)[0], {
+      list: state.entries
+    });
+  }
+
   function initState(props) {
-    if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
-    return {
-      name: props.name,
-      error: null,
-      alias: props.alias,
+    //debugger;
+    var state = {
+      inited: false,
     }
+
+    if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
+    state.name = props.name;
+    state.error = null;
+    state.alias = props.alias;
+    state.entries = props.entries;
+    if (props.type == 'lookup') setTimeout(initAwesomplete.bind(this, state), 0);
+    return state;
   }
 
   function calculateRootStyle(margin) {
@@ -81,7 +100,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
   }
 
   function whatType(type) {
-    if ('|textarea|label|hidden|button|checkbox|hyperlink|select|'.indexOf('|' + type + '|') >= 0) return type;
+    if ('|textarea|label|hidden|button|checkbox|hyperlink|select|lookup|datalist|'.indexOf('|' + type + '|') >= 0) return type;
     else return 'other';
   }
 
@@ -102,7 +121,11 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
   }
 
   function onChange() {
-    this.emitEvent("change");
+    this.emitEvent("change", this.target.value);
+  }
+
+  function onKeyUp() {
+    this.emitEvent("keyUp", this.target.value);
   }
 
   function onCheckboxClick(event) {
@@ -213,6 +236,26 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
           }
         };
         onChange.bind(self)();
+      });
+      _attr("onkeyup", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onKeyUp.bind(self)();
       });
       _elementOpenEnd("input");
       _elementClose("input");
@@ -483,6 +526,18 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
         _elementClose("option");
       });
       _elementClose("select");
+      _elementClose("div");
+    }
+    if (whatType(_props.type) == 'lookup') {
+      _elementOpenStart("div", "");
+      _elementOpenEnd("div");
+      _elementOpenStart("input", "");
+      _attr("class", "form-control input-sm");
+      _attr("name", _props.name);
+      _attr("data-minchars", "1");
+      _attr("value", _props.value);
+      _elementOpenEnd("input");
+      _elementClose("input");
       _elementClose("div");
     }
     if (_state.error && whatType(_props.type) != 'hidden') {

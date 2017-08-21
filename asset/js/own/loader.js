@@ -212,7 +212,7 @@ function Loader(cv) {
 			if (this.assets[i].seq == seq && !this.assets[i].called) {
 				//console.log("loading asset seq:", seq, "=", this.assets[i].file)
 				this.assets[i].called = true;
-				this.fetch("./" + this.assets[i].file, this.assets[i].attribute).then(this.attachScriptToDocument.bind(this, seq));
+				this.fetch("./" + this.assets[i].file, this.assets[i].attribute).then(this.attachScriptToDocument.bind(this, (!this.assets.find(function(x){return (x.seq == seq && !x.called)})? seq : null)));
 			}
 		}
 	};

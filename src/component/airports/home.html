@@ -1,0 +1,33 @@
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <div data.load="getAirports()">
+        <entry type="lookup" prompt="Airport" name="airport" entries.bind="data"></entry>
+    </div>
+    <div data.load="getAirlines()">
+        <entry type="lookup" prompt="Airline" name="airline" entries.bind="data"></entry>
+    </div>
+
+</div>
+
+<script>
+    function onKeyUp(event){
+    	console.log(event.data);
+    }
+    function getAirports() {
+	    return new Promise(function(resolve){
+		    dpd.airports.get(function(airports){
+			    resolve(airports.map(function(x){return x.IATA + ' - ' + x.airport}));
+		    })
+	    })
+    }
+    function getAirlines() {
+	    return new Promise(function(resolve){
+		    dpd.airlines.get(function(airlines){
+			    //debugger;
+			    resolve(airlines.map(function(x){return x.IATA + ' - ' + x.airline}));
+		    })
+	    })
+    }
+</script>
+
