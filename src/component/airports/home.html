@@ -1,31 +1,38 @@
 <inject from="/component/entry" name="entry"></inject>
 
 <div>
-    <div data.load="getAirports()">
-        <entry type="lookup" prompt="Airport" name="airport" entries.bind="data"></entry>
+    <div class="row">
+        <form>
+        <div data.load="getAirports()">
+            <entry type="lookup" prompt="Airport" name="airport" entries.bind="data" value="CGK"></entry>
+        </div>
+        <div data.load="getAirlines()">
+            <entry type="lookup" prompt="Airline" name="airline" entries.bind="data" value="GA"></entry>
+        </div>
+        <entry type="button" click.trigger="onSubmit()"></entry>
+        </form>
     </div>
-    <div data.load="getAirlines()">
-        <entry type="lookup" prompt="Airline" name="airline" entries.bind="data"></entry>
-    </div>
-
 </div>
 
 <script>
-    function onKeyUp(event){
-    	console.log(event.data);
+
+    function onSubmit() {
+    	debugger;
+    	console.log()
     }
     function getAirports() {
 	    return new Promise(function(resolve){
-		    dpd.airports.get(function(airports){
-			    resolve(airports.map(function(x){return x.IATA + ' - ' + x.airport}));
+		    dpd.airports.get({$fields: {IATA:1, airport:1}}, function(airports){
+		    	//debugger;
+			    resolve(airports.map(function(x){return {label:x.IATA + ' - ' + x.airport, value: x.IATA}}));
 		    })
 	    })
     }
     function getAirlines() {
 	    return new Promise(function(resolve){
-		    dpd.airlines.get(function(airlines){
+		    dpd.airlines.get({$fields: {IATA:1, airline:1}}, function(airlines){
 			    //debugger;
-			    resolve(airlines.map(function(x){return x.IATA + ' - ' + x.airline}));
+			    resolve(airlines.map(function(x){return {label:x.IATA + ' - ' + x.airline, value: x.IATA}}));
 		    })
 	    })
     }

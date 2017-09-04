@@ -1,0 +1,80 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/profile-picture/home" name="pict"></inject>
+<inject from="/hotel/card-hotel" name="hotel"></inject>
+
+<div ref.name="list">
+    <div data.load="getHotels()">
+        <span for.each="hotel in data">
+            <hotel hotel.bind="hotel" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></hotel>
+        </span>
+    </div>
+</div>
+
+<script>
+	function initState(props){
+		//debugger;
+		var state ={
+			contactPersonId: props.contactPersonId,
+			data: null,
+		}
+		return state;
+	}
+
+	function getHotels(){
+		var self = this;
+		return new Promise(function(resolve){
+			if(!self.state.contactPersonId) {
+				self.state.data = [];
+				resolve(self.state.data);
+			}
+			else {
+				dpd.hotels.get({
+					contactPersonId: self.state.contactPersonId
+				}, function (hotels) {
+					self.state.data = hotels;
+					resolve(self.state.data);
+				});
+			}
+		});
+	}
+
+	function onEdit(event){
+		debugger;
+		this.emitEvent('edit', event.data);
+	}
+
+	function onDelete(event) {
+		var hotelId = event.data;
+		var self = this;
+		debugger;
+		if(!hotelId) return;
+		else {
+			var m = self.state.data.find(function(x){return x.id == hotelId});
+			if(!m) return;
+			else {
+				deletePict(m.pictureId).then(function(){
+					dpd.hotels.del(hotelId, function(result, err){
+						debugger;
+						self.emitEvent('delete', hotelId);
+						$patchChanges('list');
+					})
+				})
+			}
+		}
+	}
+
+	function deletePict(pictureId){
+		return new Promise(function(resolve){
+			if(pictureId) {
+				dpd.hotelphotos.del(pictureId, function (result, err) {
+					debugger;
+					resolve();
+				});
+			}
+			else {
+				resolve();
+			}
+		});
+	}
+</script>

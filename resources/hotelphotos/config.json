@@ -1,0 +1,6 @@
+{
+	"type": "Fileupload",
+	"directory": "upload/hotelphotos",
+	"authorization": false,
+	"uniqueFilename": false
+}

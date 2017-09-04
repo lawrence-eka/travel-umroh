@@ -18,7 +18,6 @@
 	var isDrawedOpened;
 
 	function whatButton(){
-		console.log('lher');
 		var result = [];
 		result.push('fa');
 		if(isDrawedOpened){
@@ -31,7 +30,6 @@
 	}
 
 	function drawerClass(){
-		console.log('lhor');
 		if(isDrawedOpened)return "drawer expand";
         else return "drawer";
     }
@@ -48,7 +46,6 @@
 	}
 
     function hideMenu(){
-    	console.log('lhir');
 	    isDrawedOpened = false;
 	    $patchChanges("burger");
     }

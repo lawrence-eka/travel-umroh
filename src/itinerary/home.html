@@ -2,14 +2,18 @@
 <inject from="/component/entry" name="entry"></inject>
 <inject from="/itinerary/list" name="list"></inject>
 <inject from="/itinerary/edit-itinerary" name="edit-itinerary"></inject>
+<inject from="/component/home-button" name="home"></inject>
 
 <div data.load="getPackage()">
     <edit-itinerary if.bind="@isEditMode" close.trigger="onCloseEdit(event)" itineraryId.bind="@editItineraryId" entryType.bind="@entryType" packageId.bind="@packageId"></edit-itinerary>
     <span if.bind="!@isEditMode">
         <panel title.bind="data.packageName" nofooter>
             <div slot.name="body">
-                <entry type="button" value="Add Transport" click.trigger="onAddItinerary('Transport')" ></entry>
-                <entry type="button" value="Add Hotel" click.trigger="onAddItinerary('Hotel')" ></entry>
+                <div class="row">
+                    <entry type="button" value="Add Transport" click.trigger="onAddItinerary('Transport')" ></entry>
+                    <entry type="button" value="Add Hotel" click.trigger="onAddItinerary('Hotel')" ></entry>
+                    <home></home>
+                </div>
             </div>
         </panel>
         <list packageId.bind="@packageId" editItinerary.trigger="onEditItinerary(event)" deleteItinerary.trigger="onDeleteItinerary(event)"></list>

@@ -1,0 +1,53 @@
+{
+	"type": "Collection",
+	"properties": {
+		"contactPersonId": {
+			"name": "contactPersonId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "contactPersonId",
+			"order": 0
+		},
+		"hotelName": {
+			"name": "hotelName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "hotelName",
+			"order": 1
+		},
+		"city": {
+			"name": "city",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "city",
+			"order": 2
+		},
+		"address": {
+			"name": "address",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "address",
+			"order": 3
+		},
+		"phone": {
+			"name": "phone",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "phone",
+			"order": 4
+		},
+		"pictureId": {
+			"name": "pictureId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "pictureId",
+			"order": 5
+		}
+	}
+}

@@ -33,7 +33,6 @@ yalla.framework.addComponent("/dist/component/navbar", (function() {
   var isDrawedOpened;
 
   function whatButton() {
-    console.log('lher');
     var result = [];
     result.push('fa');
     if (isDrawedOpened) {
@@ -46,7 +45,6 @@ yalla.framework.addComponent("/dist/component/navbar", (function() {
   }
 
   function drawerClass() {
-    console.log('lhor');
     if (isDrawedOpened) return "drawer expand";
     else return "drawer";
   }
@@ -64,7 +62,6 @@ yalla.framework.addComponent("/dist/component/navbar", (function() {
   }
 
   function hideMenu() {
-    console.log('lhir');
     isDrawedOpened = false;
     $patchChanges("burger");
   }

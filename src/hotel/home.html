@@ -1,0 +1,53 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/home-button" name="home"></inject>
+<inject from="/hotel/list-hotel" name="list"></inject>
+<inject from="/hotel/edit-hotel" name="edit"></inject>
+
+<div>
+    <div if.bind="!@isEditMode">
+        <panel title="Hotel" nofooter>
+            <div slot.name="body">
+                <div class="row">
+                    <entry type="button" value="Add Hotel" click.trigger="onAddHotel()" ></entry>
+                    <home></home>
+                </div>
+            </div>
+        </panel>
+        <list contactPersonId.bind="@contactPersonId" edit.trigger="onEdit(event)"></list>
+    </div>
+    <div if.bind="@isEditMode">
+        <edit contactPersonId.bind="@contactPersonId" hotelId.bind="@hotelId" close.trigger="onCloseEdit()"></edit>
+
+    </div>
+</div>
+
+<script>
+	function initState(props){
+		var state = {
+			isEditMode:false,
+			contactPersonId: storage.me.read().id,
+		}
+		//debugger;
+		return state;
+	}
+
+	function onEdit(event){
+		this.state.hotelId = event.data;
+		this.state.isEditMode = true;
+		$patchChanges();
+	}
+
+	function onCloseEdit(){
+		this.state.hotelId = null;
+		this.state.isEditMode=false;
+		debugger;
+		$patchChanges();
+	}
+
+	function onAddHotel(){
+		this.state.hotelId = null;
+		this.state.isEditMode = true;
+		$patchChanges();
+	}
+</script>

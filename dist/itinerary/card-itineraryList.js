@@ -40,6 +40,10 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
     this.emitEvent('book');
   }
 
+  function onBack() {
+    this.emitEvent('close');
+  }
+
   function $render(_props, _slotView) {
     _context["panel"] = $inject("/component/panel");
     var panel = _context["panel"];
@@ -118,7 +122,29 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
-        var _params = {};
+        var _params = {
+          "home": "#app/search-package.home",
+          "onback": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onBack.bind(self)();
+          }
+        };
         _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         _elementClose("div");
         _elementClose("div");

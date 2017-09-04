@@ -1,0 +1,520 @@
+starting deployd v0.8.9...
+NODE_ENV=production
+Deployd is in Development Environment
+max socket is  Infinity
+Http to Https Forwarder is listening on port 80
+listening on port 443
+type help for a list of commands
+dpd > C:\Workspace\deployd\travel-umroh
+Updating IATA lists on Thu Aug 31 2017 19:50:39 GMT+0400 (Arabian Standard Time)...
+Updating Airport's IATA lists of A cities on Thu Aug 31 2017 19:50:39 GMT+0400 (Arabian Standard Time)...
+Updating Airport's IATA lists of A cities on Thu Aug 31 2017 19:50:39 GMT+0400 (Arabian Standard Time)...
+Found 125 IATA airports.
+{ city: 'Aalesund',
+  airport: 'Ålesund Airport, Vigra',
+  country: 'Norway',
+  IATA: 'AES' }
+{ city: 'Aarhus',
+  airport: 'Aarhus Airport',
+  country: 'Denmark',
+  IATA: 'AAR' }
+{ city: 'Abadan',
+  airport: 'Abadan Airport',
+  country: 'Iran',
+  IATA: 'ABD' }
+{ city: 'Abeche',
+  airport: 'Abeche Airport',
+  country: 'Chad',
+  IATA: 'AEH' }
+{ city: 'Aberdeen',
+  airport: 'Aberdeen International Airport',
+  country: 'Scotland, UK',
+  IATA: 'ABZ' }
+{ city: 'Aberdeen (SD)',
+  airport: 'Aberdeen Regional Airport',
+  country: 'USA',
+  IATA: 'ABR' }
+{ city: 'Abidjan (capital city)',
+  airport: 'Félix-Houphouët-Boigny International   (fr)',
+  country: 'Cote d\'Ivoire',
+  IATA: 'ABJ' }
+{ city: 'Abilene (TX)',
+  airport: 'Abilene Regional Airport  (GA)',
+  country: 'USA',
+  IATA: 'ABI' }
+{ city: 'Abu Dhabi (capital city)',
+  airport: 'Abu Dhabi International',
+  country: 'United Arab Emirates',
+  IATA: 'AUH' }
+{ city: 'Abuja (capital city)',
+  airport: 'Nnamdi Azikiwe International Airport',
+  country: 'Nigeria',
+  IATA: 'ABV' }
+{ city: 'Abu Rudeis',
+  airport: 'Abu Rudeis Airport',
+  country: 'Egypt',
+  IATA: 'AUE' }
+{ city: 'Abu Simbel',
+  airport: 'Abu Simbel Airport',
+  country: 'Egypt',
+  IATA: 'ABS' }
+{ city: 'Acapulco',
+  airport: 'Acapulco International Airport',
+  country: 'Mexico',
+  IATA: 'ACA' }
+{ city: 'Accra (capital city)',
+  airport: 'Kotoka International Airport',
+  country: 'Ghana',
+  IATA: 'ACC' }
+{ city: 'A Coruna (Corunna)',
+  airport: 'A Coruña Airport',
+  country: 'Spain',
+  IATA: 'LCG' }
+{ city: 'Adana',
+  airport: 'Adana Sakirpasa Airport',
+  country: 'Turkey',
+  IATA: 'ADA' }
+{ city: 'Addis Ababa (capital city)',
+  airport: 'Addis Ababa Bole International Airport',
+  country: 'Ethiopia',
+  IATA: 'ADD' }
+{ city: 'Adelaide',
+  airport: 'Adelaide Airport',
+  country: 'Australia',
+  IATA: 'ADL' }
+{ city: 'Aden (capital city)',
+  airport: 'Aden International Airport',
+  country: 'Yemen',
+  IATA: 'ADE' }
+{ city: 'Adiyaman',
+  airport: 'Adıyaman Airport',
+  country: 'Turkey',
+  IATA: 'ADF' }
+{ city: 'Adler/Sochi',
+  airport: 'Adler-Sochi International Airport',
+  country: 'Russia',
+  IATA: 'AER' }
+{ city: 'Agadez',
+  airport: 'Mano Dayak International Airport',
+  country: 'Niger',
+  IATA: 'AJY' }
+{ city: 'Agadir (Amazigh)',
+  airport: 'Agadir Massira Airport',
+  country: 'Morocco',
+  IATA: 'AGA' }
+{ city: 'Agana (Hagåtña)',
+  airport: 'Antonio B. Won Pat International Airport',
+  country: 'Guam',
+  IATA: 'GUM' }
+{ city: 'Aggeneys',
+  airport: 'Aggeneys Airport',
+  country: 'South Africa',
+  IATA: 'AGZ' }
+{ city: 'Agri (Ağrı)',
+  airport: 'Agri Airport',
+  country: 'Turkey',
+  IATA: 'AJI' }
+{ city: 'Aguadilla',
+  airport: 'Rafael Hernández Airport',
+  country: 'Puerto Rico',
+  IATA: 'BQN' }
+{ city: 'Aguascaliente',
+  airport: 'Aguascalientes International Airport',
+  country: 'Mexico',
+  IATA: 'AGU' }
+{ city: 'Ahmedabad',
+  airport: 'Ahmedabad International Airport',
+  country: 'Gujarat, India',
+  IATA: 'AMD' }
+{ city: 'Aiyura',
+  airport: 'Aiyura Airport',
+  country: 'Papua New Guinea',
+  IATA: 'AYU' }
+{ city: 'Ajaccio',
+  airport: 'Ajaccio Napoleon Bonaparte Airport',
+  country: 'Corsica, France',
+  IATA: 'AJA' }
+{ city: 'Akita',
+  airport: 'Akita Airport',
+  country: 'Japan',
+  IATA: 'AXT' }
+{ city: 'Akron (OH)',
+  airport: 'Akron-Canton Regional Airport',
+  country: 'USA',
+  IATA: 'CAK' }
+{ city: 'Akrotiri  (British Overseas Territory)',
+  airport: 'Royal Air Force Akrotiri',
+  country: 'Cyprus',
+  IATA: 'AKT' }
+{ city: 'Al Ain',
+  airport: 'Al Ain International Airport',
+  country: 'United Arab Emirates',
+  IATA: 'AAN' }
+{ city: 'Al Arish',
+  airport: 'Arish International Airport',
+  country: 'Egypt',
+  IATA: 'AAC' }
+{ city: 'Al Hoceima',
+  airport: 'Sharif Al ldrissi Airport',
+  country: 'Morocco',
+  IATA: 'AHU' }
+{ city: 'Albany',
+  airport: 'Albany Airport',
+  country: 'Australia',
+  IATA: 'ALH' }
+{ city: 'Albany (GA)',
+  airport: 'Southwest Georgia Regional Airport',
+  country: 'USA',
+  IATA: 'ABY' }
+{ city: 'Albany (NY)',
+  airport: 'Albany International Airport',
+  country: 'USA',
+  IATA: 'ALB' }
+{ city: 'Albi',
+  airport: 'Le Sequestre Airport  (GA)',
+  country: 'France',
+  IATA: 'LBI' }
+{ city: 'Albuquerque (NM)',
+  airport: 'Albuquerque Sunport Airport',
+  country: 'USA',
+  IATA: 'ABQ' }
+{ city: 'Albury',
+  airport: 'Albury Airport',
+  country: 'Australia',
+  IATA: 'ABX' }
+{ city: 'Alderney',
+  airport: 'Alderney Airport',
+  country: 'Channel Islands (UK)',
+  IATA: 'ACI' }
+{ city: 'Aleppo',
+  airport: 'Aleppo International Airport',
+  country: 'Syria',
+  IATA: 'ALP' }
+{ city: 'Alesund',
+  airport: 'Ålesund Airport, Vigra',
+  country: 'Norway',
+  IATA: 'AES' }
+{ city: 'Alexander Bay',
+  airport: 'Kortdoorn Airport',
+  country: 'South Africa',
+  IATA: 'ALJ' }
+{ city: 'Alexandria',
+  airport: 'Borg El Arab Airport',
+  country: 'Egypt',
+  IATA: 'HBE' }
+{ city: 'Alexandria',
+  airport: 'El Nhouza Airport',
+  country: 'Egypt',
+  IATA: 'ALY' }
+{ city: 'Alexandria (LA)',
+  airport: 'Alexandria International Airport',
+  country: 'USA',
+  IATA: 'AEX' }
+{ city: 'Alexandria (LA)',
+  airport: 'Esler Field',
+  country: 'USA',
+  IATA: 'ESF' }
+{ city: 'Alfujairah (Fujairah)',
+  airport: 'Fujairah International Airport',
+  country: 'United Arab Emirates',
+  IATA: 'FJR' }
+{ city: 'Alghero Sassari',
+  airport: 'Fertilia Airport (Alghero Airport)',
+  country: 'Sardinia, Italy',
+  IATA: 'AHO' }
+{ city: 'Algiers (capital city)',
+  airport: 'Houari Boumediene Airport',
+  country: 'Algeria',
+  IATA: 'ALG' }
+{ city: 'Alicante',
+  airport: 'Alicante-Elche Airport',
+  country: 'Spain',
+  IATA: 'ALC' }
+{ city: 'Alice Springs',
+  airport: 'Alice Springs Airport',
+  country: 'Australia',
+  IATA: 'ASP' }
+{ city: 'Alldays',
+  airport: 'Alldays Airport',
+  country: 'Limpopo, South Africa',
+  IATA: 'ADY' }
+{ city: 'Allentown (PA)',
+  airport: 'Lehigh Valley International Airport',
+  country: 'USA',
+  IATA: 'ABE' }
+{ city: 'Almaty (capital city)',
+  airport: 'Almaty International Airport',
+  country: 'Kazakhstan',
+  IATA: 'ALA' }
+{ city: 'Almeria',
+  airport: 'Almería International Airport',
+  country: 'Spain',
+  IATA: 'LEI' }
+{ city: 'Alta',
+  airport: 'Alta Airport',
+  country: 'Norway',
+  IATA: 'ALF' }
+{ city: 'Altay',
+  airport: 'Altay Airport',
+  country: 'Xinjiang, China',
+  IATA: 'AAT' }
+{ city: 'Altenrhein, St. Gallen',
+  airport: 'People´s Business Airport',
+  country: 'Switzerland',
+  IATA: 'ACH' }
+{ city: 'Altoona (PA)',
+  airport: 'Altoona-Blair County Airport',
+  country: 'USA',
+  IATA: 'AOO' }
+{ city: 'Altus (OK)',
+  airport: 'Altus/Quartz Mountain Regional Airport',
+  country: 'USA',
+  IATA: 'AXS' }
+{ city: 'Amami',
+  airport: 'Amami Airport',
+  country: 'Amami Island, Japan',
+  IATA: 'ASJ' }
+{ city: 'Amarillo (TX)',
+  airport: 'Rick Husband Amarillo  Airport',
+  country: 'USA',
+  IATA: 'AMA' }
+{ city: 'Amazon Bay/Deba',
+  airport: 'Amazon Bay Airport',
+  country: 'Deba, Papua New Guinea',
+  IATA: 'AZB' }
+{ city: 'Amman (capital city)',
+  airport: 'Queen Alia International Airport',
+  country: 'Jordan',
+  IATA: 'AMM' }
+{ city: 'Amman',
+  airport: 'Amman Civil Airport',
+  country: 'Jordan',
+  IATA: 'ADJ' }
+{ city: 'Amritsar',
+  airport: 'Sri Guru Ram Dass Jee International Airport',
+  country: 'Punjab, India',
+  IATA: 'ATQ' }
+{ city: 'Amsterdam',
+  airport: 'Amsterdam Airport Schiphol  (Luchthaven Schiphol)',
+  country: 'Netherlands',
+  IATA: 'AMS' }
+{ city: 'Anchorage (AK)',
+  airport: 'Ted Stevens Anchorage International',
+  country: 'USA',
+  IATA: 'ANC' }
+{ city: 'Ancona',
+  airport: 'Ancona Falconara Airport',
+  country: 'Italy',
+  IATA: 'AOI' }
+{ city: 'Andorra La Vella',
+  airport: 'Heliport',
+  country: 'Andorra',
+  IATA: 'ALV' }
+{ city: 'Anguilla/The Valley',
+  airport: 'Wallblake Airport',
+  country: 'Anguilla',
+  IATA: 'AXA' }
+{ city: 'Anjouan',
+  airport: 'Anjouan Airport',
+  country: 'Comoros (Comores)',
+  IATA: 'AJN' }
+{ city: 'Ankara (capital city)',
+  airport: 'Metropolitan Area',
+  country: 'Turkey',
+  IATA: 'ANK' }
+{ city: 'Ankara',
+  airport: 'Ankara Esenboğa  Airport',
+  country: 'Turkey',
+  IATA: 'ESB' }
+{ city: 'Annaba',
+  airport: 'Rabah Bitat Airport (Les Salines Airport)',
+  country: 'Algeria',
+  IATA: 'AAE' }
+{ city: 'Ann Arbor',
+  airport: 'Ann Arbor Municipal Airport',
+  country: 'MI, USA',
+  IATA: 'ARB' }
+{ city: 'Annecy',
+  airport: 'Meythet Airport',
+  country: 'France',
+  IATA: 'NCY' }
+{ city: 'Anniston (AL)',
+  airport: 'Anniston Metropolitan Airport',
+  country: 'USA',
+  IATA: 'ANB' }
+{ city: 'Antalya',
+  airport: 'Antalya Airport',
+  country: 'Turkey',
+  IATA: 'AYT' }
+{ city: 'Antananarivo (capital city)',
+  airport: 'Ivato International Airport',
+  country: 'Madagascar',
+  IATA: 'TNR' }
+{ city: 'Antigua',
+  airport: 'V.C. Bird International Airport',
+  country: 'Antigua and Barbuda',
+  IATA: 'ANU' }
+{ city: 'Antofagasta',
+  airport: 'Cerro Moreno International Airport  (es)',
+  country: 'Chile',
+  IATA: 'ANF' }
+{ city: 'Antwerp',
+  airport: 'Antwerp International Airport',
+  country: 'Belgium',
+  IATA: 'ANR' }
+{ city: 'Aomori',
+  airport: 'Aomori Airport',
+  country: 'Japan',
+  IATA: 'AOJ' }
+{ city: 'Apia (capital city)',
+  airport: 'Faleolo International Airport',
+  country: 'Samoa',
+  IATA: 'APW' }
+{ city: 'Appelton/Neenah/Menasha',
+  airport: 'Outagamie County Regional Airport',
+  country: 'WI, USA',
+  IATA: 'ATW' }
+{ city: 'Aqaba',
+  airport: 'King Hussein International Airport',
+  country: 'Jordan',
+  IATA: 'AQJ' }
+{ city: 'Aracaju',
+  airport: 'Santa Maria Airport',
+  country: 'Brazil',
+  IATA: 'AJU' }
+{ city: 'Arequipa',
+  airport: 'Rodriguez Ballon International Airport',
+  country: 'Peru',
+  IATA: 'AQP' }
+{ city: 'Arkhangelsk',
+  airport: 'Talagi Airport',
+  country: 'Russia',
+  IATA: 'ARH' }
+{ city: 'Arusha',
+  airport: 'Arusha Airport',
+  country: 'Tanzania',
+  IATA: 'ARK' }
+{ city: 'Araxos/Patras',
+  airport: 'Araxos Airport',
+  country: 'Greece',
+  IATA: 'GPA' }
+{ city: 'Arlit',
+  airport: 'Arlit Airport',
+  country: 'Niger',
+  IATA: 'RLT' }
+{ city: 'Arrecife/Lanzarote',
+  airport: 'Lanzarote Airport',
+  country: 'Spain',
+  IATA: 'ACE' }
+{ city: 'Aruba',
+  airport: 'Queen Beatrix International, Oranjestad',
+  country: 'Aruba',
+  IATA: 'AUA' }
+{ city: 'Asheville',
+  airport: 'Asheville Regional Airport',
+  country: 'NC, USA',
+  IATA: 'AVL' }
+{ city: 'Ashgabat (capital city)',
+  airport: 'Ashgabat International Airport',
+  country: 'Turkmenistan',
+  IATA: 'ASB' }
+{ city: 'Asmara (capital city)',
+  airport: 'Asmara International Airport',
+  country: 'Eritrea',
+  IATA: 'ASM' }
+{ city: 'Aspen (CO)',
+  airport: 'Aspen-Pitkin County Airport',
+  country: 'USA',
+  IATA: 'ASE' }
+{ city: 'Assiut',
+  airport: 'Assiut Airport',
+  country: 'Egypt',
+  IATA: 'ATZ' }
+{ city: 'Astana (capital city)',
+  airport: 'Astana International Airport',
+  country: 'Kazakhstan',
+  IATA: 'TSE' }
+{ city: 'Asuncion',
+  airport: 'Asunción International Airport',
+  country: 'Paraguay',
+  IATA: 'ASU' }
+{ city: 'Aswan',
+  airport: 'Daraw Airport',
+  country: 'Egypt',
+  IATA: 'ASW' }
+{ city: 'Athens',
+  airport: 'Athens International Airport',
+  country: 'Greece',
+  IATA: 'ATH' }
+{ city: 'Athens',
+  airport: 'Hellinikon International Airport (closed)',
+  country: 'Greece',
+  IATA: 'HEW' }
+{ city: 'Athens (GA)',
+  airport: 'Athens-Ben Epps Airport',
+  country: 'USA',
+  IATA: 'AHN' }
+{ city: 'Athens (OH)',
+  airport: 'Ohio University Airport (Snyder Field)',
+  country: 'USA',
+  IATA: 'ATO' }
+{ city: 'Atlanta (GA)',
+  airport: 'Hartsfield-Jackson Atlanta International',
+  country: 'USA',
+  IATA: 'ATL' }
+{ city: 'Atlantic City (NJ)',
+  airport: 'Atlantic City International Airport',
+  country: 'USA',
+  IATA: 'ACY' }
+{ city: 'Attawapiskat',
+  airport: 'Attawapiskat Airport',
+  country: 'NT, Canada',
+  IATA: 'YAT' }
+{ city: 'Auckland',
+  airport: 'Auckland International Airport',
+  country: 'New Zealand',
+  IATA: 'AKL' }
+{ city: 'Augsburg',
+  airport: 'Augsburg Airport',
+  country: 'Germany',
+  IATA: 'AGB' }
+{ city: 'Augusta (GA)',
+  airport: 'Augusta Regional Airport at Bush Field',
+  country: 'USA',
+  IATA: 'AGS' }
+{ city: 'Augusta (ME)',
+  airport: 'Augusta State Airport',
+  country: 'USA',
+  IATA: 'AUG' }
+{ city: 'Aurillac',
+  airport: 'Aurillac Airport',
+  country: 'France',
+  IATA: 'AUR' }
+{ city: 'Austin',
+  airport: 'Austin-Bergstrom International Airport',
+  country: '(TX) USA',
+  IATA: 'AUS' }
+{ city: 'Ayawasi',
+  airport: 'Ayawasi Airport',
+  country: 'Indonesia',
+  IATA: 'AYW' }
+{ city: 'Ayers Rock',
+  airport: 'Ayers Rock Airport (Connellan)',
+  country: 'Australia',
+  IATA: 'AYQ' }
+{ city: 'Ayr',
+  airport: 'Ayr Airport',
+  country: 'Australia',
+  IATA: 'AYR' }
+{ city: '&nbsp;',
+  airport: '&nbsp;',
+  country: '&nbsp;',
+  IATA: '&nbsp;' }
+Found 1 IATA airports.
+{ city: 'Aalborg',
+  airport: 'Aalborg Airport',
+  country: 'Denmark',
+  IATA: 'AAL' }
+Found 1292 IATA airlines.
+Found 1980 IATA airports.
+Terminate batch job (Y/N)? 

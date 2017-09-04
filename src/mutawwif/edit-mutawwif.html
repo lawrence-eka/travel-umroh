@@ -1,0 +1,155 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/profile-picture/home" name="pict"></inject>
+
+<div data.load="getMutawwif()">
+    <panel title.bind="(@mutawwifId ? 'Edit' : 'New') +  ' Mutawwif'" nofooter>
+        <div slot.name="body">
+            <span ref.name="alert">
+                <form>
+                    <div class="row">
+                        <pict name="pict" img.bind="'/upload/mutawwifphotos/' + data.id + '.jpg'"></pict>
+                        <entry type="text" prompt="First Name" name="firstName" value.bind="data.firstName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Middle Name" name="middleName" value.bind="data.middleName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Last Name" name="lastName" value.bind="data.lastName" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Phone Name" name="phone" value.bind="data.phone" alert.bind="@alert"></entry>
+                        <entry type="textarea" prompt="Address" name="address" value.bind="data.address" alert.bind="@alert"></entry>
+                        <entry type="button" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                        <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                    </div>
+                </form>
+                <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+            </span>
+        </div>
+    </panel>
+</div>
+
+<script>
+    function initState(props){
+    	//debugger;
+    	var state ={
+    		mutawwifId: props.mutawwifId,
+            contactPersonId: props.contactPersonId,
+            data: null,
+            alert: new Alert(null, $patchChanges, "alert"),
+        }
+        return state;
+    }
+
+    function getMutawwif(){
+    	var self = this;
+    	return new Promise(function(resolve){
+    		if(!self.state.contactPersonId || !self.state.mutawwifId) {
+    			self.state.data = {};
+    			resolve(self.state.data);
+		    }
+            else {
+			    dpd.mutawwifs.get({
+				    id: self.state.mutawwifId,
+				    contactPersonId: self.state.contactPersonId
+			    }, function (mutawwif) {
+				    self.state.data = mutawwif;
+				    resolve(self.state.data);
+			    });
+		    }
+        });
+    }
+
+    function onCancel() {
+    	this.emitEvent('close');
+    }
+
+    function onSave(){
+    	//debugger;
+    	var self = this;
+    	var fe = self.target.form.elements;
+
+	    var mtw = self.state.data;
+	    mtw.contactPersonId = self.state.contactPersonId;
+	    mtw.firstName = fe.firstName.value;
+	    mtw.middleName = fe.middleName.value;
+	    mtw.lastName = fe.lastName.value;
+	    mtw.phone = fe.phone.value;
+	    mtw.address = fe.address.value;
+	    var img = fe.pict.blob;
+    	if(!self.state.contactPersonId) {
+    		self.emitEvent('close');
+        }
+        else if(!self.state.mutawwifId) {
+    		dpd.mutawwifs.post(mtw, function(result, err){
+    			self.state.alert.alert(err);
+    			if(!err){
+				    prepareProfilePicture.bind(self)(img, result.id);
+                }
+            });
+        }
+        else {
+		    dpd.mutawwifs.put(self.state.mutawwifId, mtw, function(result, err){
+                self.state.alert.alert(err);
+                if(!err){
+	                prepareProfilePicture.bind(self)(img, self.state.mutawwifId)
+                }
+		    }); /**/
+        }
+    }
+
+    function prepareProfilePicture(img, mutawwifId) {
+	    var self = this;
+        if(img) {
+            saveFiles.bind(this)([img], mutawwifId + '.jpg')
+            .then(function(result){
+                //debugger;
+                dpd.mutawwifs.put(mutawwifId, {pictureId:result.add[0]}, function(result){
+	                self.emitEvent('close')
+                })
+            })
+            .catch(function(err){
+                //debugger;
+	            self.state.alert.alert(err);
+            });
+        } else {
+        	//debugger;
+	        self.emitEvent('close')
+        }
+    }
+    function saveFiles(imgs, newFileName) {
+	    var self = this;
+	    console.log('promise to upload');
+
+	    return new Promise(function(resolve, reject){
+		    var fd = new FormData();
+		    //debugger;
+		    if(imgs.length > 0) {
+                /* new way started */
+			    for(var i in imgs) {
+                    fd.append("uploadedFile", imgs[i].blob, newFileName ? newFileName  : imgs[i].filename.name)
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.open('PUT', '/mutawwifphotos');
+                xhr.onload = function () {
+                    var response = JSON.parse(this.responseText);
+
+                    if(this.status < 300) {
+                        //debugger;
+                        var results = [];
+                        response.forEach(function(x) {results.push(x.id);});
+                        console.log("Upload success.");
+                        resolve({add: results});
+                    } else {
+                        console.log(response.message);
+                        reject({message: response.message});
+                    }
+                };
+                xhr.onerror = function (err) {
+                    reject({message: err});
+                }
+                xhr.send(fd);
+		    } else {
+			    console.log("Nothing to upload.");
+			    resolve();
+		    }
+	    });
+    }
+
+</script>

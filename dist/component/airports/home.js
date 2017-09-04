@@ -30,15 +30,26 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
 
   function onPropertyChange(event) {};
 
-  function onKeyUp(event) {
-    console.log(event.data);
+
+  function onSubmit() {
+    debugger;
+    console.log()
   }
 
   function getAirports() {
     return new Promise(function(resolve) {
-      dpd.airports.get(function(airports) {
+      dpd.airports.get({
+        $fields: {
+          IATA: 1,
+          airport: 1
+        }
+      }, function(airports) {
+        //debugger;
         resolve(airports.map(function(x) {
-          return x.IATA + ' - ' + x.airport
+          return {
+            label: x.IATA + ' - ' + x.airport,
+            value: x.IATA
+          }
         }));
       })
     })
@@ -46,10 +57,18 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
 
   function getAirlines() {
     return new Promise(function(resolve) {
-      dpd.airlines.get(function(airlines) {
+      dpd.airlines.get({
+        $fields: {
+          IATA: 1,
+          airline: 1
+        }
+      }, function(airlines) {
         //debugger;
         resolve(airlines.map(function(x) {
-          return x.IATA + ' - ' + x.airline
+          return {
+            label: x.IATA + ' - ' + x.airline,
+            value: x.IATA
+          }
         }));
       })
     })
@@ -76,6 +95,11 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
+    _attr("class", "row");
+    _elementOpenEnd("div");
+    _elementOpenStart("form", "");
+    _elementOpenEnd("form");
+    _elementOpenStart("div", "");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
@@ -96,7 +120,8 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
           "type": "lookup",
           "prompt": "Airport",
           "name": "airport",
-          "entries": data
+          "entries": data,
+          "value": "CGK"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       }
@@ -139,7 +164,8 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
           "type": "lookup",
           "prompt": "Airline",
           "name": "airline",
-          "entries": data
+          "entries": data,
+          "value": "GA"
         };
         _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       }
@@ -160,6 +186,32 @@ yalla.framework.addComponent("/dist/component/airports/home", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
+    _elementClose("div");
+    var _params = {
+      "type": "button",
+      "onclick": function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onSubmit.bind(self)();
+      }
+    };
+    _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    _elementClose("form");
     _elementClose("div");
     _elementClose("div");
   }

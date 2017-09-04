@@ -1,0 +1,61 @@
+{
+	"type": "Collection",
+	"properties": {
+		"contactPersonId": {
+			"name": "contactPersonId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "contactPersonId",
+			"order": 0
+		},
+		"pictureId": {
+			"name": "pictureId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "pictureId",
+			"order": 1
+		},
+		"firstName": {
+			"name": "firstName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "firstName",
+			"order": 2
+		},
+		"middleName": {
+			"name": "middleName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "middleName",
+			"order": 3
+		},
+		"lastName": {
+			"name": "lastName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "lastName",
+			"order": 4
+		},
+		"phone": {
+			"name": "phone",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "phone",
+			"order": 5
+		},
+		"address": {
+			"name": "address",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "address",
+			"order": 6
+		}
+	}
+}

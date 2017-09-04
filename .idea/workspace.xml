@@ -4,7 +4,160 @@
     <bookmark url="file://$PROJECT_DIR$/src/prayers/home.html" description="name: 'Do’a Di Atas Bukit Safa Ketika Menghadap Ka..." line="41" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="" />
+    <list default="true" id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/testemail/config.json" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/version.ver" afterPath="$PROJECT_DIR$/public/version.ver" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.dpd/pids/mongod" afterPath="$PROJECT_DIR$/.dpd/pids/mongod" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/css/custom-style.css" afterPath="$PROJECT_DIR$/asset/css/custom-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/imageProcessor.js" afterPath="$PROJECT_DIR$/asset/js/own/imageProcessor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/loaderData.js" afterPath="$PROJECT_DIR$/asset/js/own/loaderData.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/asset/js/own/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codes/ListExtractor.js" afterPath="$PROJECT_DIR$/codes/ListExtractor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/app.js" afterPath="$PROJECT_DIR$/dist/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/airports/home.js" afterPath="$PROJECT_DIR$/dist/component/airports/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/dist/component/attachments/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/entry-naked.js" afterPath="$PROJECT_DIR$/dist/component/entry-naked.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/entry.js" afterPath="$PROJECT_DIR$/dist/component/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/home-button.js" afterPath="$PROJECT_DIR$/dist/component/home-button.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/navbar.js" afterPath="$PROJECT_DIR$/dist/component/navbar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/component/panel.js" afterPath="$PROJECT_DIR$/dist/component/panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/itinerary/card-itinerary.js" afterPath="$PROJECT_DIR$/dist/itinerary/card-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/dist/itinerary/card-itineraryList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/dist/itinerary/edit-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/dist/itinerary/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/main-menu/menu-grid.js" afterPath="$PROJECT_DIR$/dist/main-menu/menu-grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/package/card-package.js" afterPath="$PROJECT_DIR$/dist/package/card-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/dist/package/edit-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/package/home.js" afterPath="$PROJECT_DIR$/dist/package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/search-package/home.js" afterPath="$PROJECT_DIR$/dist/search-package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/search-package/showPackage.js" afterPath="$PROJECT_DIR$/dist/search-package/showPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/css/custom-style.css" afterPath="$PROJECT_DIR$/public/asset/css/custom-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/awesomplete/awesomplete.js" afterPath="$PROJECT_DIR$/public/asset/js/awesomplete/awesomplete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/asset/js/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie-emulation-modes-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" afterPath="$PROJECT_DIR$/public/asset/js/ie10-viewport-bug-workaround.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" afterPath="$PROJECT_DIR$/public/asset/js/ie8-responsive-file-warning.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/base64.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/base64.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/rawdeflate.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/rawdeflate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/js-deflate/rawinflate.js" afterPath="$PROJECT_DIR$/public/asset/js/js-deflate/rawinflate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/npm.js" afterPath="$PROJECT_DIR$/public/asset/js/npm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/alert.js" afterPath="$PROJECT_DIR$/public/asset/js/own/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/datePair.js" afterPath="$PROJECT_DIR$/public/asset/js/own/datePair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/event.js" afterPath="$PROJECT_DIR$/public/asset/js/own/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/geoLocation.js" afterPath="$PROJECT_DIR$/public/asset/js/own/geoLocation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/imageProcessor.js" afterPath="$PROJECT_DIR$/public/asset/js/own/imageProcessor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/loader.js" afterPath="$PROJECT_DIR$/public/asset/js/own/loader.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/loaderData.js" afterPath="$PROJECT_DIR$/public/asset/js/own/loaderData.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" afterPath="$PROJECT_DIR$/public/asset/js/own/prototypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/storages.js" afterPath="$PROJECT_DIR$/public/asset/js/own/storages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/utils.js" afterPath="$PROJECT_DIR$/public/asset/js/own/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" afterPath="$PROJECT_DIR$/public/asset/js/own/yalla-patch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/application.js" afterPath="$PROJECT_DIR$/public/asset/js/src/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/src/customizer.js" afterPath="$PROJECT_DIR$/public/asset/js/src/customizer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/Blob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/FileSaver.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/PrayTimes.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/PrayTimes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" afterPath="$PROJECT_DIR$/public/asset/js/vendor/autoprefixer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/asset/js/zlib.js/gunzip.js" afterPath="$PROJECT_DIR$/public/asset/js/zlib.js/gunzip.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/app.js" afterPath="$PROJECT_DIR$/public/dist/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" afterPath="$PROJECT_DIR$/public/dist/booking/bookPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/card-booking.js" afterPath="$PROJECT_DIR$/public/dist/booking/card-booking.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/home.js" afterPath="$PROJECT_DIR$/public/dist/booking/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/list.js" afterPath="$PROJECT_DIR$/public/dist/booking/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentConfirmation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" afterPath="$PROJECT_DIR$/public/dist/booking/paymentDetails.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/common/map.js" afterPath="$PROJECT_DIR$/public/dist/common/map.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" afterPath="$PROJECT_DIR$/public/dist/common/privacyPolicy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/airports/home.js" afterPath="$PROJECT_DIR$/public/dist/component/airports/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/alert.js" afterPath="$PROJECT_DIR$/public/dist/component/alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/home.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/attachments/list.js" afterPath="$PROJECT_DIR$/public/dist/component/attachments/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/collapsible-entry.js" afterPath="$PROJECT_DIR$/public/dist/component/collapsible-entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry-naked.js" afterPath="$PROJECT_DIR$/public/dist/component/entry-naked.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/entry.js" afterPath="$PROJECT_DIR$/public/dist/component/entry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/footer.js" afterPath="$PROJECT_DIR$/public/dist/component/footer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/header.js" afterPath="$PROJECT_DIR$/public/dist/component/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/home-button.js" afterPath="$PROJECT_DIR$/public/dist/component/home-button.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/navbar.js" afterPath="$PROJECT_DIR$/public/dist/component/navbar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/panel.js" afterPath="$PROJECT_DIR$/public/dist/component/panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/component/ppLink.js" afterPath="$PROJECT_DIR$/public/dist/component/ppLink.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/index.js" afterPath="$PROJECT_DIR$/public/dist/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary-bulleted.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/card-itineraryList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/edit-itinerary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/home.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/itinerary/list.js" afterPath="$PROJECT_DIR$/public/dist/itinerary/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/main-menu/menu-block.js" afterPath="$PROJECT_DIR$/public/dist/main-menu/menu-block.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/main-menu/menu-grid.js" afterPath="$PROJECT_DIR$/public/dist/main-menu/menu-grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/map/home.js" afterPath="$PROJECT_DIR$/public/dist/map/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/card-package.js" afterPath="$PROJECT_DIR$/public/dist/package/card-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/edit-package.js" afterPath="$PROJECT_DIR$/public/dist/package/edit-package.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/home.js" afterPath="$PROJECT_DIR$/public/dist/package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/package/list.js" afterPath="$PROJECT_DIR$/public/dist/package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/card-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/edit-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/home.js" afterPath="$PROJECT_DIR$/public/dist/passenger/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" afterPath="$PROJECT_DIR$/public/dist/passenger/list-passenger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/pray-times/home.js" afterPath="$PROJECT_DIR$/public/dist/pray-times/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/prayers/home.js" afterPath="$PROJECT_DIR$/public/dist/prayers/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/prayers/prayer-name.js" afterPath="$PROJECT_DIR$/public/dist/prayers/prayer-name.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/qibla/home.js" afterPath="$PROJECT_DIR$/public/dist/qibla/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/home.js" afterPath="$PROJECT_DIR$/public/dist/search-package/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/list.js" afterPath="$PROJECT_DIR$/public/dist/search-package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" afterPath="$PROJECT_DIR$/public/dist/search-package/search-panel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" afterPath="$PROJECT_DIR$/public/dist/search-package/showPackage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-one.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-one.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/child-two.js" afterPath="$PROJECT_DIR$/public/dist/test-event/child-two.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/event.js" afterPath="$PROJECT_DIR$/public/dist/test-event/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test-event/parent.js" afterPath="$PROJECT_DIR$/public/dist/test-event/parent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/test.js" afterPath="$PROJECT_DIR$/public/dist/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/card-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/edit-travel-agent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/home.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/travel-agent/list.js" afterPath="$PROJECT_DIR$/public/dist/travel-agent/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/umroh-procedure/home.js" afterPath="$PROJECT_DIR$/public/dist/umroh-procedure/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" afterPath="$PROJECT_DIR$/public/dist/user/card-user-approvals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/forgot-password.js" afterPath="$PROJECT_DIR$/public/dist/user/forgot-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/home.js" afterPath="$PROJECT_DIR$/public/dist/user/home.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/list.js" afterPath="$PROJECT_DIR$/public/dist/user/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/login-form.js" afterPath="$PROJECT_DIR$/public/dist/user/login-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myApprovals.js" afterPath="$PROJECT_DIR$/public/dist/user/myApprovals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/myProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/myProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/registration.js" afterPath="$PROJECT_DIR$/public/dist/user/registration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/reset-password.js" afterPath="$PROJECT_DIR$/public/dist/user/reset-password.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/search.js" afterPath="$PROJECT_DIR$/public/dist/user/search.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/user/userProfile.js" afterPath="$PROJECT_DIR$/public/dist/user/userProfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/dist/yalla.js" afterPath="$PROJECT_DIR$/public/dist/yalla.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/airports/config.json" afterPath="$PROJECT_DIR$/resources/airports/config.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/airports/post.js" afterPath="$PROJECT_DIR$/resources/airports/post.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/itineraries/get.js" afterPath="$PROJECT_DIR$/resources/itineraries/get.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/itineraries/validate.js" afterPath="$PROJECT_DIR$/resources/itineraries/validate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/packages/config.json" afterPath="$PROJECT_DIR$/resources/packages/config.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/packages/get.js" afterPath="$PROJECT_DIR$/resources/packages/get.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/updateiatalist/draft.js" afterPath="$PROJECT_DIR$/resources/updateiatalist/draft.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/updateiatalist/updateiatalist.js" afterPath="$PROJECT_DIR$/resources/updateiatalist/updateiatalist.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.html" afterPath="$PROJECT_DIR$/src/app.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/airports/home.html" afterPath="$PROJECT_DIR$/src/component/airports/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/attachments/home.html" afterPath="$PROJECT_DIR$/src/component/attachments/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/entry-naked.html" afterPath="$PROJECT_DIR$/src/component/entry-naked.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/entry.html" afterPath="$PROJECT_DIR$/src/component/entry.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/home-button.html" afterPath="$PROJECT_DIR$/src/component/home-button.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/navbar.html" afterPath="$PROJECT_DIR$/src/component/navbar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/panel.html" afterPath="$PROJECT_DIR$/src/component/panel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itinerary/card-itinerary.html" afterPath="$PROJECT_DIR$/src/itinerary/card-itinerary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" afterPath="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itinerary/edit-itinerary.html" afterPath="$PROJECT_DIR$/src/itinerary/edit-itinerary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itinerary/home.html" afterPath="$PROJECT_DIR$/src/itinerary/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main-menu/menu-grid.html" afterPath="$PROJECT_DIR$/src/main-menu/menu-grid.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/package/card-package.html" afterPath="$PROJECT_DIR$/src/package/card-package.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/package/edit-package.html" afterPath="$PROJECT_DIR$/src/package/edit-package.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/package/home.html" afterPath="$PROJECT_DIR$/src/package/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/search-package/home.html" afterPath="$PROJECT_DIR$/src/search-package/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/search-package/showPackage.html" afterPath="$PROJECT_DIR$/src/search-package/showPackage.html" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -21,51 +174,81 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="loaderData.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/loaderData.js">
+      <file leaf-file-name="panel.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/panel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="71" column="53" lean-forward="false" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
+            <state relative-caret-position="1188">
+              <caret line="54" column="10" lean-forward="false" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entry-naked.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/component/entry-naked.html">
+      <file leaf-file-name="card-itinerary.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="112" lean-forward="true" selection-start-line="6" selection-start-column="112" selection-end-line="6" selection-end-column="112" />
+            <state relative-caret-position="733">
+              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/airports/home.html">
+      <file leaf-file-name="edit-itinerary.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="44" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+            <state relative-caret-position="192">
+              <caret line="233" column="0" lean-forward="false" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/index.html">
+      <file leaf-file-name="ListExtractor.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/codes/ListExtractor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="803">
+            <state relative-caret-position="536">
+              <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/asset/js/own/utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
               <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yalla-patch.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
+      <file leaf-file-name="card-hotel.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hotel/card-hotel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="70" column="37" lean-forward="false" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
+            <state relative-caret-position="132">
+              <caret line="6" column="42" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entry-naked.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/entry-naked.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="navbar.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/navbar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1056">
+              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -74,18 +257,18 @@
       <file leaf-file-name="entry.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/component/entry.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="888">
-              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+            <state relative-caret-position="465">
+              <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loader.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
+      <file leaf-file-name="custom-style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1456">
-              <caret line="206" column="20" lean-forward="false" selection-start-line="206" selection-start-column="9" selection-end-line="206" selection-end-column="20" />
+            <state relative-caret-position="396">
+              <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -103,27 +286,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>home-button</find>
-      <find>scriptCache</find>
-      <find>bod</find>
-      <find>&lt;alert type.bind</find>
-      <find>geo</find>
-      <find>margin-bottom</find>
-      <find>margin:</find>
-      <find>this.scripts</find>
-      <find>navbar</find>
-      <find>media</find>
-      <find>navbar-nav</find>
-      <find>burger</find>
-      <find>custom-indent</find>
-      <find>whatclass</find>
-      <find>panel</find>
-      <find>trans</find>
-      <find>custom-co</find>
-      <find>ease</find>
-      <find>loaded.</find>
-      <find>text</find>
-      <find>document.write</find>
       <find>console.log</find>
       <find>responseType</find>
       <find>fetch</find>
@@ -132,15 +294,40 @@
       <find>unloaded</find>
       <find>latlng</find>
       <find>alert</find>
-      <find>needLoading</find>
+      <find>whattype</find>
+      <find>whatdiv</find>
+      <find>whatIn</find>
+      <find>click(</find>
+      <find>calcu</find>
+      <find>mutawwif</find>
+      <find>mtw</find>
+      <find>60px</find>
+      <find>blur</find>
+      <find>created</find>
+      <find>frame</find>
+      <find>markDelete</find>
+      <find>std-anim</find>
+      <find>fade</find>
+      <find>notification</find>
+      <find>name</find>
+      <find>popupPanel</find>
+      <find>asPop</find>
+      <find>popup</find>
+      <find>Mutawwif</find>
+      <find>encodeMap</find>
+      <find>vx</find>
     </findStrings>
     <replaceStrings>
       <replace>gotActualPayment</replace>
       <replace>cv</replace>
       <replace>console.log</replace>
+      <replace>hotel</replace>
+      <replace>htl</replace>
+      <replace>Hotel</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\workspace\esnaadm\asset</dir>
+      <dir>C:\workspace\esnaadm\src</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -149,26 +336,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/user/myProfile.html" />
-        <option value="$PROJECT_DIR$/src/component/home-button.html" />
-        <option value="$PROJECT_DIR$/src/search-package/search-panel.html" />
-        <option value="$PROJECT_DIR$/src/booking/home.html" />
-        <option value="$PROJECT_DIR$/src/travel-agent/home.html" />
-        <option value="$PROJECT_DIR$/src/booking/paymentConfirmation.html" />
-        <option value="$PROJECT_DIR$/src/user/myApprovals.html" />
-        <option value="$PROJECT_DIR$/src/user/search.html" />
-        <option value="$PROJECT_DIR$/src/main-menu/menu-block.html" />
-        <option value="$PROJECT_DIR$/src/user/userProfile.html" />
-        <option value="$PROJECT_DIR$/public/asset/css/form-panel.css" />
-        <option value="$PROJECT_DIR$/public/asset/js/own/loader.js" />
-        <option value="$PROJECT_DIR$/src/prayer-time/home.html" />
-        <option value="$PROJECT_DIR$/src/prayers/home.js" />
-        <option value="$PROJECT_DIR$/filewatcher.js" />
-        <option value="$PROJECT_DIR$/src/pray-times/space-time.html" />
-        <option value="$PROJECT_DIR$/src/prayers/home.html" />
-        <option value="$PROJECT_DIR$/src/prayers/prayer-name.html" />
-        <option value="$PROJECT_DIR$/src/umroh-procedure/home.html" />
-        <option value="$PROJECT_DIR$/src/map/map.html" />
         <option value="$PROJECT_DIR$/src/pray-times/home.html" />
         <option value="$PROJECT_DIR$/public/dist/navbar/burger.html" />
         <option value="$PROJECT_DIR$/src/navbar/burger.html" />
@@ -182,24 +349,44 @@
         <option value="$PROJECT_DIR$/src/component/navbar/home.html" />
         <option value="$PROJECT_DIR$/src/component/header.html" />
         <option value="$PROJECT_DIR$/src/itinerary/card-itineraryList.html" />
-        <option value="$PROJECT_DIR$/asset/css/custom-style.css" />
-        <option value="$PROJECT_DIR$/src/component/panel.html" />
         <option value="$PROJECT_DIR$/src/user/login-form.html" />
         <option value="$PROJECT_DIR$/src/main-menu/menu-grid.html" />
-        <option value="$PROJECT_DIR$/src/component/navbar.html" />
         <option value="$PROJECT_DIR$/dist/yalla.js" />
-        <option value="$PROJECT_DIR$/src/app.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
         <option value="$PROJECT_DIR$/src/qibla/home.html" />
         <option value="$PROJECT_DIR$/asset/js/own/geoLocation.js" />
         <option value="$PROJECT_DIR$/src/common/map.html" />
-        <option value="$PROJECT_DIR$/src/component/entry.html" />
         <option value="$PROJECT_DIR$/src/map/home.html" />
-        <option value="$PROJECT_DIR$/asset/js/own/loader.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/asset/js/own/yalla-patch.js" />
-        <option value="$PROJECT_DIR$/asset/js/own/loaderData.js" />
         <option value="$PROJECT_DIR$/src/component/airports/home.html" />
+        <option value="$PROJECT_DIR$/src/component/profile-picture/home.html" />
+        <option value="$PROJECT_DIR$/src/test/tist.html" />
+        <option value="$PROJECT_DIR$/src/test/test.html" />
+        <option value="$PROJECT_DIR$/src/package/edit-package.html" />
+        <option value="$PROJECT_DIR$/src/hotel/home.html" />
+        <option value="$PROJECT_DIR$/src/hotel/card-mutawwif.html" />
+        <option value="$PROJECT_DIR$/asset/js/own/loaderData.js" />
+        <option value="$PROJECT_DIR$/src/hotel/list-hotel.html" />
+        <option value="$PROJECT_DIR$/src/hotel/edit-hotel.html" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/package/card-package.html" />
+        <option value="$PROJECT_DIR$/src/mutawwif/card-mutawwif.html" />
+        <option value="$PROJECT_DIR$/src/mutawwif/list-mutawwif.html" />
+        <option value="$PROJECT_DIR$/src/mutawwif/home.html" />
+        <option value="$PROJECT_DIR$/src/mutawwif/edit-mutawwif.html" />
+        <option value="$PROJECT_DIR$/src/package/home.html" />
+        <option value="$PROJECT_DIR$/src/hotel/card-hotel.html" />
+        <option value="$PROJECT_DIR$/src/app.html" />
+        <option value="$PROJECT_DIR$/asset/css/custom-style.css" />
+        <option value="$PROJECT_DIR$/src/component/panel.html" />
+        <option value="$PROJECT_DIR$/src/component/navbar.html" />
         <option value="$PROJECT_DIR$/src/component/entry-naked.html" />
+        <option value="$PROJECT_DIR$/src/component/entry.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/card-itinerary.html" />
+        <option value="$PROJECT_DIR$/src/itinerary/edit-itinerary.html" />
+        <option value="$PROJECT_DIR$/codes/he.js" />
+        <option value="$PROJECT_DIR$/codes/ListExtractor.js" />
+        <option value="$PROJECT_DIR$/asset/js/own/utils.js" />
       </list>
     </option>
   </component>
@@ -213,10 +400,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -252,27 +439,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -282,25 +469,43 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="itinerary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -310,11 +515,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -328,11 +533,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="esnaadm" />
+              <option name="myItemId" value="travel-umroh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -363,17 +568,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Workspace\deployd\travel-umroh\src\navbar" />
-      <recent name="C:\workspace\esnaadm\src" />
-      <recent name="C:\workspace\esnaadm\src\component\main-menu" />
-      <recent name="C:\workspace\esnaadm\public\src\user" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Workspace\deployd\travel-umroh\asset\js\own" />
       <recent name="C:\Workspace\deployd\travel-umroh\public\dist" />
       <recent name="C:\Workspace\deployd\travel-umroh\public\asset\js\own" />
       <recent name="C:\workspace\esnaadm\public\asset\js\own" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Workspace\deployd\travel-umroh\src\navbar" />
+      <recent name="C:\workspace\esnaadm\src" />
+      <recent name="C:\workspace\esnaadm\src\component\main-menu" />
+      <recent name="C:\workspace\esnaadm\public\src\user" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.Dpd">
@@ -502,6 +707,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2c50963b-cc68-4f12-94ce-6e2722ecb993" name="Default" comment="" />
@@ -556,19 +764,23 @@
       <workItem from="1503198189664" duration="7052000" />
       <workItem from="1503223155845" duration="82000" />
       <workItem from="1503223435964" duration="783000" />
-      <workItem from="1503245332177" duration="1488000" />
-      <workItem from="1503284413080" duration="18882000" />
+      <workItem from="1503245332177" duration="24117000" />
+      <workItem from="1503803882372" duration="21326000" />
+      <workItem from="1503889286615" duration="18627000" />
+      <workItem from="1503973500366" duration="20264000" />
+      <workItem from="1504000280477" duration="1456000" />
+      <workItem from="1504255351021" duration="23794000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="625771000" />
+    <option name="totallyTimeSpent" value="714985000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19546892" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.196875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07662835" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -582,7 +794,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2497309" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32782102" sideWeight="0.49583334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -594,76 +806,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/block.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="228" column="16" lean-forward="false" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/prayers/home.js" />
-    <entry file="file://$PROJECT_DIR$/filewatcher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2822">
-          <caret line="166" column="22" lean-forward="false" selection-start-line="166" selection-start-column="22" selection-end-line="166" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pray-times/space-time.html" />
-    <entry file="file://$PROJECT_DIR$/src/prayers/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="24" column="71" lean-forward="false" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
-          <folding>
-            <marker date="1502273158277" expanded="true" signature="4815:4825" ph="{&quot;name&quot;: 'Doa masuk kota Mekkah'...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/prayers/prayer-name.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map/map.html" />
-    <entry file="file://$PROJECT_DIR$/src/umroh-procedure/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pray-times/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2222">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/navbar/burger.html" />
-    <entry file="file://$PROJECT_DIR$/src/navbar/home.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/content.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/shell.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/header.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/drawer.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/navbar.html" />
-    <entry file="file://$PROJECT_DIR$/src/component/navbar/home.html" />
-    <entry file="file://$PROJECT_DIR$/src/component/navbar/burger.html" />
-    <entry file="file://$PROJECT_DIR$/src/comp/itinerary/itinerary-page.html" />
-    <entry file="file://$PROJECT_DIR$/src/search-package/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary-bulleted.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -685,34 +832,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/sample-1.jpg" />
-    <entry file="file://$PROJECT_DIR$/src/test.html" />
     <entry file="file://$PROJECT_DIR$/src/search-package/search-panel.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="51" lean-forward="false" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="156" column="17" lean-forward="false" selection-start-line="156" selection-start-column="17" selection-end-line="156" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/panel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="65" lean-forward="false" selection-start-line="1" selection-start-column="65" selection-end-line="1" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/navbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1078">
-          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -723,17 +846,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app.html">
+    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="1782" column="14" lean-forward="false" selection-start-line="1782" selection-start-column="14" selection-end-line="1782" selection-end-column="14" />
+        <state relative-caret-position="374">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -758,6 +874,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7040">
+          <caret line="320" column="109" lean-forward="false" selection-start-line="320" selection-start-column="12" selection-end-line="320" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/asset/js/own/geoLocation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
@@ -765,25 +888,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qibla/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/map.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -798,78 +906,265 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/itinerary/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/yalla-patch.js">
+    <entry file="file://$PROJECT_DIR$/src/qibla/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="70" column="37" lean-forward="false" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="22">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/asset/js/own/loader.js">
+    <entry file="file://$PROJECT_DIR$/src/component/airports/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1456">
-          <caret line="206" column="20" lean-forward="false" selection-start-line="206" selection-start-column="9" selection-end-line="206" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="440">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/attachments/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4342">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/profile-picture/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="54" lean-forward="false" selection-start-line="13" selection-start-column="54" selection-end-line="13" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/tist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="53" lean-forward="false" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/js/own/loaderData.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="71" column="53" lean-forward="false" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
+        <state relative-caret-position="816">
+          <caret line="48" column="26" lean-forward="false" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hotel/edit-hotel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1462">
+          <caret line="86" column="44" lean-forward="false" selection-start-line="86" selection-start-column="44" selection-end-line="86" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/test.html" />
+    <entry file="file://$PROJECT_DIR$/src/sample-1.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="57" column="21" lean-forward="false" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/yalla.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11186">
+          <caret line="660" column="35" lean-forward="false" selection-start-line="660" selection-start-column="23" selection-end-line="660" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mutawwif/list-mutawwif.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="42" column="10" lean-forward="false" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mutawwif/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="43" column="10" lean-forward="false" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mutawwif/edit-mutawwif.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2057">
+          <caret line="121" column="14" lean-forward="false" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package/edit-package.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-714">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hotel/list-hotel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-299">
+          <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hotel/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="29" lean-forward="false" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/travel-agent/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="41" lean-forward="false" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package/card-package.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mutawwif/card-mutawwif.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="10" lean-forward="false" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/css/custom-style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/panel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1188">
+          <caret line="54" column="10" lean-forward="false" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hotel/card-hotel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="42" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/navbar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/component/entry.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="803">
-          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/airports/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="44" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+        <state relative-caret-position="465">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/component/entry-naked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="112" lean-forward="true" selection-start-line="6" selection-start-column="112" selection-end-line="6" selection-end-column="112" />
+        <state relative-caret-position="44">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/card-itinerary.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="733">
+          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/he.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6820">
+          <caret line="310" column="4" lean-forward="true" selection-start-line="310" selection-start-column="4" selection-end-line="310" selection-end-column="4" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codes/ListExtractor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itinerary/edit-itinerary.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="233" column="0" lean-forward="false" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/own/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
       </provider>

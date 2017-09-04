@@ -55,18 +55,26 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
 
   function onPackageClick(event) {
     this.state.displayedPackageId = event.data;
+    debugger;
     $patchChanges();
   }
 
   function onSearch(event) {
     this.state.startDate = event.data.startDate;
     this.state.endDate = event.data.endDate;
+    //debugger;
     $patchChanges();
   }
-
+  /*
   function onRecordsFound(event) {
-    this.state.recordsFound = event.data;
-    $patchChanges('panelParam');
+  	this.state.recordsFound = event.data;
+  	//$patchChanges('panelParam');
+  }
+  */
+  function onClosePackageDisplay() {
+    this.state.displayedPackageId = null;
+    debugger;
+    $patchChanges();
   }
 
   function $render(_props, _slotView) {
@@ -158,7 +166,27 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
       _elementOpenEnd("span");
       yalla.framework.registerRef("displayPackage", IncrementalDOM.currentElement(), function() {
         var _params = {
-          "packageId": _state.displayedPackageId
+          "packageId": _state.displayedPackageId,
+          "onclose": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
+            }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onClosePackageDisplay.bind(self)();
+          }
         };
         _context["show-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       })()

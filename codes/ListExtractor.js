@@ -1,3 +1,5 @@
+var he = require('../codes/he.js');
+
 removeHyperlink = function(data)
 {
     for(var i = 0; i >= 0;)
@@ -66,24 +68,55 @@ function getList(data, skipUntilTag, componentList)
         var entry = {};
         for(var i = 0; i < componentList.length; i++)
         {
-            var value = getElementValue(paket, componentList[i].begTag, componentList[i].endTag);
-            if(componentList[i].componentName != "")
-            {
-                entry[componentList[i].componentName] = value;
-                validEntry = validEntry && ((!componentList[i].mandatory) || (value !== ""));
-                gotValue = gotValue || (value !== "");
+            if(componentList[i].begTag || componentList[i].endTag) {
+	            var value = getElementValue(paket, componentList[i].begTag, componentList[i].endTag);
+	            if(componentList[i].componentName != "") {
+		            value = he.decode(value);
+		            if(componentList[i].replace) {
+			            //console.log(value);
+			            //console.log(componentList[i].replace);
+			            for(var r = 0; r < componentList[i].replace.length; r++) {
+				            value = value.replaceAll(componentList[i].replace[r].text, componentList[i].replace[r].with);
+			            }
+			            //console.log(value);
+		            }
+		            value = value.trim();
+		            validEntry = validEntry && ((!componentList[i].mandatory) || (value !== ""));
+		            gotValue = gotValue || (value !== "");
+		            entry[componentList[i].componentName] = value;
+	            }
             }
         }
-        if(validEntry && gotValue) result.push(entry);
+        if(validEntry && gotValue) {
+	        for(var i = 0; i < componentList.length; i++){
+		        if(componentList[i].alias) {
+			        entry[componentList[i].componentName] = (entry[componentList[i].alias].indexOf(entry[componentList[i].componentName]) == 0 ? '' : entry[componentList[i].componentName]);
+		        }
+	        }
+	        for(var i = 0; i < componentList.length; i++){
+		        if(componentList[i].combine) {
+		            //console.log('combine');
+		            var delimiter = componentList[i].combine.delimiter;
+		            var compound = '';
+		            for(var c = 0; c < componentList[i].combine.components.length; c++){
+                        if(compound != '') compound = compound + delimiter;
+                        compound = compound + entry[componentList[i].combine.components[c]];
+                        //console.log(compound);
+                    }
+			        entry[componentList[i].componentName] = compound;
+		        }
+	        }
+            result.push(entry);
+        }
     }
     return result;
 };
 
 exports.retrieve = function(isHttps, host, path, skipUntilTag, componentList)
 {
-    var http = require(isHttps ? 'https' : 'http');
 
-    var promise = new Promise(function(resolve){
+    var http = require(isHttps ? 'https' : 'http');
+    var promise = new Promise(function(resolve, reject){
         var options = {
             host: host,
             path: path,
@@ -92,6 +125,9 @@ exports.retrieve = function(isHttps, host, path, skipUntilTag, componentList)
         var result = [];
         var request = http.request(options, function (res) {
                 var data = '';
+                res.on('error', function(err){
+                   reject(err);
+                });
                 res.on('data', function (chunk) {
                     data += chunk;
                 });
@@ -111,5 +147,4 @@ exports.retrieve = function(isHttps, host, path, skipUntilTag, componentList)
 
     });
     return promise;
-
 };

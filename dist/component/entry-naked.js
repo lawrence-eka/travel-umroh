@@ -29,33 +29,54 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
   };
 
   function onPropertyChange(event) {};
-
-  //    var as;
-  //    var state = {
-  //    	inited:false,
-  //    }
-  function initAwesomplete(state) {
-    //    	debugger;
-    if (state.inited) return;
-    state.inited = true;
-    new Awesomplete(document.getElementsByName(state.name)[0], {
-      list: state.entries
-    });
-  }
-
+  /**/
   function initState(props) {
-    //debugger;
-    var state = {
-      inited: false,
-    }
-
+    // debugger;
+    var state = {};
     if (props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
     state.name = props.name;
     state.error = null;
     state.alias = props.alias;
     state.entries = props.entries;
-    if (props.type == 'lookup') setTimeout(initAwesomplete.bind(this, state), 0);
+    state.lookupDelimiter = props.lookupDelimiter;
+
     return state;
+  }
+
+  function initAwesomplete(value) {
+    var as = new Awesomplete(this.target, {
+      list: this.state.entries
+    });
+    this.target.addEventListener('awesomplete-select', onAwesompleteSelect.bind(this));
+    as.replace = awesompleteReplace.bind(this);
+    if (as._list.length > 0 && as._list[0].label && as._list[0].value) {
+      var item = (as._list.find(function(x) {
+        return x.value == value
+      }));
+      if (item) {
+        as.input.value = item.label;
+      } else {
+        as.input.value = ''
+      }
+    } else {
+      as.input.value = value;
+    }
+  }
+
+  function awesompleteReplace(text) {
+    var t = text;
+    if (this.state.lookupDelimiter) {
+      t = text.label.split(this.state.lookupDelimiter);
+      t.splice(-1)
+      t = t.join(this.state.lookupDelimiter);
+    }
+    this.target.value = t;
+  }
+
+  function onAwesompleteSelect(event) {
+    //debugger;
+    document.getElementsByName(this.state.name)[0].value = event.text.value ? event.text.value : event.text;
+    this.emitEvent('lookupSelected', event.text);
   }
 
   function calculateRootStyle(margin) {
@@ -89,19 +110,8 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
     else return '';
   }
 
-  function whatDivClass(divClass) {
-    if (divClass) return divClass;
-    else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
-  }
-
-  function whatInnerDivClass(innerDivClass) {
-    if (innerDivClass) return innerDivClass;
-    else return "form-group custom-entry-margin";
-  }
-
-  function whatType(type) {
-    if ('|textarea|label|hidden|button|checkbox|hyperlink|select|lookup|datalist|'.indexOf('|' + type + '|') >= 0) return type;
-    else return 'other';
+  function isGeneric(type) {
+    return ('|textarea|label|checkbox|hyperlink|select|lookup|'.indexOf('|' + type + '|') < 0);
   }
 
   function onHyperlinkClick() {
@@ -153,7 +163,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       yalla.framework.propertyCheckChanges(_component._properties, _props, onPropertyChange.bind(_self));
     }
     _component._properties = _props;
-    if ((_props.glyph || _props.prompt) && (whatType(_props.type) == 'label' || (whatType(_props.type) != 'checkbox' && whatType(_props.type) != 'hyperlink' && whatType(_props.type) != 'hidden'))) {
+    if ((_props.glyph || _props.prompt) && ((_props.type) == 'label' || ((_props.type) != 'checkbox' && (_props.type) != 'hyperlink' && (_props.type) != 'hidden'))) {
       _elementOpenStart("label", "");
       _attr("class", ((_props.class ? _props.class : 'custom-entry-prompt' + (_props.deleted ? ' custom-deleted-text' : ''))));
       _attr("onclick", function(event) {
@@ -186,17 +196,37 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       }
       _elementClose("label");
     }
-    if (whatType(_props.type) == 'other') {
+    if (isGeneric(_props.type)) {
       _elementOpenStart("input", "");
       _attr("type", _props.type);
       _attr("name", _props.name);
-      _attr("class", "form-control input-sm");
+      _attr("class", (_props.class ? _props.class : 'form-control ' + (_props.type == 'button' ? 'btn btn-info btn-block' : 'input-sm')));
       _attr("required", _props.required);
       _attr("placeholder", _props.placeholder);
       _attr("value", setValue.bind(self)(_props.value, _props.min, _props.max));
       _attr("min", _props.min);
       _attr("max", _props.max);
       _attr("accept", _props.accept);
+      _attr("onclick", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        onButtonClicked.bind(self)();
+      });
       _attr("onfocusout", function(event) {
         var self = {
           target: event.target
@@ -257,47 +287,12 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
         };
         onKeyUp.bind(self)();
       });
+      _attr("style", (_props.hidden ? 'visibility:hidden; position:absolute; left:0; top:0' : (_props.uppercase ? 'text-transform:uppercase' : '')));
+      _attr("blob", _props.blob);
       _elementOpenEnd("input");
       _elementClose("input");
     }
-    if (whatType(_props.type) == 'hidden') {
-      _elementOpenStart("input", "");
-      _attr("type", _props.type);
-      _attr("name", _props.name);
-      _attr("value", _props.value);
-      _elementOpenEnd("input");
-      _elementClose("input");
-    }
-    if (whatType(_props.type) == 'button') {
-      _elementOpenStart("input", "");
-      _attr("type", _props.type);
-      _attr("name", _props.name);
-      _attr("class", (_props.class ? _props.class : 'form-control btn btn-info btn-block'));
-      _attr("value", _props.value);
-      _attr("onclick", function(event) {
-        var self = {
-          target: event.target
-        };
-        self.properties = _props;
-        if ('elements' in self.target) {
-          self.elements = self.target.elements;
-        }
-        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-        self.component = _component;
-        self.component._state = self.component._state || {};
-        self.state = self.component._state;
-        self.emitEvent = function(eventName, data) {
-          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-          if ('on' + eventName in _props) {
-            _props['on' + eventName](event);
-          }
-        };
-        onButtonClicked.bind(self)();
-      });
-      _elementOpenEnd("input");
-      _elementClose("input");
-    }
-    if (whatType(_props.type) == 'textarea') {
+    if ((_props.type) == 'textarea') {
       _elementOpenStart("textarea", "");
       _attr("name", _props.name);
       _attr("required", _props.required);
@@ -326,7 +321,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _text("" + ((_props.value ? _props.value : '')) + "");
       _elementClose("textarea");
     }
-    if (whatType(_props.type) == 'hyperlink') {
+    if ((_props.type) == 'hyperlink') {
       _elementOpenStart("a", "");
       _attr("href", _props.href);
       _attr("class", (_props.class ? _props.class : 'custom-entry-prompt'));
@@ -354,7 +349,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _text("" + (_props.prompt) + "");
       _elementClose("a");
     }
-    if (whatType(_props.type) == 'checkbox') {
+    if ((_props.type) == 'checkbox') {
       _elementOpenStart("div", "");
       _elementOpenEnd("div");
       _elementOpenStart("input", "");
@@ -489,7 +484,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _elementClose("div");
       _elementClose("div");
     }
-    if (whatType(_props.type) == 'select') {
+    if ((_props.type) == 'select') {
       _elementOpenStart("div", "");
       _attr("onchange", function(event) {
         var self = {
@@ -515,6 +510,7 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _elementOpenStart("select", "");
       _attr("class", "form-control input-sm");
       _attr("name", _props.name);
+      _attr("required", _props.required);
       _elementOpenEnd("select");
       var _array = _props.entries || [];
       _array.forEach(function(entry) {
@@ -528,19 +524,45 @@ yalla.framework.addComponent("/dist/component/entry-naked", (function() {
       _elementClose("select");
       _elementClose("div");
     }
-    if (whatType(_props.type) == 'lookup') {
+    if ((_props.type) == 'lookup') {
       _elementOpenStart("div", "");
       _elementOpenEnd("div");
       _elementOpenStart("input", "");
       _attr("class", "form-control input-sm");
-      _attr("name", _props.name);
+      _attr("name", _props.name + '-display');
       _attr("data-minchars", "1");
+      _attr("required", _props.required);
+      _attr("oncreated", function(event) {
+        var self = {
+          target: event.target
+        };
+        self.properties = _props;
+        if ('elements' in self.target) {
+          self.elements = self.target.elements;
+        }
+        self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+        self.component = _component;
+        self.component._state = self.component._state || {};
+        self.state = self.component._state;
+        self.emitEvent = function(eventName, data) {
+          var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+          if ('on' + eventName in _props) {
+            _props['on' + eventName](event);
+          }
+        };
+        initAwesomplete.bind(self)(_props.value);
+      });
+      _elementOpenEnd("input");
+      _elementClose("input");
+      _elementOpenStart("input", "");
+      _attr("type", "hidden");
+      _attr("name", _props.name);
       _attr("value", _props.value);
       _elementOpenEnd("input");
       _elementClose("input");
       _elementClose("div");
     }
-    if (_state.error && whatType(_props.type) != 'hidden') {
+    if (_state.error && (_props.type) != 'hidden') {
       _elementOpenStart("label", "");
       _attr("class", "custom-entry-prompt custom-error-text");
       _elementOpenEnd("label");

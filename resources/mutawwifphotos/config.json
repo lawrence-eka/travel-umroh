@@ -1,0 +1,6 @@
+{
+	"type": "Fileupload",
+	"directory": "upload/mutawwifphotos",
+	"authorization": false,
+	"uniqueFilename": false
+}

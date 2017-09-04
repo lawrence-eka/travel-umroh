@@ -31,6 +31,8 @@ function mainMenu (path){
 	var menu = [
 			{code:'schedule', icon:'calendar',short:'Schedule', long:'Find Schedule', addr:'#app/search-package.home'},
 			{code:'bookings', icon:'ticket',short:'Bookings', long:'My Bookings', addr:'#app/booking.home'},
+			{code:'hotels', icon:'hotel',short:'Hotels', long:'Hotels', addr:'#app/hotel.home'},
+			{code:'mutawwifs', icon:'graduation-cap',short:'Mutawwifs', long:'My Mutawwifs', addr:'#app/mutawwif.home'},
 			{code:'travelAgent', icon:'plane',short:'Travel Agent', long:'My Travel Agents', addr:'#app/travel-agent.home'},
 			{code:'confirmPayment', icon:'money',short:'Payments', long:'Payment Confirmation', addr:'#app/booking.paymentConfirmation'},
 			{code:'approveUsers', icon:'files-o',short:'Approvals', long:'User Approval', addr:'#app/user.myApprovals'},
@@ -48,7 +50,7 @@ function mainMenu (path){
 		var result = '|schedule|login|prayTimes|qibla|prayers|steps|map|';
 		if(me) {
 			result += 'profile|bookings|';
-			if(me.isTravelAgent) result += 'travelAgent|confirmPayment|';
+			if(me.isTravelAgent) result += 'travelAgent|confirmPayment|mutawwifs|hotels|';
 			if(me.isAdmin) result += 'manageUsers|approveUsers|';
 		}
 		return result;//.toLowerCase();

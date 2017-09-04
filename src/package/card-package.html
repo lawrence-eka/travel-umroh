@@ -1,21 +1,56 @@
 <inject from="/component/panel" name="card"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/mutawwif/card-mutawwif" name="mtw"></inject>
 
 <div>
     <card title.bind="$pkg.packageName" nofooter click.trigger="onClick($pkg.id)">
         <div slot.name="body">
             <strong>Status:{{whatStatus($pkg)}}</strong><br/>
-            Travel Date: {{$pkg.travelDateFrom ? $pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil) : ''}} <br/>
-            Land Arrangements: {{$pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : ''}}<br/>
-            Tickets: {{$pkg.costTickets ? $pkg.costTickets.toFormattedString(): ''}}
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <entry type="label" prompt="Travel Date:" naked></entry>{{nbsp}}
+                        <entry type="label" prompt.bind="($pkg.travelDateFrom ? $pkg.travelDateFrom.toStringDateRange($pkg.travelDateUntil) : '')" naked></entry>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <entry type="label" prompt="Land Arrangement:" naked></entry>{{nbsp}}
+                        <entry type="label" prompt.bind="($pkg.costLandArrangements ? $pkg.costLandArrangements.toFormattedString() : '')" naked></entry>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <entry type="label" prompt="Ticket:" naked></entry>{{nbsp}}
+                        <entry type="label" prompt.bind="($pkg.costTickets ? $pkg.costTickets.toFormattedString(): '')" naked></entry>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <entry type="label" prompt="Mutawwif:" naked></entry>{{nbsp}}
+                        <entry type="hyperlink" if.bind="$pkg.mutawwif" prompt.bind="$pkg.mutawwif" click.trigger="onShowMutawwif($pkg.mutawwifId)" naked></entry>
+                    </div>
+                </div>
+            </div>
             <div class=row" if.bind="$onedit || $onshowItinerary">
+                <div class="col">
+                    <entry type="label" prompt=" " naked></entry>{{nbsp}}
+                </div>
                 <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($pkg.id)"></entry>
                 <entry type="button" value="Itinerary..." divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onItineraryClicked($pkg.id)"></entry>
             </div>
         </div>
     </card>
+    <mtw if.bind="@showMutawwif" mutawwif.bind="@showMutawwif" aspopup close.trigger="onCloseMutawwif()"></mtw>
 </div>
 <script>
+    var nbsp = ' ';
+    function initState(props){
+    	return {
+            showMutawwif:null,
+        }
+
+    }
     function whatStatus(pkg) {
     	var today = new Date();
     	if(!pkg.isPublished) return "Draft";
@@ -35,6 +70,16 @@
     }
     function onEdit(packageId) {
 	    this.emitEvent('edit', packageId);
+    }
+
+    function onShowMutawwif(mutawwif) {
+    	this.state.showMutawwif = mutawwif;
+    	$patchChanges();
+    }
+
+    function onCloseMutawwif(){
+	    this.state.showMutawwif = null;
+	    $patchChanges();
     }
 
 </script>

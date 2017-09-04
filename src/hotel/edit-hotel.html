@@ -1,0 +1,153 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/alert" name="alert"></inject>
+<inject from="/component/profile-picture/home" name="pict"></inject>
+
+<div data.load="getHotel()">
+    <panel title.bind="(@hotelId ? 'Edit' : 'New') +  ' Hotel'" nofooter>
+        <div slot.name="body">
+            <span ref.name="alert">
+                <form>
+                    <div class="row">
+                        <pict name="pict" img.bind="'/upload/hotelphotos/' + data.id + '.jpg'"></pict>
+                        <entry type="text" prompt="Hotel Name" name="hotelName" value.bind="data.hotelName" alert.bind="@alert"></entry>
+                        <entry type="textarea" prompt="Address" name="address" value.bind="data.address" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="City" name="city" value.bind="data.city" alert.bind="@alert"></entry>
+                        <entry type="text" prompt="Phone Name" name="phone" value.bind="data.phone" alert.bind="@alert"></entry>
+                        <entry type="button" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
+                        <entry type="button" value="Cancel" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onCancel()"></entry>
+                    </div>
+                </form>
+                <alert message.bind="@alert.text()" alertType.bind="@alert.type()"></alert>
+            </span>
+        </div>
+    </panel>
+</div>
+
+<script>
+	function initState(props){
+		//debugger;
+		var state ={
+			hotelId: props.hotelId,
+			contactPersonId: props.contactPersonId,
+			data: null,
+			alert: new Alert(null, $patchChanges, "alert"),
+		}
+		return state;
+	}
+
+	function getHotel(){
+		var self = this;
+		return new Promise(function(resolve){
+			if(!self.state.contactPersonId || !self.state.hotelId) {
+				self.state.data = {};
+				resolve(self.state.data);
+			}
+			else {
+				dpd.hotels.get({
+					id: self.state.hotelId,
+					contactPersonId: self.state.contactPersonId
+				}, function (hotel) {
+					self.state.data = hotel;
+					resolve(self.state.data);
+				});
+			}
+		});
+	}
+
+	function onCancel() {
+		this.emitEvent('close');
+	}
+
+	function onSave(){
+		//debugger;
+		var self = this;
+		var fe = self.target.form.elements;
+
+		var htl = self.state.data;
+		htl.contactPersonId = self.state.contactPersonId;
+		htl.hotelName = fe.hotelName.value;
+		htl.address = fe.address.value;
+		htl.city = fe.city.value;
+		htl.phone = fe.phone.value;
+		var img = fe.pict.blob;
+		if(!self.state.contactPersonId) {
+			self.emitEvent('close');
+		}
+		else if(!self.state.hotelId) {
+			dpd.hotels.post(htl, function(result, err){
+				self.state.alert.alert(err);
+				if(!err){
+					prepareProfilePicture.bind(self)(img, result.id);
+				}
+			});
+		}
+		else {
+			dpd.hotels.put(self.state.hotelId, htl, function(result, err){
+				self.state.alert.alert(err);
+				if(!err){
+					prepareProfilePicture.bind(self)(img, self.state.hotelId)
+				}
+			}); /**/
+		}
+	}
+
+	function prepareProfilePicture(img, hotelId) {
+		var self = this;
+		if(img) {
+			saveFiles.bind(this)([img], hotelId + '.jpg')
+				.then(function(result){
+					debugger;
+					dpd.hotels.put(hotelId, {pictureId:result.add[0]}, function(result){
+						self.emitEvent('close')
+					})
+				})
+				.catch(function(err){
+					debugger;
+					self.state.alert.alert(err);
+				});
+		} else {
+			debugger;
+			self.emitEvent('close')
+		}
+	}
+	function saveFiles(imgs, newFileName) {
+		var self = this;
+		console.log('promise to upload');
+
+		return new Promise(function(resolve, reject){
+			var fd = new FormData();
+			debugger;
+			if(imgs.length > 0) {
+                /* new way started */
+				for(var i in imgs) {
+					fd.append("uploadedFile", imgs[i].blob, newFileName ? newFileName  : imgs[i].filename.name)
+				}
+				var xhr = new XMLHttpRequest();
+				xhr.open('PUT', '/hotelphotos');
+				xhr.onload = function () {
+					var response = JSON.parse(this.responseText);
+
+					if(this.status < 300) {
+						//debugger;
+						var results = [];
+						response.forEach(function(x) {results.push(x.id);});
+						console.log("Upload success.");
+						resolve({add: results});
+					} else {
+						console.log(response.message);
+						reject({message: response.message});
+					}
+				};
+				xhr.onerror = function (err) {
+					reject({message: err});
+				}
+				xhr.send(fd);
+			} else {
+				console.log("Nothing to upload.");
+				resolve();
+			}
+		});
+	}
+
+</script>

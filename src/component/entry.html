@@ -20,10 +20,15 @@
         margin.bind="$margin"
         deleted.bind="$deleted"
         accept.bind="$accept"
+        hidden.bind ="$hidden"
+        blob.bind="$blob"
+        uppercase.bind="$uppercase"
+        lookupDelimiter.bind="$lookupDelimiter"
         change.trigger="onChange(event)"
         keyUp.trigger="onKeyUp(event)"
         click.trigger="onClick()"
-        focusout.trigger="onFocusOut()">
+        focusout.trigger="onFocusOut()"
+        lookupSelected.trigger="onLookupSelected(event)">
     </entry-naked>
     <div if.bind="!$naked && $type!='hidden'" class.bind="whatDivClass($divClass)">
         <div class.bind="whatInnerDivClass($innerDivClass)">
@@ -46,10 +51,15 @@
                 margin.bind="$margin"
                 deleted.bind="$deleted"
                 accept.bind="$accept"
+                hidden.bind ="$hidden"
+                blob.bind="$blob"
+                uppercase.bind="$uppercase"
+                lookupDelimiter.bind="$lookupDelimiter"
                 change.trigger="onChange(event)"
                 keyUp.trigger="onKeyUp(event)"
                 click.trigger="onClick(event)"
-                focusout.trigger="onFocusOut()">
+                focusout.trigger="onFocusOut()"
+                lookupSelected.trigger="onLookupSelected(event)">
             </entry-naked>
         </div>
     </div>
@@ -80,6 +90,10 @@
 
     function onKeyUp(event) {
 	    this.emitEvent('keyUp', event.data);
+    }
+
+    function onLookupSelected(event){
+    	this.emitEvent('lookupSelected', event.data);
     }
 </script>
 

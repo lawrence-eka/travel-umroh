@@ -12,7 +12,7 @@
         <card-package pkg.bind="data"></card-package>
     </div>
     <div data.load="queryItineraries()">
-        <card-itineraryList itinerary.bind="data" book.trigger="book()"></card-itineraryList>
+        <card-itineraryList itinerary.bind="data" book.trigger="book()" close.trigger="onClose()"></card-itineraryList>
     </div>
 </div>
 
@@ -29,6 +29,9 @@
     	debugger;
     }
 
+    function onClose() {
+    	this.emitEvent('close');
+    }
     function book(){
         var me = storage.me.read();
         var self = this;

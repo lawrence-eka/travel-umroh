@@ -1,0 +1,80 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/profile-picture/home" name="pict"></inject>
+<inject from="/mutawwif/card-mutawwif" name="mutawwif"></inject>
+
+<div ref.name="list">
+    <div data.load="getMutawwifs()">
+        <span for.each="mutawwif in data">
+            <mutawwif mutawwif.bind="mutawwif" edit.trigger="onEdit(event)" delete.trigger="onDelete(event)"></mutawwif>
+        </span>
+    </div>
+</div>
+
+<script>
+	function initState(props){
+		//debugger;
+		var state ={
+			contactPersonId: props.contactPersonId,
+			data: null,
+	}
+		return state;
+	}
+
+	function getMutawwifs(){
+		var self = this;
+		return new Promise(function(resolve){
+			if(!self.state.contactPersonId) {
+				self.state.data = [];
+				resolve(self.state.data);
+			}
+			else {
+				dpd.mutawwifs.get({
+					contactPersonId: self.state.contactPersonId
+				}, function (mutawwifs) {
+					self.state.data = mutawwifs;
+					resolve(self.state.data);
+				});
+			}
+		});
+	}
+
+	function onEdit(event){
+		//debugger;
+		this.emitEvent('edit', event.data);
+    }
+
+    function onDelete(event) {
+		var mutawwifId = event.data;
+		var self = this;
+		debugger;
+		if(!mutawwifId) return;
+		else {
+			var m = self.state.data.find(function(x){return x.id == mutawwifId});
+			if(!m) return;
+			else {
+				deletePict(m.pictureId).then(function(){
+					dpd.mutawwifs.del(mutawwifId, function(result, err){
+						debugger;
+						self.emitEvent('delete', mutawwifId);
+						$patchChanges('list');
+					})
+				})
+            }
+        }
+    }
+
+    function deletePict(pictureId){
+		return new Promise(function(resolve){
+		    if(pictureId) {
+			    dpd.mutawwifphotos.del(pictureId, function (result, err) {
+				    debugger;
+				    resolve();
+			    });
+		    }
+		    else {
+			    resolve();
+		    }
+        });
+    }
+</script>

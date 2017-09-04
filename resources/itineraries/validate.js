@@ -32,6 +32,8 @@ if(this.entry.transport)
     fromDateType = "Departure";
     toDateType = "Arrival";
 }
+
+
 else if(this.entry.hotel)
 {
     errorIf(!this.entry.checkIn, "checkIn", "Missing Check In Date Info");
@@ -46,8 +48,8 @@ else if(this.entry.hotel)
     toDateType = "Check Out";
 }
 
-errorIf(fromDateTime < (new Date()).getTime(), 'Date', "'" + fromDateType + " Date' (" + fromDateTime + ") must be a future date");
-errorIf(fromDateTime > toDateTime, 'Date Range', "'" + fromDateType + " Date' (" + fromDateTime + ") must be less or equal to '" + toDateType + " Date' (" + toDateTime + ")");
+//errorIf(fromDateTime < (new Date()).getTime(), 'Date', "'" + fromDateType + " Date' (" + fromDateTime + ") must be a future date");
+//errorIf(fromDateTime > toDateTime, 'Date Range', "'" + fromDateType + " Date' (" + fromDateTime + ") must be less or equal to '" + toDateType + " Date' (" + toDateTime + ")");
 
 var query = {  
     "id": {"$ne": this.id},
@@ -76,11 +78,13 @@ var query = {
         }
     ]
 };
+
 /*
 dpd.itineraries.get(query, function (result) {
     errorIf(result && result.length > 0, "Date", "The date range (" + fromDateTime + " - " + toDateTime + ") overlaps with existing itinerary");
 });
 */
+
 
 dpd.packages.get(this.packageId, function (travelPackage) {
     if(travelPackage)

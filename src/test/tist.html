@@ -1,0 +1,16 @@
+<inject from="/test/test" name="test"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div>
+    <form>
+        <test value.bind="$value" name ='bah' entries.bind="[{label:'katy perry', value:'kp'}, {label:'taylor swift', value:'ts'}, {label:'selena gomez', value:'sg'}]"></test>
+        <entry type="button" click.trigger="onClick()"></entry>
+    </form>
+</div>
+
+<script>
+    function onClick(){
+    	debugger;
+
+    }
+</script>

@@ -87,6 +87,8 @@ yalla.framework.addComponent("/dist/itinerary/home", (function() {
     var list = _context["list"];
     _context["edit-itinerary"] = $inject("/itinerary/edit-itinerary");
     var editItinerary = _context["edit-itinerary"];
+    _context["home"] = $inject("/component/home-button");
+    var home = _context["home"];
     _elementOpenStart("div", "");
     _attr("element", "dist.itinerary.home");
     _elementOpenEnd("div");
@@ -158,6 +160,9 @@ yalla.framework.addComponent("/dist/itinerary/home", (function() {
             if (slotName === "body") {
               _elementOpenStart("div", "");
               _elementOpenEnd("div");
+              _elementOpenStart("div", "");
+              _attr("class", "row");
+              _elementOpenEnd("div");
               var _params = {
                 "type": "button",
                 "value": "Add Transport",
@@ -208,6 +213,9 @@ yalla.framework.addComponent("/dist/itinerary/home", (function() {
                 }
               };
               _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              var _params = {};
+              _context["home"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+              _elementClose("div");
               _elementClose("div");
             }
           });

@@ -4,47 +4,59 @@
 
 <div>
     <panel title.bind="((@itineraryId ? 'Edit' : 'New') + ' Entry')" nofooter>
-        <div slot.name="body" data.load="getItinerary()">
+        <div slot.name="body" data.load="getData()">
             <form>
-                <input type="hidden" name="id" value.bind="data.id">
-                <input type="hidden" name="packageId" value.bind="data.packageId">
-<!--
-                <div class=row" if.bind="false">
-                    <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
-                    <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
-                </div>
--->
-                <div class.bind="isVisible('Transport')">
-                    <div class="row">
-                        <entry type="select" name="transportType" value.bind="data.entry.transportType" prompt="Transport" entries.bind="['Plane', 'Bus', 'Train', 'Car', 'Ship']" change.trigger="onTransportTypeChange()"></entry>
-                    </div>
-                    <div class="row">
-                        <div ref.name="spanTransport">
-                            <entry type="text" name="transport" prompt.bind="whatTransportType()" value.bind="data.entry.transport"></entry>
-                        </div>
-                        <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):@datePair.departure.defaultStartDate(true))" min.bind="@datePair.departure.minStartDate(true)" focusout.trigger="@datePair.departure.onStartDateFocusOut('arrival')"></entry>
-                        <entry type="text" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom"></entry>
-                        <div ref.name="arrival">
-                            <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : @datePair.departure.defaultEndDate(true))" min.bind="@datePair.departure.minEndDate(true)"></entry>
-                        </div>
-                        <entry type="text" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt"></entry>
-                    </div>
-                </div>
-                <div class.bind ="isVisible('Hotel')">
-                    <div class="row">
-                        <entry type="date" name="checkIn" class="form-control input-sm" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD():@datePair.checkIn.defaultStartDate())" min.bind="@datePair.checkIn.minStartDate()" focusout.trigger="@datePair.checkIn.onStartDateFocusOut('checkOut')"></entry>
-                        <span ref.name="checkOut">
-                            <entry type="date" name="checkOut" class="form-control input-sm" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD():@datePair.checkIn.defaultEndDate())" min.bind="@datePair.checkIn.minEndDate()"></entry>
-                        </span>
-                        <entry type="text" name="hotel" prompt="Hotel" value.bind="data.entry.hotel"></entry>
-                        <entry type="text" name="city" prompt="City" value.bind="data.entry.city"></entry>
-                    </div>
-                </div>
-                <div class="row">
-                    <entry type="textarea" name="remarks" prompt="Remarks" value.bind="data.remarks"></entry>
-                </div>
+                <div ref.name="alert">
 
-                <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+                    <input type="hidden" name="id" value.bind="data.id">
+                    <input type="hidden" name="packageId" value.bind="data.packageId">
+    <!--
+                    <div class=row" if.bind="false">
+                        <entry type="button" value="Transport" name='btnTransport' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Transport')" click.trigger="onClick()"></entry>
+                        <entry type="button" value="Hotel" name='btnHotel' divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" class.bind="setButtonClass('Hotel')" click.trigger="onClick()"></entry>
+                    </div>
+    -->
+                    <div class.bind="isVisible('Transport')">
+                        <div class="row">
+                            <entry type="select" name="transportType" value.bind="data.entry.transportType" prompt="Transport" entries.bind="['Plane', 'Bus', 'Train', 'Car', 'Ship']" change.trigger="onTransportTypeChange()"></entry>
+                        </div>
+                        <div class="row">
+                            <div ref.name="spanTransport">
+                                <entry type.bind="whatTransportEntryType()" name="transport" prompt.bind="whatTransportPrompt()" value.bind="data.entry.transport" entries.bind="@data.airlines" required alert.bind="@alert"></entry>
+                                <div if.bind="@transportType == 'Plane'">
+                                    <entry type="text" name="flight" prompt="Flight" uppercase value.bind="data.entry.flight" required alert.bind="@alert"></entry>
+                                </div>
+                             </div>
+                            <entry type="datetime-local" name="departure" prompt="Departure" value.bind="(data.entry.departure ? data.entry.departure.toYYYYMMDD(true):@datePair.departure.defaultStartDate(true))" min.bind="@datePair.departure.minStartDate(true)" focusout.trigger="@datePair.departure.onStartDateFocusOut('arrival')" required alert.bind="@alert"></entry>
+                            <div ref.name="departurePort">
+                                <entry type.bind="whatTransportEntryType()" name="departFrom" prompt="Depart From" value.bind="data.entry.departFrom" entries.bind="@data.airports" required alert.bind="@alert" lookupDelimiter=' - ' lookupSelected.trigger="onDepartFromSelected(event)"></entry>
+                                <entry type="text" if.bind="@transportType == 'Plane'" name="departureCity" value.bind="data.entry.departureCity" required alert.bind="@alert"></entry>
+                            </div>
+                            <div ref.name="arrival">
+                                <entry type="datetime-local" name="arrival" prompt="Arrival" value.bind="(data.entry.arrival ? data.entry.arrival.toYYYYMMDD(true) : @datePair.departure.defaultEndDate(true))" min.bind="@datePair.departure.minEndDate(true)" required alert.bind="@alert"></entry>
+                            </div>
+                            <div ref.name="arrivalPort">
+                                <entry type.bind="whatTransportEntryType()" name="arriveAt" prompt="Arrive At" value.bind="data.entry.arriveAt" entries.bind="@data.airports" required alert.bind="@alert" lookupDelimiter=' - ' lookupSelected.trigger="onArriveAtSelected(event)"></entry>
+                                <entry type="text" if.bind="@transportType == 'Plane'" name="arrivalCity" value.bind="data.entry.arrivalCity" required alert.bind="@alert"></entry>
+                            </div>
+                        </div>
+                    </div>
+                    <div class.bind ="isVisible('Hotel')">
+                        <div class="row">
+                            <entry type="date" name="checkIn" prompt="Check In" value.bind="(data.entry.checkIn ? data.entry.checkIn.toYYYYMMDD():@datePair.checkIn.defaultStartDate())" min.bind="@datePair.checkIn.minStartDate()" focusout.trigger="@datePair.checkIn.onStartDateFocusOut('checkOut')" required alert.bind="@alert"></entry>
+                            <span ref.name="checkOut">
+                                <entry type="date" name="checkOut" prompt="Check Out" value.bind="(data.entry.checkOut ? data.entry.checkOut.toYYYYMMDD():@datePair.checkIn.defaultEndDate())" min.bind="@datePair.checkIn.minEndDate()" required alert.bind="@alert"></entry>
+                            </span>
+                            <entry type="lookup" name="hotel" prompt="Hotel" value.bind="data.entry.hotel" entries.bind="@data.hotels" required alert.bind="@alert" lookupDelimiter=' - ' lookupSelected.trigger="onHotelSelected(event)"></entry>
+                            <entry type="text" name="city" prompt="City" value.bind="data.entry.city" required alert.bind="@alert"></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <entry type="textarea" name="remarks" prompt="Remarks" value.bind="data.remarks"></entry>
+                    </div>
+
+                    <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
+                </div>
 
                 <div class=row">
                     <entry type="button" value="Save" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onSave()"></entry>
@@ -66,16 +78,35 @@
                 departure: new DatePair($patchChanges),
                 checkIn: new DatePair($patchChanges, null, 1),
             },
-            transportType:'',
-            alert: new Alert(),
+            data: {
+            	itinerary:null,
+            	airlines: null,
+                airports: null,
+                hotels: null,
+            },
+            transportType:(props.entryType == 'Transport' ? 'Plane' : ''),
+            alert: new Alert(null, $patchChanges, "alert"),
         };
+	}
+
+	function getData(){
+		//debugger;
+		var self = this;
+		return new Promise(function(resolve){
+			Promise.all([getAirports.bind(self)(), getAirlines.bind(self)(), getHotels.bind(self)(), getItinerary.bind(self)()]).then(function(result){
+				var retval = result[3];
+				retval.airlines = result[1];
+				retval.airports = result[0];
+				resolve(retval);
+			});
+		});
 	}
 
 	function getItinerary() {
 		var self = this;
+		//debugger;
 		return new Promise(function (resolve) {
 			(new Utils()).itineraries.recommendedNewDates(self.state.packageId).then(function(data){
-				//debugger;
 				self.state.datePair.departure.setDefaults(null, null, data);
 				self.state.datePair.checkIn.setDefaults(null, null, data);
 
@@ -89,30 +120,83 @@
 						self.state.alert.alert(err);
 						if(itr) {
 							self.state.entryType = (itr.entry.transport ? 'Transport' : 'Hotel');
-							resolve(itr);
+							self.state.transportType = (itr.entry.transport ? itr.entry.transportType? itr.entry.transportType : 'Plane' : '');
+							self.state.data.itinerary = itr;
+							resolve(self.state.data.itinerary);
 						}
 					});
 				}
 				else {
-					resolve({
+					self.state.data.itinerary = {
 						packageId: self.state.packageId,
 						entry:{},
-					});
+					};
+					resolve(self.state.data.itinerary);
 				}
 			});
 		});
 	}
+
+	function getAirlines() {
+		var self = this;
+		return new Promise (function(resolve){
+			if(self.state.data.airlines) resolve(self.state.data.airlines);
+			else {
+				dpd.airlines.get({$fields: {IATA:1, airline:1}}, function(airlines){
+					//debugger;
+					self.state.data.airlines = (airlines.map(function(x){return {label:x.IATA + ' - ' + x.airline, value: x.IATA}}));
+					resolve(self.state.data.airlines);
+				})
+			}
+		});
+	}
+
+	function getAirports() {
+		var self = this;
+		return new Promise(function (resolve) {
+			if(self.state.data.airports) resolve(self.state.data.airports);
+			else {
+				(new Utils()).itineraries.airports().then(function (airports) {
+					self.state.data.airports = airports;
+					resolve(self.state.data.airports);
+				});
+			}
+		});
+	}
+
+	function getHotels() {
+		//debugger;
+		var self = this;
+		return new Promise (function(resolve){
+			if(self.state.data.hotels) resolve(self.state.data.hotels);
+			else {
+				dpd.hotels.get({contactPersonId: storage.me.read().id, $fields: {id:1, hotelName:1, city:1}}, function(hotels){
+					//debugger;
+					self.state.data.hotels = (hotels.map(function(x){return {label:x.hotelName + ' - ' + x.city, city:x.city, value: x.id}}));
+					resolve(self.state.data.hotels);
+				})
+			}
+		});
+	}
+
 	function onTransportTypeChange(){
     	this.state.transportType = this.target.value;
-    	$patchChanges('spanTransport');
+    	//debugger;
+    	$patchChanges('spanTransport', 'departurePort', 'arrivalPort');
     }
 
-    function whatTransportType() {
-        if(this.state.transportType == 'Plane') return 'Airline';
-        else return this.state.transportType + ' Info';
-    }
+	function whatTransportPrompt() {
+		if(this.state.transportType == 'Plane') return 'Airline';
+		else return this.state.transportType + ' Info';
+	}
 
-    function onClick(){
+	function whatTransportEntryType() {
+		//debugger;
+		if(this.state.transportType == 'Plane') return 'lookup';
+		else return 'text';
+	}
+
+	function onClick(){
         this.state.entryType = this.target.name == 'btnHotel' ? 'Hotel' : 'Transport';
     	$patchChanges();
     }
@@ -130,46 +214,68 @@
 
 	function onSave(event, itinerary){
 		//debugger;
-		var form = this.target.form;
-		var itinerary = {};
-		itinerary.id = form.elements.id.value;
-		itinerary.packageId = form.elements.packageId.value;
-		itinerary.entry = {};
-		itinerary.remarks = form.elements.remarks.value;
+		var self = this;
+		var fe = this.target.form.elements;
+		var itr = self.state.data.itinerary;
+
+		itr.id = fe.id.value;
+		itr.packageId = fe.packageId.value;
+		itr.entry = {};
+		itr.remarks = fe.remarks.value;
 		if(this.state.entryType=='Hotel'){
-			itinerary.entry.hotel = form.elements.hotel.value;
-			itinerary.entry.city = form.elements.city.value;
-			itinerary.entry.checkIn = (new Date(form.elements.checkIn.value)).setHours(23,35,35);
-			itinerary.entry.checkOut = (new Date(form.elements.checkOut.value)).setHours(0,0,1);
+			itr.entry.hotel = fe.hotel.value;
+			itr.entry.city = fe.city.value;
+			itr.entry.checkIn = (new Date(fe.checkIn.value)).setHours(23,35,35);
+			itr.entry.checkOut = (new Date(fe.checkOut.value)).setHours(0,0,1);
 		} //checkout 31 des - checkin 31 des
         else {
-			itinerary.entry.transport = form.elements.transport.value;
-			itinerary.entry.transportType = form.elements.transportType.value;
-			itinerary.entry.departFrom = form.elements.departFrom.value;
-			itinerary.entry.arriveAt = form.elements.arriveAt.value;
-			itinerary.entry.departure = (new Date(form.elements.departure.value)).getTime();
-			itinerary.entry.arrival = (new Date(form.elements.arrival.value)).getTime();
+			itr.entry.transport = fe.transport.value;
+			itr.entry.departFrom = fe.departFrom.value;
+			itr.entry.arriveAt = fe.arriveAt.value;
+			itr.entry.departureCity = self.state.transportType == 'Plane' ? fe.departureCity.value : null;
+			itr.entry.arrivalCity = self.state.transportType == 'Plane' ? fe.arrivalCity.value : null;
+			itr.entry.departure = (new Date(fe.departure.value)).getTime();
+			itr.entry.arrival = (new Date(fe.arrival.value)).getTime();
+
+			itr.entry.transportType = fe.transportType.value;
+
+			var err = {errors :{}};
+			if(!fe.transport.value) {err.errors.transport = 'Missing value'}
+			if(!fe.departure.value) {err.errors.departure = 'Missing value'}
+			if(!fe.departFrom.value) {err.errors.departFrom = 'Missing value'}
+			if(!fe.arrival.value) {err.errors.arrival = 'Missing value'}
+			if(!fe.arriveAt.value) {err.errors.arriveAt = 'Missing value'}
+			if(fe.transportType.value == 'Plane') {
+				itr.entry.flight = fe.flight.value;
+
+				if(fe.transport.value && !this.state.data.airlines.find(function(x){return x.value == fe.transport.value})) {err.errors.transport = 'Unknown airline';}
+				if(!fe.flight.value) {err.errors.flight = 'Missing value'}
+				if(fe.departFrom.value && !this.state.data.airports.find(function(x){return x.value == fe.departFrom.value})) {err.errors.departFrom = 'Unknown airport';}
+				if(fe.arriveAt.value && !this.state.data.airports.find(function(x){return x.value == fe.arriveAt.value})) {err.errors.arriveAt = 'Unknown airport';}
+            }
+            this.state.alert.alert(err);
+			if(Object.keys(err.errors).length != 0) return;
+			debugger;
         }
-		var self = this;
-		if(itinerary.id=="") {
-			dpd.itineraries.post(itinerary, function(result, err) {
+		if(itr.id=="") {
+			dpd.itineraries.post(itr, function(result, err) {
 				//debugger;
                 self.state.alert.alert(err);
 				if(result) {
 					self.emitEvent('close');
 				}
-				$patchChanges();
+				//$patchChanges();
 			});
 		}
 		else {
 			//debugger;
-			dpd.itineraries.put(itinerary.id, itinerary, function(result, err) {
+			dpd.itineraries.put(itr.id, itr, function(result, err) {
 				//debugger;
                 self.state.alert.alert(err);
 				if(result) {
 					self.emitEvent('close');
 				}
-				$patchChanges();
+				//$patchChanges();
 			});
 		}
 	}
@@ -179,5 +285,17 @@
 	    else return "custom-set-hidden";
     }
 
+	function onHotelSelected(event){
+		//debugger;
+		this.target.form.city.value = event.data.label.split(' - ').slice(-1);
+	}
+	function onDepartFromSelected(event){
+		//debugger;
+		this.target.form.departureCity.value = event.data.label.split(' - ').slice(-1);
+	}
+	function onArriveAtSelected(event){
+		//debugger;
+		this.target.form.arrivalCity.value = event.data.label.split(' - ').slice(-1);
+	}
 </script>
 

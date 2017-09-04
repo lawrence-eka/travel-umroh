@@ -25,13 +25,21 @@
 			"id": "tourLeader",
 			"order": 2
 		},
+		"mutawwifId": {
+			"name": "mutawwifId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "mutawwifId",
+			"order": 3
+		},
 		"validFrom": {
 			"name": "validFrom",
 			"type": "number",
 			"typeLabel": "number",
 			"required": true,
 			"id": "validFrom",
-			"order": 3
+			"order": 4
 		},
 		"validUntil": {
 			"name": "validUntil",
@@ -39,7 +47,7 @@
 			"typeLabel": "number",
 			"required": true,
 			"id": "validUntil",
-			"order": 4
+			"order": 5
 		},
 		"remarks": {
 			"name": "remarks",
@@ -47,7 +55,7 @@
 			"typeLabel": "string",
 			"required": false,
 			"id": "remarks",
-			"order": 5
+			"order": 6
 		},
 		"travelDateFrom": {
 			"name": "travelDateFrom",
@@ -55,7 +63,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "travelDateFrom",
-			"order": 6
+			"order": 7
 		},
 		"travelDateUntil": {
 			"name": "travelDateUntil",
@@ -63,7 +71,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "travelDateUntil",
-			"order": 7
+			"order": 8
 		},
 		"isItineraryConfirmed": {
 			"name": "isItineraryConfirmed",
@@ -71,7 +79,7 @@
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isItineraryConfirmed",
-			"order": 8
+			"order": 9
 		},
 		"isPublished": {
 			"name": "isPublished",
@@ -79,7 +87,7 @@
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "isPublished",
-			"order": 9
+			"order": 10
 		},
 		"costLandArrangements": {
 			"name": "costLandArrangements",
@@ -87,7 +95,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "costLandArrangements",
-			"order": 10
+			"order": 11
 		},
 		"costTickets": {
 			"name": "costTickets",
@@ -95,7 +103,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "costTickets",
-			"order": 11
+			"order": 12
 		}
 	}
 }

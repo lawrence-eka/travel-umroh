@@ -1,9 +1,18 @@
 <inject from="/component/entry" name="entry"></inject>
 <div>
-    <entry type="button" value.bind="($value ? $value : 'Close')" divClass.bind='$divClass' click.trigger="home()"></entry>
+    <entry type="button" value.bind="($value ? $value : 'Close')" divClass.bind='$divClass' click.trigger="go()"></entry>
 </div>
 <script>
-    function home() {
-	    window.location.hash = mainMenuPath;
+    function initState(props){
+
+    	return {
+    		goto: props.home ? typeof props.home == 'string' ? props.home : mainMenuPath : false,
+        }
+    }
+
+    function go() {
+    	if(this.state.goto && this.state.goto != window.location.hash) window.location.hash = this.state.goto;
+	    else if (this.state.goto == window.location.hash) this.emitEvent('back');
+	    else window.history.back();
     }
 </script>

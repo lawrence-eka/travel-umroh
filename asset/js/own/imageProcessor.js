@@ -70,7 +70,7 @@ function ImageProcessor() {
 	}
 	
 	this.toJpegBlob = function(filename, ratio, quality) {
-		debugger;
+		//debugger;
 		var imgData = new Object({filename:filename, ratio:ratio || 1, quality:quality || 0.3});
 		return this.toBlob(imgData,filename, ratio, quality);
 	}

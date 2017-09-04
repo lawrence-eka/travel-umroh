@@ -1,9 +1,11 @@
 <inject from="/component/navbar" name="navbar"></inject>
 
-<div class="container">
-    <div data.load="checkCurrentUser()">
+<div class="container" >
+    <div data.load="checkCurrentUser()"  name="motherNature">
         <navbar></navbar>
         <slot-view></slot-view>
+    </div>
+    <div name="popup" class="container centered-form popupContainer" style="visibility:hidden">
     </div>
 </div>
 

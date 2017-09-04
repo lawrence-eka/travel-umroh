@@ -17,13 +17,29 @@
 			"id": "airport",
 			"order": 1
 		},
+		"city": {
+			"name": "city",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "city",
+			"order": 2
+		},
 		"country": {
 			"name": "country",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
 			"id": "country",
-			"order": 2
+			"order": 3
+		},
+		"cmb": {
+			"name": "cmb",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "cmb",
+			"order": 4
 		},
 		"createdOn": {
 			"name": "createdOn",
@@ -31,7 +47,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "createdOn",
-			"order": 3
+			"order": 5
 		},
 		"lastUpdatedOn": {
 			"name": "lastUpdatedOn",
@@ -39,7 +55,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "lastUpdatedOn",
-			"order": 4
+			"order": 6
 		}
 	}
 }

@@ -1,8 +1,10 @@
-<div>
-    <div class="container custom-container-layout custom-std-anim" click.trigger="onClick()" style.bind="isClickable()">
+<inject from="/component/entry" name="entry"></inject>
+
+<div created.trigger="onCreated()" deleted.trigger="onDeleted()">
+    <div class="container custom-container-layout custom-std-anim" style.bind="isClickable()">
         <div class="row centered-form no-top-margin">
             <div class="form-panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-default ">
+                <div class="panel panel-default " click.trigger="onClick()">
                     <div class="panel-heading custom-panel-layout" if.bind="$test || !$notitle || $title">
                         <h3 class="panel-title">
                             {{($title ? $title : '')}}
@@ -12,19 +14,24 @@
                         </h3>
                         <slot-view  name="title"></slot-view>
                     </div>
-                    <div class="panel-body custom-panel-layout" style.bind="$style">
+                    <div class="panel-body custom-panel-layout" style.bind="$style" >
                         {{$body ? $body : ''}}
                         <div if.bind="$test">
                             PANEL BODY
                         </div>
                         <slot-view name="body"></slot-view>
                     </div>
-                    <div class="panel-footer custom-panel-layout"  if.bind="$test || !$nofooter || $footer">
-                        {{$footer ? $footer : ''}}
-                        <div if.bind="$test">
-                            PANEL FOOTER
+                    <div class="panel-footer custom-panel-layout"  if.bind="@aspopup || $test || !$nofooter || $footer">
+                        <div if.bind="!@aspopup">
+                            {{$footer ? $footer : ''}}
+                            <div if.bind="$test">
+                                PANEL FOOTER
+                            </div>
+                            <slot-view  name="footer"></slot-view>
                         </div>
-                        <slot-view  name="footer"></slot-view>
+                        <div if.bind="@aspopup" class="row">
+                            <entry type="button" value="Close" divClass="col-xs-12 col-sm-12 col-md-12 col-lg-12" click.trigger="onClosePopup()"></entry>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,9 +41,42 @@
 
 <script>
     function initState(props) {
-    	return {};
+    	return {
+    		aspopup: props.aspopup != null,
+            popupPanel:null,
+        };
     }
+
+    function doClose(){
+    	this.emitEvent('close');
+    }
+
+    function onClosePopup(){
+    	//debugger;
+	   // document.getElementsByName(this.state.name)[0].className = document.getElementsByName(this.state.name)[0].className + ' custom-fadeout-anim';
+        this.state.popupPanel.className += ' custom-fadeout-anim';
+	    document.getElementsByName('popup')[0].style.visibility = 'hidden';
+	    document.getElementsByName('motherNature')[0].className = "not-blur";
+	    setTimeout(doClose.bind(this), 250);
+    }
+    function onCreated(){
+	    if(this.state.aspopup){
+	    	this.state.popupPanel = this.target;
+		    var popup = document.getElementsByName('popup')[0];
+		    popup.style.visibility = 'visible';
+		    popup.appendChild(this.target);
+		    document.getElementsByName('motherNature')[0].className = "blur";
+	    }
+    }
+    function onDeleted(){
+	    if(this.state.aspopup){
+		    document.getElementsByName('motherNature')[0].className = "not-blur";
+	    }
+    }
+
     function onClick(){
+    	//debugger;
+	    if(this.target.nodeName == 'A') return;
         this.emitEvent('click');
     }
 

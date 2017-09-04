@@ -71,6 +71,7 @@ yalla.framework.addComponent("/dist/app", (function() {
     }
     _component._properties = _props;
     _elementOpenStart("div", "");
+    _attr("name", "motherNature");
     _elementOpenEnd("div");
     (function(domNode) {
       var node = domNode.element;
@@ -108,6 +109,12 @@ yalla.framework.addComponent("/dist/app", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
+    _elementClose("div");
+    _elementOpenStart("div", "");
+    _attr("name", "popup");
+    _attr("class", "container centered-form popupContainer");
+    _attr("style", "visibility:hidden");
+    _elementOpenEnd("div");
     _elementClose("div");
     _elementClose("div");
   }

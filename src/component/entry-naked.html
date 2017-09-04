@@ -1,11 +1,9 @@
 <span style.bind="calculateRootStyle($margin)">
-    <label if.bind="($glyph || $prompt) && (whatType($type) == 'label' || (whatType($type) != 'checkbox' && whatType($type) != 'hyperlink' && whatType($type) != 'hidden'))" class.bind="(($class ? $class : 'custom-entry-prompt' + ($deleted ? ' custom-deleted-text' : '')))" click.trigger="onPromptClick()">{{$prompt ? $prompt:''}}<span if.bind="$glyph" class.bind="'glyphicon glyphicon-' + $glyph" ></span></label>
-    <input if.bind="whatType($type) == 'other'" type.bind="$type" name.bind="$name" class="form-control input-sm" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" accept.bind="$accept" focusout.trigger="onFocusOut()" change.trigger="onChange()" keyup.trigger="onKeyUp()">
-    <input if.bind="whatType($type) == 'hidden'" type.bind="$type" name.bind="$name"value.bind="$value">
-    <input if.bind="whatType($type) == 'button'" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control btn btn-info btn-block')" value.bind="$value" click.trigger="onButtonClicked()">
-    <textarea if.bind="whatType($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm" focusout.trigger="onFocusOut()">{{($value ? $value : '')}}</textarea>
-    <a if.bind="whatType($type) == 'hyperlink'" href.bind="$href" class.bind="($class ? $class : 'custom-entry-prompt')" click.trigger="onHyperlinkClick()">{{$prompt}}</a>
-    <div if.bind="whatType($type) == 'checkbox'" >
+    <label if.bind="($glyph || $prompt) && (($type) == 'label' || (($type) != 'checkbox' && ($type) != 'hyperlink' && ($type) != 'hidden'))" class.bind="(($class ? $class : 'custom-entry-prompt' + ($deleted ? ' custom-deleted-text' : '')))" click.trigger="onPromptClick()">{{$prompt ? $prompt:''}}<span if.bind="$glyph" class.bind="'glyphicon glyphicon-' + $glyph" ></span></label>
+    <input if.bind="isGeneric($type)" type.bind="$type" name.bind="$name" class.bind="($class ? $class : 'form-control ' + ($type=='button' ? 'btn btn-info btn-block' : 'input-sm'))" required.bind="$required" placeholder.bind="$placeholder" value.bind="setValue($value, $min, $max)" min.bind="$min" max.bind="$max" accept.bind="$accept" click.trigger="onButtonClicked()" focusout.trigger="onFocusOut()" change.trigger="onChange()" keyup.trigger="onKeyUp()" style.bind="($hidden ? 'visibility:hidden; position:absolute; left:0; top:0' : ($uppercase ? 'text-transform:uppercase' : ''))" blob.bind="$blob" >
+    <textarea if.bind="($type) == 'textarea'" name.bind="$name" required.bind="$required" class="form-control input-sm" focusout.trigger="onFocusOut()">{{($value ? $value : '')}}</textarea>
+    <a if.bind="($type) == 'hyperlink'" href.bind="$href" class.bind="($class ? $class : 'custom-entry-prompt')" click.trigger="onHyperlinkClick()">{{$prompt}}</a>
+    <div if.bind="($type) == 'checkbox'" >
         <input type="checkbox" name.bind="$name" id.bind="$name" autocomplete="off"  checked.bind="$checked" focusout.trigger="onFocusOut()" click.trigger="onCheckboxClick(event)"/>
         <div class="btn-group" focusout.trigger="onFocusOut()">
             <label for.bind="$name" class="btn btn-default btn-checkbox">
@@ -17,43 +15,59 @@
             </label>
         </div>
     </div>
-    <div if.bind="whatType($type) == 'select'" change.trigger="onChange()">
-        <select class="form-control input-sm" name.bind="$name">
+    <div if.bind="($type) == 'select'" change.trigger="onChange()">
+        <select class="form-control input-sm" name.bind="$name" required.bind="$required" >
             <option for.each="entry in $entries" value.bind="entry" selected.bind="entry==$value">{{entry}}</option>
         </select>
     </div>
-    <div if.bind="whatType($type) == 'lookup'">
-        <input class="form-control input-sm" name.bind="$name" data-minchars="1" value.bind="$value"/>
+    <div if.bind="($type) == 'lookup'">
+        <input class="form-control input-sm" name.bind="$name+'-display'" data-minchars="1" required.bind="$required" created.trigger="initAwesomplete($value)"/>
+        <input type="hidden" name.bind="$name" value.bind="$value"/>
     </div>
-    <label if.bind="@error && whatType($type) != 'hidden'" class="custom-entry-prompt custom-error-text">{{@error}}</label>
+    <label if.bind="@error && ($type) != 'hidden'" class="custom-entry-prompt custom-error-text">{{@error}}</label>
 </span>
 
-<script>
-//    var as;
-//    var state = {
-//    	inited:false,
-//    }
-	function initAwesomplete(state) {
-//    	debugger;
-		if(state.inited) return;
-		state.inited = true;
-		new Awesomplete(document.getElementsByName(state.name)[0], {list:state.entries});
-	}
-
+<script> /**/
     function initState(props) {
-//debugger;
-    var state = {
-    	inited:false,
+       // debugger;
+	    var state = {};
+        if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
+        state.name = props.name;
+        state.error = null;
+        state.alias = props.alias;
+        state.entries = props.entries;
+        state.lookupDelimiter = props.lookupDelimiter;
+        
+	    return state;
     }
 
-	    if(props.alert) props.alert.onError.subscribe(errorSelector.bind(this));
-	    state.name = props.name;
-	    state.error = null;
-	    state.alias = props.alias;
-	    state.entries = props.entries;
-	    if(props.type == 'lookup') setTimeout(initAwesomplete.bind(this, state), 0);
-    	return state;
+    function initAwesomplete(value) {
+        var as = new Awesomplete(this.target, {list:this.state.entries});
+        this.target.addEventListener('awesomplete-select', onAwesompleteSelect.bind(this));
+        as.replace = awesompleteReplace.bind(this);
+        if(as._list.length > 0 && as._list[0].label && as._list[0].value) {
+            var item = (as._list.find(function (x) {return x.value == value}));
+            if (item) {as.input.value = item.label;}
+            else {as.input.value = ''}
+        }
+        else {as.input.value = value;}
     }
+
+    function awesompleteReplace(text){
+    	var t = text;
+    	if(this.state.lookupDelimiter) {
+		    t = text.label.split(this.state.lookupDelimiter);
+		    t.splice(-1)
+		    t = t.join(this.state.lookupDelimiter);
+	    }
+	    this.target.value = t;
+    }
+
+    function onAwesompleteSelect(event) {
+		//debugger;
+    	document.getElementsByName(this.state.name)[0].value = event.text.value ? event.text.value : event.text;
+		this.emitEvent('lookupSelected', event.text);
+	}
 
     function calculateRootStyle(margin){
     	if(margin){
@@ -86,19 +100,8 @@
         else return '';
     }
 
-	function whatDivClass(divClass){
-		if(divClass) return divClass;
-		else return "col-xs-12 col-sm-6 col-md-6 col-lg-6";
-	}
-
-	function whatInnerDivClass(innerDivClass){
-		if(innerDivClass) return innerDivClass;
-		else return "form-group custom-entry-margin";
-	}
-
-	function whatType(type) {
-		if('|textarea|label|hidden|button|checkbox|hyperlink|select|lookup|datalist|'.indexOf('|' + type + '|') >= 0) return type;
-		else return 'other';
+	function isGeneric(type) {
+		return ('|textarea|label|checkbox|hyperlink|select|lookup|'.indexOf('|' + type + '|') < 0);
 	}
 
     function onHyperlinkClick() {

@@ -1,30 +1,96 @@
 <inject from="/component/panel" name="card"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/hotel/card-hotel" name="hotel"></inject>
 
 <div>
     <card title.bind="($itr.fromDateTime.toDateComponents())" remarks.bind="$itr.remarks" nofooter>
         <div slot.name="body">
             <div if.bind="$itr.entry.transport">
-                {{$itr.entry.transportType}}: {{$itr.entry.transport}} <br/>
-                Departure: {{$itr.entry.departure.toDateComponents(false, true)}} <br/>
-                From: {{$itr.entry.departFrom}} <br/>
-                Arrival: {{$itr.entry.arrival.toDateComponents(false, true)}} <br/>
-                At: {{$itr.entry.arriveAt}} <br/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt.bind="$itr.entry.transportType + ': '" naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.transportName? $itr.entry.transportName : $itr.entry.transport)" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="Departure: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.departure.toDateComponents(false, true))" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="From: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.departFromName? $itr.entry.departFromName : $itr.entry.departFrom)" naked></entry>
+                            {{nbsp}}<entry type="label" if.bind="$itr.entry.departureCity" prompt="-" naked></entry>{{nbsp}}
+                            <entry type="label" if.bind="$itr.entry.departureCity" prompt.bind="($itr.entry.departureCity)" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="Arrival: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.arrival.toDateComponents(false, true))" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="At: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.arriveAtName? $itr.entry.arriveAtName : $itr.entry.arriveAt)" naked></entry>
+                            {{nbsp}}<entry type="label" if.bind="$itr.entry.arrivalCity" prompt="-" naked></entry>{{nbsp}}
+                            <entry type="label" if.bind="$itr.entry.arrivalCity" prompt.bind="($itr.entry.arrivalCity)" naked></entry>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div if.bind="$itr.entry.hotel">
-                Hotel: {{$itr.entry.hotel}} <br/>
-                City: {{$itr.entry.city}} <br/>
-                Check in: {{$itr.entry.checkIn.toDateComponents()}} <br/>
-                Check out: {{$itr.entry.checkOut.toDateComponents()}} <br/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="Hotel: " naked></entry>{{nbsp}}
+                            <entry type="hyperlink" prompt.bind="($itr.entry.hotelName ? $itr.entry.hotelName : $itr.entry.hotel)"  click.trigger="onShowHotel($itr.entry.hotel)" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="City: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.city)" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="Check In: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.checkIn.toDateComponents())" naked></entry>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <entry type="label" prompt="Check Out: " naked></entry>{{nbsp}}
+                            <entry type="label" prompt.bind="($itr.entry.checkOut.toDateComponents())" naked></entry>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class=row" if.bind="$onedit || $ondelete">
+                <div class="col">
+                    <entry type="label" prompt=" " naked></entry>{{nbsp}}
+                </div>
                 <entry type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit($itr.id)"></entry>
                 <entry type="button" value="Delete" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onDelete($itr.id)"></entry>
             </div>
         </div>
     </card>
+    <hotel if.bind="@showHotel" hotel.bind="@showHotel" aspopup close.trigger="onCloseHotel()"></mtw>
 </div>
 <script>
+    var nbsp = ' ';
+    function initState(props){
+	    return {
+		    showHotel:null,
+	    }
+
+    }
+
     function onEdit(itineraryId) {
     	//debugger;
     	this.emitEvent('edit', itineraryId);
@@ -34,4 +100,15 @@
     	//debugger;
     	this.emitEvent('delete', itineraryId);
     }
+
+    function onShowHotel(hotelId) {
+	    this.state.showHotel = hotelId;
+	    $patchChanges();
+    }
+
+    function onCloseHotel(){
+	    this.state.showHotel = null;
+	    $patchChanges();
+    }
+
 </script>

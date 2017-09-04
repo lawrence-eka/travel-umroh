@@ -1,4 +1,5 @@
 var query = {"IATA": this.IATA};
+//console.log(this)https://localhost/dashboard/airports/events/#post-panel;
 dpd.airports.get(query, function (result) {
     if(result.length > 0)
     {

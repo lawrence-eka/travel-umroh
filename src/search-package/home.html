@@ -10,7 +10,7 @@
         <list startDate.bind="@startDate" endDate.bind="@endDate" click.trigger="onPackageClick(event)" onRecordsFound.bind="@onRecordsFound"></list>
     </span>
     <span if.bind="@displayedPackageId" ref.name="displayPackage">
-        <show-package packageId.bind="@displayedPackageId"></show-package>
+        <show-package packageId.bind="@displayedPackageId" close.trigger="onClosePackageDisplay()"></show-package>
     </span>
 </div>
 
@@ -39,17 +39,26 @@
 
     function onPackageClick(event){
     	this.state.displayedPackageId = event.data;
+    	debugger;
     	$patchChanges();
     }
 
     function onSearch(event) {
     	this.state.startDate = event.data.startDate;
     	this.state.endDate = event.data.endDate;
+    	//debugger;
     	$patchChanges();
     }
+    /*
     function onRecordsFound(event) {
     	this.state.recordsFound = event.data;
-    	$patchChanges('panelParam');
+    	//$patchChanges('panelParam');
+    }
+    */
+    function onClosePackageDisplay(){
+    	this.state.displayedPackageId = null;
+    	debugger;
+    	$patchChanges();
     }
 </script>
 

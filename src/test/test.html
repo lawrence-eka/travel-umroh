@@ -1,0 +1,47 @@
+<div>
+    <input class="form-control input-sm" name.bind="@name +'-display'" data-minchars="1" required.bind="$required" created.trigger="initAwesomplete($value)"/>
+    <input name.bind="@name" value.bind="$value" type="hidden"/>
+</div>
+
+<script>
+	function initState(props) {
+		var state = {}
+
+		state.name = props.name;
+		state.entries = props.entries;
+		return state;
+	}
+
+	function initAwesomplete(value) {
+		debugger;
+//		var as = new Awesomplete(this.target, {list:[{label:'katy perry', value:'kp'}, {label:'taylor swift', value:'ts'}, {label:'selena gomez', value:'sg'}]});
+		//var as = new Awesomplete(this.target, {list:['katy perry', 'selena gomez', 'taylor swift']});
+		var as = new Awesomplete(this.target, {list:this.state.entries});
+		this.target.addEventListener('awesomplete-select', onAwesompleteSelect.bind(this));
+        as.replace = awesompleteReplace;
+        if(as._list[0].label && as._list[0].value) {
+	        var item = (as._list.find(function (x) {
+		        return x.value == value
+	        }));
+	        if (item) {
+		        as.input.value = item.label;
+	        }
+	        else {
+		        as.input.value = ''
+	        }
+        }
+        else {
+        	as.input.value = value;
+        }
+	}
+
+	function awesompleteReplace(text){
+		debugger;
+		this.input.value = text;
+    }
+
+    function onAwesompleteSelect(event) {
+		debugger;
+		document.getElementsByName(this.state.name)[0].value = event.text.value ? event.text.value : event.text;
+    }
+</script>

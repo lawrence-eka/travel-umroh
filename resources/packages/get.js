@@ -7,3 +7,9 @@ if(query.includeItineraries==="true")
       this.itineraries = result;
     });
 }
+
+if(this.mutawwifId) {
+    dpd.mutawwifs.get(this.mutawwifId, function(mtw){
+        this.mutawwif = mtw.firstName + ' ' + mtw.middleName + ' ' + mtw.lastName;
+    });
+}

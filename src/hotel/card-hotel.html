@@ -1,0 +1,57 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/component/profile-picture/home" name="pict"></inject>
+
+<div data.load="getHotel($hotel)">
+    <panel notitle nofooter aspopup.bind="$aspopup" close.trigger="onClose()">
+        <div slot.name="body" class="row">
+            <pict readonly img.bind="('/upload/hotelphotos/' + data.id + '.jpg?' + (new Date().getTime()))"></pict>
+            <entry type="label" prompt.bind="data.hotelName"></entry>
+            <entry type="label" prompt.bind="'Address: ' + data.address"></entry>
+            <entry type="label" prompt.bind="'City: ' + data.city"></entry>
+            <entry type="label" prompt.bind="'Phone: ' + data.phone"></entry>
+            <entry if.bind="!@readonly && !@aspopup" type="button" value="Edit" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onEdit(data.id)"></entry>
+            <entry if.bind="!@readonly && !@aspopup" type="button" value="Delete" divClass="col-xs-6 col-sm-6 col-md-6 col-lg-6" click.trigger="onDelete(data.id)"></entry>
+        </div>
+    </panel>
+</div>
+
+<script>
+    /**/
+    function initState(props){
+	    return{
+		    readonly:props.readonly,
+		    aspopup: props.aspopup,
+	    }
+    }
+
+	function getHotel(hotel){
+		//debugger;
+		var self = this;
+		return new Promise(function(resolve){
+			if(typeof hotel == 'string') {
+				dpd.hotels.get(hotel, function(hotel){
+					resolve(hotel);
+				})
+			}
+			else {
+				resolve(hotel);
+			}
+		});
+	}
+
+	function onEdit(event){
+		//debugger;
+		this.emitEvent('edit', event);
+	}
+
+	function onDelete(event) {
+		//debugger;
+		this.emitEvent('delete', event);
+	}
+
+	function onClose() {
+		this.emitEvent('close');
+	}
+
+</script>

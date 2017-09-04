@@ -12,7 +12,7 @@
         <div slot.name="footer">
             <div class="row">
                 <entry if.bind='@me' type="button" value="Book This!" click.trigger="onBook()"></entry>
-                <home></home>
+                <home home="#app/search-package.home" back.trigger="onBack()"></home>
             </div>
         </div>
 
@@ -25,5 +25,8 @@
     }
     function onBook() {
         this.emitEvent('book');
+    }
+    function onBack(){
+    	this.emitEvent('close');
     }
 </script>

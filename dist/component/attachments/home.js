@@ -265,34 +265,7 @@ yalla.framework.addComponent("/dist/component/attachments/home", (function() {
               message: err
             });
           });
-
         /* new way ended */
-        /* old way started
-        			    for(var i in self._state.newFiles) {
-                            fd.append("uploadedFile", self._state.newFiles[i])
-        			    }
-        			    var xhr = new XMLHttpRequest();
-        			    xhr.open('PUT', '/' + self._state.collection);
-        			    xhr.onload = function () {
-        				    var response = JSON.parse(this.responseText);
-
-        				    if(this.status < 300) {
-        				    	//debugger;
-        				    	var results = [];
-        					    response.forEach(function(x) {results.push(x.id);});
-        				    	console.log("Upload success.");
-        				    	self._state.newFiles.length = 0;
-        					    resolve({add: results});
-        				    } else {
-        					    console.log(response.message);
-        					    reject({name: self._state.name, message: response.message});
-        				    }
-        			    };
-        			    xhr.onerror = function (err) {
-                            reject({name: self._state.name, message: err});
-        			    }
-        			    xhr.send(fd);
-         old way ended */
       } else {
         console.log("Nothing to upload.");
         resolve();

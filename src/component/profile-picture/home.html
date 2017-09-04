@@ -1,0 +1,57 @@
+<inject from="/component/panel" name="panel"></inject>
+<inject from="/component/entry" name="entry"></inject>
+
+<div class="row row-centered" ref.name="profpict">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered">
+        <img if.bind="@img" src.bind="@img" class="custom-prof-pict" style.bind="@styleImg" click.trigger="onUploadPicture()" error.trigger="onError()">
+        <div if.bind="!@img && @readonly" class="custom-prof-pict" style.bind="@stylePlaceholder">
+            <i class="fa fa-user" style="color:#CECECE; font-size:10em"></i>
+        </div>
+        <div if.bind="!@img && !@readonly" class="custom-prof-pict" style.bind="@stylePlaceholder" click.trigger="onUploadPicture()">
+            <i class="fa fa-camera" style="color:#CECECE; font-size:8em"></i>
+        </div>
+    </div>
+    <entry type="file" name.bind="$name" accept="image/*" hidden change.trigger="onPictSelected()" blob.bind="@blob"></entry>
+</div>
+<script>
+    function initState(props){
+    	props.dim = props.dim || 150;
+    	//props.img = props.img || 'asset/img/sample-1.jpg';
+    	var state = {
+    		name: props.name,
+    		readonly: props.readonly,
+		    styleImg: 'max-width:' + props.dim + 'px; max-height:' + props.dim + 'px',
+		    stylePlaceholder: 'width:' + props.dim + 'px !important; height:' + props.dim + 'px !important;',
+            img: props.img,
+            blob:null,
+        }
+        return state;
+    }
+
+    function onError() {
+    	this.state.img = null;
+    	$patchChanges('profpict');
+    }
+
+    function onUploadPicture(){
+	    if(this.state.readonly){return};
+    	document.getElementsByName(this.state.name)[0].click();
+    }
+
+    function onPictSelected(){
+    	if(this.state.readonly){return};
+    	//debugger;
+	    var pict = this.target;
+	    var self = this;
+	    console.log(pict.files[0]);
+	    //debugger;
+	    var ip = new ImageProcessor();
+	    ip.toJpegBlob(pict.files[0]).then(function(img){
+	    	var urlCreator = window.URL ||window.webkitURL;
+	    	self.state.img = urlCreator.createObjectURL(img.blob);
+	    	self.state.blob = img;
+	    	$patchChanges('profpict');
+        });
+	    pict.value=null;
+    }
+</script>

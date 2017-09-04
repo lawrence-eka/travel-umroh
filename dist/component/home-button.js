@@ -30,8 +30,17 @@ yalla.framework.addComponent("/dist/component/home-button", (function() {
 
   function onPropertyChange(event) {};
 
-  function home() {
-    window.location.hash = mainMenuPath;
+  function initState(props) {
+
+    return {
+      goto: props.home ? typeof props.home == 'string' ? props.home : mainMenuPath : false,
+    }
+  }
+
+  function go() {
+    if (this.state.goto && this.state.goto != window.location.hash) window.location.hash = this.state.goto;
+    else if (this.state.goto == window.location.hash) this.emitEvent('back');
+    else window.history.back();
   }
 
   function $render(_props, _slotView) {
@@ -76,7 +85,7 @@ yalla.framework.addComponent("/dist/component/home-button", (function() {
             _props['on' + eventName](event);
           }
         };
-        home.bind(self)();
+        go.bind(self)();
       }
     };
     _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

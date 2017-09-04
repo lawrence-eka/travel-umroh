@@ -37,7 +37,46 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
       packageId: props.packageId,
       travelAgentId: props.travelAgentId,
       alert: new Alert(),
+      data: {
+        mutawwifs: null,
+      },
     }
+  }
+
+  function getData(packageId) {
+    //debugger;
+    var self = this;
+    return new Promise(function(resolve) {
+      Promise.all([getOnePackage.bind(self)(packageId), getMutawwifs.bind(self)()]).then(function(result) {
+        var retval = result[0];
+        retval.mutawwifs = result[1];
+        resolve(retval);
+      });
+    });
+  }
+
+  function getMutawwifs() {
+    var self = this;
+    return new Promise(function(resolve) {
+      //debugger;
+      dpd.mutawwifs.get({
+        contactPersonId: storage.me.read().id,
+        $fields: {
+          firstName: 1,
+          middleName: 1,
+          lastName: 1
+        }
+      }, function(mtw) {
+        //debugger;
+        self.state.data.mutawwifs = (mtw.map(function(x) {
+          return {
+            label: x.firstName + ' ' + x.middleName + ' ' + x.lastName,
+            value: x.id
+          }
+        }));
+        resolve(self.state.data.mutawwifs);
+      })
+    });
   }
 
   function getOnePackage(id) {
@@ -77,6 +116,7 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
     package.travelAgentId = form.elements.travelAgentId.value;
     package.packageName = form.elements.packageName.value;
     package.tourLeader = form.elements.tourLeader.value;
+    package.mutawwifId = form.elements.mutawwifId.value;
     package.validFrom = (new Date(form.elements.validFrom.value)).getTime();
     package.validUntil = (new Date(form.elements.validUntil.value)).getTime();
     package.costLandArrangements = form.elements.costLandArrangements.value;
@@ -201,6 +241,14 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
             };
             _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             var _params = {
+              "type": "lookup",
+              "name": "mutawwifId",
+              "prompt": "Mutawwif",
+              "value": data.mutawwifId,
+              "entries": data.mutawwifs
+            };
+            _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+            var _params = {
               "type": "hidden",
               "name": "validFrom",
               "naked": "naked",
@@ -322,7 +370,7 @@ yalla.framework.addComponent("/dist/package/edit-package", (function() {
             _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
             _elementClose("form");
           }
-          var promise = getOnePackage.bind(self)(_state.packageId);
+          var promise = getData.bind(self)(_state.packageId);
           if (promise && typeof promise == "object" && "then" in promise) {
             _skip();
             promise.then(function(_result) {

@@ -56,6 +56,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
     this.emitEvent('keyUp', event.data);
   }
 
+  function onLookupSelected(event) {
+    this.emitEvent('lookupSelected', event.data);
+  }
+
   function $render(_props, _slotView) {
     _context["entry-naked"] = $inject("/component/entry-naked");
     var entryNaked = _context["entry-naked"];
@@ -96,6 +100,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "margin": _props.margin,
         "deleted": _props.deleted,
         "accept": _props.accept,
+        "hidden": _props.hidden,
+        "blob": _props.blob,
+        "uppercase": _props.uppercase,
+        "lookupDelimiter": _props.lookupDelimiter,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -175,6 +183,26 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
             }
           };
           onFocusOut.bind(self)();
+        },
+        "onlookupSelected": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onLookupSelected.bind(self)(event);
         }
       };
       _context["entry-naked"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
@@ -205,6 +233,10 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
         "margin": _props.margin,
         "deleted": _props.deleted,
         "accept": _props.accept,
+        "hidden": _props.hidden,
+        "blob": _props.blob,
+        "uppercase": _props.uppercase,
+        "lookupDelimiter": _props.lookupDelimiter,
         "onchange": function(event) {
           var self = {
             target: event.target
@@ -284,6 +316,26 @@ yalla.framework.addComponent("/dist/component/entry", (function() {
             }
           };
           onFocusOut.bind(self)();
+        },
+        "onlookupSelected": function(event) {
+          var self = {
+            target: event.target
+          };
+          self.properties = _props;
+          if ('elements' in self.target) {
+            self.elements = self.target.elements;
+          }
+          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+          self.component = _component;
+          self.component._state = self.component._state || {};
+          self.state = self.component._state;
+          self.emitEvent = function(eventName, data) {
+            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+            if ('on' + eventName in _props) {
+              _props['on' + eventName](event);
+            }
+          };
+          onLookupSelected.bind(self)(event);
         }
       };
       _context["entry-naked"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

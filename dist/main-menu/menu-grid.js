@@ -60,7 +60,7 @@ yalla.framework.addComponent("/dist/main-menu/menu-grid", (function() {
     _attr("class", "row row-centered");
     _elementOpenEnd("div");
     _elementOpenStart("div", "");
-    _attr("class", "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-centered");
+    _attr("class", "col-xs-12 col-sm-6 col-md-4 col-lg-3 col-centered");
     _elementOpenEnd("div");
     _elementOpenStart("img", "");
     _attr("src", "/asset/img/image6.jpg");
