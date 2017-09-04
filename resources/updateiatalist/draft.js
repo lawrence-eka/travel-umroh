@@ -33,8 +33,8 @@ dpd.airports.get(function(result,error){
   });
 });
 
-//var airportsHost = "www.nationsonline.org";
-var airportsHost = "localhost";
+var airportsHost = "www.nationsonline.org";
+//var airportsHost = "localhost";
 var airportComponentList = [
 	{componentName: "IATA", begTag: '<td class="border1">', endTag: '</td>', mandatory: true},
 	{componentName: "city", begTag: '">', endTag: '</td>'},
@@ -48,7 +48,7 @@ for(var i = 0; i < 26; i++)
 	var c = String.fromCharCode('A'.charCodeAt() + i);
 	var airportsPath = '/oneworld/IATA_Codes/IATA_Code_' + c + '.htm';
 	console.log("Updating Airport's IATA lists of " + c + " cities on " + (new Date()).toString() + "...");
-	extractor.retrieve(true, airportsHost, airportsPath, 'class="border1"><b>Country</b><br></td>', airportComponentList).then(function(airports){
+	extractor.retrieve(false, airportsHost, airportsPath, 'class="border1"><b>Country</b><br></td>', airportComponentList).then(function(airports){
 		if(airports.length) console.log("Found " + airports.length.toString() + " IATA " + airports[0].IATA[0] + " airports.");
 		for(var i = 0; i < airports.length; i++)
 		{
