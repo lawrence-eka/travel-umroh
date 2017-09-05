@@ -33,21 +33,13 @@
 			"id": "country",
 			"order": 3
 		},
-		"cmb": {
-			"name": "cmb",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "cmb",
-			"order": 4
-		},
 		"createdOn": {
 			"name": "createdOn",
 			"type": "number",
 			"typeLabel": "number",
 			"required": false,
 			"id": "createdOn",
-			"order": 5
+			"order": 4
 		},
 		"lastUpdatedOn": {
 			"name": "lastUpdatedOn",
@@ -55,7 +47,7 @@
 			"typeLabel": "number",
 			"required": false,
 			"id": "lastUpdatedOn",
-			"order": 6
+			"order": 5
 		}
 	}
 }

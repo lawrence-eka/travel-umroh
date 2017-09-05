@@ -31,12 +31,12 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
-    //debugger;
     var state = {
       recordsFound: props.recordsFound,
       alert: new Alert(),
       datePair: new DatePair($patchChanges, null, '1y'),
-      date: {},
+      startDate: props.startDate,
+      endDate: props.endDate,
     };
     return state;
   }
@@ -47,6 +47,7 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
 
   function search() {
     var form = this.target.form;
+    //debugger;
     var eventData = {
       startDate: form.elements.startDate.value,
       endDate: form.elements.endDate.value,
@@ -95,7 +96,7 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
           "type": "date",
           "prompt": "Between",
           "name": "startDate",
-          "value": _state.datePair.defaultStartDate.bind(self)(),
+          "value": _state.datePair.defaultStartDate.bind(self)(null, _state.startDate),
           "min": _state.datePair.minStartDate.bind(self)(),
           "onfocusout": function(event) {
             var self = {
@@ -126,7 +127,7 @@ yalla.framework.addComponent("/dist/search-package/search-panel", (function() {
             "type": "date",
             "prompt": "And",
             "name": "endDate",
-            "value": _state.datePair.defaultEndDate.bind(self)(),
+            "value": _state.datePair.defaultEndDate.bind(self)(null, _state.endDate),
             "min": _state.datePair.minEndDate.bind(self)()
           };
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});

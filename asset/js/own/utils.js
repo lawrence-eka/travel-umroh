@@ -51,9 +51,15 @@ function Utils() {
 			var airports = JSON.parse(storage.session.read('airports'));
 			if(airports) resolve(airports);
 			else {
-				dpd.airports.get({$fields: {cmb:1}}, function(airports){
-					airports = (airports.map(function(x){var z = x.cmb.split(':'); return {label:z[0] + (z[1] ? ' - ' + z[1] : '') + ' - ' + z[2], value: z[0]}}));
-					storage.session.save('airports', JSON.stringify(airports))
+				dpd.cache.get({name:'airports', $fields:{data:1},}, function(result){
+					if(result.length && result[0].data && result[0].data.cache) {
+						airports = result[0].data.cache.map(function (x) {
+							var z = x.split(':');
+							return {label: z[0] + (z[1] ? ' - ' + z[1] : '') + ' - ' + z[2], value: z[0]}
+						});
+						storage.session.save('airports', JSON.stringify(airports))
+					}
+					else { airports = [];}
 					resolve(airports);
 				})
 			}

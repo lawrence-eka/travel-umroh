@@ -38,9 +38,8 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
       onRecordsFound: new Event(),
     };
     state.onRecordsFound.subscribe(onRecordsFoundEvent.bind(this));
-    state.startDate = new Date(state.datePair.defaultStartDate());
-    state.endDate = new Date(state.datePair.defaultEndDate());
-
+    state.startDate = state.datePair.defaultStartDate();
+    state.endDate = state.datePair.defaultEndDate();
     return state;
   }
 
@@ -128,7 +127,9 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
               }
             };
             onSearch.bind(self)(event);
-          }
+          },
+          "startDate": (new Date(_state.startDate)),
+          "endDate": (new Date(_state.endDate))
         };
         _context["search"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
       })()

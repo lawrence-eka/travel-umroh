@@ -54,11 +54,12 @@ function DatePair(patchChanges, defaultMinDate, defaultMaxDateOffset, defaultVal
 		return self.date.minEndDate.toYYYYMMDD(withHHMM);
 	};
 
-	self.defaultStartDate = function(withHHMM) {
+	self.defaultStartDate = function(withHHMM, currentStartDate) {
+		if(!isNaN(Date.parse(currentStartDate))) self.date.defaultStartDate = currentStartDate;
 		return self.date.defaultStartDate.toYYYYMMDD(withHHMM);
 	};
-	self.defaultEndDate = function(withHHMM) {
-		//debugger;
+	self.defaultEndDate = function(withHHMM, currentEndDate) {
+		if(!isNaN(Date.parse(currentEndDate))) self.date.defaultEndDate = currentEndDate;
 		return self.date.defaultEndDate.toYYYYMMDD(withHHMM);
 	};
 }
