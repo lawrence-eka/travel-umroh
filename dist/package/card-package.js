@@ -36,7 +36,6 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
     return {
       showMutawwif: null,
     }
-
   }
 
   function whatStatus(pkg) {
@@ -63,12 +62,12 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
 
   function onShowMutawwif(mutawwif) {
     this.state.showMutawwif = mutawwif;
-    $patchChanges();
+    $patchChanges('mutawwifPopup');
   }
 
   function onCloseMutawwif() {
     this.state.showMutawwif = null;
-    $patchChanges();
+    $patchChanges('mutawwifPopup');
   }
 
 
@@ -313,33 +312,38 @@ yalla.framework.addComponent("/dist/package/card-package", (function() {
         _elementClose("div");
       }
     });
-    if (_state.showMutawwif) {
-      var _params = {
-        "mutawwif": _state.showMutawwif,
-        "aspopup": "aspopup",
-        "onclose": function(event) {
-          var self = {
-            target: event.target
-          };
-          self.properties = _props;
-          if ('elements' in self.target) {
-            self.elements = self.target.elements;
-          }
-          self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
-          self.component = _component;
-          self.component._state = self.component._state || {};
-          self.state = self.component._state;
-          self.emitEvent = function(eventName, data) {
-            var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
-            if ('on' + eventName in _props) {
-              _props['on' + eventName](event);
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("mutawwifPopup", IncrementalDOM.currentElement(), function() {
+      if (_state.showMutawwif) {
+        var _params = {
+          "mutawwif": _state.showMutawwif,
+          "aspopup": "aspopup",
+          "onclose": function(event) {
+            var self = {
+              target: event.target
+            };
+            self.properties = _props;
+            if ('elements' in self.target) {
+              self.elements = self.target.elements;
             }
-          };
-          onCloseMutawwif.bind(self)();
-        }
-      };
-      _context["mtw"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
-    }
+            self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+            self.component = _component;
+            self.component._state = self.component._state || {};
+            self.state = self.component._state;
+            self.emitEvent = function(eventName, data) {
+              var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+              if ('on' + eventName in _props) {
+                _props['on' + eventName](event);
+              }
+            };
+            onCloseMutawwif.bind(self)();
+          }
+        };
+        _context["mtw"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+      }
+    })()
+    _elementClose("span");
     _elementClose("div");
   }
   if (typeof $render === "function") {

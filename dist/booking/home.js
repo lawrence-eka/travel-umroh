@@ -41,7 +41,7 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   }
 
   function onPropertyChange(props) {
-    debugger;
+    //debugger;
     if (props.editedBooking) this.state.editedBooking = props.editedBooking.newValue;
     if (props.bookingId) this.state.editedBooking = props.bookingId.newValue;
   }
@@ -49,7 +49,7 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   function loadBooking(id) {
     var self = this;
     return new Promise(function(resolve) {
-      debugger;
+      //debugger;
       if (!id) {
         //self.state.editedBooking = null;
         resolve(self.state.editedBooking);
@@ -65,7 +65,7 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   }
 
   function onEditBooking(event) {
-    debugger;
+    //debugger;
     this.state.editedBooking = event.data;
     $patchChanges();
   }
@@ -77,7 +77,7 @@ yalla.framework.addComponent("/dist/booking/home", (function() {
   }
 
   function onBookingCancelled() {
-    debugger;
+    //debugger;
     this.state.bookingId = null;
     this.state.editedBooking = null;
     $patchChanges();

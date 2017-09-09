@@ -1,11 +1,9 @@
 <inject from="/component/navbar" name="navbar"></inject>
 
-<div class="container" >
+<div class="container" name="universe" created.trigger="onCreated()" deleted.trigger="onDeleted()">
     <div data.load="checkCurrentUser()"  name="motherNature">
         <navbar></navbar>
         <slot-view></slot-view>
-    </div>
-    <div name="popup" class="container centered-form popupContainer" style="visibility:hidden">
     </div>
 </div>
 
@@ -13,6 +11,17 @@
     function checkCurrentUser(){
     	return storage.me.read();
     }
+
+    function onCreated() {
+        console.log('debugger');
+    }
+
+    var popupManager = {
+	    setPopup: function(element) {
+            debugger;
+            console.log('hi');
+        }
+    };
 
     document.addEventListener('touchmove', function(event){if(event.scale !==1){event.preventDefault();}}, false);
 	var lastTouchEnd = 0;

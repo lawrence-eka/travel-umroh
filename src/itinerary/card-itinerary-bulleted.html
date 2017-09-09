@@ -1,3 +1,6 @@
+<inject from="/component/entry" name="entry"></inject>
+<inject from="/hotel/card-hotel" name="hotel"></inject>
+
 <style>
     root{
         /*
@@ -67,28 +70,81 @@
         </div>
     </div>
     <div class="content">
+        <div class="row custom-itinerary-row">
+            <entry naked type="label" prompt.bind="(($itr.entry.departure ? $itr.entry.departure : $itr.entry.checkIn).toDateComponents(false))" class="custom-itinerary-head" ></entry>
+        </div>
         <div if.bind="$itr.entry.transport">
-            <strong>{{$itr.entry.departure.toDateComponents(false)}}</strong>
-            <h5>Dep:{{nbsp}}<label>{{$itr.entry.departure.toTimeComponents()}}</label>{{nbsp}}/ Arr:{{nbsp}}<label>{{$itr.entry.arrival.toTimeComponents() + ($itr.entry.departure.toDayOffset($itr.entry.arrival) ? ' ' + $itr.entry.departure.toDayOffset($itr.entry.arrival) : '')}}</label></h5>
-            {{$itr.entry.transportType}}:{{nbsp}}{{$itr.entry.transport}} <br/>
-            From:{{nbsp}}{{$itr.entry.departFrom}} <br/>
-            To:{{nbsp}}{{$itr.entry.arriveAt}} <br/>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="Dep:" class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.departure.toTimeComponents())" class="custom-itinerary-value" ></entry>
+                {{nbsp}}<entry naked type="label" prompt=" / Arr:" class="custom-itinerary-prompt"></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.arrival.toTimeComponents() + ($itr.entry.departure.toDayOffset($itr.entry.arrival) ? ' ' + $itr.entry.departure.toDayOffset($itr.entry.arrival) : ''))" class="custom-itinerary-value" ></entry>
+            </div>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt.bind="($itr.entry.transportType == 'Plane' ? 'Airline' : $itr.entry.transportType) + ':'" class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.transport)" class="custom-itinerary-value" ></entry>
+                {{nbsp}}<entry naked type="label" if.bind="$itr.entry.flight" prompt="Flight:" class="custom-itinerary-prompt"></entry>
+                <entry naked type="label" if.bind="$itr.entry.flight" prompt.bind="($itr.entry.flight)" class="custom-itinerary-value" ></entry>
+            </div>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="From: " class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.departFrom)" class="custom-itinerary-value" ></entry>
+                {{nbsp}}<entry naked type="label" if.bind="$itr.entry.departureCity" prompt="- " class="custom-itinerary-prompt"></entry>
+                {{nbsp}}<entry naked type="label" if.bind="$itr.entry.departureCity" prompt.bind="($itr.entry.departureCity)" class="custom-itinerary-value" ></entry>
+            </div>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="To: " class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.arriveAt)" class="custom-itinerary-value" ></entry>
+                {{nbsp}}<entry naked type="label" if.bind="$itr.entry.arrivalCity" prompt="- " class="custom-itinerary-prompt"></entry>
+                {{nbsp}}<entry naked type="label" if.bind="$itr.entry.arrivalCity" prompt.bind="($itr.entry.arrivalCity)" class="custom-itinerary-value" ></entry>
+            </div>
         </div>
         <div if.bind="$itr.entry.hotel">
-            <strong>{{$itr.entry.checkIn.toDateComponents(false)}}</strong>
-            <h5>Check out:{{nbsp}}<label>{{$itr.entry.checkOut.toDateComponents()}}</label></h5>
-            Hotel:{{nbsp}}{{$itr.entry.hotel}} <br/>
-            City:{{nbsp}}{{$itr.entry.city}} <br/>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="Check out:" class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.checkOut.toDateComponents())" class="custom-itinerary-value" ></entry>
+            </div>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="Hotel:" class="custom-itinerary-prompt" ></entry>
+                <entry naked type.bind="$itr.entry.hotelName ? 'hyperlink' : 'label'" prompt.bind="($itr.entry.hotelName? $itr.entry.hotelName : $itr.entry.hotel)" class="custom-itinerary-value" click.trigger="onShowHotel($itr.entry.hotel)"></entry>
+            </div>
+            <div class="row custom-itinerary-row">
+                <entry naked type="label" prompt="City:" class="custom-itinerary-prompt" ></entry>
+                <entry naked type="label" prompt.bind="($itr.entry.city)" class="custom-itinerary-value" ></entry>
+            </div>
         </div>
-        {{$itr.remarks}}
+        <entry naked type="label" if.bind="$itr.remarks" prompt.bind="($itr.remarks)" class="custom-itinerary-prompt" ></entry>
     </div>
+    <span ref.name="hotelPopup">
+        <hotel if.bind="@showHotel" hotel.bind="@showHotel" aspopup close.trigger="onCloseHotel()"></hotel>
+    </span>
 </div>
 
 <script>
     var nbsp=' ';
+
+    function initState(props){
+	    return {
+		    showHotel:null,
+	    }
+
+    }
+
     function whatClass(item) {
         item = item ? item : 'hotel';
         item = item.toLowerCase();
         return "fa fa-" + item + " icon-center";
     }
+    function onShowHotel(hotel) {
+    	//debugger;
+	    this.state.showHotel = hotel;
+	    $patchChanges('hotelPopup');
+    }
+
+    function onCloseHotel(){
+	    this.state.showHotel = null;
+	    $patchChanges('hotelPopup');
+    }
+
+
 </script>

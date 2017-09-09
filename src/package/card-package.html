@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col">
                         <entry type="label" prompt="Mutawwif:" naked></entry>{{nbsp}}
-                        <entry type="hyperlink" if.bind="$pkg.mutawwif" prompt.bind="$pkg.mutawwif" click.trigger="onShowMutawwif($pkg.mutawwifId)" naked></entry>
+                        <entry type="hyperlink" if.bind="$pkg.mutawwif" prompt.bind="$pkg.mutawwif" click.trigger="onShowMutawwif($pkg.mutawwifId)" naked ></entry>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,9 @@
             </div>
         </div>
     </card>
-    <mtw if.bind="@showMutawwif" mutawwif.bind="@showMutawwif" aspopup close.trigger="onCloseMutawwif()"></mtw>
+    <span ref.name="mutawwifPopup">
+        <mtw if.bind="@showMutawwif" mutawwif.bind="@showMutawwif" aspopup close.trigger="onCloseMutawwif()"></mtw>
+    </span>
 </div>
 <script>
     var nbsp = ' ';
@@ -49,8 +51,8 @@
     	return {
             showMutawwif:null,
         }
-
     }
+
     function whatStatus(pkg) {
     	var today = new Date();
     	if(!pkg.isPublished) return "Draft";
@@ -74,12 +76,12 @@
 
     function onShowMutawwif(mutawwif) {
     	this.state.showMutawwif = mutawwif;
-    	$patchChanges();
+    	$patchChanges('mutawwifPopup');
     }
 
     function onCloseMutawwif(){
 	    this.state.showMutawwif = null;
-	    $patchChanges();
+	    $patchChanges('mutawwifPopup');
     }
 
 </script>

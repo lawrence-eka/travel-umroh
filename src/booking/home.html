@@ -23,14 +23,6 @@
 	<div if.bind="!@editedBooking">
 		<list editBooking.trigger="onEditBooking(event)"></list>
 	</div>
-	<!--
-	<edit-passenger passengerId.bind="@passengerId"></edit-passenger>
-	<div data.load="getPassengers(@bookingId)">
-		<p for.each="psg in data">
-			<card-passenger passenger.bind="psg"></card-passenger>
-		</p>
-	</div>
-	-->
 </div>
 
 
@@ -46,7 +38,7 @@
 	}
 
 	function onPropertyChange(props){
-		debugger;
+		//debugger;
 		if(props.editedBooking) this.state.editedBooking = props.editedBooking.newValue;
 		if(props.bookingId) this.state.editedBooking = props.bookingId.newValue;
 	}
@@ -54,7 +46,7 @@
 	function loadBooking(id) {
 		var self = this;
 		return new Promise(function(resolve){
-			debugger;
+			//debugger;
 			if(!id) {
 				//self.state.editedBooking = null;
 				resolve(self.state.editedBooking);
@@ -71,7 +63,7 @@
 	}
 
 	function onEditBooking(event){
-		debugger;
+		//debugger;
 		this.state.editedBooking = event.data;
 		$patchChanges();
 	}
@@ -82,7 +74,7 @@
 	}
 
 	function onBookingCancelled() {
-		debugger;
+		//debugger;
 		this.state.bookingId = null;
 		this.state.editedBooking = null;
 		$patchChanges();

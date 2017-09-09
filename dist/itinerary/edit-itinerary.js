@@ -242,7 +242,7 @@ yalla.framework.addComponent("/dist/itinerary/edit-itinerary", (function() {
         err.errors.arriveAt = 'Missing value'
       }
       if (fe.transportType.value == 'Plane') {
-        itr.entry.flight = fe.flight.value;
+        itr.entry.flight = fe.flight.value.toUpperCase();
 
         if (fe.transport.value && !this.state.data.airlines.find(function(x) {
             return x.value == fe.transport.value

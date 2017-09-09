@@ -1,6 +1,8 @@
 <inject from="/component/panel" name="card"></inject>
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/component/entry" name="entry"></inject>
+<inject from="/search-package/showPackage" name="show-package"></inject>
+<inject from="/component/scrollable-popup/home" name="popup"></inject>
 
 <div>
     <card click.trigger="onClick()" title.bind="@booking.package.packageName">
@@ -18,6 +20,7 @@
                 <entry type="label" prompt.bind="('Expiry Date: ' + (@booking.waitingForPaymentUntil ? @booking.waitingForPaymentUntil.toDateComponents(false, true) : ''))"></entry>
             </div>
             <div if.bind="!@showOnly" class="row">
+                <entry type="button" name="btnPackageDetails" value="Package Details" click.trigger="onDisplayPackageDetails()"></entry>
                 <entry type="button" name="btnSave" value="Save & Close" click.trigger="onSaveBooking()"></entry>
                 <entry type="button" name="btnPassengers" value="Passengers..." click.trigger="onEditPassenger()"></entry>
                 <entry type="button" name="btnPaymentDetail" if.bind="@booking.uniqueCode" value="Payment Detail" click.trigger="onShowPaymentDetail()"></entry>
@@ -33,20 +36,23 @@
     <span ref.name="alert">
         <alert alertType.bind="@alert.type()" message.bind="@alert.text()"></alert>
     </span>
-    <!--
-    <span if.bind="!@showOnly">
-        <list-passenger bookingId="@booking.id"></list-passenger>
+    <span ref.name="packageInfo">
+        <popup if.bind="@displayedPackageId" show.bind="@displayedPackageId" onCloseEvent.bind="@onClosePackageDetail">
+            <show-package packageId.bind="@displayedPackageId" aspopup home="#app/booking.home" readonly close.trigger="onClosePackageDisplay()" onCloseEvent.bind="@onClosePackageDetail"></show-package>
+        </popup>
     </span>
-    -->
 </div>
 
 <script>
+
     function initState(props) {
     	return {
     		booking: props.booking,
             flow: (new Utils()).flow.booking,
             showOnly: props.showOnly,
             alert: new Alert(null, $patchChanges, "alert"),
+            displayedPackageId: null,
+            onClosePackageDetail: new Event(),
         }
     }
 
@@ -101,6 +107,18 @@
 		        });
             }
 	    });
+    }
+
+    function onDisplayPackageDetails(){
+    	//debugger;
+	    this.state.displayedPackageId = this.state.booking.package.id;
+	    $patchChanges();
+    }
+
+    function onClosePackageDisplay(){
+	    debugger;
+	    this.state.displayedPackageId = null;
+	    $patchChanges();
     }
 
 </script>

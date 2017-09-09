@@ -11,8 +11,8 @@
         </div>
         <div slot.name="footer">
             <div class="row">
-                <entry if.bind='@me' type="button" value="Book This!" click.trigger="onBook()"></entry>
-                <home home="#app/search-package.home" back.trigger="onBack()"></home>
+                <entry if.bind='@me && !@readOnly' type="button" value="Book This!" click.trigger="onBook()"></entry>
+                <home home.bind="$home" back.trigger="onBack()"></home>
             </div>
         </div>
 
@@ -21,7 +21,10 @@
 
 <script>
     function initState(props){
-    	return {me:storage.me.read(),};
+    	return {
+    		me:storage.me.read(),
+            readOnly:props.readonly,
+        };
     }
     function onBook() {
         this.emitEvent('book');

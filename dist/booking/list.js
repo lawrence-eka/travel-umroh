@@ -48,9 +48,9 @@ yalla.framework.addComponent("/dist/booking/list", (function() {
       var q = {
         "userId": storage.me.read().id
       };
-      debugger;
+      //debugger;
       dpd.bookings.get(q, function(bkg, err) {
-        debugger;
+        //debugger;
         self.state.alert.alert(err);
         if (!err) {
           resolve(bkg);

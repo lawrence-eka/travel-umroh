@@ -1,0 +1,79 @@
+<div class="container centered-form popupContainerScrollable"><!-- created.trigger="onCreated()"> -->
+    <slot-view></slot-view>
+</div>
+
+<script>
+    function initState(props){
+    	//debugger;
+	    if(props.onCloseEvent) props.onCloseEvent.subscribe(onCloseEvent.bind(this));
+        var state = {
+	        popup: null,
+	        popupPanel:null,
+	        show: (props.show != null),
+        };
+        display.bind(this)(state.show, false);
+	    return state;
+    }
+
+    function onCloseEvent(){
+    	//debugger;
+    	display.bind(this)(false);
+    }
+
+    function onCreated() {
+    	//debugger;
+	    this.target.style.visibility = 'visible';
+	    document.getElementsByName('universe')[0].appendChild(this.target);
+        var panels = document.getElementsByName('universe')[0].children;
+        if(panels.length > 1) panels[panels.length - 2].classList.add('blur');
+    }
+
+    function onPropertyChange(props){
+    	//debugger;
+    	this.state.show = props.show.newValue;
+	    display.bind(this.component)(this.state.show, true);
+
+    }
+
+
+    function display(isShown, temp){
+    	//debugger;
+	    if(!isShown) {
+	    	//if(temp)
+	    	{
+			    //this.style.visibility = 'visible';
+			    //document.getElementsByName('universe')[0].appendChild(this);
+		    }
+		    var panels = document.getElementsByName('universe')[0].children;
+		    if(panels.length > 1) {
+			    panels[panels.length - 2].classList.add('not-blur');
+			    panels[panels.length - 2].classList.remove('blur');
+		    }
+		        //this.style.visibility = 'hidden';
+		    this.className += ' custom-fadeout-anim';
+		    setTimeout(doClose.bind(this), 250);
+	    }
+	    else {
+	    	//if(temp)
+	    	{
+			    this.style.visibility = 'visible';
+			    document.getElementsByName('universe')[0].appendChild(this);
+		    }
+		    var panels = document.getElementsByName('universe')[0].children;
+		    if(panels.length > 1) {
+			    panels[panels.length - 2].classList.add('blur');
+			    panels[panels.length - 2].classList.remove('not-blur');
+		    }
+	    }
+	    //$patchChanges('slot');
+    }
+
+    function doClose(){
+        //debugger;
+        //this.style.visibility = 'hidden';
+        document.getElementsByName('universe')[0].removeChild(this);
+        //this.state.popup = null;
+    }
+
+
+</script>

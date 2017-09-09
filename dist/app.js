@@ -34,6 +34,17 @@ yalla.framework.addComponent("/dist/app", (function() {
     return storage.me.read();
   }
 
+  function onCreated() {
+    console.log('debugger');
+  }
+
+  var popupManager = {
+    setPopup: function(element) {
+      debugger;
+      console.log('hi');
+    }
+  };
+
   document.addEventListener('touchmove', function(event) {
     if (event.scale !== 1) {
       event.preventDefault();
@@ -55,6 +66,47 @@ yalla.framework.addComponent("/dist/app", (function() {
     _elementOpenStart("div", "");
     _attr("element", "dist.app");
     _attr("class", "container");
+    _attr("name", "universe");
+    _attr("oncreated", function(event) {
+      var self = {
+        target: event.target
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
+      self.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+        if ('on' + eventName in _props) {
+          _props['on' + eventName](event);
+        }
+      };
+      onCreated.bind(self)();
+    });
+    _attr("ondeleted", function(event) {
+      var self = {
+        target: event.target
+      };
+      self.properties = _props;
+      if ('elements' in self.target) {
+        self.elements = self.target.elements;
+      }
+      self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+      self.component = _component;
+      self.component._state = self.component._state || {};
+      self.state = self.component._state;
+      self.emitEvent = function(eventName, data) {
+        var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+        if ('on' + eventName in _props) {
+          _props['on' + eventName](event);
+        }
+      };
+      onDeleted.bind(self)();
+    });
     _elementOpenEnd("div");
     var _component = IncrementalDOM.currentElement();
     var _validComponent = yalla.framework.validComponentName(_component, _elementName)
@@ -109,12 +161,6 @@ yalla.framework.addComponent("/dist/app", (function() {
       element: IncrementalDOM.currentElement(),
       pointer: IncrementalDOM.currentPointer()
     });
-    _elementClose("div");
-    _elementOpenStart("div", "");
-    _attr("name", "popup");
-    _attr("class", "container centered-form popupContainer");
-    _attr("style", "visibility:hidden");
-    _elementOpenEnd("div");
     _elementClose("div");
     _elementClose("div");
   }

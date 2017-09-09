@@ -30,12 +30,15 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
 
   function onPropertyChange(event) {};
 
+
   function initState(props) {
     return {
       booking: props.booking,
       flow: (new Utils()).flow.booking,
       showOnly: props.showOnly,
       alert: new Alert(null, $patchChanges, "alert"),
+      displayedPackageId: null,
+      onClosePackageDetail: new Event(),
     }
   }
 
@@ -92,6 +95,18 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
     });
   }
 
+  function onDisplayPackageDetails() {
+    //debugger;
+    this.state.displayedPackageId = this.state.booking.package.id;
+    $patchChanges();
+  }
+
+  function onClosePackageDisplay() {
+    debugger;
+    this.state.displayedPackageId = null;
+    $patchChanges();
+  }
+
 
   function $render(_props, _slotView) {
     _context["card"] = $inject("/component/panel");
@@ -100,6 +115,10 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
     var alert = _context["alert"];
     _context["entry"] = $inject("/component/entry");
     var entry = _context["entry"];
+    _context["show-package"] = $inject("/search-package/showPackage");
+    var showPackage = _context["show-package"];
+    _context["popup"] = $inject("/component/scrollable-popup/home");
+    var popup = _context["popup"];
     _elementOpenStart("div", "");
     _attr("element", "dist.booking.card-booking");
     _elementOpenEnd("div");
@@ -211,6 +230,32 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
           _elementOpenStart("div", "");
           _attr("class", "row");
           _elementOpenEnd("div");
+          var _params = {
+            "type": "button",
+            "name": "btnPackageDetails",
+            "value": "Package Details",
+            "onclick": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onDisplayPackageDetails.bind(self)();
+            }
+          };
+          _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           var _params = {
             "type": "button",
             "name": "btnSave",
@@ -397,6 +442,47 @@ yalla.framework.addComponent("/dist/booking/card-booking", (function() {
         "message": _state.alert.text.bind(self)()
       };
       _context["alert"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+    })()
+    _elementClose("span");
+    _elementOpenStart("span", "");
+    _elementOpenEnd("span");
+    yalla.framework.registerRef("packageInfo", IncrementalDOM.currentElement(), function() {
+      if (_state.displayedPackageId) {
+        var _params = {
+          "show": _state.displayedPackageId,
+          "onCloseEvent": _state.onClosePackageDetail
+        };
+        _context["popup"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {
+          var _params = {
+            "packageId": _state.displayedPackageId,
+            "aspopup": "aspopup",
+            "home": "#app/booking.home",
+            "readonly": "readonly",
+            "onclose": function(event) {
+              var self = {
+                target: event.target
+              };
+              self.properties = _props;
+              if ('elements' in self.target) {
+                self.elements = self.target.elements;
+              }
+              self.currentTarget = this == event.target ? self.target : _parentComponent(event.currentTarget);
+              self.component = _component;
+              self.component._state = self.component._state || {};
+              self.state = self.component._state;
+              self.emitEvent = function(eventName, data) {
+                var event = new ComponentEvent(eventName, data, self.target, self.currentTarget);
+                if ('on' + eventName in _props) {
+                  _props['on' + eventName](event);
+                }
+              };
+              onClosePackageDisplay.bind(self)();
+            },
+            "onCloseEvent": _state.onClosePackageDetail
+          };
+          _context["show-package"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
+        });
+      }
     })()
     _elementClose("span");
     _elementClose("div");

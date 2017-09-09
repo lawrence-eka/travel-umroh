@@ -246,7 +246,7 @@
 			if(!fe.arrival.value) {err.errors.arrival = 'Missing value'}
 			if(!fe.arriveAt.value) {err.errors.arriveAt = 'Missing value'}
 			if(fe.transportType.value == 'Plane') {
-				itr.entry.flight = fe.flight.value;
+				itr.entry.flight = fe.flight.value.toUpperCase();
 
 				if(fe.transport.value && !this.state.data.airlines.find(function(x){return x.value == fe.transport.value})) {err.errors.transport = 'Unknown airline';}
 				if(!fe.flight.value) {err.errors.flight = 'Missing value'}

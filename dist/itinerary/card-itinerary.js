@@ -263,7 +263,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itinerary", (function() {
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
           _text("" + (nbsp) + "");
           var _params = {
-            "type": "hyperlink",
+            "type": _props.itr.entry.hotelName ? 'hyperlink' : 'label',
             "prompt": (_props.itr.entry.hotelName ? _props.itr.entry.hotelName : _props.itr.entry.hotel),
             "onclick": function(event) {
               var self = {

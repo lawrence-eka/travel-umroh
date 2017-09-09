@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col">
                             <entry type="label" prompt="Hotel: " naked></entry>{{nbsp}}
-                            <entry type="hyperlink" prompt.bind="($itr.entry.hotelName ? $itr.entry.hotelName : $itr.entry.hotel)"  click.trigger="onShowHotel($itr.entry.hotel)" naked></entry>
+                            <entry type.bind="$itr.entry.hotelName ? 'hyperlink' : 'label'" prompt.bind="($itr.entry.hotelName ? $itr.entry.hotelName : $itr.entry.hotel)"  click.trigger="onShowHotel($itr.entry.hotel)" naked></entry>
                         </div>
                     </div>
                     <div class="row">

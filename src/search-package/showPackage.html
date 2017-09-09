@@ -1,6 +1,5 @@
 <inject from="/component/alert" name="alert"></inject>
 <inject from="/package/card-package" name="card-package"></inject>
-
 <inject from="/itinerary/card-itineraryList" name="card-itineraryList"></inject>
 <inject from="/component/entry" name="entry"></inject>
 
@@ -12,13 +11,15 @@
         <card-package pkg.bind="data"></card-package>
     </div>
     <div data.load="queryItineraries()">
-        <card-itineraryList itinerary.bind="data" book.trigger="book()" close.trigger="onClose()"></card-itineraryList>
+        <card-itineraryList itinerary.bind="data" book.trigger="book()" home.bind="$home" readonly.bind="$readonly" close.trigger="onClose()"></card-itineraryList>
     </div>
 </div>
 
 <script>
     function initState(props) {
+    	//debugger;
     	return {
+    		onCloseEvent: props.onCloseEvent,
 		    packageId: props.packageId,
             alert: new Alert(null, $patchChanges, "alert"),
 		    flow: (new Utils).flow.booking,
@@ -30,8 +31,11 @@
     }
 
     function onClose() {
-    	this.emitEvent('close');
+    	//debugger;
+    	this.state.onCloseEvent.publish();
+        //this.emitEvent('close');
     }
+
     function book(){
         var me = storage.me.read();
         var self = this;

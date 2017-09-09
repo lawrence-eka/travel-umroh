@@ -43,32 +43,43 @@
     function initState(props) {
     	return {
     		aspopup: props.aspopup != null,
+            popup: null,
             popupPanel:null,
         };
     }
 
     function doClose(){
-    	this.emitEvent('close');
+	    this.state.popup.style.visibility = 'hidden';
+	    document.getElementsByName('universe')[0].removeChild(this.state.popup);
+	    this.state.popup = null;
+
+	    this.emitEvent('close');
     }
 
     function onClosePopup(){
-    	//debugger;
-	   // document.getElementsByName(this.state.name)[0].className = document.getElementsByName(this.state.name)[0].className + ' custom-fadeout-anim';
         this.state.popupPanel.className += ' custom-fadeout-anim';
-	    document.getElementsByName('popup')[0].style.visibility = 'hidden';
-	    document.getElementsByName('motherNature')[0].className = "not-blur";
+
+	    var panels = document.getElementsByName('universe')[0].children;
+	    panels[panels.length - 2].classList.remove('blur');
 	    setTimeout(doClose.bind(this), 250);
     }
     function onCreated(){
 	    if(this.state.aspopup){
+	    	debugger;
 	    	this.state.popupPanel = this.target;
-		    var popup = document.getElementsByName('popup')[0];
-		    popup.style.visibility = 'visible';
-		    popup.appendChild(this.target);
-		    document.getElementsByName('motherNature')[0].className = "blur";
+            this.state.popup = document.createElement('div');
+
+		    var panels = document.getElementsByName('universe')[0].children;
+		    panels[panels.length - 1].classList.add('blur');
+
+		    document.getElementsByName('universe')[0].appendChild(this.state.popup);
+		    this.state.popup.className="container centered-form popupContainer"
+		    this.state.popup.style.visibility = 'visible';
+		    this.state.popup.appendChild(this.target);
 	    }
     }
     function onDeleted(){
+    	debugger;
 	    if(this.state.aspopup){
 		    document.getElementsByName('motherNature')[0].className = "not-blur";
 	    }

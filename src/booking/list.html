@@ -29,9 +29,9 @@
     	var self = this;
         return new Promise(function(resolve) {
 	        var q = {"userId": storage.me.read().id};
-	        debugger;
+	        //debugger;
 	        dpd.bookings.get(q, function (bkg, err) {
-	        	debugger;
+	        	//debugger;
 	        	self.state.alert.alert(err);
 		        if (!err) {
 			        resolve(bkg);

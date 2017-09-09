@@ -16,7 +16,7 @@ if(this.entry) {
     }
     else if(this.entry.hotel) {
         dpd.hotels.get(this.entry.hotel, function(res){
-            if(res && res.length) this.entry.hotelName = res.hotelName;
+            if(res) this.entry.hotelName = res.hotelName;
         });
     }
 }

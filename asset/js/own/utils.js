@@ -129,7 +129,7 @@ function Utils() {
 			},
 			
 			isTransitionAllowed: function(fromStatus, toStatus, via) {
-				debugger;
+				//debugger;
 				return typeof self.flow.booking.transitions.find(function(item) {return (item.from == fromStatus && item.to == toStatus && (via? item.via == via : true));}) != 'undefined';
 			},
 			

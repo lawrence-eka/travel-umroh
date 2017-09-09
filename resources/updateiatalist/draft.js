@@ -23,8 +23,8 @@ extractor.retrieve(true, airlinesHost, airlinesPath, "<th>Comments</th>", airlin
 
 
 
-var airportsHost = "www.nationsonline.org";
-//var airportsHost = "localhost";
+//var airportsHost = "www.nationsonline.org";
+var airportsHost = "localhost";
 var airportComponentList = [
 	{componentName: "IATA", begTag: '<td class="border1">', endTag: '</td>', mandatory: true},
 	{componentName: "city", begTag: '">', endTag: '</td>'},
@@ -43,7 +43,7 @@ var promises = [];
 alphabet.forEach(function(c){
     var airportsPath = '/oneworld/IATA_Codes/IATA_Code_' + c + '.htm';
     console.log("Updating Airport's IATA lists of " + c + " cities on " + (new Date()).toString() + "...");
-    promises.push(extractor.retrieve(false, airportsHost, airportsPath, 'class="border1"><b>Country</b><br></td>', airportComponentList));
+    promises.push(extractor.retrieve(true, airportsHost, airportsPath, 'class="border1"><b>Country</b><br></td>', airportComponentList));
 });
 
 Promise.all(promises).then(function(airportsList){

@@ -31,7 +31,9 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
   function onPropertyChange(event) {};
 
   function initState(props) {
+    //debugger;
     return {
+      onCloseEvent: props.onCloseEvent,
       packageId: props.packageId,
       alert: new Alert(null, $patchChanges, "alert"),
       flow: (new Utils).flow.booking,
@@ -43,7 +45,9 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
   }
 
   function onClose() {
-    this.emitEvent('close');
+    //debugger;
+    this.state.onCloseEvent.publish();
+    //this.emitEvent('close');
   }
 
   function book() {
@@ -235,6 +239,8 @@ yalla.framework.addComponent("/dist/search-package/showPackage", (function() {
             };
             book.bind(self)();
           },
+          "home": _props.home,
+          "readonly": _props.readonly,
           "onclose": function(event) {
             var self = {
               target: event.target

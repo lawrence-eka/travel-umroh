@@ -33,6 +33,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
   function initState(props) {
     return {
       me: storage.me.read(),
+      readOnly: props.readonly,
     };
   }
 
@@ -95,7 +96,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
         _elementOpenStart("div", "");
         _attr("class", "row");
         _elementOpenEnd("div");
-        if (_state.me) {
+        if (_state.me && !_state.readOnly) {
           var _params = {
             "type": "button",
             "value": "Book This!",
@@ -123,7 +124,7 @@ yalla.framework.addComponent("/dist/itinerary/card-itineraryList", (function() {
           _context["entry"].render(typeof arguments[1] === "object" ? _merge(arguments[1], _params) : _params, function(slotName, slotProps) {});
         }
         var _params = {
-          "home": "#app/search-package.home",
+          "home": _props.home,
           "onback": function(event) {
             var self = {
               target: event.target

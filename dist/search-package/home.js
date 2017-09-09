@@ -54,7 +54,7 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
 
   function onPackageClick(event) {
     this.state.displayedPackageId = event.data;
-    debugger;
+    //debugger;
     $patchChanges();
   }
 
@@ -72,7 +72,7 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
   */
   function onClosePackageDisplay() {
     this.state.displayedPackageId = null;
-    debugger;
+    //debugger;
     $patchChanges();
   }
 
@@ -168,6 +168,7 @@ yalla.framework.addComponent("/dist/search-package/home", (function() {
       yalla.framework.registerRef("displayPackage", IncrementalDOM.currentElement(), function() {
         var _params = {
           "packageId": _state.displayedPackageId,
+          "home": "#app/search-package.home",
           "onclose": function(event) {
             var self = {
               target: event.target
